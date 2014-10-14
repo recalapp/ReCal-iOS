@@ -1,0 +1,437 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		811D481819ED7EB000E3F360 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D481719ED7EB000E3F360 /* AppDelegate.swift */; };
+		811D481B19ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 811D481919ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld */; };
+		811D481D19ED7EB000E3F360 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D481C19ED7EB000E3F360 /* ViewController.swift */; };
+		811D482019ED7EB000E3F360 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 811D481E19ED7EB000E3F360 /* Main.storyboard */; };
+		811D482219ED7EB000E3F360 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811D482119ED7EB000E3F360 /* Images.xcassets */; };
+		811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811D482319ED7EB000E3F360 /* LaunchScreen.xib */; };
+		811D483119ED7EB100E3F360 /* ReCal_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		811D482B19ED7EB100E3F360 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 811D481119ED7EB000E3F360;
+			remoteInfo = "ReCal iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		811D481219ED7EB000E3F360 /* ReCal iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		811D481619ED7EB000E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		811D481719ED7EB000E3F360 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		811D481A19ED7EB000E3F360 /* ReCal_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReCal_iOS.xcdatamodel; sourceTree = "<group>"; };
+		811D481C19ED7EB000E3F360 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		811D481F19ED7EB000E3F360 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		811D482119ED7EB000E3F360 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		811D482419ED7EB000E3F360 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		811D482F19ED7EB100E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_iOSTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		811D480F19ED7EB000E3F360 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		811D482719ED7EB100E3F360 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		811D480919ED7EB000E3F360 = {
+			isa = PBXGroup;
+			children = (
+				811D481419ED7EB000E3F360 /* ReCal iOS */,
+				811D482D19ED7EB100E3F360 /* ReCal iOSTests */,
+				811D481319ED7EB000E3F360 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		811D481319ED7EB000E3F360 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				811D481219ED7EB000E3F360 /* ReCal iOS.app */,
+				811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		811D481419ED7EB000E3F360 /* ReCal iOS */ = {
+			isa = PBXGroup;
+			children = (
+				811D481719ED7EB000E3F360 /* AppDelegate.swift */,
+				811D481C19ED7EB000E3F360 /* ViewController.swift */,
+				811D481E19ED7EB000E3F360 /* Main.storyboard */,
+				811D482119ED7EB000E3F360 /* Images.xcassets */,
+				811D482319ED7EB000E3F360 /* LaunchScreen.xib */,
+				811D481919ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld */,
+				811D481519ED7EB000E3F360 /* Supporting Files */,
+			);
+			path = "ReCal iOS";
+			sourceTree = "<group>";
+		};
+		811D481519ED7EB000E3F360 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				811D481619ED7EB000E3F360 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		811D482D19ED7EB100E3F360 /* ReCal iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */,
+				811D482E19ED7EB100E3F360 /* Supporting Files */,
+			);
+			path = "ReCal iOSTests";
+			sourceTree = "<group>";
+		};
+		811D482E19ED7EB100E3F360 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				811D482F19ED7EB100E3F360 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		811D481119ED7EB000E3F360 /* ReCal iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 811D483419ED7EB100E3F360 /* Build configuration list for PBXNativeTarget "ReCal iOS" */;
+			buildPhases = (
+				811D480E19ED7EB000E3F360 /* Sources */,
+				811D480F19ED7EB000E3F360 /* Frameworks */,
+				811D481019ED7EB000E3F360 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ReCal iOS";
+			productName = "ReCal iOS";
+			productReference = 811D481219ED7EB000E3F360 /* ReCal iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		811D482919ED7EB100E3F360 /* ReCal iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 811D483719ED7EB100E3F360 /* Build configuration list for PBXNativeTarget "ReCal iOSTests" */;
+			buildPhases = (
+				811D482619ED7EB100E3F360 /* Sources */,
+				811D482719ED7EB100E3F360 /* Frameworks */,
+				811D482819ED7EB100E3F360 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				811D482C19ED7EB100E3F360 /* PBXTargetDependency */,
+			);
+			name = "ReCal iOSTests";
+			productName = "ReCal iOSTests";
+			productReference = 811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		811D480A19ED7EB000E3F360 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = ReCal;
+				TargetAttributes = {
+					811D481119ED7EB000E3F360 = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
+					811D482919ED7EB100E3F360 = {
+						CreatedOnToolsVersion = 6.0.1;
+						TestTargetID = 811D481119ED7EB000E3F360;
+					};
+				};
+			};
+			buildConfigurationList = 811D480D19ED7EB000E3F360 /* Build configuration list for PBXProject "ReCal iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 811D480919ED7EB000E3F360;
+			productRefGroup = 811D481319ED7EB000E3F360 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				811D481119ED7EB000E3F360 /* ReCal iOS */,
+				811D482919ED7EB100E3F360 /* ReCal iOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		811D481019ED7EB000E3F360 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				811D482019ED7EB000E3F360 /* Main.storyboard in Resources */,
+				811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */,
+				811D482219ED7EB000E3F360 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		811D482819ED7EB100E3F360 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		811D480E19ED7EB000E3F360 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				811D481D19ED7EB000E3F360 /* ViewController.swift in Sources */,
+				811D481819ED7EB000E3F360 /* AppDelegate.swift in Sources */,
+				811D481B19ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		811D482619ED7EB100E3F360 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				811D483119ED7EB100E3F360 /* ReCal_iOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		811D482C19ED7EB100E3F360 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 811D481119ED7EB000E3F360 /* ReCal iOS */;
+			targetProxy = 811D482B19ED7EB100E3F360 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		811D481E19ED7EB000E3F360 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				811D481F19ED7EB000E3F360 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		811D482319ED7EB000E3F360 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				811D482419ED7EB000E3F360 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		811D483219ED7EB100E3F360 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		811D483319ED7EB100E3F360 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		811D483519ED7EB100E3F360 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "ReCal iOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		811D483619ED7EB100E3F360 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "ReCal iOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		811D483819ED7EB100E3F360 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal iOS.app/ReCal iOS";
+			};
+			name = Debug;
+		};
+		811D483919ED7EB100E3F360 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal iOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal iOS.app/ReCal iOS";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		811D480D19ED7EB000E3F360 /* Build configuration list for PBXProject "ReCal iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				811D483219ED7EB100E3F360 /* Debug */,
+				811D483319ED7EB100E3F360 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		811D483419ED7EB100E3F360 /* Build configuration list for PBXNativeTarget "ReCal iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				811D483519ED7EB100E3F360 /* Debug */,
+				811D483619ED7EB100E3F360 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		811D483719ED7EB100E3F360 /* Build configuration list for PBXNativeTarget "ReCal iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				811D483819ED7EB100E3F360 /* Debug */,
+				811D483919ED7EB100E3F360 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		811D481919ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				811D481A19ED7EB000E3F360 /* ReCal_iOS.xcdatamodel */,
+			);
+			currentVersion = 811D481A19ED7EB000E3F360 /* ReCal_iOS.xcdatamodel */;
+			path = ReCal_iOS.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 811D480A19ED7EB000E3F360 /* Project object */;
+}
