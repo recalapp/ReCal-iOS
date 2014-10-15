@@ -20,6 +20,7 @@
 		8144D88919EEB86B00C9EF24 /* ReCal Common Framework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8144D87419EEB86B00C9EF24 /* ReCal Common Framework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8144D89419EEB8E400C9EF24 /* BaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */; };
 		8144D89919EEBB8D00C9EF24 /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */; };
+		81D4B5CB19EED087007B3C1A /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4B5CA19EED087007B3C1A /* Queue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		8144D88419EEB86B00C9EF24 /* ReCal_Common_FrameworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_Common_FrameworkTests.swift; sourceTree = "<group>"; };
 		8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
 		8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
+		81D4B5CA19EED087007B3C1A /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 		8144D87519EEB86B00C9EF24 /* ReCal Common Framework */ = {
 			isa = PBXGroup;
 			children = (
+				81D4B5C919EED066007B3C1A /* Data Structures */,
 				8144D87819EEB86B00C9EF24 /* ReCal Common Framework.h */,
 				8144D87619EEB86B00C9EF24 /* Supporting Files */,
 				8144D89519EEB8EB00C9EF24 /* DataSource */,
@@ -225,6 +228,14 @@
 				8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */,
 			);
 			name = DataSource;
+			sourceTree = "<group>";
+		};
+		81D4B5C919EED066007B3C1A /* Data Structures */ = {
+			isa = PBXGroup;
+			children = (
+				81D4B5CA19EED087007B3C1A /* Queue.swift */,
+			);
+			name = "Data Structures";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -419,6 +430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8144D89419EEB8E400C9EF24 /* BaseDataSource.swift in Sources */,
+				81D4B5CB19EED087007B3C1A /* Queue.swift in Sources */,
 				8144D89919EEBB8D00C9EF24 /* DataSourceDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -721,6 +733,7 @@
 				8144D88D19EEB86B00C9EF24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8144D89219EEB86B00C9EF24 /* Build configuration list for PBXNativeTarget "ReCal Common FrameworkTests" */ = {
 			isa = XCConfigurationList;
@@ -729,6 +742,7 @@
 				8144D88F19EEB86B00C9EF24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
