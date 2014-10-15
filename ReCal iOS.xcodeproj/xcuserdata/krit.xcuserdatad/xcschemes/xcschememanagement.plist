@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>ReCal Common Framework.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>ReCal iOS.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,16 @@
 			<true/>
 		</dict>
 		<key>811D482919ED7EB100E3F360</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8144D87319EEB86B00C9EF24</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8144D87D19EEB86B00C9EF24</key>
 		<dict>
 			<key>primary</key>
 			<true/>

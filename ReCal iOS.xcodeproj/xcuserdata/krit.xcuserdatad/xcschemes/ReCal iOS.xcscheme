@@ -34,6 +34,20 @@
                ReferencedContainer = "container:ReCal iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8144D87D19EEB86B00C9EF24"
+               BuildableName = "ReCal Common FrameworkTests.xctest"
+               BlueprintName = "ReCal Common FrameworkTests"
+               ReferencedContainer = "container:ReCal iOS.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -49,6 +63,16 @@
                BlueprintIdentifier = "811D482919ED7EB100E3F360"
                BuildableName = "ReCal iOSTests.xctest"
                BlueprintName = "ReCal iOSTests"
+               ReferencedContainer = "container:ReCal iOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8144D87D19EEB86B00C9EF24"
+               BuildableName = "ReCal Common FrameworkTests.xctest"
+               BlueprintName = "ReCal Common FrameworkTests"
                ReferencedContainer = "container:ReCal iOS.xcodeproj">
             </BuildableReference>
          </TestableReference>

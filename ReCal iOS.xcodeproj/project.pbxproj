@@ -14,6 +14,12 @@
 		811D482219ED7EB000E3F360 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811D482119ED7EB000E3F360 /* Images.xcassets */; };
 		811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811D482319ED7EB000E3F360 /* LaunchScreen.xib */; };
 		811D483119ED7EB100E3F360 /* ReCal_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */; };
+		8144D87919EEB86B00C9EF24 /* ReCal Common Framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 8144D87819EEB86B00C9EF24 /* ReCal Common Framework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8144D88519EEB86B00C9EF24 /* ReCal_Common_FrameworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8144D88419EEB86B00C9EF24 /* ReCal_Common_FrameworkTests.swift */; };
+		8144D88819EEB86B00C9EF24 /* ReCal Common Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8144D87419EEB86B00C9EF24 /* ReCal Common Framework.framework */; };
+		8144D88919EEB86B00C9EF24 /* ReCal Common Framework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8144D87419EEB86B00C9EF24 /* ReCal Common Framework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8144D89419EEB8E400C9EF24 /* BaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */; };
+		8144D89919EEBB8D00C9EF24 /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,7 +30,42 @@
 			remoteGlobalIDString = 811D481119ED7EB000E3F360;
 			remoteInfo = "ReCal iOS";
 		};
+		8144D87F19EEB86B00C9EF24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 811D481119ED7EB000E3F360;
+			remoteInfo = "ReCal iOS";
+		};
+		8144D88619EEB86B00C9EF24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8144D87319EEB86B00C9EF24;
+			remoteInfo = "ReCal Common Framework";
+		};
+		8144D88A19EEB86B00C9EF24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8144D87319EEB86B00C9EF24;
+			remoteInfo = "ReCal Common Framework";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8144D89119EEB86B00C9EF24 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8144D88919EEB86B00C9EF24 /* ReCal Common Framework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		811D481219ED7EB000E3F360 /* ReCal iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,6 +79,14 @@
 		811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		811D482F19ED7EB100E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_iOSTests.swift; sourceTree = "<group>"; };
+		8144D87419EEB86B00C9EF24 /* ReCal Common Framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "ReCal Common Framework.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8144D87719EEB86B00C9EF24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8144D87819EEB86B00C9EF24 /* ReCal Common Framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReCal Common Framework.h"; sourceTree = "<group>"; };
+		8144D87E19EEB86B00C9EF24 /* ReCal Common FrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal Common FrameworkTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8144D88319EEB86B00C9EF24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8144D88419EEB86B00C9EF24 /* ReCal_Common_FrameworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_Common_FrameworkTests.swift; sourceTree = "<group>"; };
+		8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
+		8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,10 +94,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8144D88819EEB86B00C9EF24 /* ReCal Common Framework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		811D482719ED7EB100E3F360 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8144D87019EEB86B00C9EF24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8144D87B19EEB86B00C9EF24 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -63,6 +127,8 @@
 			children = (
 				811D481419ED7EB000E3F360 /* ReCal iOS */,
 				811D482D19ED7EB100E3F360 /* ReCal iOSTests */,
+				8144D87519EEB86B00C9EF24 /* ReCal Common Framework */,
+				8144D88119EEB86B00C9EF24 /* ReCal Common FrameworkTests */,
 				811D481319ED7EB000E3F360 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,6 +138,8 @@
 			children = (
 				811D481219ED7EB000E3F360 /* ReCal iOS.app */,
 				811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */,
+				8144D87419EEB86B00C9EF24 /* ReCal Common Framework.framework */,
+				8144D87E19EEB86B00C9EF24 /* ReCal Common FrameworkTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,7 +183,62 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8144D87519EEB86B00C9EF24 /* ReCal Common Framework */ = {
+			isa = PBXGroup;
+			children = (
+				8144D87819EEB86B00C9EF24 /* ReCal Common Framework.h */,
+				8144D87619EEB86B00C9EF24 /* Supporting Files */,
+				8144D89519EEB8EB00C9EF24 /* DataSource */,
+			);
+			path = "ReCal Common Framework";
+			sourceTree = "<group>";
+		};
+		8144D87619EEB86B00C9EF24 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8144D87719EEB86B00C9EF24 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8144D88119EEB86B00C9EF24 /* ReCal Common FrameworkTests */ = {
+			isa = PBXGroup;
+			children = (
+				8144D88419EEB86B00C9EF24 /* ReCal_Common_FrameworkTests.swift */,
+				8144D88219EEB86B00C9EF24 /* Supporting Files */,
+			);
+			path = "ReCal Common FrameworkTests";
+			sourceTree = "<group>";
+		};
+		8144D88219EEB86B00C9EF24 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8144D88319EEB86B00C9EF24 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8144D89519EEB8EB00C9EF24 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */,
+				8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */,
+			);
+			name = DataSource;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8144D87119EEB86B00C9EF24 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8144D87919EEB86B00C9EF24 /* ReCal Common Framework.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		811D481119ED7EB000E3F360 /* ReCal iOS */ = {
@@ -125,10 +248,13 @@
 				811D480E19ED7EB000E3F360 /* Sources */,
 				811D480F19ED7EB000E3F360 /* Frameworks */,
 				811D481019ED7EB000E3F360 /* Resources */,
+				8144D89119EEB86B00C9EF24 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8144D88719EEB86B00C9EF24 /* PBXTargetDependency */,
+				8144D88B19EEB86B00C9EF24 /* PBXTargetDependency */,
 			);
 			name = "ReCal iOS";
 			productName = "ReCal iOS";
@@ -153,6 +279,42 @@
 			productReference = 811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		8144D87319EEB86B00C9EF24 /* ReCal Common Framework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8144D89019EEB86B00C9EF24 /* Build configuration list for PBXNativeTarget "ReCal Common Framework" */;
+			buildPhases = (
+				8144D86F19EEB86B00C9EF24 /* Sources */,
+				8144D87019EEB86B00C9EF24 /* Frameworks */,
+				8144D87119EEB86B00C9EF24 /* Headers */,
+				8144D87219EEB86B00C9EF24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ReCal Common Framework";
+			productName = "ReCal Common Framework";
+			productReference = 8144D87419EEB86B00C9EF24 /* ReCal Common Framework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8144D87D19EEB86B00C9EF24 /* ReCal Common FrameworkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8144D89219EEB86B00C9EF24 /* Build configuration list for PBXNativeTarget "ReCal Common FrameworkTests" */;
+			buildPhases = (
+				8144D87A19EEB86B00C9EF24 /* Sources */,
+				8144D87B19EEB86B00C9EF24 /* Frameworks */,
+				8144D87C19EEB86B00C9EF24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8144D88019EEB86B00C9EF24 /* PBXTargetDependency */,
+			);
+			name = "ReCal Common FrameworkTests";
+			productName = "ReCal Common FrameworkTests";
+			productReference = 8144D87E19EEB86B00C9EF24 /* ReCal Common FrameworkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -166,6 +328,13 @@
 						CreatedOnToolsVersion = 6.0.1;
 					};
 					811D482919ED7EB100E3F360 = {
+						CreatedOnToolsVersion = 6.0.1;
+						TestTargetID = 811D481119ED7EB000E3F360;
+					};
+					8144D87319EEB86B00C9EF24 = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
+					8144D87D19EEB86B00C9EF24 = {
 						CreatedOnToolsVersion = 6.0.1;
 						TestTargetID = 811D481119ED7EB000E3F360;
 					};
@@ -186,6 +355,8 @@
 			targets = (
 				811D481119ED7EB000E3F360 /* ReCal iOS */,
 				811D482919ED7EB100E3F360 /* ReCal iOSTests */,
+				8144D87319EEB86B00C9EF24 /* ReCal Common Framework */,
+				8144D87D19EEB86B00C9EF24 /* ReCal Common FrameworkTests */,
 			);
 		};
 /* End PBXProject section */
@@ -202,6 +373,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		811D482819ED7EB100E3F360 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8144D87219EEB86B00C9EF24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8144D87C19EEB86B00C9EF24 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -229,6 +414,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8144D86F19EEB86B00C9EF24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8144D89419EEB8E400C9EF24 /* BaseDataSource.swift in Sources */,
+				8144D89919EEBB8D00C9EF24 /* DataSourceDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8144D87A19EEB86B00C9EF24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8144D88519EEB86B00C9EF24 /* ReCal_Common_FrameworkTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -236,6 +438,21 @@
 			isa = PBXTargetDependency;
 			target = 811D481119ED7EB000E3F360 /* ReCal iOS */;
 			targetProxy = 811D482B19ED7EB100E3F360 /* PBXContainerItemProxy */;
+		};
+		8144D88019EEB86B00C9EF24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 811D481119ED7EB000E3F360 /* ReCal iOS */;
+			targetProxy = 8144D87F19EEB86B00C9EF24 /* PBXContainerItemProxy */;
+		};
+		8144D88719EEB86B00C9EF24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8144D87319EEB86B00C9EF24 /* ReCal Common Framework */;
+			targetProxy = 8144D88619EEB86B00C9EF24 /* PBXContainerItemProxy */;
+		};
+		8144D88B19EEB86B00C9EF24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8144D87319EEB86B00C9EF24 /* ReCal Common Framework */;
+			targetProxy = 8144D88A19EEB86B00C9EF24 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -390,6 +607,83 @@
 			};
 			name = Release;
 		};
+		8144D88C19EEB86B00C9EF24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal Common Framework/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8144D88D19EEB86B00C9EF24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "ReCal Common Framework/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8144D88E19EEB86B00C9EF24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal Common FrameworkTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal iOS.app/ReCal iOS";
+			};
+			name = Debug;
+		};
+		8144D88F19EEB86B00C9EF24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal Common FrameworkTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal iOS.app/ReCal iOS";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -409,12 +703,30 @@
 				811D483619ED7EB100E3F360 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		811D483719ED7EB100E3F360 /* Build configuration list for PBXNativeTarget "ReCal iOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				811D483819ED7EB100E3F360 /* Debug */,
 				811D483919ED7EB100E3F360 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8144D89019EEB86B00C9EF24 /* Build configuration list for PBXNativeTarget "ReCal Common Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8144D88C19EEB86B00C9EF24 /* Debug */,
+				8144D88D19EEB86B00C9EF24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		8144D89219EEB86B00C9EF24 /* Build configuration list for PBXNativeTarget "ReCal Common FrameworkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8144D88E19EEB86B00C9EF24 /* Debug */,
+				8144D88F19EEB86B00C9EF24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
