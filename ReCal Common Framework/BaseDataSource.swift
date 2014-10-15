@@ -54,6 +54,13 @@ class BaseDataSource: NSObject, UICollectionViewDataSource, DataSourceDelegate {
     {
         assert(false, "Should be implemented by subclass")
     }
+    
+    /// reset the content and loading state
+    func resetContent()
+    {
+        
+    }
+    
     // MARK: Notifications methods
     // TODO: finish implementing
     private func executePendingUpdates()

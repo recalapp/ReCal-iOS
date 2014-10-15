@@ -21,6 +21,7 @@
 		8144D89419EEB8E400C9EF24 /* BaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */; };
 		8144D89919EEBB8D00C9EF24 /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */; };
 		81D4B5CB19EED087007B3C1A /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4B5CA19EED087007B3C1A /* Queue.swift */; };
+		81D4B5CD19EEF108007B3C1A /* BasicDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4B5CC19EEF108007B3C1A /* BasicDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
 		8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 		81D4B5CA19EED087007B3C1A /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		81D4B5CC19EEF108007B3C1A /* BasicDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +228,7 @@
 			children = (
 				8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */,
 				8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */,
+				81D4B5CC19EEF108007B3C1A /* BasicDataSource.swift */,
 			);
 			name = DataSource;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8144D89419EEB8E400C9EF24 /* BaseDataSource.swift in Sources */,
+				81D4B5CD19EEF108007B3C1A /* BasicDataSource.swift in Sources */,
 				81D4B5CB19EED087007B3C1A /* Queue.swift in Sources */,
 				8144D89919EEBB8D00C9EF24 /* DataSourceDelegate.swift in Sources */,
 			);
