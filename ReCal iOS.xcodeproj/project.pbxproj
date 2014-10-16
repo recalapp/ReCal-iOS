@@ -14,6 +14,7 @@
 		811D482219ED7EB000E3F360 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811D482119ED7EB000E3F360 /* Images.xcassets */; };
 		811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811D482319ED7EB000E3F360 /* LaunchScreen.xib */; };
 		811D483119ED7EB100E3F360 /* ReCal_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */; };
+		8149950219F0117F00E0C260 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149950119F0117F00E0C260 /* Stack.swift */; };
 		81D9F26019EF4D9600F987B9 /* ReCalCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81D9F26C19EF4D9600F987B9 /* ReCalCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */; };
 		81D9F26F19EF4D9600F987B9 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
@@ -88,6 +89,7 @@
 		811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_iOSTests.swift; sourceTree = "<group>"; };
 		8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
 		8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
+		8149950119F0117F00E0C260 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		81D4B5CA19EED087007B3C1A /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		81D4B5CC19EEF108007B3C1A /* BasicDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicDataSource.swift; sourceTree = "<group>"; };
 		81D9F24419EEFE0800F987B9 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = "../ReCal Common Framework/Util.swift"; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			children = (
 				81D4B5CA19EED087007B3C1A /* Queue.swift */,
 				81D9F25019EF380800F987B9 /* Cache.swift */,
+				8149950119F0117F00E0C260 /* Stack.swift */,
 			);
 			name = "Data Structures";
 			path = "../ReCal Common Framework";
@@ -466,6 +469,7 @@
 				81D9F27C19EF4E1500F987B9 /* Queue.swift in Sources */,
 				81D9F27D19EF4E1500F987B9 /* Cache.swift in Sources */,
 				81D9F27E19EF4E1500F987B9 /* BaseDataSource.swift in Sources */,
+				8149950219F0117F00E0C260 /* Stack.swift in Sources */,
 				81D9F27F19EF4E1500F987B9 /* DataSourceDelegate.swift in Sources */,
 				81D9F28019EF4E1500F987B9 /* BasicDataSource.swift in Sources */,
 				81D9F28119EF4E1500F987B9 /* Util.swift in Sources */,
@@ -771,6 +775,7 @@
 				81D9F27519EF4D9600F987B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		81D9F27619EF4D9600F987B9 /* Build configuration list for PBXNativeTarget "ReCalCommonTests" */ = {
 			isa = XCConfigurationList;
@@ -779,6 +784,7 @@
 				81D9F27819EF4D9600F987B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

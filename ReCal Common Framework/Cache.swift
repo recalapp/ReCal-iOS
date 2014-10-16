@@ -7,7 +7,13 @@
 //
 
 import Foundation
-public class Cache<Key: Hashable, Value> {
+
+public class Cache<Key: Hashable, Value>: SequenceType {
+    
+    public typealias GeneratorType = CacheGenerator<Key, Value>
+    public func generate() -> GeneratorType {
+        return CacheGenerator<Key, Value>(cache: self)
+    }
     
     private var cacheDictionary = [Key: Value]()
     
@@ -16,6 +22,10 @@ public class Cache<Key: Hashable, Value> {
     public var willClear: ((Cache<Key, Value>)->Void)?
     
     public var didClear: ((Cache<Key, Value>)->Void)?
+    
+    public var keys: LazyBidirectionalCollection<MapCollectionView<Dictionary<Key, Value>, Key>> {
+        return self.cacheDictionary.keys
+    }
 
     public var count: Int {
         return self.cacheDictionary.count
@@ -79,5 +89,24 @@ public class Cache<Key: Hashable, Value> {
             }
         }
         return filtered
+    }
+}
+
+public struct CacheGenerator<Key: Hashable, Value>: GeneratorType {
+    private var cache: Cache<Key, Value>
+    private var keysStack = Stack<Key>()
+    init(cache: Cache<Key, Value>)
+    {
+        self.cache = cache
+        for key in self.cache.keys {
+            self.keysStack.push(key)
+        }
+    }
+    
+    public mutating func next()->(Key, Value)? {
+        if let key = self.keysStack.pop() {
+            return (key, self.cache[key])
+        }
+        return nil
     }
 }
