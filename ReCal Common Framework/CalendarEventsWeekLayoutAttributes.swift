@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalendarEventsWeekLayoutAttributes: UICollectionViewLayoutAttributes {
+public class CalendarEventsWeekLayoutAttributes: UICollectionViewLayoutAttributes {
     
     init(forCellWithIndexPath indexPath:NSIndexPath)
     {
@@ -16,14 +16,14 @@ class CalendarEventsWeekLayoutAttributes: UICollectionViewLayoutAttributes {
         self.indexPath = indexPath
     }
     
-    override func isEqual(object: AnyObject?) -> Bool {
+    override public func isEqual(object: AnyObject?) -> Bool {
         if super.isEqual(object){
             return true
         }
         return false
     }
     
-    override func copyWithZone(zone: NSZone) -> AnyObject {
+    override public func copyWithZone(zone: NSZone) -> AnyObject {
         if let copy = super.copyWithZone(zone) as? CalendarEventsWeekLayoutAttributes {
             return copy
         }

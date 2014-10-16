@@ -8,14 +8,14 @@
 
 import UIKit
 /// A subclass of UICollectionViewLayout that provides a week view-like interface. Each section shuold correspond to a day, and each item an event. Does not support multi-day events right now.
-class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
+public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     
     private let eventsLayoutAttributes = Cache<NSIndexPath, CalendarEventsWeekLayoutAttributes>()
     private var shouldRecalculateEventsLayoutAttributes: Bool {
         return self.eventsLayoutAttributes.isEmpty
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         weak var wSelf = self
         self.eventsLayoutAttributes.itemConstructor = {(indexPath: NSIndexPath) in
@@ -30,7 +30,7 @@ class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         assert(false, "Collection View DataSource must conform to CollectionViewDataSourceCalendarWeekLayout to be used with CollectionViewCalendarWeekLayout")
     }
     
-    override func prepareLayout() {
+    override public func prepareLayout() {
         if self.shouldRecalculateEventsLayoutAttributes {
             if let collectionView = self.collectionView {
                 if let numberOfSections = collectionView.dataSource?.numberOfSectionsInCollectionView?(collectionView) {
@@ -45,13 +45,17 @@ class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     private func calculateEventsLayoutForSection(section: Int){
     }
     
-    override func invalidateLayout() {
+    override public func invalidateLayout() {
         super.invalidateLayout()
         self.eventsLayoutAttributes.clearCache()
     }
-    override func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
+    override public func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
         // TODO invalidate efficiently
         super.invalidateLayoutWithContext(context)
         self.eventsLayoutAttributes.clearCache()
     }
+}
+
+public enum CollectionViewCalendarWeekLayoutSupplementaryViewKind: String {
+    case DayColumnHeaderBackground = "DayColumnHeaderBackground"
 }
