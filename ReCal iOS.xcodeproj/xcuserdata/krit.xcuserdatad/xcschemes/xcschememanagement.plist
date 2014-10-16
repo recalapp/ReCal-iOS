@@ -14,6 +14,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>ReCalCommon.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -33,6 +38,16 @@
 			<true/>
 		</dict>
 		<key>8144D87D19EEB86B00C9EF24</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>81D9F25A19EF4D9600F987B9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>81D9F26419EF4D9600F987B9</key>
 		<dict>
 			<key>primary</key>
 			<true/>

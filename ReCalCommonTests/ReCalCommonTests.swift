@@ -1,6 +1,6 @@
 //
-//  ReCal_Common_FrameworkTests.swift
-//  ReCal Common FrameworkTests
+//  ReCalCommonTests.swift
+//  ReCalCommonTests
 //
 //  Created by Naphat Sanguansin on 10/15/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class ReCal_Common_FrameworkTests: XCTestCase {
+class ReCalCommonTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

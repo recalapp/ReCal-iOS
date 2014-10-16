@@ -8,17 +8,17 @@
 
 import Foundation
 
-class Queue<T> {
+public struct Queue<T> {
     private var array:[T] = [];
-    var isEmpty: Bool {
+    public var isEmpty: Bool {
         return self.array.count == 0;
     }
         
-    func enqueue(item: T) {
+    public mutating func enqueue(item: T) {
         self.array.append(item);
     }
     
-    func dequeue() -> T? {
+    public mutating func dequeue() -> T? {
         if self.isEmpty {
             return nil;
         }

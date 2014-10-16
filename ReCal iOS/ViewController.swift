@@ -7,12 +7,20 @@
 //
 
 import UIKit
+import ReCalCommon
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let cache = Cache<Int, String>(itemConstructor: {(key: Int) in
+            println("Creating for \(key)")
+            return "test \(key)"
+        })
+        println(cache[1])
+        println(cache[2])
+        println(cache[1])
     }
 
     override func didReceiveMemoryWarning() {

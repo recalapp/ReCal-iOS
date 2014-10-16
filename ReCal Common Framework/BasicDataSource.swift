@@ -8,17 +8,6 @@
 
 import UIKit
 
-extension Array {
-    func find(isIncludedElement: T -> Bool) -> [Int] {
-        var indices: [Int] = []
-        for (i, element) in enumerate(self) {
-            if isIncludedElement(element) {
-                indices.append(i)
-            }
-        }
-        return indices
-    }
-}
 // TODO: finish implementing
 class BasicDataSource: BaseDataSource {
     var items: [AnyObject] = [];
@@ -36,11 +25,11 @@ class BasicDataSource: BaseDataSource {
         return nil
     }
     
-    override func indexPathsForItem(item: AnyObject) -> [NSIndexPath] {
-        return self.items.find { (otherItem) in
-            return otherItem === item
-        }.map {(index: Int) in
-            return NSIndexPath(forItem: index, inSection: 0)
-        }
-    }
+//    override func indexPathsForItem(item: AnyObject) -> [NSIndexPath] {
+//        return self.items.find { (otherItem) in
+//            return otherItem === item
+//        }.map {(index: Int) in
+//            return NSIndexPath(forItem: index, inSection: 0)
+//        }
+//    }
 }

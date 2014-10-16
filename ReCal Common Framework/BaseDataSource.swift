@@ -8,10 +8,6 @@
 
 import UIKit
 
-func ASSERT_MAIN_THREAD() {
-    assert(NSThread.isMainThread(), "This method must be called on the main thread");
-}
-
 class BaseDataSource: NSObject, UICollectionViewDataSource, DataSourceDelegate {
     typealias UpdateBlock = ()->Void
     
