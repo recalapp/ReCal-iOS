@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Cache<Key: Hashable, Value>: SequenceType {
+final public class Cache<Key: Hashable, Value>: SequenceType {
     
     public typealias GeneratorType = CacheGenerator<Key, Value>
     public func generate() -> GeneratorType {
@@ -39,14 +39,9 @@ public class Cache<Key: Hashable, Value>: SequenceType {
         
     }
     
-    public convenience init(itemConstructor: (Key)->Value) {
-        self.init()
-        self.itemConstructor = itemConstructor
-    }
-    
     public func clearCache() {
         self.willClear?(self)
-        self.cacheDictionary = Dictionary<Key, Value>()
+        self.cacheDictionary.removeAll(keepCapacity: true)
         self.didClear?(self)
     }
     
@@ -62,10 +57,8 @@ public class Cache<Key: Hashable, Value>: SequenceType {
             }
             assert(false, "ItemConstructor must be provided before first call to cache")
         }
-        set {
-            self.cacheDictionary[key] = newValue
-        }
     }
+    
     
     public func reduce<Result>(initialValue: Result, combine: (Result, Key, Value)-> Result)->Result{
         var finalValue = initialValue
