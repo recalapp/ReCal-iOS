@@ -18,6 +18,8 @@
 		81C1F5D919F05C010042AB61 /* SampleCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */; };
 		81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */; };
 		81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D270D419F090E700DED75D /* HeaderBackgroundView.swift */; };
+		81D270D819F0946100DED75D /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D270D619F0946100DED75D /* HeaderView.swift */; };
+		81D270D919F0946100DED75D /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81D270D719F0946100DED75D /* HeaderView.xib */; };
 		81D9F26019EF4D9600F987B9 /* ReCalCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81D9F26C19EF4D9600F987B9 /* ReCalCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */; };
 		81D9F26F19EF4D9600F987B9 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
@@ -95,6 +97,8 @@
 		81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarViewController.swift; sourceTree = "<group>"; };
 		81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		81D270D419F090E700DED75D /* HeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderBackgroundView.swift; sourceTree = "<group>"; };
+		81D270D619F0946100DED75D /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		81D270D719F0946100DED75D /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		81D4B5CA19EED087007B3C1A /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		81D4B5CC19EEF108007B3C1A /* BasicDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicDataSource.swift; sourceTree = "<group>"; };
 		81D9F24419EEFE0800F987B9 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = "../ReCal Common Framework/Util.swift"; sourceTree = "<group>"; };
@@ -177,6 +181,8 @@
 				81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */,
 				81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */,
 				81D270D419F090E700DED75D /* HeaderBackgroundView.swift */,
+				81D270D619F0946100DED75D /* HeaderView.swift */,
+				81D270D719F0946100DED75D /* HeaderView.xib */,
 			);
 			path = "ReCal iOS";
 			sourceTree = "<group>";
@@ -420,6 +426,7 @@
 				811D482019ED7EB000E3F360 /* Main.storyboard in Resources */,
 				811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */,
 				811D482219ED7EB000E3F360 /* Images.xcassets in Resources */,
+				81D270D919F0946100DED75D /* HeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +464,7 @@
 				811D481B19ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld in Sources */,
 				81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */,
 				81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */,
+				81D270D819F0946100DED75D /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

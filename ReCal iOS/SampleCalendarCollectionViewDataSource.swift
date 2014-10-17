@@ -10,6 +10,7 @@ import UIKit
 import ReCalCommon
 
 let eventCellIdentifier = "Cell"
+let dayHeaderViewIdentifier = "DayHeader"
 
 class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSource, CollectionViewDataSourceCalendarWeekLayout {
     
@@ -31,11 +32,14 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        /*let supplementaryViewKind = kind as CollectionViewCalendarWeekLayoutSupplementaryViewKind
-        if let reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: reuseIdentifier, forIndexPath: indexPath) as? UICollectionReusableView {
-            return reusableView
-        }*/
-        assert(false, "collection view should return a reusable view")
+        if let viewKind = CollectionViewCalendarWeekLayoutSupplementaryViewKind.fromRaw(kind) {
+            switch viewKind {
+            case .DayColumnHeader:
+                let reusableView: UICollectionReusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dayHeaderViewIdentifier, forIndexPath: indexPath) as UICollectionReusableView
+                return reusableView
+            }
+        }
+        assert(false, "Supplementary view kind \(kind) not implemented")
     }
     
     // MARK: CollectionViewDataSourceCalendarWeekLayout
@@ -66,6 +70,6 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     
     /// Return the height of the day header
     func dayHeaderHeightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float {
-        return 200.0
+        return 100.0
     }
 }

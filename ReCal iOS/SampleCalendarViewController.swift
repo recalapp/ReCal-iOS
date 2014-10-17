@@ -20,9 +20,11 @@ class SampleCalendarViewController: UICollectionViewController {
         // Register cell classes
         if let collectionView = self.collectionView {
             collectionView.dataSource = self.weekDataSource
+            collectionView.registerNib(UINib(nibName: "HeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.toRaw(), withReuseIdentifier: dayHeaderViewIdentifier)
             if let layout = self.collectionView?.collectionViewLayout as? CollectionViewCalendarWeekLayout {
                 layout.dataSource = self.weekDataSource
                 layout.registerClass(HeaderBackgroundView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.toRaw())
+                
             }
         }
         else {

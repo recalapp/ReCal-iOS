@@ -47,11 +47,15 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     /// MARK: Caches
     private let eventsLayoutAttributes = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
     private let dayColumnHeaderBackgroundLayoutAttributes = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
+    private let dayColumnHeaderLayoutAttributes = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
     private var shouldRecalculateEventsLayoutAttributes: Bool {
         return self.eventsLayoutAttributes.isEmpty
     }
     private var shouldRecalculateDayColumnHeaderBackgroundLayoutAttributes: Bool {
         return self.dayColumnHeaderBackgroundLayoutAttributes.isEmpty
+    }
+    private var shouldRecalculateDayColumnHeaderLayoutAttributes: Bool {
+        return self.dayColumnHeaderLayoutAttributes.isEmpty
     }
     
     /// MARK: Methods
@@ -63,6 +67,10 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         self.dayColumnHeaderBackgroundLayoutAttributes.itemConstructor = {(indexPath: NSIndexPath) in
             return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.toRaw(), withIndexPath: indexPath)
         }
+        self.dayColumnHeaderLayoutAttributes.itemConstructor = {(indexPath: NSIndexPath) in
+            return UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.toRaw(), withIndexPath: indexPath)
+        }
+        
     }
     
     
@@ -86,7 +94,12 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     private func calculateLayoutAttributesForSections(sections: [Int])
     {
         if self.shouldRecalculateDayColumnHeaderBackgroundLayoutAttributes {
-            self.calculateDayColumnHeaderLayoutAttribute()
+            self.calculateDayColumnHeaderBackgroundLayoutAttributes()
+        }
+        if self.shouldRecalculateDayColumnHeaderLayoutAttributes {
+            for section in sections {
+                self.calculateDayColumnHeaderLayoutAttributesForSection(section)
+            }
         }
         if self.shouldRecalculateEventsLayoutAttributes {
             for section in sections {
@@ -95,11 +108,16 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         }
     }
     
-    
-    private func calculateDayColumnHeaderLayoutAttribute() {
+    private func calculateDayColumnHeaderBackgroundLayoutAttributes() {
         var backgroundLayoutAttributes = self.dayColumnHeaderBackgroundLayoutAttributes[NSIndexPath(forItem: 0, inSection: 0)]
         
         backgroundLayoutAttributes.frame = CGRectMake(self.collectionView!.contentOffset.x, self.collectionView!.contentOffset.y, self.collectionView!.frame.size.width, self.dayHeaderHeight)
+    }
+    private func calculateDayColumnHeaderLayoutAttributesForSection(section: Int) {
+        let sectionMinX = self.daySectionWidth * CGFloat(section)
+        var headerLayoutAttributes = self.dayColumnHeaderLayoutAttributes[NSIndexPath(index: section)]
+        headerLayoutAttributes.frame = CGRectMake(sectionMinX, self.collectionView!.contentOffset.y, self.daySectionWidth, self.dayHeaderHeight)
+        headerLayoutAttributes.zIndex = 100
     }
     
     /// MARK: Invalidation
@@ -129,7 +147,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
                 return self.dayColumnHeaderBackgroundLayoutAttributes[indexPath]
             }
         }
-        assert(false, "invalid Decoration View Kind \(elementKind)")
+        assert(false, "Invalid Decoration View Kind \(elementKind)")
     }
     
     override public func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
@@ -137,7 +155,13 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     
     override public func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
-        assert(false, "unimplemented")
+        if let kind = CollectionViewCalendarWeekLayoutSupplementaryViewKind.fromRaw(elementKind) {
+            switch kind {
+            case .DayColumnHeader:
+                return self.dayColumnHeaderLayoutAttributes[indexPath]
+            }
+        }
+        assert(false, "Invalid Supplementary View Kind \(elementKind)")
     }
     
     override public func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
@@ -147,6 +171,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         }
         visibleAttributes += self.eventsLayoutAttributes.filter(visibleFilter)
         visibleAttributes += self.dayColumnHeaderBackgroundLayoutAttributes.filter(visibleFilter)
+        visibleAttributes += self.dayColumnHeaderLayoutAttributes.filter(visibleFilter)
         return visibleAttributes
     }
     
