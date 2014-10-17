@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 /// A subclass of UICollectionViewLayout that provides a week view-like interface. Each section shuold correspond to a day, and each item an event. Does not support multi-day events right now.
 public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     
@@ -73,8 +74,6 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         
     }
     
-    
-    
     override public func prepareLayout() {
         if self.dataSource == nil {
             return // cannot do anything without datasource
@@ -125,12 +124,14 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         super.invalidateLayout()
         self.eventsLayoutAttributes.clearCache()
         self.dayColumnHeaderBackgroundLayoutAttributes.clearCache()
+        self.dayColumnHeaderLayoutAttributes.clearCache()
     }
     override public func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
         // TODO invalidate efficiently
         super.invalidateLayoutWithContext(context)
         self.eventsLayoutAttributes.clearCache()
         self.dayColumnHeaderBackgroundLayoutAttributes.clearCache()
+        self.dayColumnHeaderLayoutAttributes.clearCache()
     }
     
     /// MARK: UICollectionViewLayout Methods
