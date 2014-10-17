@@ -128,10 +128,43 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     override public func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
         // TODO invalidate efficiently
+        
+        let invalidateHeaders: ()->Void = {
+            self.dayColumnHeaderBackgroundLayoutAttributes.clearCache()
+            self.dayColumnHeaderLayoutAttributes.clearCache()
+        }
+        let invalidateAll: ()->Void = {
+            invalidateHeaders()
+            self.eventsLayoutAttributes.clearCache()
+        }
+        if context.invalidateEverything {
+            invalidateAll()
+        }
+        if context.invalidateDataSourceCounts {
+            invalidateAll()
+        }
+        if context.contentSizeAdjustment != CGSizeZero {
+            invalidateAll()
+            context.contentSizeAdjustment = CGSizeZero
+        }
+        if context.contentOffsetAdjustment.y != 0 {
+            // scrolling in y direction
+            invalidateHeaders()
+            context.contentOffsetAdjustment.y = 0 // set back to zero, otherwise super does something with scrolling
+        }
+        if context.contentOffsetAdjustment.x != 0 {
+            // scrolling in x direction
+            self.dayColumnHeaderBackgroundLayoutAttributes.clearCache()
+            context.contentOffsetAdjustment.x = 0
+        }
+        // TODO specific items
         super.invalidateLayoutWithContext(context)
-        self.eventsLayoutAttributes.clearCache()
-        self.dayColumnHeaderBackgroundLayoutAttributes.clearCache()
-        self.dayColumnHeaderLayoutAttributes.clearCache()
+    }
+    
+    override public func invalidationContextForBoundsChange(newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
+        var context = super.invalidationContextForBoundsChange(newBounds)
+        context.contentOffsetAdjustment = CGPointMake(newBounds.origin.x, newBounds.origin.y)
+        return context
     }
     
     /// MARK: UICollectionViewLayout Methods

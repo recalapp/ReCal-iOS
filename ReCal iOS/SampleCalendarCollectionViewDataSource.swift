@@ -65,7 +65,7 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     
     /// Return the height of the week view (scrollable height, not frame height)
     func heightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->CollectionViewCalendarWeekLayoutHeight {
-        return CollectionViewCalendarWeekLayoutHeight.Fit
+        return CollectionViewCalendarWeekLayoutHeight.Exact(500.0)
     }
     
     /// Return the height of the day header
