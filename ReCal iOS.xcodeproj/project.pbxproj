@@ -17,12 +17,12 @@
 		8149950219F0117F00E0C260 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149950119F0117F00E0C260 /* Stack.swift */; };
 		81C1F5D919F05C010042AB61 /* SampleCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */; };
 		81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */; };
+		81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D270D419F090E700DED75D /* HeaderBackgroundView.swift */; };
 		81D9F26019EF4D9600F987B9 /* ReCalCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81D9F26C19EF4D9600F987B9 /* ReCalCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */; };
 		81D9F26F19EF4D9600F987B9 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
 		81D9F27019EF4D9600F987B9 /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		81D9F27919EF4E1500F987B9 /* CollectionViewCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F24C19EF14E700F987B9 /* CollectionViewCalendarWeekLayout.swift */; };
-		81D9F27A19EF4E1500F987B9 /* CalendarEventsWeekLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F25419EF455500F987B9 /* CalendarEventsWeekLayoutAttributes.swift */; };
 		81D9F27B19EF4E1500F987B9 /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F24E19EF150D00F987B9 /* CollectionViewDataSourceCalendarWeekLayout.swift */; };
 		81D9F27C19EF4E1500F987B9 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4B5CA19EED087007B3C1A /* Queue.swift */; };
 		81D9F27D19EF4E1500F987B9 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F25019EF380800F987B9 /* Cache.swift */; };
@@ -94,13 +94,13 @@
 		8149950119F0117F00E0C260 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarViewController.swift; sourceTree = "<group>"; };
 		81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		81D270D419F090E700DED75D /* HeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderBackgroundView.swift; sourceTree = "<group>"; };
 		81D4B5CA19EED087007B3C1A /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		81D4B5CC19EEF108007B3C1A /* BasicDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicDataSource.swift; sourceTree = "<group>"; };
 		81D9F24419EEFE0800F987B9 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = "../ReCal Common Framework/Util.swift"; sourceTree = "<group>"; };
 		81D9F24C19EF14E700F987B9 /* CollectionViewCalendarWeekLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCalendarWeekLayout.swift; sourceTree = "<group>"; };
 		81D9F24E19EF150D00F987B9 /* CollectionViewDataSourceCalendarWeekLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSourceCalendarWeekLayout.swift; sourceTree = "<group>"; };
 		81D9F25019EF380800F987B9 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
-		81D9F25419EF455500F987B9 /* CalendarEventsWeekLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarEventsWeekLayoutAttributes.swift; sourceTree = "<group>"; };
 		81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReCalCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D9F25E19EF4D9600F987B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReCalCommon.h; sourceTree = "<group>"; };
@@ -176,6 +176,7 @@
 				811D481519ED7EB000E3F360 /* Supporting Files */,
 				81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */,
 				81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */,
+				81D270D419F090E700DED75D /* HeaderBackgroundView.swift */,
 			);
 			path = "ReCal iOS";
 			sourceTree = "<group>";
@@ -231,7 +232,6 @@
 			isa = PBXGroup;
 			children = (
 				81D9F24C19EF14E700F987B9 /* CollectionViewCalendarWeekLayout.swift */,
-				81D9F25419EF455500F987B9 /* CalendarEventsWeekLayoutAttributes.swift */,
 				81D9F24E19EF150D00F987B9 /* CollectionViewDataSourceCalendarWeekLayout.swift */,
 			);
 			name = Calendar;
@@ -456,6 +456,7 @@
 				811D481819ED7EB000E3F360 /* AppDelegate.swift in Sources */,
 				811D481B19ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld in Sources */,
 				81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */,
+				81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,7 +473,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				81D9F27919EF4E1500F987B9 /* CollectionViewCalendarWeekLayout.swift in Sources */,
-				81D9F27A19EF4E1500F987B9 /* CalendarEventsWeekLayoutAttributes.swift in Sources */,
 				81D9F27B19EF4E1500F987B9 /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */,
 				81D9F27C19EF4E1500F987B9 /* Queue.swift in Sources */,
 				81D9F27D19EF4E1500F987B9 /* Cache.swift in Sources */,

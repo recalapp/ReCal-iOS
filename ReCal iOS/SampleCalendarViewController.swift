@@ -7,8 +7,7 @@
 //
 
 import UIKit
-
-
+import ReCalCommon
 
 class SampleCalendarViewController: UICollectionViewController {
     private let weekDataSource = SampleCalendarCollectionViewDataSource()
@@ -21,6 +20,10 @@ class SampleCalendarViewController: UICollectionViewController {
         // Register cell classes
         if let collectionView = self.collectionView {
             collectionView.dataSource = self.weekDataSource
+            if let layout = self.collectionView?.collectionViewLayout as? CollectionViewCalendarWeekLayout {
+                layout.dataSource = self.weekDataSource
+                layout.registerClass(HeaderBackgroundView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.toRaw())
+            }
         }
         else {
             assert(false, "Collection View not initialized")

@@ -38,15 +38,34 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
         assert(false, "collection view should return a reusable view")
     }
     
-    func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, dateForSection section: Int) -> NSDate? {
-        return nil
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, endDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
-        return nil
-    }
-    
+    // MARK: CollectionViewDataSourceCalendarWeekLayout
+    /// Return the start date in NSDate for the item at indexPath. nil if indexPath invalid
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, startDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
-        return nil
+        return NSDate()
+    }
+    
+    /// Return the end date in NSDate for the item at indexPath. nil if indexPath invalid
+    func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, endDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
+        return NSDate()
+    }
+    
+    /// Return the date associated with the section. The time component is ignored.
+    func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, dateForSection section: Int) -> NSDate? {
+        return NSDate()
+    }
+    
+    /// Return the width for a day
+    func daySectionWidthForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->CollectionViewCalendarWeekLayoutDaySectionWidth {
+        return CollectionViewCalendarWeekLayoutDaySectionWidth.VisibleNumberOfDays(5)
+    }
+    
+    /// Return the height of the week view (scrollable height, not frame height)
+    func heightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->CollectionViewCalendarWeekLayoutHeight {
+        return CollectionViewCalendarWeekLayoutHeight.Fit
+    }
+    
+    /// Return the height of the day header
+    func dayHeaderHeightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float {
+        return 200.0
     }
 }

@@ -10,52 +10,153 @@ import UIKit
 /// A subclass of UICollectionViewLayout that provides a week view-like interface. Each section shuold correspond to a day, and each item an event. Does not support multi-day events right now.
 public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     
-    private let eventsLayoutAttributes = Cache<NSIndexPath, CalendarEventsWeekLayoutAttributes>()
+    /// MARK: Properties
+    public var dataSource: CollectionViewDataSourceCalendarWeekLayout?
+    
+    private var daySectionWidth: CGFloat {
+        var finalWidth: Float = 300.0 // TODO default value?
+        if let sectionWidth = self.dataSource?.daySectionWidthForCollectionView(self.collectionView!, layout: self) {
+            switch sectionWidth {
+            case .Exact(let width):
+                finalWidth = width
+            case .VisibleNumberOfDays(let days):
+                finalWidth = floor(Float(self.collectionView!.frame.size.width) / Float(days))
+            }
+        }
+        return CGFloat(finalWidth)
+    }
+    private var layoutHeight: CGFloat {
+        var finalHeight: Float = 300.0 // TODO default value?
+        if let layoutHeight = self.dataSource?.heightForCollectionView(self.collectionView!, layout: self) {
+            switch layoutHeight {
+            case .Exact(let height):
+                finalHeight = height
+            case .Fit:
+                finalHeight = Float(self.collectionView!.frame.size.height)
+            }
+        }
+        return CGFloat(finalHeight)
+    }
+    private var dayHeaderHeight: CGFloat {
+        var finalHeight: Float = 300.0 // TODO default value?
+        if let height = self.dataSource?.dayHeaderHeightForCollectionView(self.collectionView!, layout: self) {
+            finalHeight = height
+        }
+        return CGFloat(finalHeight)
+    }
+    /// MARK: Caches
+    private let eventsLayoutAttributes = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
+    private let dayColumnHeaderBackgroundLayoutAttributes = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
     private var shouldRecalculateEventsLayoutAttributes: Bool {
         return self.eventsLayoutAttributes.isEmpty
     }
+    private var shouldRecalculateDayColumnHeaderBackgroundLayoutAttributes: Bool {
+        return self.dayColumnHeaderBackgroundLayoutAttributes.isEmpty
+    }
     
+    /// MARK: Methods
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        weak var wSelf = self
         self.eventsLayoutAttributes.itemConstructor = {(indexPath: NSIndexPath) in
-            return CalendarEventsWeekLayoutAttributes(forCellWithIndexPath: indexPath)
+            return UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+        }
+        self.dayColumnHeaderBackgroundLayoutAttributes.itemConstructor = {(indexPath: NSIndexPath) in
+            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.toRaw(), withIndexPath: indexPath)
         }
     }
     
-    var dataSource: CollectionViewDataSourceCalendarWeekLayout {
-        if let dataSource = self.collectionView?.dataSource as? CollectionViewDataSourceCalendarWeekLayout {
-            return dataSource;
-        }
-        assert(false, "Collection View DataSource must conform to CollectionViewDataSourceCalendarWeekLayout to be used with CollectionViewCalendarWeekLayout")
-    }
+    
     
     override public func prepareLayout() {
+        if self.dataSource == nil {
+            return // cannot do anything without datasource
+        }
         if self.shouldRecalculateEventsLayoutAttributes {
             if let collectionView = self.collectionView {
                 if let numberOfSections = collectionView.dataSource?.numberOfSectionsInCollectionView?(collectionView) {
-                    for var section = 0; section < numberOfSections; ++section {
-                        self.calculateEventsLayoutForSection(section)
-                    }
+                    self.calculateLayoutAttributesForSections((0...numberOfSections).map { $0 })
                 }
             }
         }
     }
     
-    private func calculateEventsLayoutForSection(section: Int){
+    /// MARK: Layout Attributes Calculation
+    private func calculateEventsLayoutAttributesForSection(section: Int) {
+    }
+    private func calculateLayoutAttributesForSections(sections: [Int])
+    {
+        if self.shouldRecalculateDayColumnHeaderBackgroundLayoutAttributes {
+            self.calculateDayColumnHeaderLayoutAttribute()
+        }
+        if self.shouldRecalculateEventsLayoutAttributes {
+            for section in sections {
+                self.calculateEventsLayoutAttributesForSection(section)
+            }
+        }
     }
     
+    
+    private func calculateDayColumnHeaderLayoutAttribute() {
+        var backgroundLayoutAttributes = self.dayColumnHeaderBackgroundLayoutAttributes[NSIndexPath(forItem: 0, inSection: 0)]
+        
+        backgroundLayoutAttributes.frame = CGRectMake(self.collectionView!.contentOffset.x, self.collectionView!.contentOffset.y, self.collectionView!.frame.size.width, self.dayHeaderHeight)
+    }
+    
+    /// MARK: Invalidation
     override public func invalidateLayout() {
         super.invalidateLayout()
         self.eventsLayoutAttributes.clearCache()
+        self.dayColumnHeaderBackgroundLayoutAttributes.clearCache()
     }
     override public func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
         // TODO invalidate efficiently
         super.invalidateLayoutWithContext(context)
         self.eventsLayoutAttributes.clearCache()
+        self.dayColumnHeaderBackgroundLayoutAttributes.clearCache()
+    }
+    
+    /// MARK: UICollectionViewLayout Methods
+    override public func collectionViewContentSize() -> CGSize {
+        let numberOfSections: Int = self.collectionView!.numberOfSections()
+        let finalWidth = self.daySectionWidth * CGFloat(numberOfSections)
+        return CGSizeMake(finalWidth, self.layoutHeight)
+    }
+    
+    override public func layoutAttributesForDecorationViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
+        if let kind = CollectionViewCalendarWeekLayoutDecorationViewKind.fromRaw(elementKind) {
+            switch kind {
+            case .DayColumnHeaderBackground:
+                return self.dayColumnHeaderBackgroundLayoutAttributes[indexPath]
+            }
+        }
+        assert(false, "invalid Decoration View Kind \(elementKind)")
+    }
+    
+    override public func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
+        return self.eventsLayoutAttributes[indexPath]
+    }
+    
+    override public func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
+        assert(false, "unimplemented")
+    }
+    
+    override public func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
+        var visibleAttributes: [UICollectionViewLayoutAttributes] = []
+        let visibleFilter:(NSIndexPath, UICollectionViewLayoutAttributes)->Bool = {(_, layoutAttributes) in
+            return CGRectIntersectsRect(rect, layoutAttributes.frame)
+        }
+        visibleAttributes += self.eventsLayoutAttributes.filter(visibleFilter)
+        visibleAttributes += self.dayColumnHeaderBackgroundLayoutAttributes.filter(visibleFilter)
+        return visibleAttributes
+    }
+    
+    override public func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+        return true
     }
 }
-
 public enum CollectionViewCalendarWeekLayoutSupplementaryViewKind: String {
+    case DayColumnHeader = "DayColumnHeader"
+}
+public enum CollectionViewCalendarWeekLayoutDecorationViewKind: String {
     case DayColumnHeaderBackground = "DayColumnHeaderBackground"
 }
