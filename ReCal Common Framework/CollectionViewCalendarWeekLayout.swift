@@ -73,6 +73,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     private var timeRowHeaderBackgroundLayoutAttributesCache = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
     private var timeRowHeaderLayoutAttributesCache = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
     private var verticalGridLineLayoutAttributesCache = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
+    private var horizontalGridLineLayoutAttributesCache = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
     private var shouldRecalculateEventsLayoutAttributes: Bool {
         return self.eventsLayoutAttributesCache.isEmpty
     }
@@ -90,6 +91,9 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     private var shouldRecalculateVerticalGridLineLayoutAttributes: Bool {
         return self.verticalGridLineLayoutAttributesCache.isEmpty
+    }
+    private var shouldRecalculateHorizontalGridLineLayoutAttributes: Bool {
+        return self.horizontalGridLineLayoutAttributesCache.isEmpty
     }
     
     /// MARK: Methods
@@ -115,6 +119,9 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         self.verticalGridLineLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
             return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.VerticalGridLine.toRaw(), withIndexPath: indexPath)
         }
+        self.horizontalGridLineLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
+            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.HorizontalGridLine.toRaw(), withIndexPath: indexPath)
+        }
         
         if debug {
             self.eventsLayoutAttributesCache.willClear = {(_) in println("invalidating events cache") }
@@ -123,6 +130,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             self.timeRowHeaderBackgroundLayoutAttributesCache.willClear = {(_) in println("invalidating time row header background") }
             self.timeRowHeaderLayoutAttributesCache.willClear = {(_) in println("invalidating time row header") }
             self.verticalGridLineLayoutAttributesCache.willClear = {(_) in println("invalidating vertical grid lines") }
+            self.horizontalGridLineLayoutAttributesCache.willClear = {(_) in println("invalidating horizontal grid line")}
         }
     }
     
@@ -165,6 +173,9 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             for section in sections {
                 self.calculateVerticalGridLineForSection(section)
             }
+        }
+        if self.shouldRecalculateHorizontalGridLineLayoutAttributes {
+            self.calculateHorizontalGridLineLayoutAttributes()
         }
         if self.shouldRecalculateEventsLayoutAttributes {
             for section in sections {
@@ -210,8 +221,23 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     private func calculateVerticalGridLineForSection(section: Int) {
         let sectionMinX = self.minXForSection(section)
         let verticalGridLineLayoutAttributes = self.verticalGridLineLayoutAttributesCache[NSIndexPath(index: section)]
-        verticalGridLineLayoutAttributes.frame = CGRectMake(sectionMinX, 0, gridLineWidth, self.layoutHeight)
+        verticalGridLineLayoutAttributes.frame = CGRectMake(sectionMinX, self.collectionView!.contentOffset.y, gridLineWidth, self.collectionView!.bounds.size.height)
         verticalGridLineLayoutAttributes.zIndex = gridLineZIndex
+    }
+    private func calculateHorizontalGridLineLayoutAttributes() {
+        let minHour = 0
+        let maxHour = 23
+        let topMargin = self.dayColumnHeaderHeight
+        let hourSlotHeight = self.hourSlotHeight
+        let timeHeaderWidth = self.timeRowHeaderWidth
+        let contentOffset = self.collectionView!.contentOffset
+        let bounds = self.collectionView!.bounds
+        for hour in minHour...maxHour {
+            // this loops from minHour to maxHour, inclusive
+            let timeLayoutAttributes = self.horizontalGridLineLayoutAttributesCache[NSIndexPath(index: hour)]
+            timeLayoutAttributes.frame = CGRectMake(contentOffset.x, CGFloat(hour - minHour) * hourSlotHeight + topMargin, bounds.size.width, gridLineWidth)
+            timeLayoutAttributes.zIndex = gridLineZIndex
+        }
     }
     
     /// MARK: Invalidation
@@ -233,6 +259,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         }
         let invalidateGridLines: ()->Void = {
             self.verticalGridLineLayoutAttributesCache.clearCache()
+            self.horizontalGridLineLayoutAttributesCache.clearCache()
         }
         let invalidateAll: ()->Void = {
             invalidateColumnHeaders()
@@ -254,11 +281,13 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             // scrolling in y direction
             invalidateColumnHeaders()
             self.timeRowHeaderBackgroundLayoutAttributesCache.clearCache()
+            self.verticalGridLineLayoutAttributesCache.clearCache()
             context.contentOffsetAdjustment.y = 0 // set back to zero, otherwise super does something with scrolling
         }
         if context.contentOffsetAdjustment.x != 0 {
             // scrolling in x direction
             invalidateRowHeaders()
+            self.horizontalGridLineLayoutAttributesCache.clearCache()
             self.dayColumnHeaderBackgroundLayoutAttributesCache.clearCache()
             context.contentOffsetAdjustment.x = 0
         }
@@ -294,6 +323,8 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
                 return self.verticalGridLineLayoutAttributesCache[indexPath]
             case .TimeRowHeaderBackground:
                 return self.timeRowHeaderBackgroundLayoutAttributesCache[indexPath]
+            case .HorizontalGridLine:
+                return self.horizontalGridLineLayoutAttributesCache[indexPath]
             }
         }
         assert(false, "Invalid Decoration View Kind \(elementKind)")
@@ -326,6 +357,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         visibleAttributes += self.verticalGridLineLayoutAttributesCache.filter(visibleFilter)
         visibleAttributes += self.timeRowHeaderBackgroundLayoutAttributesCache.filter(visibleFilter)
         visibleAttributes += self.timeRowHeaderLayoutAttributesCache.filter(visibleFilter)
+        visibleAttributes += self.horizontalGridLineLayoutAttributesCache.filter(visibleFilter)
         return visibleAttributes
     }
     
@@ -341,4 +373,5 @@ public enum CollectionViewCalendarWeekLayoutDecorationViewKind: String {
     case DayColumnHeaderBackground = "DayColumnHeaderBackground"
     case TimeRowHeaderBackground = "TimeRowHeaderBackground"
     case VerticalGridLine = "VerticalGridLine"
+    case HorizontalGridLine = "HorizontalGridLine"
 }
