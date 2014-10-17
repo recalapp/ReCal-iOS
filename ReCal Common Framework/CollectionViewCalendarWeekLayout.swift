@@ -8,6 +8,11 @@
 
 import UIKit
 
+let gridLineWidth: CGFloat = 1.0
+let gridLineZIndex = 1
+let dayHeaderBackgroundZIndex = gridLineZIndex + 1
+let dayHeaderZIndex = dayHeaderBackgroundZIndex + 1
+
 /// A subclass of UICollectionViewLayout that provides a week view-like interface. Each section shuold correspond to a day, and each item an event. Does not support multi-day events right now.
 public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     
@@ -46,32 +51,38 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         return CGFloat(finalHeight)
     }
     /// MARK: Caches
-    private let eventsLayoutAttributes = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
-    private let dayColumnHeaderBackgroundLayoutAttributes = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
-    private let dayColumnHeaderLayoutAttributes = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
+    private let eventsLayoutAttributesCache = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
+    private let dayColumnHeaderBackgroundLayoutAttributesCache = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
+    private let dayColumnHeaderLayoutAttributesCache = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
+    private let verticalGridLineLayoutAttributesCache = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
     private var shouldRecalculateEventsLayoutAttributes: Bool {
-        return self.eventsLayoutAttributes.isEmpty
+        return self.eventsLayoutAttributesCache.isEmpty
     }
     private var shouldRecalculateDayColumnHeaderBackgroundLayoutAttributes: Bool {
-        return self.dayColumnHeaderBackgroundLayoutAttributes.isEmpty
+        return self.dayColumnHeaderBackgroundLayoutAttributesCache.isEmpty
     }
     private var shouldRecalculateDayColumnHeaderLayoutAttributes: Bool {
-        return self.dayColumnHeaderLayoutAttributes.isEmpty
+        return self.dayColumnHeaderLayoutAttributesCache.isEmpty
+    }
+    private var shouldRecalculateVerticalGridLineLayoutAttributes: Bool {
+        return self.verticalGridLineLayoutAttributesCache.isEmpty
     }
     
     /// MARK: Methods
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.eventsLayoutAttributes.itemConstructor = {(indexPath: NSIndexPath) in
+        self.eventsLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
             return UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         }
-        self.dayColumnHeaderBackgroundLayoutAttributes.itemConstructor = {(indexPath: NSIndexPath) in
+        self.dayColumnHeaderBackgroundLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
             return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.toRaw(), withIndexPath: indexPath)
         }
-        self.dayColumnHeaderLayoutAttributes.itemConstructor = {(indexPath: NSIndexPath) in
+        self.dayColumnHeaderLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
             return UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.toRaw(), withIndexPath: indexPath)
         }
-        
+        self.verticalGridLineLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
+            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.VerticalGridLine.toRaw(), withIndexPath: indexPath)
+        }
     }
     
     override public func prepareLayout() {
@@ -88,6 +99,9 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     
     /// MARK: Layout Attributes Calculation
+    private func minXForSection(section: Int)->CGFloat {
+        return CGFloat(section) * self.daySectionWidth
+    }
     private func calculateEventsLayoutAttributesForSection(section: Int) {
     }
     private func calculateLayoutAttributesForSections(sections: [Int])
@@ -100,6 +114,11 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
                 self.calculateDayColumnHeaderLayoutAttributesForSection(section)
             }
         }
+        if self.shouldRecalculateVerticalGridLineLayoutAttributes {
+            for section in sections {
+                self.calculateVerticalGridLineForSection(section)
+            }
+        }
         if self.shouldRecalculateEventsLayoutAttributes {
             for section in sections {
                 self.calculateEventsLayoutAttributesForSection(section)
@@ -108,34 +127,46 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     
     private func calculateDayColumnHeaderBackgroundLayoutAttributes() {
-        var backgroundLayoutAttributes = self.dayColumnHeaderBackgroundLayoutAttributes[NSIndexPath(forItem: 0, inSection: 0)]
+        var backgroundLayoutAttributes = self.dayColumnHeaderBackgroundLayoutAttributesCache[NSIndexPath(forItem: 0, inSection: 0)]
         
         backgroundLayoutAttributes.frame = CGRectMake(self.collectionView!.contentOffset.x, self.collectionView!.contentOffset.y, self.collectionView!.frame.size.width, self.dayHeaderHeight)
+        backgroundLayoutAttributes.zIndex = dayHeaderBackgroundZIndex
     }
     private func calculateDayColumnHeaderLayoutAttributesForSection(section: Int) {
-        let sectionMinX = self.daySectionWidth * CGFloat(section)
-        var headerLayoutAttributes = self.dayColumnHeaderLayoutAttributes[NSIndexPath(index: section)]
+        let sectionMinX = self.minXForSection(section)
+        var headerLayoutAttributes = self.dayColumnHeaderLayoutAttributesCache[NSIndexPath(index: section)]
         headerLayoutAttributes.frame = CGRectMake(sectionMinX, self.collectionView!.contentOffset.y, self.daySectionWidth, self.dayHeaderHeight)
-        headerLayoutAttributes.zIndex = 100
+        headerLayoutAttributes.zIndex = dayHeaderZIndex
+    }
+    
+    private func calculateVerticalGridLineForSection(section: Int) {
+        let sectionMinX = self.minXForSection(section)
+        var verticalGridLineLayoutAttributes = self.verticalGridLineLayoutAttributesCache[NSIndexPath(index: section)]
+        verticalGridLineLayoutAttributes.frame = CGRectMake(sectionMinX, 0, gridLineWidth, self.layoutHeight)
+        verticalGridLineLayoutAttributes.zIndex = gridLineZIndex
     }
     
     /// MARK: Invalidation
     override public func invalidateLayout() {
         super.invalidateLayout()
-        self.eventsLayoutAttributes.clearCache()
-        self.dayColumnHeaderBackgroundLayoutAttributes.clearCache()
-        self.dayColumnHeaderLayoutAttributes.clearCache()
+        self.eventsLayoutAttributesCache.clearCache()
+        self.dayColumnHeaderBackgroundLayoutAttributesCache.clearCache()
+        self.dayColumnHeaderLayoutAttributesCache.clearCache()
     }
     override public func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
         // TODO invalidate efficiently
         
         let invalidateHeaders: ()->Void = {
-            self.dayColumnHeaderBackgroundLayoutAttributes.clearCache()
-            self.dayColumnHeaderLayoutAttributes.clearCache()
+            self.dayColumnHeaderBackgroundLayoutAttributesCache.clearCache()
+            self.dayColumnHeaderLayoutAttributesCache.clearCache()
+        }
+        let invalidateGridLines: ()->Void = {
+            self.verticalGridLineLayoutAttributesCache.clearCache()
         }
         let invalidateAll: ()->Void = {
             invalidateHeaders()
-            self.eventsLayoutAttributes.clearCache()
+            invalidateGridLines()
+            self.eventsLayoutAttributesCache.clearCache()
         }
         if context.invalidateEverything {
             invalidateAll()
@@ -154,7 +185,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         }
         if context.contentOffsetAdjustment.x != 0 {
             // scrolling in x direction
-            self.dayColumnHeaderBackgroundLayoutAttributes.clearCache()
+            self.dayColumnHeaderBackgroundLayoutAttributesCache.clearCache()
             context.contentOffsetAdjustment.x = 0
         }
         // TODO specific items
@@ -164,6 +195,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     override public func invalidationContextForBoundsChange(newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
         var context = super.invalidationContextForBoundsChange(newBounds)
         context.contentOffsetAdjustment = CGPointMake(newBounds.origin.x, newBounds.origin.y)
+        context.contentSizeAdjustment = CGSizeMake(newBounds.size.width - self.collectionView!.bounds.size.width, newBounds.size.height - self.collectionView!.bounds.size.height)
         return context
     }
     
@@ -178,21 +210,23 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         if let kind = CollectionViewCalendarWeekLayoutDecorationViewKind.fromRaw(elementKind) {
             switch kind {
             case .DayColumnHeaderBackground:
-                return self.dayColumnHeaderBackgroundLayoutAttributes[indexPath]
+                return self.dayColumnHeaderBackgroundLayoutAttributesCache[indexPath]
+            case .VerticalGridLine:
+                return self.verticalGridLineLayoutAttributesCache[indexPath]
             }
         }
         assert(false, "Invalid Decoration View Kind \(elementKind)")
     }
     
     override public func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
-        return self.eventsLayoutAttributes[indexPath]
+        return self.eventsLayoutAttributesCache[indexPath]
     }
     
     override public func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
         if let kind = CollectionViewCalendarWeekLayoutSupplementaryViewKind.fromRaw(elementKind) {
             switch kind {
             case .DayColumnHeader:
-                return self.dayColumnHeaderLayoutAttributes[indexPath]
+                return self.dayColumnHeaderLayoutAttributesCache[indexPath]
             }
         }
         assert(false, "Invalid Supplementary View Kind \(elementKind)")
@@ -203,9 +237,10 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         let visibleFilter:(NSIndexPath, UICollectionViewLayoutAttributes)->Bool = {(_, layoutAttributes) in
             return CGRectIntersectsRect(rect, layoutAttributes.frame)
         }
-        visibleAttributes += self.eventsLayoutAttributes.filter(visibleFilter)
-        visibleAttributes += self.dayColumnHeaderBackgroundLayoutAttributes.filter(visibleFilter)
-        visibleAttributes += self.dayColumnHeaderLayoutAttributes.filter(visibleFilter)
+        visibleAttributes += self.eventsLayoutAttributesCache.filter(visibleFilter)
+        visibleAttributes += self.dayColumnHeaderBackgroundLayoutAttributesCache.filter(visibleFilter)
+        visibleAttributes += self.dayColumnHeaderLayoutAttributesCache.filter(visibleFilter)
+        visibleAttributes += self.verticalGridLineLayoutAttributesCache.filter(visibleFilter)
         return visibleAttributes
     }
     
@@ -218,4 +253,5 @@ public enum CollectionViewCalendarWeekLayoutSupplementaryViewKind: String {
 }
 public enum CollectionViewCalendarWeekLayoutDecorationViewKind: String {
     case DayColumnHeaderBackground = "DayColumnHeaderBackground"
+    case VerticalGridLine = "VerticalGridLine"
 }

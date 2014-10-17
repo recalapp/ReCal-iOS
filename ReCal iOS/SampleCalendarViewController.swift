@@ -24,7 +24,7 @@ class SampleCalendarViewController: UICollectionViewController {
             if let layout = self.collectionView?.collectionViewLayout as? CollectionViewCalendarWeekLayout {
                 layout.dataSource = self.weekDataSource
                 layout.registerClass(HeaderBackgroundView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.toRaw())
-                
+                layout.registerClass(GridLineView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.VerticalGridLine.toRaw())
             }
         }
         else {

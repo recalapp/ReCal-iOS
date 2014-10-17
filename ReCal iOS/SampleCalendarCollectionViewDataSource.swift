@@ -20,7 +20,7 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     // MARK: UICollectionViewDataSource
    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 10
+        return 100
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -65,7 +65,7 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     
     /// Return the height of the week view (scrollable height, not frame height)
     func heightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->CollectionViewCalendarWeekLayoutHeight {
-        return CollectionViewCalendarWeekLayoutHeight.Exact(500.0)
+        return CollectionViewCalendarWeekLayoutHeight.Fit
     }
     
     /// Return the height of the day header
