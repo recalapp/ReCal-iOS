@@ -14,6 +14,7 @@
 		811D482219ED7EB000E3F360 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811D482119ED7EB000E3F360 /* Images.xcassets */; };
 		811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811D482319ED7EB000E3F360 /* LaunchScreen.xib */; };
 		811D483119ED7EB100E3F360 /* ReCal_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */; };
+		8124969019F17F440081AFB2 /* TimeHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */; };
 		8149950219F0117F00E0C260 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149950119F0117F00E0C260 /* Stack.swift */; };
 		819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819193CD19F1652700E3A3B8 /* GridLineView.swift */; };
 		81C1F5D919F05C010042AB61 /* SampleCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */; };
@@ -92,6 +93,7 @@
 		811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		811D482F19ED7EB100E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_iOSTests.swift; sourceTree = "<group>"; };
+		8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderBackgroundView.swift; sourceTree = "<group>"; };
 		8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
 		8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 		8149950119F0117F00E0C260 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				819193CD19F1652700E3A3B8 /* GridLineView.swift */,
 				81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */,
 				81D270D419F090E700DED75D /* HeaderBackgroundView.swift */,
+				8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */,
 				81D270D619F0946100DED75D /* HeaderView.swift */,
 				81D270D719F0946100DED75D /* HeaderView.xib */,
 			);
@@ -467,6 +470,7 @@
 				811D481B19ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld in Sources */,
 				81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */,
 				81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */,
+				8124969019F17F440081AFB2 /* TimeHeaderBackgroundView.swift in Sources */,
 				819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */,
 				81D270D819F0946100DED75D /* HeaderView.swift in Sources */,
 			);

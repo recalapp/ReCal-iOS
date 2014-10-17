@@ -26,7 +26,11 @@ public protocol CollectionViewDataSourceCalendarWeekLayout
     func heightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->CollectionViewCalendarWeekLayoutHeight
     
     /// Return the height of the day header
-    func dayHeaderHeightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float
+    func dayColumnHeaderHeightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float
+    
+    /// Return the width of the time header
+    func timeRowHeaderWidthForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float
+
 }
 
 public enum CollectionViewCalendarWeekLayoutDaySectionWidth {

@@ -21,6 +21,7 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 100
+
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -69,7 +70,11 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     }
     
     /// Return the height of the day header
-    func dayHeaderHeightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float {
+    func dayColumnHeaderHeightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float {
         return 100.0
+    }
+    /// Return the width of the time header
+    func timeRowHeaderWidthForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout) -> Float {
+        return 50.0
     }
 }
