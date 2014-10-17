@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U6b-Vx-4bR" customClass="TimeHeaderView" customModule="ReCal_iOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="257" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8:00AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebg-3N-IXa">
+                    <rect key="frame" x="189" y="14" width="60" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="2ES-hP-JHh"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="2ES-hP-JHh"/>
+                        </mask>
+                    </variation>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="ebg-3N-IXa" firstAttribute="trailing" secondItem="U6b-Vx-4bR" secondAttribute="trailingMargin" id="Lzp-M6-rmD"/>
+                <constraint firstAttribute="centerY" secondItem="ebg-3N-IXa" secondAttribute="centerY" constant="0.5" id="MMj-E9-86J"/>
+                <constraint firstAttribute="bottom" secondItem="ebg-3N-IXa" secondAttribute="bottom" constant="15" id="lcI-RP-feE"/>
+                <constraint firstItem="ebg-3N-IXa" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="14" id="qjK-3y-n0d"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="lcI-RP-feE"/>
+                    <exclude reference="qjK-3y-n0d"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="401.5" y="324"/>
+        </collectionReusableView>
+    </objects>
+</document>

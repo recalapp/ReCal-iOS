@@ -21,6 +21,7 @@ class SampleCalendarViewController: UICollectionViewController {
         if let collectionView = self.collectionView {
             collectionView.dataSource = self.weekDataSource
             collectionView.registerNib(UINib(nibName: "HeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.toRaw(), withReuseIdentifier: dayHeaderViewIdentifier)
+            collectionView.registerNib(UINib(nibName: "TimeHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.TimeRowHeader.toRaw(), withReuseIdentifier: timeHeaderViewIdentifier)
             if let layout = self.collectionView?.collectionViewLayout as? CollectionViewCalendarWeekLayout {
                 layout.dataSource = self.weekDataSource
                 layout.registerClass(HeaderBackgroundView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.toRaw())

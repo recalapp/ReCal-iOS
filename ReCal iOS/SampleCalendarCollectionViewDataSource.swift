@@ -11,6 +11,7 @@ import ReCalCommon
 
 let eventCellIdentifier = "Cell"
 let dayHeaderViewIdentifier = "DayHeader"
+let timeHeaderViewIdentifier = "TimeHeader"
 
 class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSource, CollectionViewDataSourceCalendarWeekLayout {
     
@@ -36,7 +37,10 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
         if let viewKind = CollectionViewCalendarWeekLayoutSupplementaryViewKind.fromRaw(kind) {
             switch viewKind {
             case .DayColumnHeader:
-                let reusableView: UICollectionReusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dayHeaderViewIdentifier, forIndexPath: indexPath) as UICollectionReusableView
+                let reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dayHeaderViewIdentifier, forIndexPath: indexPath) as UICollectionReusableView
+                return reusableView
+            case .TimeRowHeader:
+                let reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: timeHeaderViewIdentifier, forIndexPath: indexPath) as UICollectionReusableView
                 return reusableView
             }
         }
@@ -66,7 +70,7 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     
     /// Return the height of the week view (scrollable height, not frame height)
     func heightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->CollectionViewCalendarWeekLayoutHeight {
-        return CollectionViewCalendarWeekLayoutHeight.Fit
+        return CollectionViewCalendarWeekLayoutHeight.Exact(1000.0)
     }
     
     /// Return the height of the day header
@@ -75,6 +79,6 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     }
     /// Return the width of the time header
     func timeRowHeaderWidthForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout) -> Float {
-        return 50.0
+        return 80.0
     }
 }
