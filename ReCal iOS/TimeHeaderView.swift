@@ -23,6 +23,6 @@ class TimeHeaderView: UICollectionReusableView {
         layoutAttributes.frame = CGRect(x: 0, y: 200, width: 100, height: 100)
         
         
-        return super.preferredLayoutAttributesFittingAttributes(layoutAttributes)
+        return layoutAttributes
     }
 }

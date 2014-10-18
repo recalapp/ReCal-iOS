@@ -18,6 +18,8 @@
 		8124969319F18A620081AFB2 /* TimeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124969119F18A620081AFB2 /* TimeHeaderView.swift */; };
 		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
 		8149950219F0117F00E0C260 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8149950119F0117F00E0C260 /* Stack.swift */; };
+		8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */; };
+		8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */; };
 		819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819193CD19F1652700E3A3B8 /* GridLineView.swift */; };
 		81C1F5D919F05C010042AB61 /* SampleCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */; };
 		81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */; };
@@ -101,6 +103,8 @@
 		8144D89319EEB8E400C9EF24 /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
 		8144D89819EEBB8D00C9EF24 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 		8149950119F0117F00E0C260 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewCell.swift; sourceTree = "<group>"; };
+		8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsCollectionViewCell.xib; sourceTree = "<group>"; };
 		819193CD19F1652700E3A3B8 /* GridLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLineView.swift; sourceTree = "<group>"; };
 		81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarViewController.swift; sourceTree = "<group>"; };
 		81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarCollectionViewDataSource.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				81D270D719F0946100DED75D /* HeaderView.xib */,
 				8124969119F18A620081AFB2 /* TimeHeaderView.swift */,
 				8124969219F18A620081AFB2 /* TimeHeaderView.xib */,
+				8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */,
+				8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */,
 			);
 			path = "ReCal iOS";
 			sourceTree = "<group>";
@@ -436,6 +442,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				811D482019ED7EB000E3F360 /* Main.storyboard in Resources */,
+				8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */,
 				811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */,
 				8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */,
 				811D482219ED7EB000E3F360 /* Images.xcassets in Resources */,
@@ -479,6 +486,7 @@
 				81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */,
 				81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */,
 				8124969019F17F440081AFB2 /* TimeHeaderBackgroundView.swift in Sources */,
+				8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */,
 				819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */,
 				81D270D819F0946100DED75D /* HeaderView.swift in Sources */,
 			);

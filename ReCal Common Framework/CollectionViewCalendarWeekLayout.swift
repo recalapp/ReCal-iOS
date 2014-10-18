@@ -12,7 +12,8 @@ let debug = false
 
 let gridLineWidth: CGFloat = 1.0
 let gridLineZIndex = 1
-let timeRowHeaderBackgroundZIndex = gridLineZIndex + 1
+let eventsZIndex = gridLineZIndex + 1
+let timeRowHeaderBackgroundZIndex = eventsZIndex + 1
 let timeRowHeaderZIndex = timeRowHeaderBackgroundZIndex + 1
 let dayColumnHeaderBackgroundZIndex = timeRowHeaderZIndex + 1
 let dayColumnHeaderZIndex = dayColumnHeaderBackgroundZIndex + 1
@@ -70,9 +71,11 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         let contentOffset = self.collectionView!.contentOffset
         let bounds = self.collectionView!.bounds
         let sectionWidth = self.daySectionWidth
-        let minSection = Int((contentOffset.x - leftMargin)/sectionWidth) // ok to cast down, we just want a section that's to the left of the left most visible section
+        let possibleMinSection = Int((contentOffset.x - leftMargin)/sectionWidth) // ok to cast down, we just want a section that's to the left of the left most visible section
         let sectionDelta = Int(ceil(bounds.width / sectionWidth))
-        let maxSection = minSection + sectionDelta
+        let possibleMaxSection = possibleMinSection + sectionDelta
+        let minSection = max(possibleMinSection, 0)
+        let maxSection = min(possibleMaxSection, self.collectionView!.numberOfSections() - 1)
         return (minSection...maxSection).map{ $0 }
     }
     private var minimumHour: Int {
@@ -177,8 +180,17 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     private func minXForSection(section: Int)->CGFloat {
         return CGFloat(section) * self.daySectionWidth + self.timeRowHeaderWidth
     }
-    private func calculateEventsLayoutAttributesForSection(section: Int) {
+    
+    private func offsetYForTime(time: NSDate)-> CGFloat {
+        // get how many hours this is away from min 
+        let topMargin = self.dayColumnHeaderHeight
+        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+        let component = calendar.components((NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute), fromDate: time)
+        let curHour: Float = Float(component.hour) + Float(component.minute)/60.0
+        let deltaHour = curHour - Float(self.minimumHour)
+        return (deltaHour <= 0.0 ? 0.0 : floor(CGFloat(deltaHour) * self.hourSlotHeight)) + topMargin
     }
+    
     private func calculateLayoutAttributes()
     {
         let numberOfSections = self.collectionView?.numberOfSections()
@@ -228,7 +240,37 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             }
         }
     }
-    
+    private func calculateEventsLayoutAttributesForSection(section: Int) {
+        let itemsCount = self.collectionView!.numberOfItemsInSection(section)
+        if itemsCount == 0 {
+            return
+        }
+        let minSectionX = self.minXForSection(section)
+        let sectionWidth = self.daySectionWidth
+        let calculateFrameForItemAtIndexPath: (NSIndexPath)->CGRect? = {(indexPath) in
+            let startDateOpt = self.dataSource?.collectionView(self.collectionView!, layout: self, startDateForItemAtIndexPath: indexPath)
+            let endDateOpt = self.dataSource?.collectionView(self.collectionView!, layout: self, endDateForItemAtIndexPath: indexPath)
+            if startDateOpt == nil || endDateOpt == nil {
+                return nil
+            }
+            let startDate = startDateOpt!
+            let endDate = endDateOpt!
+            let minY = self.offsetYForTime(startDate)
+            let maxY = self.offsetYForTime(endDate)
+            
+            let height = maxY - minY
+            return CGRect(x: minSectionX, y: minY, width: sectionWidth, height: height)
+        }
+        for i in 0...itemsCount-1 {
+            let indexPath = NSIndexPath(forItem: i, inSection: section)
+            if let frame = calculateFrameForItemAtIndexPath(indexPath) {
+                var eventsLayoutAttributes = self.eventsLayoutAttributesCache[indexPath]
+                eventsLayoutAttributes.frame = frame
+                eventsLayoutAttributes.zIndex = eventsZIndex
+            }
+        }
+    }
+
     private func calculateDayColumnHeaderBackgroundLayoutAttributes() {
         var backgroundLayoutAttributes = self.dayColumnHeaderBackgroundLayoutAttributesCache[NSIndexPath(forItem: 0, inSection: 0)]
         
@@ -299,6 +341,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         #if debug
             println("begin invalidation")
         #endif
+        
         // TODO invalidate efficiently
         let invalidateRowHeaders: ()->Void = {
             self.timeRowHeaderBackgroundLayoutAttributesCache.clearCache()
@@ -343,6 +386,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             self.dayColumnHeaderBackgroundLayoutAttributesCache.clearCache()
             context.contentOffsetAdjustment.x = 0
         }
+        
         // TODO specific items
         #if debug
             println("end invalidation")
