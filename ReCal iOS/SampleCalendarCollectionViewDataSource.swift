@@ -70,7 +70,7 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     
     /// Return the height of the week view (scrollable height, not frame height)
     func heightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->CollectionViewCalendarWeekLayoutHeight {
-        return CollectionViewCalendarWeekLayoutHeight.Exact(1000.0)
+        return CollectionViewCalendarWeekLayoutHeight.Fit
     }
     
     /// Return the height of the day header
@@ -80,5 +80,20 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     /// Return the width of the time header
     func timeRowHeaderWidthForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout) -> Float {
         return 80.0
+    }
+    
+    /// Return the minimum hour, from 0 to 23
+    func minimumHourForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Int {
+        return 8
+    }
+    
+    /// Return the maximum hour, from 0 to 23. This is the last hour seen (so you will see the hour from max to max + 1)
+    func maximumHourForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Int {
+        return 11
+    }
+    
+    /// Return how many hours (can be fractional) each vertical slot represent
+    func hourStepForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float {
+        return 1.5
     }
 }

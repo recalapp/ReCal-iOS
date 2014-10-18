@@ -63,7 +63,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         return finalWidth
     }
     private var hourSlotHeight: CGFloat {
-        return floor((self.layoutHeight - self.dayColumnHeaderHeight) / 24.0)
+        return floor((self.layoutHeight - self.dayColumnHeaderHeight) / CGFloat(self.maximumHour - self.minimumHour))
     }
     private var visibleDaySections: [Int] {
         let leftMargin = self.timeRowHeaderWidth
@@ -74,6 +74,28 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         let sectionDelta = Int(ceil(bounds.width / sectionWidth))
         let maxSection = minSection + sectionDelta
         return (minSection...maxSection).map{ $0 }
+    }
+    private var minimumHour: Int {
+        if let minimumHour = self.dataSource?.minimumHourForCollectionView(self.collectionView!, layout: self) {
+            assert(minimumHour >= 0 && minimumHour < 23, "The minimum hour must be between 0 and 23, inclusive") // autoclosure means we don't do this unless when debugging
+            return minimumHour
+        }
+        return 0 // default value
+    }
+    private var maximumHour: Int {
+        if let maximumHour = self.dataSource?.maximumHourForCollectionView(self.collectionView!, layout: self) {
+            assert(maximumHour >= 1 && maximumHour < 24, "The maximum hour must be between 1 and 24, inclusive")
+            assert(maximumHour > self.minimumHour, "The maximum hour must be greater than the minimum hour")
+            return maximumHour
+        }
+        return 24
+    }
+    private var hourStep: Float {
+        if let hourStep = self.dataSource?.hourStepForCollectionView(self.collectionView!, layout: self) {
+            assert(hourStep > 0.0, "The hour step must be positive")
+            return hourStep
+        }
+        return 1.0
     }
     
     /// MARK: Caches
@@ -133,7 +155,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.HorizontalGridLine.toRaw(), withIndexPath: indexPath)
         }
         
-        if debug {
+        #if debug
             self.eventsLayoutAttributesCache.willClear = {(_) in println("invalidating events cache") }
             self.dayColumnHeaderBackgroundLayoutAttributesCache.willClear = {(_) in println("invalidating day header background")}
             self.dayColumnHeaderLayoutAttributesCache.willClear = {(_) in println("invalidating day column header") }
@@ -141,7 +163,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             self.timeRowHeaderLayoutAttributesCache.willClear = {(_) in println("invalidating time row header") }
             self.verticalGridLineLayoutAttributesCache.willClear = {(_) in println("invalidating vertical grid lines") }
             self.horizontalGridLineLayoutAttributesCache.willClear = {(_) in println("invalidating horizontal grid line")}
-        }
+        #endif
     }
     
     override public func prepareLayout() {
@@ -227,17 +249,20 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         timeBackgroundLayoutAttributes.zIndex = timeRowHeaderBackgroundZIndex
     }
     private func calculateTimeRowHeaderLayoutAttributes() {
-        let minHour = 0
-        let maxHour = 23
+        let minHour = Float(self.minimumHour)
+        let maxHour = Float(self.maximumHour)
+        let hourStep = self.hourStep
         let topMargin = self.dayColumnHeaderHeight
         let hourSlotHeight = self.hourSlotHeight
         let timeHeaderWidth = self.timeRowHeaderWidth
         let contentOffset = self.collectionView!.contentOffset
-        for hour in minHour...maxHour {
+        var i = 0
+        for var hour = minHour; hour < maxHour; hour += hourStep  {
             // this loops from minHour to maxHour, inclusive
-            let timeLayoutAttributes = self.timeRowHeaderLayoutAttributesCache[NSIndexPath(index: hour)]
-            timeLayoutAttributes.frame = CGRectMake(contentOffset.x, CGFloat(hour - minHour) * hourSlotHeight + topMargin, timeHeaderWidth, hourSlotHeight)
+            let timeLayoutAttributes = self.timeRowHeaderLayoutAttributesCache[NSIndexPath(index: i)]
+            timeLayoutAttributes.frame = CGRectMake(contentOffset.x, CGFloat(hour - minHour) * hourSlotHeight + topMargin, timeHeaderWidth, 50.0) // TODO auto sizing cell
             timeLayoutAttributes.zIndex = timeRowHeaderZIndex
+            i++
         }
     }
     
@@ -248,18 +273,21 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         verticalGridLineLayoutAttributes.zIndex = gridLineZIndex
     }
     private func calculateHorizontalGridLineLayoutAttributes() {
-        let minHour = 0
-        let maxHour = 23
+        let minHour = Float(self.minimumHour)
+        let maxHour = Float(self.maximumHour)
+        let hourStep = self.hourStep
         let topMargin = self.dayColumnHeaderHeight
         let hourSlotHeight = self.hourSlotHeight
         let timeHeaderWidth = self.timeRowHeaderWidth
         let contentOffset = self.collectionView!.contentOffset
         let bounds = self.collectionView!.bounds
-        for hour in minHour...maxHour {
+        var i = 0
+        for var hour = minHour; hour < maxHour; hour += hourStep {
             // this loops from minHour to maxHour, inclusive
-            let timeLayoutAttributes = self.horizontalGridLineLayoutAttributesCache[NSIndexPath(index: hour)]
+            let timeLayoutAttributes = self.horizontalGridLineLayoutAttributesCache[NSIndexPath(index: i)]
             timeLayoutAttributes.frame = CGRectMake(contentOffset.x, CGFloat(hour - minHour) * hourSlotHeight + topMargin, bounds.size.width, gridLineWidth)
             timeLayoutAttributes.zIndex = gridLineZIndex
+            i++
         }
     }
     
@@ -268,9 +296,9 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         super.invalidateLayout()
     }
     override public func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
-        if debug {
+        #if debug
             println("begin invalidation")
-        }
+        #endif
         // TODO invalidate efficiently
         let invalidateRowHeaders: ()->Void = {
             self.timeRowHeaderBackgroundLayoutAttributesCache.clearCache()
@@ -316,10 +344,10 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             context.contentOffsetAdjustment.x = 0
         }
         // TODO specific items
-        if debug {
+        #if debug
             println("end invalidation")
             println("----------------------")
-        }
+        #endif
         super.invalidateLayoutWithContext(context)
         
     }
@@ -330,7 +358,13 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         context.contentSizeAdjustment = CGSizeMake(newBounds.size.width - self.collectionView!.bounds.size.width, newBounds.size.height - self.collectionView!.bounds.size.height)
         return context
     }
-    
+    override public func invalidationContextForPreferredLayoutAttributes(preferredAttributes: UICollectionViewLayoutAttributes, withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutInvalidationContext {
+        var context = super.invalidationContextForPreferredLayoutAttributes(preferredAttributes, withOriginalAttributes: originalAttributes)
+        return context
+    }
+    override public func shouldInvalidateLayoutForPreferredLayoutAttributes(preferredAttributes: UICollectionViewLayoutAttributes, withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes) -> Bool {
+        return true
+    }
     /// MARK: UICollectionViewLayout Methods
     override public func collectionViewContentSize() -> CGSize {
         let numberOfSections: Int = self.collectionView!.numberOfSections()
@@ -388,6 +422,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     override public func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
         return true
     }
+    
 }
 public enum CollectionViewCalendarWeekLayoutSupplementaryViewKind: String {
     case DayColumnHeader = "DayColumnHeader"

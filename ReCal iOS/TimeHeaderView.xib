@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8:00AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebg-3N-IXa">
-                    <rect key="frame" x="189" y="14" width="60" height="21"/>
+                    <rect key="frame" x="189.5" y="14.5" width="59.5" height="20.5"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="2ES-hP-JHh"/>
                     </constraints>
@@ -29,15 +29,20 @@
             <constraints>
                 <constraint firstItem="ebg-3N-IXa" firstAttribute="trailing" secondItem="U6b-Vx-4bR" secondAttribute="trailingMargin" id="Lzp-M6-rmD"/>
                 <constraint firstAttribute="centerY" secondItem="ebg-3N-IXa" secondAttribute="centerY" constant="0.5" id="MMj-E9-86J"/>
-                <constraint firstAttribute="bottom" secondItem="ebg-3N-IXa" secondAttribute="bottom" constant="15" id="lcI-RP-feE"/>
-                <constraint firstItem="ebg-3N-IXa" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="14" id="qjK-3y-n0d"/>
+                <constraint firstAttribute="bottom" secondItem="ebg-3N-IXa" secondAttribute="bottom" constant="15" id="gYD-cU-dIl"/>
+                <constraint firstItem="ebg-3N-IXa" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="14.5" id="zGe-kx-X7a"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="lcI-RP-feE"/>
-                    <exclude reference="qjK-3y-n0d"/>
+                    <exclude reference="gYD-cU-dIl"/>
+                    <exclude reference="zGe-kx-X7a"/>
                 </mask>
             </variation>
+            <connections>
+                <outlet property="timeLabel" destination="ebg-3N-IXa" id="a9q-hK-mAl"/>
+                <outlet property="timeLabelBottomConstraint" destination="gYD-cU-dIl" id="NUW-wn-rSm"/>
+                <outlet property="timeLabelTopConstraint" destination="zGe-kx-X7a" id="PA6-xk-zLU"/>
+            </connections>
             <point key="canvasLocation" x="401.5" y="324"/>
         </collectionReusableView>
     </objects>

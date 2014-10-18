@@ -31,6 +31,14 @@ public protocol CollectionViewDataSourceCalendarWeekLayout
     /// Return the width of the time header
     func timeRowHeaderWidthForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float
 
+    /// Return the minimum hour, from 0 to 23
+    func minimumHourForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Int
+    
+    /// Return the maximum hour, from 1 to 24. This is the first hour not seen. For example, setting this to 10 means that you will see the hour 9-10, but not 10-11
+    func maximumHourForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Int
+    
+    /// Return how many hours (can be fractional) each vertical slot represent
+    func hourStepForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float
 }
 
 public enum CollectionViewCalendarWeekLayoutDaySectionWidth {
