@@ -63,7 +63,17 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         return finalWidth
     }
     private var hourSlotHeight: CGFloat {
-        return (self.layoutHeight - self.dayColumnHeaderHeight) / 24.0
+        return floor((self.layoutHeight - self.dayColumnHeaderHeight) / 24.0)
+    }
+    private var visibleDaySections: [Int] {
+        let leftMargin = self.timeRowHeaderWidth
+        let contentOffset = self.collectionView!.contentOffset
+        let bounds = self.collectionView!.bounds
+        let sectionWidth = self.daySectionWidth
+        let minSection = Int((contentOffset.x - leftMargin)/sectionWidth) // ok to cast down, we just want a section that's to the left of the left most visible section
+        let sectionDelta = Int(ceil(bounds.width / sectionWidth))
+        let maxSection = minSection + sectionDelta
+        return (minSection...maxSection).map{ $0 }
     }
     
     /// MARK: Caches
@@ -138,13 +148,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         if self.dataSource == nil {
             return // cannot do anything without datasource
         }
-        if self.shouldRecalculateEventsLayoutAttributes {
-            if let collectionView = self.collectionView {
-                if let numberOfSections = collectionView.dataSource?.numberOfSectionsInCollectionView?(collectionView) {
-                    self.calculateLayoutAttributesForSections((0...numberOfSections).map { $0 })
-                }
-            }
-        }
+        self.calculateLayoutAttributes()
     }
     
     /// MARK: Layout Attributes Calculation
@@ -153,13 +157,23 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     private func calculateEventsLayoutAttributesForSection(section: Int) {
     }
-    private func calculateLayoutAttributesForSections(sections: [Int])
+    private func calculateLayoutAttributes()
     {
+        let numberOfSections = self.collectionView?.numberOfSections()
+        if numberOfSections == nil {
+            return; // cannot do anything
+        }
+        let totalSections = (1...numberOfSections!).map {$0 - 1}
+        let visibleSections = self.visibleDaySections
         if self.shouldRecalculateDayColumnHeaderBackgroundLayoutAttributes {
             self.calculateDayColumnHeaderBackgroundLayoutAttributes()
         }
         if self.shouldRecalculateDayColumnHeaderLayoutAttributes {
-            for section in sections {
+            for section in totalSections {
+                self.calculateDayColumnHeaderLayoutAttributesForSection(section)
+            }
+        } else {
+            for section in visibleSections {
                 self.calculateDayColumnHeaderLayoutAttributesForSection(section)
             }
         }
@@ -170,7 +184,11 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             self.calculateTimeRowHeaderLayoutAttributes()
         }
         if self.shouldRecalculateVerticalGridLineLayoutAttributes {
-            for section in sections {
+            for section in totalSections {
+                self.calculateVerticalGridLineForSection(section)
+            }
+        } else {
+            for section in visibleSections {
                 self.calculateVerticalGridLineForSection(section)
             }
         }
@@ -178,7 +196,12 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             self.calculateHorizontalGridLineLayoutAttributes()
         }
         if self.shouldRecalculateEventsLayoutAttributes {
-            for section in sections {
+            for section in totalSections {
+                self.calculateEventsLayoutAttributesForSection(section)
+            }
+        }
+        else {
+            for section in visibleSections {
                 self.calculateEventsLayoutAttributesForSection(section)
             }
         }
@@ -279,9 +302,10 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         }
         if context.contentOffsetAdjustment.y != 0 {
             // scrolling in y direction
-            invalidateColumnHeaders()
+            //invalidateColumnHeaders()
+            self.dayColumnHeaderBackgroundLayoutAttributesCache.clearCache()
             self.timeRowHeaderBackgroundLayoutAttributesCache.clearCache()
-            self.verticalGridLineLayoutAttributesCache.clearCache()
+            //self.verticalGridLineLayoutAttributesCache.clearCache()
             context.contentOffsetAdjustment.y = 0 // set back to zero, otherwise super does something with scrolling
         }
         if context.contentOffsetAdjustment.x != 0 {
