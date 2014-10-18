@@ -100,6 +100,10 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         }
         return 1.0
     }
+    private var nearestVisibleSection: Int {
+        let contentOffset = self.collectionView!.contentOffset
+        return self.nearestSectionForContentOffset(contentOffset)
+    }
     
     /// MARK: Caches
     private var eventsLayoutAttributesCache = Cache<NSIndexPath, UICollectionViewLayoutAttributes>()
@@ -174,6 +178,14 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             return // cannot do anything without datasource
         }
         self.calculateLayoutAttributes()
+    }
+    
+    /// find the closest section to this content offset. Note that this is the collection view's content offset. the way to think of it is: what if there were no margins?
+    private func nearestSectionForContentOffset(contentOffset: CGPoint) -> Int {
+        return Int(round(contentOffset.x / self.daySectionWidth))
+    }
+    private func contentOffsetXForSection(section: Int) -> CGFloat {
+        return self.minXForSection(section) - self.timeRowHeaderWidth
     }
     
     /// MARK: Layout Attributes Calculation
@@ -462,7 +474,15 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     override public func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
         return true
     }
-    
+
+    override public func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint) -> CGPoint {
+        let nearestSection = nearestSectionForContentOffset(proposedContentOffset)
+        let newOffset = CGPoint(x: self.contentOffsetXForSection(nearestSection), y: proposedContentOffset.y)
+        return newOffset
+    }
+    override public func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+        return self.targetContentOffsetForProposedContentOffset(proposedContentOffset)
+    }
 }
 public enum CollectionViewCalendarWeekLayoutSupplementaryViewKind: String {
     case DayColumnHeader = "DayColumnHeader"
