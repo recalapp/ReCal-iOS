@@ -14,6 +14,7 @@
 		8111F63219F4947700A331E3 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62A19F4947700A331E3 /* Stack.swift */; };
 		8111F63319F4947700A331E3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62B19F4947700A331E3 /* Util.swift */; };
 		8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */; };
+		8111F63A19F49F4500A331E3 /* SlidingSelectionControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8111F63919F49F4500A331E3 /* SlidingSelectionControl.xib */; };
 		811D481819ED7EB000E3F360 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D481719ED7EB000E3F360 /* AppDelegate.swift */; };
 		811D481B19ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 811D481919ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld */; };
 		811D481D19ED7EB000E3F360 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D481C19ED7EB000E3F360 /* ViewController.swift */; };
@@ -94,6 +95,7 @@
 		8111F62B19F4947700A331E3 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		8111F62C19F4947700A331E3 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataSourceDelegate.swift; path = ../ReCalCommon/DataSourceDelegate.swift; sourceTree = "<group>"; };
 		8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSelectionControl.swift; sourceTree = "<group>"; };
+		8111F63919F49F4500A331E3 /* SlidingSelectionControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SlidingSelectionControl.xib; sourceTree = "<group>"; };
 		811D481219ED7EB000E3F360 /* ReCal iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		811D481619ED7EB000E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		811D481719ED7EB000E3F360 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */,
+				8111F63919F49F4500A331E3 /* SlidingSelectionControl.xib */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8111F63A19F49F4500A331E3 /* SlidingSelectionControl.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
