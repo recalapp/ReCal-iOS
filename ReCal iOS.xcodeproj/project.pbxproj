@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8111F62E19F4947700A331E3 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62619F4947700A331E3 /* Cache.swift */; };
-		8111F62F19F4947700A331E3 /* CollectionViewCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62719F4947700A331E3 /* CollectionViewCalendarWeekLayout.swift */; };
-		8111F63019F4947700A331E3 /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62819F4947700A331E3 /* CollectionViewDataSourceCalendarWeekLayout.swift */; };
-		8111F63119F4947700A331E3 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62919F4947700A331E3 /* Queue.swift */; };
-		8111F63219F4947700A331E3 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62A19F4947700A331E3 /* Stack.swift */; };
 		8111F63319F4947700A331E3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62B19F4947700A331E3 /* Util.swift */; };
 		8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */; };
 		811D481819ED7EB000E3F360 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D481719ED7EB000E3F360 /* AppDelegate.swift */; };
@@ -26,6 +21,14 @@
 		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
 		8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */; };
 		8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */; };
+		8172B96819F562590070E7DF /* BaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96019F562590070E7DF /* BaseDataSource.swift */; };
+		8172B96919F562590070E7DF /* BasicDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96119F562590070E7DF /* BasicDataSource.swift */; };
+		8172B96A19F562590070E7DF /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96219F562590070E7DF /* Cache.swift */; };
+		8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96319F562590070E7DF /* CollectionViewCalendarWeekLayout.swift */; };
+		8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */; };
+		8172B96D19F562590070E7DF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96519F562590070E7DF /* Queue.swift */; };
+		8172B96E19F562590070E7DF /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96619F562590070E7DF /* Stack.swift */; };
+		8172B96F19F562590070E7DF /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96719F562590070E7DF /* DataSourceDelegate.swift */; };
 		819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819193CD19F1652700E3A3B8 /* GridLineView.swift */; };
 		81C1F5D919F05C010042AB61 /* SampleCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */; };
 		81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */; };
@@ -84,15 +87,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8111F62319F4946300A331E3 /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseDataSource.swift; path = ../ReCalCommon/BaseDataSource.swift; sourceTree = "<group>"; };
-		8111F62519F4947700A331E3 /* BasicDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasicDataSource.swift; path = ../ReCalCommon/BasicDataSource.swift; sourceTree = "<group>"; };
-		8111F62619F4947700A331E3 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cache.swift; path = ../ReCalCommon/Cache.swift; sourceTree = "<group>"; };
-		8111F62719F4947700A331E3 /* CollectionViewCalendarWeekLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionViewCalendarWeekLayout.swift; path = ../ReCalCommon/CollectionViewCalendarWeekLayout.swift; sourceTree = "<group>"; };
-		8111F62819F4947700A331E3 /* CollectionViewDataSourceCalendarWeekLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionViewDataSourceCalendarWeekLayout.swift; path = ../ReCalCommon/CollectionViewDataSourceCalendarWeekLayout.swift; sourceTree = "<group>"; };
-		8111F62919F4947700A331E3 /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Queue.swift; path = ../ReCalCommon/Queue.swift; sourceTree = "<group>"; };
-		8111F62A19F4947700A331E3 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stack.swift; path = ../ReCalCommon/Stack.swift; sourceTree = "<group>"; };
 		8111F62B19F4947700A331E3 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		8111F62C19F4947700A331E3 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataSourceDelegate.swift; path = ../ReCalCommon/DataSourceDelegate.swift; sourceTree = "<group>"; };
 		8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSelectionControl.swift; sourceTree = "<group>"; };
 		811D481219ED7EB000E3F360 /* ReCal iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		811D481619ED7EB000E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -110,6 +105,14 @@
 		8124969219F18A620081AFB2 /* TimeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeHeaderView.xib; sourceTree = "<group>"; };
 		8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewCell.swift; sourceTree = "<group>"; };
 		8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsCollectionViewCell.xib; sourceTree = "<group>"; };
+		8172B96019F562590070E7DF /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
+		8172B96119F562590070E7DF /* BasicDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicDataSource.swift; sourceTree = "<group>"; };
+		8172B96219F562590070E7DF /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		8172B96319F562590070E7DF /* CollectionViewCalendarWeekLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCalendarWeekLayout.swift; sourceTree = "<group>"; };
+		8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSourceCalendarWeekLayout.swift; sourceTree = "<group>"; };
+		8172B96519F562590070E7DF /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		8172B96619F562590070E7DF /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		8172B96719F562590070E7DF /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 		819193CD19F1652700E3A3B8 /* GridLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLineView.swift; sourceTree = "<group>"; };
 		81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarViewController.swift; sourceTree = "<group>"; };
 		81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarCollectionViewDataSource.swift; sourceTree = "<group>"; };
@@ -237,46 +240,43 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8144D89519EEB8EB00C9EF24 /* DataSource */ = {
+		8172B97019F5627C0070E7DF /* Data Strucutres */ = {
 			isa = PBXGroup;
 			children = (
-				8111F62519F4947700A331E3 /* BasicDataSource.swift */,
-				8111F62C19F4947700A331E3 /* DataSourceDelegate.swift */,
-				8111F62319F4946300A331E3 /* BaseDataSource.swift */,
+				8172B96219F562590070E7DF /* Cache.swift */,
+				8172B96519F562590070E7DF /* Queue.swift */,
+				8172B96619F562590070E7DF /* Stack.swift */,
+			);
+			name = "Data Strucutres";
+			sourceTree = "<group>";
+		};
+		8172B97119F562840070E7DF /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				8172B96019F562590070E7DF /* BaseDataSource.swift */,
+				8172B96119F562590070E7DF /* BasicDataSource.swift */,
+				8172B96719F562590070E7DF /* DataSourceDelegate.swift */,
 			);
 			name = DataSource;
-			path = "../ReCal Common Framework";
 			sourceTree = "<group>";
 		};
-		81D4B5C919EED066007B3C1A /* Data Structures */ = {
+		8172B97219F562990070E7DF /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				8111F62619F4947700A331E3 /* Cache.swift */,
-				8111F62919F4947700A331E3 /* Queue.swift */,
-				8111F62A19F4947700A331E3 /* Stack.swift */,
-			);
-			name = "Data Structures";
-			path = "../ReCal Common Framework";
-			sourceTree = "<group>";
-		};
-		81D4B5CE19EEF9C7007B3C1A /* Calendar */ = {
-			isa = PBXGroup;
-			children = (
-				8111F62719F4947700A331E3 /* CollectionViewCalendarWeekLayout.swift */,
-				8111F62819F4947700A331E3 /* CollectionViewDataSourceCalendarWeekLayout.swift */,
+				8172B96319F562590070E7DF /* CollectionViewCalendarWeekLayout.swift */,
+				8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */,
 			);
 			name = Calendar;
-			path = "../ReCal Common Framework";
 			sourceTree = "<group>";
 		};
 		81D9F25C19EF4D9600F987B9 /* ReCalCommon */ = {
 			isa = PBXGroup;
 			children = (
-				8111F62B19F4947700A331E3 /* Util.swift */,
 				8111F62219F493A500A331E3 /* Controls */,
-				81D4B5CE19EEF9C7007B3C1A /* Calendar */,
-				81D4B5C919EED066007B3C1A /* Data Structures */,
-				8144D89519EEB8EB00C9EF24 /* DataSource */,
+				8172B97219F562990070E7DF /* Calendar */,
+				8172B97019F5627C0070E7DF /* Data Strucutres */,
+				8172B97119F562840070E7DF /* DataSource */,
+				8111F62B19F4947700A331E3 /* Util.swift */,
 				81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */,
 				81D9F25D19EF4D9600F987B9 /* Supporting Files */,
 			);
@@ -512,13 +512,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */,
+				8172B96E19F562590070E7DF /* Stack.swift in Sources */,
+				8172B96819F562590070E7DF /* BaseDataSource.swift in Sources */,
+				8172B96A19F562590070E7DF /* Cache.swift in Sources */,
+				8172B96D19F562590070E7DF /* Queue.swift in Sources */,
+				8172B96919F562590070E7DF /* BasicDataSource.swift in Sources */,
 				8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */,
-				8111F63019F4947700A331E3 /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */,
-				8111F63119F4947700A331E3 /* Queue.swift in Sources */,
-				8111F63219F4947700A331E3 /* Stack.swift in Sources */,
+				8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */,
 				8111F63319F4947700A331E3 /* Util.swift in Sources */,
-				8111F62F19F4947700A331E3 /* CollectionViewCalendarWeekLayout.swift in Sources */,
-				8111F62E19F4947700A331E3 /* Cache.swift in Sources */,
+				8172B96F19F562590070E7DF /* DataSourceDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
