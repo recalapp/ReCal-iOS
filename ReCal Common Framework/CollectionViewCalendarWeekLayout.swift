@@ -162,7 +162,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.HorizontalGridLine.toRaw(), withIndexPath: indexPath)
         }
         
-        #if debug
+        if debug {
             self.eventsLayoutAttributesCache.willClear = {(_) in println("invalidating events cache") }
             self.dayColumnHeaderBackgroundLayoutAttributesCache.willClear = {(_) in println("invalidating day header background")}
             self.dayColumnHeaderLayoutAttributesCache.willClear = {(_) in println("invalidating day column header") }
@@ -170,7 +170,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             self.timeRowHeaderLayoutAttributesCache.willClear = {(_) in println("invalidating time row header") }
             self.verticalGridLineLayoutAttributesCache.willClear = {(_) in println("invalidating vertical grid lines") }
             self.horizontalGridLineLayoutAttributesCache.willClear = {(_) in println("invalidating horizontal grid line")}
-        #endif
+        }
     }
     
     override public func prepareLayout() {
@@ -350,11 +350,11 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         super.invalidateLayout()
     }
     override public func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
-        #if debug
+        if debug {
             println("begin invalidation")
-        #endif
+        }
         
-        // TODO invalidate efficiently
+        // invalidate efficiently
         let invalidateRowHeaders: ()->Void = {
             self.timeRowHeaderBackgroundLayoutAttributesCache.clearCache()
             self.timeRowHeaderLayoutAttributesCache.clearCache()
@@ -400,10 +400,10 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         }
         
         // TODO specific items
-        #if debug
+        if debug {
             println("end invalidation")
             println("----------------------")
-        #endif
+        }
         super.invalidateLayoutWithContext(context)
         
     }
