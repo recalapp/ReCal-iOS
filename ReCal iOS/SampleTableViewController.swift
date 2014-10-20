@@ -40,8 +40,12 @@ class SampleTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
-
-        let testControl = SlidingSelectionControl(items: ["test", "12345678", "apple", "and", "oranges", "12345678", "apple", "and", "oranges", "12345678", "apple", "and", "oranges"])
+        for subview in cell.contentView.subviews {
+            if let test = subview as? SlidingSelectionControl {
+                return cell
+            }
+        }
+        let testControl = SlidingSelectionControl(items: ["test", "12345678", "apple", "and", "oranges", "12345678", "apple", "and", "oranges", "12345678", "apple", "and", "oranges", "apple", "and", "oranges", "apple", "and", "oranges"])
         let leadingConstraint = NSLayoutConstraint(item: testControl, attribute: .Leading, relatedBy: .Equal, toItem: cell.contentView, attribute: .Left, multiplier: 1.0, constant: 0.0)
         let trailingConstraint = NSLayoutConstraint(item: testControl, attribute: .Trailing, relatedBy: .Equal, toItem: cell.contentView, attribute: .Right, multiplier: 1.0, constant: 0.0)
         let topConstraint = NSLayoutConstraint(item: testControl, attribute: .Top, relatedBy: .Equal, toItem: cell.contentView, attribute: .Top, multiplier: 1.0, constant: 0.0)
@@ -50,7 +54,7 @@ class SampleTableViewController: UITableViewController {
         cell.contentView.addSubview(testControl)
         cell.contentView.addConstraints([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
         testControl.preferredMaxLayoutWidth = cell.contentView.frame.size.width // TODO put this in subview
-
+        testControl.layoutMargins = UIEdgeInsetsZero
         return cell
     }
 

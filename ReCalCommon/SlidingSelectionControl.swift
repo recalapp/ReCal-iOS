@@ -138,7 +138,7 @@ public class SlidingSelectionControl: UIControl {
         }
         let addConstraintForTrailingItem: (SlidingSelectionControlItem?)->Void = {(prevItemOpt) in
             if let prevItem = prevItemOpt {
-                let trailingConstraint = NSLayoutConstraint(item: prevItem, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1.0, constant: 0.0)
+                let trailingConstraint = NSLayoutConstraint(item: prevItem, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .RightMargin, multiplier: 1.0, constant: 0.0)
                 self.addConstraint(trailingConstraint)
                 self.slidingSelectionControlItemConstraints.push(trailingConstraint)
             }
@@ -161,7 +161,7 @@ public class SlidingSelectionControl: UIControl {
             runningHeight = max(runningHeight, itemSize.height)
             
             // constraints
-            let yConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: contentSize.height)
+            let yConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .TopMargin, multiplier: 1.0, constant: contentSize.height)
             if let prevItem = prevItemOpt {
                 let xConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Left, relatedBy: .Equal, toItem: prevItem, attribute: .Right, multiplier: 1.0, constant: 0.0)
                 self.addConstraints([xConstraint, yConstraint])
@@ -169,7 +169,7 @@ public class SlidingSelectionControl: UIControl {
                 self.slidingSelectionControlItemConstraints.push(yConstraint)
             }
             else {
-                let xConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Left, multiplier: 1.0, constant: 0.0)
+                let xConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .LeftMargin, multiplier: 1.0, constant: 0.0)
                 self.addConstraints([xConstraint, yConstraint])
                 self.slidingSelectionControlItemConstraints.push(xConstraint)
                 self.slidingSelectionControlItemConstraints.push(yConstraint)
@@ -179,6 +179,8 @@ public class SlidingSelectionControl: UIControl {
         addConstraintForTrailingItem(prevItemOpt)
         contentSize.width = max(contentSize.width, runningWidth)
         contentSize.height += runningHeight
+        contentSize.width += self.layoutMargins.left + self.layoutMargins.right
+        contentSize.height += self.layoutMargins.top + self.layoutMargins.bottom
         self.contentSize = contentSize
         self.setNeedsUpdateConstraints()
         self.invalidateIntrinsicContentSize()
@@ -188,8 +190,8 @@ public class SlidingSelectionControl: UIControl {
 /// MARK: Helper class
 class SlidingSelectionControlItem: UIControl {
     
-    private let xMargin:CGFloat = 8.0
-    private let yMargin:CGFloat = 8.0
+    private let xMargin:CGFloat = 0
+    private let yMargin:CGFloat = 0
     
     override var selected: Bool {
         didSet {
@@ -233,10 +235,10 @@ class SlidingSelectionControlItem: UIControl {
         self.label.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.addSubview(self.label)
         
-        let leadingConstraint = NSLayoutConstraint(item: self.label, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Left, multiplier: 1.0, constant: self.xMargin)
-        let trailingConstraint = NSLayoutConstraint(item: self.label, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1.0, constant: -self.xMargin)
-        let topConstraint = NSLayoutConstraint(item: self.label, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: self.yMargin)
-        let bottomConstraint = NSLayoutConstraint(item: self.label, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: -self.yMargin)
+        let leadingConstraint = NSLayoutConstraint(item: self.label, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .LeftMargin, multiplier: 1.0, constant: self.xMargin)
+        let trailingConstraint = NSLayoutConstraint(item: self.label, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .RightMargin, multiplier: 1.0, constant: -self.xMargin)
+        let topConstraint = NSLayoutConstraint(item: self.label, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .TopMargin, multiplier: 1.0, constant: self.yMargin)
+        let bottomConstraint = NSLayoutConstraint(item: self.label, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .BottomMargin, multiplier: 1.0, constant: -self.yMargin)
         self.addConstraints([leadingConstraint, topConstraint, trailingConstraint, bottomConstraint])
     }
     
@@ -253,6 +255,8 @@ class SlidingSelectionControlItem: UIControl {
         var size = self.label.intrinsicContentSize()
         size.width += 2 * self.xMargin
         size.height += 2 * self.yMargin
+        size.width += self.layoutMargins.right + self.layoutMargins.left
+        size.height += self.layoutMargins.top + self.layoutMargins.bottom
         return size
     }
     
