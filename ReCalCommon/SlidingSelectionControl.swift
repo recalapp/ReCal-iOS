@@ -10,17 +10,23 @@ import UIKit
 
 public class SlidingSelectionControl: UIControl {
     
-    private var contentSize: CGSize?
+    private let contentSize: CGSize?
+    private let slidingSelectionControlItems: [SlidingSelectionControlItem]
     
     required public init(coder aDecoder: NSCoder) {
+        self.slidingSelectionControlItems = []
         super.init(coder: aDecoder)
     }
     
     override public init(frame: CGRect) {
+        self.slidingSelectionControlItems = []
         super.init(frame: frame)
     }
     
-    public init(items: [String]) {
+    public init(items: [String], initialSelection: Int = 0) {
+        assert(initialSelection >= 0, "Initial selection must be an array index, so it cannot be negative")
+        assert(initialSelection < items.count, "Initial selection must be an array index, so it must be in the bounds of the array")
+        self.slidingSelectionControlItems = []
         super.init()
         self.setTranslatesAutoresizingMaskIntoConstraints(false)
         var prevItemOpt: SlidingSelectionControlItem? = nil
@@ -47,8 +53,41 @@ public class SlidingSelectionControl: UIControl {
                 self.addConstraints([xConstraint, yConstraint])
             }
             prevItemOpt = slidingSelectionControlItem
+            
+            // actions
+            slidingSelectionControlItem.addTarget(self, action: "updateSelection:forEvent:", forControlEvents: UIControlEvents.AllTouchEvents)
+            
+            // add to array
+            self.slidingSelectionControlItems.append(slidingSelectionControlItem)
         }
+        self.slidingSelectionControlItems[initialSelection].selected = true
         self.contentSize = contentSize
+    }
+    
+    func updateSelection(sender: SlidingSelectionControlItem?, forEvent eventOpt: UIEvent?) {
+        if let event = eventOpt {
+            let touchOpt = event.allTouches()?.anyObject() as UITouch?
+            if let touch = touchOpt {
+                // check if touch is in any view, if not, we don't process it (keeping last selection)
+                let touchInSomeView = self.slidingSelectionControlItems.reduce(false, combine: {(found, item) in
+                    if found {
+                        return true
+                    }
+                    return item.containsTouch(touch)
+                })
+                
+                // process touch
+                if touchInSomeView {
+                    for slidingSelectionControlItem in self.slidingSelectionControlItems {
+                        if slidingSelectionControlItem.containsTouch(touch) {
+                            slidingSelectionControlItem.selected = true
+                        } else {
+                            slidingSelectionControlItem.selected = false
+                        }
+                    }
+                }
+            }
+        }
     }
     
     override public func intrinsicContentSize() -> CGSize {
@@ -71,6 +110,15 @@ public class SlidingSelectionControl: UIControl {
 }
 
 class SlidingSelectionControlItem: UIControl {
+    
+    private let xMargin:CGFloat = 8.0
+    private let yMargin:CGFloat = 8.0
+    
+    override var selected: Bool {
+        didSet {
+            self.updateAppearance()
+        }
+    }
     
     var text: String {
         get {
@@ -108,15 +156,31 @@ class SlidingSelectionControlItem: UIControl {
         self.label.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.addSubview(self.label)
         
-        let leadingConstraint = NSLayoutConstraint(item: self.label, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Left, multiplier: 1.0, constant: 0.0)
-        let trailingConstraint = NSLayoutConstraint(item: self.label, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1.0, constant: 0.0)
-        let topConstraint = NSLayoutConstraint(item: self.label, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: 0.0)
-        let bottomConstraint = NSLayoutConstraint(item: self.label, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
+        let leadingConstraint = NSLayoutConstraint(item: self.label, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Left, multiplier: 1.0, constant: self.xMargin)
+        let trailingConstraint = NSLayoutConstraint(item: self.label, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1.0, constant: -self.xMargin)
+        let topConstraint = NSLayoutConstraint(item: self.label, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: self.yMargin)
+        let bottomConstraint = NSLayoutConstraint(item: self.label, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: -self.yMargin)
         self.addConstraints([leadingConstraint, topConstraint, trailingConstraint, bottomConstraint])
     }
     
+    private func updateAppearance() {
+        if self.selected {
+            self.backgroundColor = UIColor.greenColor()
+        }
+        else {
+            self.backgroundColor = UIColor.clearColor()
+        }
+    }
+    
     override func intrinsicContentSize() -> CGSize {
-        let size = self.label.intrinsicContentSize()
+        var size = self.label.intrinsicContentSize()
+        size.width += 2 * self.xMargin
+        size.height += 2 * self.yMargin
         return size
+    }
+    
+    func containsTouch(touch: UITouch)-> Bool {
+        let location = touch.locationInView(self)
+        return self.bounds.contains(location)
     }
 }
