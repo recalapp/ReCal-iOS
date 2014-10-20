@@ -13,6 +13,15 @@ public class SlidingSelectionControl: UIControl {
     private var contentSize: CGSize?
     private let slidingSelectionControlItems: [SlidingSelectionControlItem]
     private var slidingSelectionControlItemConstraints = Stack<NSLayoutConstraint>()
+    public var preferredMaxLayoutWidth: CGFloat = 0.0
+    
+    private var defaultPreferredMaxLayoutWidth: CGFloat {
+        let givenWidth = self.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).width
+        if givenWidth <= 0.0 {
+            return CGFloat.max
+        }
+        return givenWidth
+    }
     
     required public init(coder aDecoder: NSCoder) {
         self.slidingSelectionControlItems = []
@@ -30,6 +39,7 @@ public class SlidingSelectionControl: UIControl {
         self.slidingSelectionControlItems = []
         super.init()
         self.setTranslatesAutoresizingMaskIntoConstraints(false)
+        //self.setTranslatesAutoresizingMaskIntoConstraints(false)
         for item in items {
             // set up item
             let slidingSelectionControlItem = SlidingSelectionControlItem()
@@ -82,10 +92,9 @@ public class SlidingSelectionControl: UIControl {
     }
     
     override public func updateConstraints() {
-        let givenWidth = self.systemLayoutSizeFittingSize(UILayoutFittingExpandedSize).width
+        let givenWidth = self.preferredMaxLayoutWidth <= 0.0 ? self.defaultPreferredMaxLayoutWidth : self.preferredMaxLayoutWidth
         if givenWidth < self.intrinsicContentSize().width {
             self.updateConstraintToFitWidth(givenWidth)
-            
             // safe to continue, because invalidation doesn't actually trigger an update on constraints.
         }
         super.updateConstraints()
@@ -96,6 +105,17 @@ public class SlidingSelectionControl: UIControl {
         while let oldConstraint = self.slidingSelectionControlItemConstraints.pop() {
             self.removeConstraint(oldConstraint)
         }
+        let updateContentSizeWithRunningSize: (CGSize, CGSize)->CGSize = {(oldContentSize, runningContentSize) in
+            let newContentSize = CGSize(width: max(oldContentSize.width, runningContentSize.width), height: oldContentSize.height + runningContentSize.height)
+            return newContentSize
+        }
+        let addConstraintForTrailingItem: (SlidingSelectionControlItem?)->Void = {(prevItemOpt) in
+            if let prevItem = prevItemOpt {
+                let trailingConstraint = NSLayoutConstraint(item: prevItem, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1.0, constant: 0.0)
+                self.addConstraint(trailingConstraint)
+                self.slidingSelectionControlItemConstraints.push(trailingConstraint)
+            }
+        }
         var prevItemOpt: SlidingSelectionControlItem? = nil
         var contentSize = CGSizeZero
         var runningWidth: CGFloat = 0.0
@@ -104,10 +124,10 @@ public class SlidingSelectionControl: UIControl {
             // update content size
             let itemSize = slidingSelectionControlItem.intrinsicContentSize()
             if runningWidth + itemSize.width > maxWidth {
-                contentSize.width = max(contentSize.width, runningWidth)
-                contentSize.height += runningHeight
+                contentSize = updateContentSizeWithRunningSize(contentSize, CGSize(width: runningWidth, height: runningHeight))
                 runningHeight = 0
                 runningWidth = 0
+                addConstraintForTrailingItem(prevItemOpt)
                 prevItemOpt = nil
             }
             runningWidth += itemSize.width
@@ -129,6 +149,7 @@ public class SlidingSelectionControl: UIControl {
             }
             prevItemOpt = slidingSelectionControlItem
         }
+        addConstraintForTrailingItem(prevItemOpt)
         contentSize.width = max(contentSize.width, runningWidth)
         contentSize.height += runningHeight
         self.contentSize = contentSize

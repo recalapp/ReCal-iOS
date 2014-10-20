@@ -16,6 +16,7 @@
 		811D482219ED7EB000E3F360 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811D482119ED7EB000E3F360 /* Images.xcassets */; };
 		811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811D482319ED7EB000E3F360 /* LaunchScreen.xib */; };
 		811D483119ED7EB100E3F360 /* ReCal_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */; };
+		811E64CA19F56681007B0148 /* SampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E64C919F56681007B0148 /* SampleTableViewController.swift */; };
 		8124969019F17F440081AFB2 /* TimeHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */; };
 		8124969319F18A620081AFB2 /* TimeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124969119F18A620081AFB2 /* TimeHeaderView.swift */; };
 		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
@@ -100,6 +101,7 @@
 		811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		811D482F19ED7EB100E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_iOSTests.swift; sourceTree = "<group>"; };
+		811E64C919F56681007B0148 /* SampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewController.swift; sourceTree = "<group>"; };
 		8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderBackgroundView.swift; sourceTree = "<group>"; };
 		8124969119F18A620081AFB2 /* TimeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderView.swift; sourceTree = "<group>"; };
 		8124969219F18A620081AFB2 /* TimeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeHeaderView.xib; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				811D481719ED7EB000E3F360 /* AppDelegate.swift */,
+				811E64C919F56681007B0148 /* SampleTableViewController.swift */,
 				811D481C19ED7EB000E3F360 /* ViewController.swift */,
 				811D481E19ED7EB000E3F360 /* Main.storyboard */,
 				811D482119ED7EB000E3F360 /* Images.xcassets */,
@@ -497,6 +500,7 @@
 				8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */,
 				819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */,
 				81D270D819F0946100DED75D /* HeaderView.swift in Sources */,
+				811E64CA19F56681007B0148 /* SampleTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
