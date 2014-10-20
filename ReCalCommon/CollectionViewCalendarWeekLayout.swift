@@ -143,23 +143,23 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         }
         
         self.dayColumnHeaderBackgroundLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
-            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.toRaw(), withIndexPath: indexPath)
+            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.rawValue, withIndexPath: indexPath)
         }
         
         self.dayColumnHeaderLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
-            return UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.toRaw(), withIndexPath: indexPath)
+            return UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.rawValue, withIndexPath: indexPath)
         }
         self.timeRowHeaderBackgroundLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
-            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.TimeRowHeaderBackground.toRaw(), withIndexPath: indexPath)
+            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.TimeRowHeaderBackground.rawValue, withIndexPath: indexPath)
         }
         self.timeRowHeaderLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
-            return UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.TimeRowHeader.toRaw(), withIndexPath: indexPath)
+            return UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.TimeRowHeader.rawValue, withIndexPath: indexPath)
         }
         self.verticalGridLineLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
-            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.VerticalGridLine.toRaw(), withIndexPath: indexPath)
+            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.VerticalGridLine.rawValue, withIndexPath: indexPath)
         }
         self.horizontalGridLineLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
-            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.HorizontalGridLine.toRaw(), withIndexPath: indexPath)
+            return UICollectionViewLayoutAttributes(forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.HorizontalGridLine.rawValue, withIndexPath: indexPath)
         }
         
         if debug {
@@ -196,11 +196,14 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     private func offsetYForTime(time: NSDate)-> CGFloat {
         // get how many hours this is away from min 
         let topMargin = self.dayColumnHeaderHeight
-        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-        let component = calendar.components((NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute), fromDate: time)
-        let curHour: Float = Float(component.hour) + Float(component.minute)/60.0
-        let deltaHour = curHour - Float(self.minimumHour)
-        return (deltaHour <= 0.0 ? 0.0 : floor(CGFloat(deltaHour) * self.hourSlotHeight)) + topMargin
+        let calendarOpt = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+        if let calendar = calendarOpt {
+            let component = calendar.components((NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute), fromDate: time)
+            let curHour: Float = Float(component.hour) + Float(component.minute)/60.0
+            let deltaHour = curHour - Float(self.minimumHour)
+            return (deltaHour <= 0.0 ? 0.0 : floor(CGFloat(deltaHour) * self.hourSlotHeight)) + topMargin
+        }
+        assert(false, "Failure to create a calendar")
     }
     
     private func calculateLayoutAttributes()
@@ -398,7 +401,6 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             self.dayColumnHeaderBackgroundLayoutAttributesCache.clearCache()
             context.contentOffsetAdjustment.x = 0
         }
-        
         // TODO specific items
         if debug {
             println("end invalidation")
@@ -425,7 +427,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     
     override public func layoutAttributesForDecorationViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
-        if let kind = CollectionViewCalendarWeekLayoutDecorationViewKind.fromRaw(elementKind) {
+        if let kind = CollectionViewCalendarWeekLayoutDecorationViewKind(rawValue: elementKind) {
             switch kind {
             case .DayColumnHeaderBackground:
                 return self.dayColumnHeaderBackgroundLayoutAttributesCache[indexPath]
@@ -445,7 +447,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     
     override public func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
-        if let kind = CollectionViewCalendarWeekLayoutSupplementaryViewKind.fromRaw(elementKind) {
+        if let kind = CollectionViewCalendarWeekLayoutSupplementaryViewKind(rawValue: elementKind) {
             switch kind {
             case .DayColumnHeader:
                 return self.dayColumnHeaderLayoutAttributesCache[indexPath]

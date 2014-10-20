@@ -10,11 +10,11 @@ import UIKit
 
 public class SlidingSelectionControl: UIControl {
     
-    private var contentSize: CGSize?
-    private let slidingSelectionControlItems: [SlidingSelectionControlItem]
-    private var slidingSelectionControlItemConstraints = Stack<NSLayoutConstraint>()
+    /// MARK: Properties
+    /// The preferred max layout width for intrinsic content size
     public var preferredMaxLayoutWidth: CGFloat = 0.0
     
+    /// The default value for preferredMaxLayoutWidth
     private var defaultPreferredMaxLayoutWidth: CGFloat {
         let givenWidth = self.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).width
         if givenWidth <= 0.0 {
@@ -23,6 +23,24 @@ public class SlidingSelectionControl: UIControl {
         return givenWidth
     }
     
+    /// Cache for intrinsic content size
+    private var contentSize: CGSize?
+    
+    /// An array of all the SlidingSelectionControlItem
+    private let slidingSelectionControlItems: [SlidingSelectionControlItem]
+    
+    /// A stack of all the constraints associated with slidingSelectionControlItems
+    lazy private var slidingSelectionControlItemConstraints = Stack<NSLayoutConstraint>()
+    
+    /// The current selected index
+    public var selectedIndex: Int = 0 {
+        willSet {
+            assert(newValue >= 0, "Selected index must be greater than or equal 0")
+            assert(newValue < self.slidingSelectionControlItems.count, "Selected index must be smaller than the number of possible items")
+        }
+    }
+    
+    /// MARK: Constructors
     required public init(coder aDecoder: NSCoder) {
         self.slidingSelectionControlItems = []
         super.init(coder: aDecoder)
@@ -53,9 +71,12 @@ public class SlidingSelectionControl: UIControl {
             self.slidingSelectionControlItems.append(slidingSelectionControlItem)
         }
         self.slidingSelectionControlItems[initialSelection].selected = true
+        self.selectedIndex = initialSelection
         self.updateConstraintToFitWidth(CGFloat.max)
     }
     
+    /// MARK: Methods
+    /// Update selection based on event
     func updateSelection(sender: SlidingSelectionControlItem?, forEvent eventOpt: UIEvent?) {
         if let event = eventOpt {
             let touchOpt = event.allTouches()?.anyObject() as UITouch?
@@ -70,9 +91,14 @@ public class SlidingSelectionControl: UIControl {
                 
                 // process touch
                 if touchInSomeView {
-                    for slidingSelectionControlItem in self.slidingSelectionControlItems {
+                    for (index, slidingSelectionControlItem) in enumerate(self.slidingSelectionControlItems) {
                         if slidingSelectionControlItem.containsTouch(touch) {
                             slidingSelectionControlItem.selected = true
+                            let oldSelected = self.selectedIndex
+                            self.selectedIndex = oldSelected
+                            if oldSelected != self.selectedIndex {
+                                self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
+                            }
                         } else {
                             slidingSelectionControlItem.selected = false
                         }
@@ -100,6 +126,7 @@ public class SlidingSelectionControl: UIControl {
         super.updateConstraints()
     }
     
+    /// Layout the slidingSelectionControlItems to fit maxWidth
     private func updateConstraintToFitWidth(maxWidth: CGFloat) {
         // remove old constraints
         while let oldConstraint = self.slidingSelectionControlItemConstraints.pop() {
@@ -156,18 +183,9 @@ public class SlidingSelectionControl: UIControl {
         self.setNeedsUpdateConstraints()
         self.invalidateIntrinsicContentSize()
     }
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect)
-    {
-        // Drawing code
-    }
-    */
-
 }
 
+/// MARK: Helper class
 class SlidingSelectionControlItem: UIControl {
     
     private let xMargin:CGFloat = 8.0

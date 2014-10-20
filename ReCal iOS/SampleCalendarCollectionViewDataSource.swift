@@ -24,9 +24,9 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
         let curDate = NSDate()
         let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
         let componentsFromDate:(NSDate)->NSDateComponents = {(date) in
-            return calendar.components((NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.HourCalendarUnit | NSCalendarUnit.SecondCalendarUnit), fromDate: date)
+            return calendar!.components((NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.HourCalendarUnit | NSCalendarUnit.SecondCalendarUnit), fromDate: date)
         }
-        let dateFromComponents:(NSDateComponents)->NSDate = {(components) in calendar.dateFromComponents(components)! }
+        let dateFromComponents:(NSDateComponents)->NSDate = {(components) in calendar!.dateFromComponents(components)! }
         var components = componentsFromDate(curDate)
         components.hour = 8
         components.minute = 0
@@ -48,6 +48,9 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
         end = dateFromComponents(components)
         let event3 = TimeInterval(start: start, end: end)
         self.dummyData = [[event1, event2],[],[event3],[event1],[event2,event3],[],[event2],[event1, event2],[],[event3],[event1],[event2,event3],[],[event2],[event1, event2],[],[event3],[event1],[event2,event3],[],[event2],[event1, event2],[],[event3],[event1],[event2,event3],[],[event2],[event1, event2],[],[event3],[event1],[event2,event3],[],[event2],[event1, event2],[],[event3],[event1],[event2,event3],[],[event2],[event1, event2],[],[event3],[event1],[event2,event3],[],[event2]]
+        self.dummyData += self.dummyData
+        self.dummyData += self.dummyData
+        self.dummyData += self.dummyData
     }
     // MARK: UICollectionViewDataSource
    
@@ -66,7 +69,7 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        if let viewKind = CollectionViewCalendarWeekLayoutSupplementaryViewKind.fromRaw(kind) {
+        if let viewKind = CollectionViewCalendarWeekLayoutSupplementaryViewKind(rawValue: kind) {
             switch viewKind {
             case .DayColumnHeader:
                 let reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: dayHeaderViewIdentifier, forIndexPath: indexPath) as UICollectionReusableView

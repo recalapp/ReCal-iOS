@@ -18,19 +18,19 @@ class SampleCalendarViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        if let collectionView = self.collectionView {
-            collectionView.dataSource = self.weekDataSource
-            collectionView.registerNib(UINib(nibName: "HeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.toRaw(), withReuseIdentifier: dayHeaderViewIdentifier)
-            collectionView.registerNib(UINib(nibName: "TimeHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.TimeRowHeader.toRaw(), withReuseIdentifier: timeHeaderViewIdentifier)
-            collectionView.registerNib(UINib(nibName: "EventsCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: eventCellIdentifier)
-            if let layout = self.collectionView?.collectionViewLayout as? CollectionViewCalendarWeekLayout {
-                layout.dataSource = self.weekDataSource
-                layout.registerClass(HeaderBackgroundView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.toRaw())
-                layout.registerClass(GridLineView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.VerticalGridLine.toRaw())
-                layout.registerClass(TimeHeaderBackgroundView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.TimeRowHeaderBackground.toRaw())
-                layout.registerClass(GridLineView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.HorizontalGridLine.toRaw())
-            }
+        let collectionView = self.collectionView
+        collectionView.dataSource = self.weekDataSource
+        collectionView.registerNib(UINib(nibName: "HeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.rawValue, withReuseIdentifier: dayHeaderViewIdentifier)
+        collectionView.registerNib(UINib(nibName: "TimeHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.TimeRowHeader.rawValue, withReuseIdentifier: timeHeaderViewIdentifier)
+        collectionView.registerNib(UINib(nibName: "EventsCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: eventCellIdentifier)
+        if let layout = collectionView.collectionViewLayout as? CollectionViewCalendarWeekLayout {
+            layout.dataSource = self.weekDataSource
+            layout.registerClass(HeaderBackgroundView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.rawValue)
+            layout.registerClass(GridLineView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.VerticalGridLine.rawValue)
+            layout.registerClass(TimeHeaderBackgroundView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.TimeRowHeaderBackground.rawValue)
+            layout.registerClass(GridLineView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.HorizontalGridLine.rawValue)
         }
+        
         else {
             assert(false, "Collection View not initialized")
         }
