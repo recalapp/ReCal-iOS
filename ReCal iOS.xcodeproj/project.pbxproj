@@ -50,6 +50,7 @@
 		81FCD2AC19F7E3FD00B6DC2D /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		81FCD2B119F7E41900B6DC2D /* CourseSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */; };
 		81FCD2B319F7EBF100B6DC2D /* CourseSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD2B219F7EBF100B6DC2D /* CourseSearchTableViewController.swift */; };
+		81FCD2B519F7F9C000B6DC2D /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD2B419F7F9C000B6DC2D /* CourseDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +177,7 @@
 		81FCD2A319F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_Course_SelectionTests.swift; sourceTree = "<group>"; };
 		81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionViewController.swift; sourceTree = "<group>"; };
 		81FCD2B219F7EBF100B6DC2D /* CourseSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSearchTableViewController.swift; sourceTree = "<group>"; };
+		81FCD2B419F7F9C000B6DC2D /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -395,6 +397,7 @@
 				81FCD28B19F7E3E200B6DC2D /* AppDelegate.swift */,
 				81FCD28F19F7E3E200B6DC2D /* ViewController.swift */,
 				81FCD2B219F7EBF100B6DC2D /* CourseSearchTableViewController.swift */,
+				81FCD2B419F7F9C000B6DC2D /* CourseDetailsViewController.swift */,
 				81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */,
 				81FCD29119F7E3E200B6DC2D /* Main.storyboard */,
 				81FCD29419F7E3E200B6DC2D /* Images.xcassets */,
@@ -721,6 +724,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81FCD2B519F7F9C000B6DC2D /* CourseDetailsViewController.swift in Sources */,
 				81FCD2B119F7E41900B6DC2D /* CourseSelectionViewController.swift in Sources */,
 				81FCD29019F7E3E200B6DC2D /* ViewController.swift in Sources */,
 				81FCD2B319F7EBF100B6DC2D /* CourseSearchTableViewController.swift in Sources */,
