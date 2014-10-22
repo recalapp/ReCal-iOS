@@ -14,7 +14,7 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         return self.view.bounds.size.width
     }
     
-    private let sidebarRightBuffer: CGFloat = 10.0
+    private let sidebarRightBuffer: CGFloat = 20.0
     
     private var sidebarWidth: CGFloat {
         get {
@@ -22,9 +22,23 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         }
     }
     
+    private(set) public var sidebarIsShown: Bool = true {
+        didSet {
+            if let scrollView = self.sidebarContainerScrollView {
+                if sidebarIsShown {
+                    self.view.addGestureRecognizer(scrollView.panGestureRecognizer)
+                } else {
+                    scrollView.addGestureRecognizer(scrollView.panGestureRecognizer)
+                }
+            }
+        }
+    }
+    
+    private var sidebarContainerScrollView: UIScrollView?
+    
     private var sidebarView: UIVisualEffectView?
     
-    internal(set) public var sidebarContentView: UIView?
+    private(set) public var sidebarContentView: UIView?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +73,7 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
+        self.sidebarContainerScrollView = scrollView
         self.view.addSubview(scrollView)
         let leadingConstraint = NSLayoutConstraint(item: scrollView, attribute: .Leading, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1, constant: 0)
         let trailingConstraint = NSLayoutConstraint(item: scrollView, attribute: .Trailing, relatedBy: .Equal, toItem: self.view, attribute: .Right, multiplier: 1, constant: 0)
@@ -81,8 +96,10 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         // TODO might be better to not use this at all. can set content offset at will begin decelerating
         if velocity.x > 0 || targetContentOffset.memory.x > self.sidebarWidth/2 {
             targetContentOffset.put(CGPoint(x:self.sidebarWidth, y:0))
+            self.sidebarIsShown = false
         } else {
-            targetContentOffset.put(CGPoint(x: -self.sidebarLeftBuffer, y: 0))
+            targetContentOffset.put(CGPointZero)
+            self.sidebarIsShown = true
         }
     }
     
