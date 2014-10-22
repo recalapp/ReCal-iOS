@@ -38,11 +38,26 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
     
     private var sidebarView: UIVisualEffectView?
     
+    private(set) public var primaryContentView: UIView?
+    
     private(set) public var sidebarContentView: UIView?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
+        let contentView = UIView()
+        contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        contentView.backgroundColor = UIColor.greenColor()
+        self.view.addSubview(contentView)
+        self.primaryContentView = contentView
+        let leadingConstraint = NSLayoutConstraint(item: contentView, attribute: .Leading, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1, constant: 0)
+        let trailingConstraint = NSLayoutConstraint(item: contentView, attribute: .Trailing, relatedBy: .Equal, toItem: self.view, attribute: .Right, multiplier: 1, constant: 0)
+        let topConstraint = NSLayoutConstraint(item: contentView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1, constant: 0)
+        let bottomConstraint = NSLayoutConstraint(item: contentView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1, constant: 0)
+        self.view.addConstraints([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
+        self.setUpSidebar()
+    }
+    
+    private func setUpSidebar() {
         // sidebar view
         let sidebarView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
         self.sidebarView = sidebarView
@@ -108,7 +123,6 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         // Dispose of any resources that can be recreated.
     }
     
-
     /*
     // MARK: - Navigation
 
