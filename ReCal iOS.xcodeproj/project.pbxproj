@@ -39,6 +39,16 @@
 		81D9F27019EF4D9600F987B9 /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */; };
 		81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */; };
+		81FCD28C19F7E3E200B6DC2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28B19F7E3E200B6DC2D /* AppDelegate.swift */; };
+		81FCD28E19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28D19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld */; };
+		81FCD29019F7E3E200B6DC2D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28F19F7E3E200B6DC2D /* ViewController.swift */; };
+		81FCD29319F7E3E200B6DC2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81FCD29119F7E3E200B6DC2D /* Main.storyboard */; };
+		81FCD29519F7E3E200B6DC2D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81FCD29419F7E3E200B6DC2D /* Images.xcassets */; };
+		81FCD29819F7E3E200B6DC2D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81FCD29619F7E3E200B6DC2D /* LaunchScreen.xib */; };
+		81FCD2A419F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD2A319F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift */; };
+		81FCD2AB19F7E3FD00B6DC2D /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
+		81FCD2AC19F7E3FD00B6DC2D /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		81FCD2B119F7E41900B6DC2D /* CourseSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +80,20 @@
 			remoteGlobalIDString = 81D9F25A19EF4D9600F987B9;
 			remoteInfo = ReCalCommon;
 		};
+		81FCD29E19F7E3E200B6DC2D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81FCD28619F7E3E200B6DC2D;
+			remoteInfo = "ReCal Course Selection";
+		};
+		81FCD2AD19F7E3FD00B6DC2D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81D9F25A19EF4D9600F987B9;
+			remoteInfo = ReCalCommon;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -80,6 +104,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				81D9F27019EF4D9600F987B9 /* ReCalCommon.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81FCD2AF19F7E3FD00B6DC2D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				81FCD2AC19F7E3FD00B6DC2D /* ReCalCommon.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,6 +163,17 @@
 		81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCalCommonTests.swift; sourceTree = "<group>"; };
 		81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSidebarViewController.swift; sourceTree = "<group>"; };
 		81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayScrollView.swift; sourceTree = "<group>"; };
+		81FCD28719F7E3E200B6DC2D /* ReCal Course Selection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal Course Selection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81FCD28A19F7E3E200B6DC2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81FCD28B19F7E3E200B6DC2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		81FCD28F19F7E3E200B6DC2D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		81FCD29219F7E3E200B6DC2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		81FCD29419F7E3E200B6DC2D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		81FCD29719F7E3E200B6DC2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		81FCD29D19F7E3E200B6DC2D /* ReCal Course SelectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal Course SelectionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81FCD2A219F7E3E200B6DC2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81FCD2A319F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_Course_SelectionTests.swift; sourceTree = "<group>"; };
+		81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +206,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81FCD28419F7E3E200B6DC2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81FCD2AB19F7E3FD00B6DC2D /* ReCalCommon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81FCD29A19F7E3E200B6DC2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -178,6 +239,8 @@
 				811D482D19ED7EB100E3F360 /* ReCal iOSTests */,
 				81D9F25C19EF4D9600F987B9 /* ReCalCommon */,
 				81D9F26819EF4D9600F987B9 /* ReCalCommonTests */,
+				81FCD28819F7E3E200B6DC2D /* ReCal Course Selection */,
+				81FCD2A019F7E3E200B6DC2D /* ReCal Course SelectionTests */,
 				811D481319ED7EB000E3F360 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -189,6 +252,8 @@
 				811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */,
 				81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */,
 				81D9F26519EF4D9600F987B9 /* ReCalCommonTests.xctest */,
+				81FCD28719F7E3E200B6DC2D /* ReCal Course Selection.app */,
+				81FCD29D19F7E3E200B6DC2D /* ReCal Course SelectionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -322,6 +387,46 @@
 			name = SlidingSidebarViewController;
 			sourceTree = "<group>";
 		};
+		81FCD28819F7E3E200B6DC2D /* ReCal Course Selection */ = {
+			isa = PBXGroup;
+			children = (
+				81FCD28B19F7E3E200B6DC2D /* AppDelegate.swift */,
+				81FCD28F19F7E3E200B6DC2D /* ViewController.swift */,
+				81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */,
+				81FCD29119F7E3E200B6DC2D /* Main.storyboard */,
+				81FCD29419F7E3E200B6DC2D /* Images.xcassets */,
+				81FCD29619F7E3E200B6DC2D /* LaunchScreen.xib */,
+				81FCD28D19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld */,
+				81FCD28919F7E3E200B6DC2D /* Supporting Files */,
+			);
+			path = "ReCal Course Selection";
+			sourceTree = "<group>";
+		};
+		81FCD28919F7E3E200B6DC2D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				81FCD28A19F7E3E200B6DC2D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		81FCD2A019F7E3E200B6DC2D /* ReCal Course SelectionTests */ = {
+			isa = PBXGroup;
+			children = (
+				81FCD2A319F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift */,
+				81FCD2A119F7E3E200B6DC2D /* Supporting Files */,
+			);
+			path = "ReCal Course SelectionTests";
+			sourceTree = "<group>";
+		};
+		81FCD2A119F7E3E200B6DC2D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				81FCD2A219F7E3E200B6DC2D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -410,6 +515,43 @@
 			productReference = 81D9F26519EF4D9600F987B9 /* ReCalCommonTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		81FCD28619F7E3E200B6DC2D /* ReCal Course Selection */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81FCD2A919F7E3E200B6DC2D /* Build configuration list for PBXNativeTarget "ReCal Course Selection" */;
+			buildPhases = (
+				81FCD28319F7E3E200B6DC2D /* Sources */,
+				81FCD28419F7E3E200B6DC2D /* Frameworks */,
+				81FCD28519F7E3E200B6DC2D /* Resources */,
+				81FCD2AF19F7E3FD00B6DC2D /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				81FCD2AE19F7E3FD00B6DC2D /* PBXTargetDependency */,
+			);
+			name = "ReCal Course Selection";
+			productName = "ReCal Course Selection";
+			productReference = 81FCD28719F7E3E200B6DC2D /* ReCal Course Selection.app */;
+			productType = "com.apple.product-type.application";
+		};
+		81FCD29C19F7E3E200B6DC2D /* ReCal Course SelectionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81FCD2AA19F7E3E200B6DC2D /* Build configuration list for PBXNativeTarget "ReCal Course SelectionTests" */;
+			buildPhases = (
+				81FCD29919F7E3E200B6DC2D /* Sources */,
+				81FCD29A19F7E3E200B6DC2D /* Frameworks */,
+				81FCD29B19F7E3E200B6DC2D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				81FCD29F19F7E3E200B6DC2D /* PBXTargetDependency */,
+			);
+			name = "ReCal Course SelectionTests";
+			productName = "ReCal Course SelectionTests";
+			productReference = 81FCD29D19F7E3E200B6DC2D /* ReCal Course SelectionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -429,11 +571,17 @@
 					};
 					81D9F25A19EF4D9600F987B9 = {
 						CreatedOnToolsVersion = 6.0.1;
-						DevelopmentTeam = JKWEABKQ7A;
 					};
 					81D9F26419EF4D9600F987B9 = {
 						CreatedOnToolsVersion = 6.0.1;
 						TestTargetID = 811D481119ED7EB000E3F360;
+					};
+					81FCD28619F7E3E200B6DC2D = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					81FCD29C19F7E3E200B6DC2D = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 81FCD28619F7E3E200B6DC2D;
 					};
 				};
 			};
@@ -454,6 +602,8 @@
 				811D482919ED7EB100E3F360 /* ReCal iOSTests */,
 				81D9F25A19EF4D9600F987B9 /* ReCalCommon */,
 				81D9F26419EF4D9600F987B9 /* ReCalCommonTests */,
+				81FCD28619F7E3E200B6DC2D /* ReCal Course Selection */,
+				81FCD29C19F7E3E200B6DC2D /* ReCal Course SelectionTests */,
 			);
 		};
 /* End PBXProject section */
@@ -487,6 +637,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		81D9F26319EF4D9600F987B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81FCD28519F7E3E200B6DC2D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81FCD29319F7E3E200B6DC2D /* Main.storyboard in Resources */,
+				81FCD29819F7E3E200B6DC2D /* LaunchScreen.xib in Resources */,
+				81FCD29519F7E3E200B6DC2D /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81FCD29B19F7E3E200B6DC2D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -547,6 +714,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81FCD28319F7E3E200B6DC2D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81FCD2B119F7E41900B6DC2D /* CourseSelectionViewController.swift in Sources */,
+				81FCD29019F7E3E200B6DC2D /* ViewController.swift in Sources */,
+				81FCD28C19F7E3E200B6DC2D /* AppDelegate.swift in Sources */,
+				81FCD28E19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81FCD29919F7E3E200B6DC2D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81FCD2A419F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -570,6 +756,16 @@
 			target = 81D9F25A19EF4D9600F987B9 /* ReCalCommon */;
 			targetProxy = 81D9F27119EF4D9600F987B9 /* PBXContainerItemProxy */;
 		};
+		81FCD29F19F7E3E200B6DC2D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81FCD28619F7E3E200B6DC2D /* ReCal Course Selection */;
+			targetProxy = 81FCD29E19F7E3E200B6DC2D /* PBXContainerItemProxy */;
+		};
+		81FCD2AE19F7E3FD00B6DC2D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81D9F25A19EF4D9600F987B9 /* ReCalCommon */;
+			targetProxy = 81FCD2AD19F7E3FD00B6DC2D /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -585,6 +781,22 @@
 			isa = PBXVariantGroup;
 			children = (
 				811D482419ED7EB000E3F360 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		81FCD29119F7E3E200B6DC2D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81FCD29219F7E3E200B6DC2D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		81FCD29619F7E3E200B6DC2D /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81FCD29719F7E3E200B6DC2D /* Base */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -802,6 +1014,74 @@
 			};
 			name = Release;
 		};
+		81FCD2A519F7E3E200B6DC2D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal Course Selection/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		81FCD2A619F7E3E200B6DC2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = "ReCal Course Selection/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		81FCD2A719F7E3E200B6DC2D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal Course SelectionTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal Course Selection.app/ReCal Course Selection";
+			};
+			name = Debug;
+		};
+		81FCD2A819F7E3E200B6DC2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal Course SelectionTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal Course Selection.app/ReCal Course Selection";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -850,6 +1130,22 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		81FCD2A919F7E3E200B6DC2D /* Build configuration list for PBXNativeTarget "ReCal Course Selection" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81FCD2A519F7E3E200B6DC2D /* Debug */,
+				81FCD2A619F7E3E200B6DC2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		81FCD2AA19F7E3E200B6DC2D /* Build configuration list for PBXNativeTarget "ReCal Course SelectionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81FCD2A719F7E3E200B6DC2D /* Debug */,
+				81FCD2A819F7E3E200B6DC2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
@@ -860,6 +1156,14 @@
 			);
 			currentVersion = 811D481A19ED7EB000E3F360 /* ReCal_iOS.xcdatamodel */;
 			path = ReCal_iOS.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		81FCD28D19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+			);
+			path = ReCal_Course_Selection.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

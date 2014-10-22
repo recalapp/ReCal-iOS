@@ -50,7 +50,6 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         super.viewDidLoad()
         let contentView = UIView()
         contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        contentView.backgroundColor = UIColor.greenColor()
         self.view.addSubview(contentView)
         self.primaryContentView = contentView
         self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsetsZero))
@@ -65,7 +64,6 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         // sidebar content view
         let sidebarContentView = UIView()
         sidebarContentView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        sidebarContentView.backgroundColor = UIColor.redColor()
         self.sidebarContentView = sidebarContentView
         self.sidebarView?.contentView.addSubview(sidebarContentView)
         
