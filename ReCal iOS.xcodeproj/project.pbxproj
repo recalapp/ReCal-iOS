@@ -22,14 +22,11 @@
 		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
 		8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */; };
 		8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */; };
-		8172B96819F562590070E7DF /* BaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96019F562590070E7DF /* BaseDataSource.swift */; };
-		8172B96919F562590070E7DF /* BasicDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96119F562590070E7DF /* BasicDataSource.swift */; };
 		8172B96A19F562590070E7DF /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96219F562590070E7DF /* Cache.swift */; };
 		8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96319F562590070E7DF /* CollectionViewCalendarWeekLayout.swift */; };
 		8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */; };
 		8172B96D19F562590070E7DF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96519F562590070E7DF /* Queue.swift */; };
 		8172B96E19F562590070E7DF /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96619F562590070E7DF /* Stack.swift */; };
-		8172B96F19F562590070E7DF /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96719F562590070E7DF /* DataSourceDelegate.swift */; };
 		819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819193CD19F1652700E3A3B8 /* GridLineView.swift */; };
 		81C1F5D919F05C010042AB61 /* SampleCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */; };
 		81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */; };
@@ -40,6 +37,8 @@
 		81D9F26C19EF4D9600F987B9 /* ReCalCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */; };
 		81D9F26F19EF4D9600F987B9 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
 		81D9F27019EF4D9600F987B9 /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */; };
+		81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +126,8 @@
 		81D9F26519EF4D9600F987B9 /* ReCalCommonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReCalCommonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D9F26A19EF4D9600F987B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCalCommonTests.swift; sourceTree = "<group>"; };
+		81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSidebarViewController.swift; sourceTree = "<group>"; };
+		81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +276,7 @@
 		81D9F25C19EF4D9600F987B9 /* ReCalCommon */ = {
 			isa = PBXGroup;
 			children = (
+				81FCD27E19F7414400B6DC2D /* SlidingSidebarViewController */,
 				8111F62219F493A500A331E3 /* Controls */,
 				8172B97219F562990070E7DF /* Calendar */,
 				8172B97019F5627C0070E7DF /* Data Strucutres */,
@@ -309,6 +311,15 @@
 				81D9F26A19EF4D9600F987B9 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		81FCD27E19F7414400B6DC2D /* SlidingSidebarViewController */ = {
+			isa = PBXGroup;
+			children = (
+				81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */,
+				81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */,
+			);
+			name = SlidingSidebarViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -516,16 +527,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,
 				8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */,
 				8172B96E19F562590070E7DF /* Stack.swift in Sources */,
-				8172B96819F562590070E7DF /* BaseDataSource.swift in Sources */,
+				81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */,
 				8172B96A19F562590070E7DF /* Cache.swift in Sources */,
 				8172B96D19F562590070E7DF /* Queue.swift in Sources */,
-				8172B96919F562590070E7DF /* BasicDataSource.swift in Sources */,
 				8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */,
 				8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */,
 				8111F63319F4947700A331E3 /* Util.swift in Sources */,
-				8172B96F19F562590070E7DF /* DataSourceDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
