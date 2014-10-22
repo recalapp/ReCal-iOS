@@ -9,12 +9,17 @@
 import UIKit
 import ReCalCommon
 
+let courseSearchViewControllerStoryboardId = "CourseSearch"
+
 class CourseSelectionViewController: SlidingSidebarViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        let courseSearchViewController = self.storyboard?.instantiateViewControllerWithIdentifier(courseSearchViewControllerStoryboardId) as CourseSearchTableViewController
+        courseSearchViewController.view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.addChildViewController(courseSearchViewController)
+        self.sidebarContentView?.addSubview(courseSearchViewController.view)
+        self.sidebarContentView?.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(courseSearchViewController.view, inParentView: self.sidebarContentView!, withInsets: UIEdgeInsetsZero))
     }
 
     
