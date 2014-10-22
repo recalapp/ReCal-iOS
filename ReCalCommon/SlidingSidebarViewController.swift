@@ -22,13 +22,17 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         }
     }
     
+    public var disablesScrollingInPrimaryViewWhenCollapsed = false
+    
     private(set) public var sidebarIsShown: Bool = true {
         didSet {
-            if let scrollView = self.sidebarContainerScrollView {
-                if sidebarIsShown {
-                    self.view.addGestureRecognizer(scrollView.panGestureRecognizer)
-                } else {
-                    scrollView.addGestureRecognizer(scrollView.panGestureRecognizer)
+            if self.disablesScrollingInPrimaryViewWhenCollapsed {
+                if let scrollView = self.sidebarContainerScrollView {
+                    if sidebarIsShown {
+                        self.view.addGestureRecognizer(scrollView.panGestureRecognizer)
+                    } else {
+                        scrollView.addGestureRecognizer(scrollView.panGestureRecognizer)
+                    }
                 }
             }
         }
@@ -49,11 +53,7 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         contentView.backgroundColor = UIColor.greenColor()
         self.view.addSubview(contentView)
         self.primaryContentView = contentView
-        let leadingConstraint = NSLayoutConstraint(item: contentView, attribute: .Leading, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1, constant: 0)
-        let trailingConstraint = NSLayoutConstraint(item: contentView, attribute: .Trailing, relatedBy: .Equal, toItem: self.view, attribute: .Right, multiplier: 1, constant: 0)
-        let topConstraint = NSLayoutConstraint(item: contentView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1, constant: 0)
-        let bottomConstraint = NSLayoutConstraint(item: contentView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1, constant: 0)
-        self.view.addConstraints([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
+        self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsetsZero))
         self.setUpSidebar()
     }
     
@@ -70,12 +70,7 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         self.sidebarView?.contentView.addSubview(sidebarContentView)
         
         // constraints
-        let leadingConstraint = NSLayoutConstraint(item: sidebarContentView, attribute: .Leading, relatedBy: .Equal, toItem: sidebarView, attribute: .Left, multiplier: 1, constant: self.sidebarLeftBuffer)
-        let widthConstraint = NSLayoutConstraint(item: sidebarContentView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.sidebarWidth)
-        let topConstraint = NSLayoutConstraint(item: sidebarContentView, attribute: .Top, relatedBy: .Equal, toItem: sidebarView, attribute: .Top, multiplier: 1, constant: 0)
-        let bottomConstraint = NSLayoutConstraint(item: sidebarContentView, attribute: .Bottom, relatedBy: .Equal, toItem: sidebarView, attribute: .Bottom, multiplier: 1, constant: 0)
-        sidebarContentView.addConstraint(widthConstraint)
-        sidebarView.addConstraints([leadingConstraint, topConstraint, bottomConstraint])
+        sidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(sidebarContentView, inParentView: sidebarView, withInsets: UIEdgeInsets(top: 0, left: self.sidebarLeftBuffer, bottom: 0, right: self.sidebarRightBuffer)))
         
         self.setUpOverlayScrollView()
     }
@@ -90,11 +85,7 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         scrollView.showsVerticalScrollIndicator = false
         self.sidebarContainerScrollView = scrollView
         self.view.addSubview(scrollView)
-        let leadingConstraint = NSLayoutConstraint(item: scrollView, attribute: .Leading, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1, constant: 0)
-        let trailingConstraint = NSLayoutConstraint(item: scrollView, attribute: .Trailing, relatedBy: .Equal, toItem: self.view, attribute: .Right, multiplier: 1, constant: 0)
-        let topConstraint = NSLayoutConstraint(item: scrollView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1, constant: 0)
-        let bottomConstraint = NSLayoutConstraint(item: scrollView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1, constant: 0)
-        self.view.addConstraints([leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
+        self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(scrollView, inParentView: self.view, withInsets: UIEdgeInsetsZero))
         scrollView.contentSize = CGSize(width: self.sidebarWidth + self.view.bounds.size.width, height: self.view.bounds.size.height)
         self.view.addGestureRecognizer(scrollView.panGestureRecognizer)
         
