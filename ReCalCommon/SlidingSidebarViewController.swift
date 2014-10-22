@@ -8,7 +8,13 @@
 
 import UIKit
 
-public class SlidingSidebarViewController: UIViewController {
+public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegate {
+    
+    private var sidebarLeftBuffer: CGFloat {
+        return self.view.bounds.size.width
+    }
+    
+    private let sidebarRightBuffer: CGFloat = 10.0
     
     private var sidebarWidth: CGFloat {
         get {
@@ -16,12 +22,32 @@ public class SlidingSidebarViewController: UIViewController {
         }
     }
     
-    private var sidebarView: UIView?
+    private var sidebarView: UIVisualEffectView?
+    
+    internal(set) public var sidebarContentView: UIView?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        // sidebar view
         let sidebarView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
         self.sidebarView = sidebarView
+        
+        // sidebar content view
+        let sidebarContentView = UIView()
+        sidebarContentView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        sidebarContentView.backgroundColor = UIColor.redColor()
+        self.sidebarContentView = sidebarContentView
+        self.sidebarView?.contentView.addSubview(sidebarContentView)
+        
+        // constraints
+        let leadingConstraint = NSLayoutConstraint(item: sidebarContentView, attribute: .Leading, relatedBy: .Equal, toItem: sidebarView, attribute: .Left, multiplier: 1, constant: self.sidebarLeftBuffer)
+        let widthConstraint = NSLayoutConstraint(item: sidebarContentView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: self.sidebarWidth)
+        let topConstraint = NSLayoutConstraint(item: sidebarContentView, attribute: .Top, relatedBy: .Equal, toItem: sidebarView, attribute: .Top, multiplier: 1, constant: 0)
+        let bottomConstraint = NSLayoutConstraint(item: sidebarContentView, attribute: .Bottom, relatedBy: .Equal, toItem: sidebarView, attribute: .Bottom, multiplier: 1, constant: 0)
+        sidebarContentView.addConstraint(widthConstraint)
+        sidebarView.addConstraints([leadingConstraint, topConstraint, bottomConstraint])
+        
         self.setUpOverlayScrollView()
     }
     
@@ -29,6 +55,7 @@ public class SlidingSidebarViewController: UIViewController {
     private func setUpOverlayScrollView() {
         // creating and setting constraints
         let scrollView = OverlayScrollView()
+        scrollView.delegate = self
         scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
@@ -44,11 +71,21 @@ public class SlidingSidebarViewController: UIViewController {
         // adding sidebar
         if let sidebarView = self.sidebarView {
             scrollView.addSubview(sidebarView)
-            sidebarView.frame = CGRect(x: 0, y: 0, width: self.sidebarWidth, height: self.view.bounds.size.height)
+            sidebarView.frame = CGRect(x: -self.sidebarLeftBuffer, y: 0, width: self.sidebarWidth + self.sidebarLeftBuffer + self.sidebarRightBuffer, height: self.view.bounds.size.height)
         }
         
     }
-
+    
+    public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, var targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        // check if we should be hiding the sidebar - if it is more than halfway hidden or if the velocity is positive
+        // TODO might be better to not use this at all. can set content offset at will begin decelerating
+        if velocity.x > 0 || targetContentOffset.memory.x > self.sidebarWidth/2 {
+            targetContentOffset.put(CGPoint(x:self.sidebarWidth, y:0))
+        } else {
+            targetContentOffset.put(CGPoint(x: -self.sidebarLeftBuffer, y: 0))
+        }
+    }
+    
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
