@@ -13,10 +13,11 @@ let courseDetailsViewControllerStoryboardId = "CourseDetails"
 
 class CourseSearchTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate  {
 
-    private var courseDetailsViewController: CourseDetailsViewController?
+    private var courseDetailsViewController: CourseDetailsViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.courseDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -90,18 +91,28 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath == self.courseDetailsViewController?.indexPath {
             return
+        } else {
+            let present:()->Void = {
+                let cell = tableView.cellForRowAtIndexPath(indexPath)!
+                
+                self.courseDetailsViewController.modalPresentationStyle = .Popover
+                self.courseDetailsViewController.indexPath = indexPath
+                self.courseDetailsViewController.popoverPresentationController?.delegate = self
+                self.presentViewController(self.courseDetailsViewController, animated: true, completion: nil)
+                
+                let popoverPresentationController = self.courseDetailsViewController.popoverPresentationController
+                popoverPresentationController?.permittedArrowDirections = .Left
+                popoverPresentationController?.sourceView = cell
+                popoverPresentationController?.sourceRect = cell.bounds
+            }
+            if self.presentedViewController == self.courseDetailsViewController {
+                self.courseDetailsViewController.dismissViewControllerAnimated(false) {
+                    present()
+                }
+            } else {
+                present()
+            }
         }
-        let cell = tableView.cellForRowAtIndexPath(indexPath)!
-        self.courseDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as? CourseDetailsViewController
-        self.courseDetailsViewController!.modalPresentationStyle = .Popover
-        self.courseDetailsViewController!.indexPath = indexPath
-
-        let popoverPresentationController = courseDetailsViewController!.popoverPresentationController
-        popoverPresentationController?.permittedArrowDirections = .Left
-        popoverPresentationController?.sourceView = cell
-        popoverPresentationController?.sourceRect = cell.bounds
-        popoverPresentationController?.delegate = self
-        self.presentViewController(courseDetailsViewController!, animated: false, completion: nil)
     }
     
     // MARK: - Adaptive Presentation Controller Delegate
@@ -111,11 +122,9 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     // MARK: Popover Presentation Controller Delegate
     func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
-        if self.courseDetailsViewController != nil {
-            if let indexPath = self.courseDetailsViewController!.indexPath {
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
-            }
-            self.courseDetailsViewController = nil
+        if let indexPath = self.courseDetailsViewController.indexPath {
+            self.courseDetailsViewController.indexPath = nil
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
         
     }
