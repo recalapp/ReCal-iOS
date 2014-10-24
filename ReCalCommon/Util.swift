@@ -33,3 +33,13 @@ public extension NSLayoutConstraint {
         return [leadingConstraint, trailingConstraint, topConstraint, bottomConstraint]
     }
 }
+
+public func arrayContainsElement<T: Equatable>(#array: [T], #element: T) -> Bool {
+    return array.filter { $0 == element }.count > 0
+}
+
+public func arraysContainSameElements<T: Equatable>(array1: [T], array2: [T]) -> Bool {
+    return array1.reduce(true, combine: { (old, value) in
+        return old && arrayContainsElement(array: array2, element: value)
+    })
+}

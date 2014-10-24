@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RkG-w0-zfD">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Course Selection View Controller-->
@@ -47,6 +48,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DTC-mY-Oof" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1073" y="988"/>
+        </scene>
+        <!--Section Selection View Controller-->
+        <scene sceneID="eBh-qA-Osj">
+            <objects>
+                <viewController id="RkG-w0-zfD" customClass="SectionSelectionViewController" customModule="ReCal_Course_Selection" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4pw-0X-yIK"/>
+                        <viewControllerLayoutGuide type="bottom" id="Lza-UY-E5V"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dOS-eH-Ibb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Dci-Ev-bgy">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="600"/>
+                                <collectionViewLayout key="collectionViewLayout" id="EIC-oO-Qf3" customClass="CollectionViewCalendarWeekLayout" customModule="ReCalCommon"/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pFL-LH-erB">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Lza-UY-E5V" firstAttribute="top" secondItem="Dci-Ev-bgy" secondAttribute="bottom" id="Chx-ke-abG"/>
+                            <constraint firstItem="Dci-Ev-bgy" firstAttribute="top" secondItem="dOS-eH-Ibb" secondAttribute="top" id="GwX-Yq-R8u"/>
+                            <constraint firstItem="Dci-Ev-bgy" firstAttribute="leading" secondItem="dOS-eH-Ibb" secondAttribute="leading" id="MDw-LF-e7y"/>
+                            <constraint firstItem="Dci-Ev-bgy" firstAttribute="width" secondItem="dOS-eH-Ibb" secondAttribute="width" multiplier="0.75" id="gjd-hk-wgh"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="scheduleView" destination="Dci-Ev-bgy" id="xjv-Rw-eL3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l9Q-DY-Kiz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="41" y="1508"/>
         </scene>
         <!--Course Details View Controller-->
         <scene sceneID="XcN-Eg-f47">

@@ -22,6 +22,19 @@
 		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
 		8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */; };
 		8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */; };
+		81580BD119F98E6200119517 /* SectionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BD019F98E6200119517 /* SectionSelectionViewController.swift */; };
+		81580BD319F9905100119517 /* ScheduleCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BD219F9905100119517 /* ScheduleCollectionViewDataSource.swift */; };
+		81580BD719F9922100119517 /* TimeRowHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BD619F9922100119517 /* TimeRowHeaderBackgroundView.swift */; };
+		81580BDB19F9927500119517 /* TimeRowHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BD919F9927500119517 /* TimeRowHeaderView.swift */; };
+		81580BDC19F9927500119517 /* TimeRowHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81580BDA19F9927500119517 /* TimeRowHeaderView.xib */; };
+		81580BDE19F9931E00119517 /* DayColumnHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BDD19F9931E00119517 /* DayColumnHeaderBackgroundView.swift */; };
+		81580BE119F9938700119517 /* DayColumnHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BDF19F9938700119517 /* DayColumnHeaderView.swift */; };
+		81580BE219F9938700119517 /* DayColumnHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81580BE019F9938700119517 /* DayColumnHeaderView.xib */; };
+		81580BE419F9958400119517 /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BE319F9958400119517 /* GridLineView.swift */; };
+		81580BEE19F9C21D00119517 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BEC19F9C21D00119517 /* EventCollectionViewCell.swift */; };
+		81580BEF19F9C21D00119517 /* EventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81580BED19F9C21D00119517 /* EventCollectionViewCell.xib */; };
+		81580BF119F9C3B400119517 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BF019F9C3B400119517 /* Section.swift */; };
+		81580BF419F9C6C300119517 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BF319F9C6C300119517 /* Course.swift */; };
 		8172B96A19F562590070E7DF /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96219F562590070E7DF /* Cache.swift */; };
 		8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96319F562590070E7DF /* CollectionViewCalendarWeekLayout.swift */; };
 		8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */; };
@@ -143,6 +156,19 @@
 		8124969219F18A620081AFB2 /* TimeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeHeaderView.xib; sourceTree = "<group>"; };
 		8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewCell.swift; sourceTree = "<group>"; };
 		8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsCollectionViewCell.xib; sourceTree = "<group>"; };
+		81580BD019F98E6200119517 /* SectionSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionSelectionViewController.swift; sourceTree = "<group>"; };
+		81580BD219F9905100119517 /* ScheduleCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		81580BD619F9922100119517 /* TimeRowHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderBackgroundView.swift; sourceTree = "<group>"; };
+		81580BD919F9927500119517 /* TimeRowHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderView.swift; sourceTree = "<group>"; };
+		81580BDA19F9927500119517 /* TimeRowHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeRowHeaderView.xib; sourceTree = "<group>"; };
+		81580BDD19F9931E00119517 /* DayColumnHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayColumnHeaderBackgroundView.swift; sourceTree = "<group>"; };
+		81580BDF19F9938700119517 /* DayColumnHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayColumnHeaderView.swift; sourceTree = "<group>"; };
+		81580BE019F9938700119517 /* DayColumnHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayColumnHeaderView.xib; sourceTree = "<group>"; };
+		81580BE319F9958400119517 /* GridLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLineView.swift; sourceTree = "<group>"; };
+		81580BEC19F9C21D00119517 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
+		81580BED19F9C21D00119517 /* EventCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCollectionViewCell.xib; sourceTree = "<group>"; };
+		81580BF019F9C3B400119517 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		81580BF319F9C6C300119517 /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		8172B96019F562590070E7DF /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
 		8172B96119F562590070E7DF /* BasicDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicDataSource.swift; sourceTree = "<group>"; };
 		8172B96219F562590070E7DF /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -313,6 +339,41 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		81580BD819F9922800119517 /* Calendar View Components */ = {
+			isa = PBXGroup;
+			children = (
+				81580BD619F9922100119517 /* TimeRowHeaderBackgroundView.swift */,
+				81580BD919F9927500119517 /* TimeRowHeaderView.swift */,
+				81580BDA19F9927500119517 /* TimeRowHeaderView.xib */,
+				81580BDD19F9931E00119517 /* DayColumnHeaderBackgroundView.swift */,
+				81580BDF19F9938700119517 /* DayColumnHeaderView.swift */,
+				81580BE019F9938700119517 /* DayColumnHeaderView.xib */,
+				81580BE319F9958400119517 /* GridLineView.swift */,
+				81580BEC19F9C21D00119517 /* EventCollectionViewCell.swift */,
+				81580BED19F9C21D00119517 /* EventCollectionViewCell.xib */,
+			);
+			name = "Calendar View Components";
+			sourceTree = "<group>";
+		};
+		81580BE519F99C5900119517 /* Section Selection */ = {
+			isa = PBXGroup;
+			children = (
+				81580BD019F98E6200119517 /* SectionSelectionViewController.swift */,
+				81580BD219F9905100119517 /* ScheduleCollectionViewDataSource.swift */,
+				81580BD819F9922800119517 /* Calendar View Components */,
+			);
+			name = "Section Selection";
+			sourceTree = "<group>";
+		};
+		81580BF219F9C3C700119517 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				81580BF019F9C3B400119517 /* Section.swift */,
+				81580BF319F9C6C300119517 /* Course.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		8172B97019F5627C0070E7DF /* Data Strucutres */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +460,8 @@
 				81FCD2B219F7EBF100B6DC2D /* CourseSearchTableViewController.swift */,
 				81FCD2B419F7F9C000B6DC2D /* CourseDetailsViewController.swift */,
 				81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */,
+				81580BF219F9C3C700119517 /* Model */,
+				81580BE519F99C5900119517 /* Section Selection */,
 				81FCD29119F7E3E200B6DC2D /* Main.storyboard */,
 				81FCD29419F7E3E200B6DC2D /* Images.xcassets */,
 				81FCD29619F7E3E200B6DC2D /* LaunchScreen.xib */,
@@ -654,8 +717,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				81FCD29319F7E3E200B6DC2D /* Main.storyboard in Resources */,
+				81580BDC19F9927500119517 /* TimeRowHeaderView.xib in Resources */,
 				81FCD29819F7E3E200B6DC2D /* LaunchScreen.xib in Resources */,
+				81580BE219F9938700119517 /* DayColumnHeaderView.xib in Resources */,
 				81FCD29519F7E3E200B6DC2D /* Images.xcassets in Resources */,
+				81580BEF19F9C21D00119517 /* EventCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,9 +790,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81580BF119F9C3B400119517 /* Section.swift in Sources */,
+				81580BD319F9905100119517 /* ScheduleCollectionViewDataSource.swift in Sources */,
+				81580BEE19F9C21D00119517 /* EventCollectionViewCell.swift in Sources */,
+				81580BDB19F9927500119517 /* TimeRowHeaderView.swift in Sources */,
+				81580BE419F9958400119517 /* GridLineView.swift in Sources */,
 				81FCD2B519F7F9C000B6DC2D /* CourseDetailsViewController.swift in Sources */,
 				81FCD2B119F7E41900B6DC2D /* CourseSelectionViewController.swift in Sources */,
 				81FCD29019F7E3E200B6DC2D /* ViewController.swift in Sources */,
+				81580BF419F9C6C300119517 /* Course.swift in Sources */,
+				81580BD119F98E6200119517 /* SectionSelectionViewController.swift in Sources */,
+				81580BD719F9922100119517 /* TimeRowHeaderBackgroundView.swift in Sources */,
+				81580BDE19F9931E00119517 /* DayColumnHeaderBackgroundView.swift in Sources */,
+				81580BE119F9938700119517 /* DayColumnHeaderView.swift in Sources */,
 				81FCD2B319F7EBF100B6DC2D /* CourseSearchTableViewController.swift in Sources */,
 				81FCD28C19F7E3E200B6DC2D /* AppDelegate.swift in Sources */,
 				81FCD28E19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld in Sources */,
@@ -1145,6 +1221,7 @@
 				81FCD2A619F7E3E200B6DC2D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		81FCD2AA19F7E3E200B6DC2D /* Build configuration list for PBXNativeTarget "ReCal Course SelectionTests" */ = {
 			isa = XCConfigurationList;
@@ -1153,6 +1230,7 @@
 				81FCD2A819F7E3E200B6DC2D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

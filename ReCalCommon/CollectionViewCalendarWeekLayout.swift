@@ -10,7 +10,7 @@ import UIKit
 
 let debug = false
 
-let gridLineWidth: CGFloat = 1.0
+let gridLineWidth: CGFloat = 0.5
 let gridLineZIndex = 1
 let eventsZIndex = gridLineZIndex + 1
 let timeRowHeaderBackgroundZIndex = eventsZIndex + 1
