@@ -9,8 +9,6 @@
 import UIKit
 
 class DayColumnHeaderView: UICollectionReusableView {
-
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var weekDayLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()

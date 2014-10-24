@@ -10,27 +10,19 @@
             <rect key="frame" x="0.0" y="0.0" width="83" height="134"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q8b-c4-zj5">
-                    <rect key="frame" x="26" y="105" width="30" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Guq-gZ-cUU">
-                    <rect key="frame" x="23" y="76.5" width="36" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q8b-c4-zj5">
+                    <rect key="frame" x="28.5" y="108.5" width="25" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="Guq-gZ-cUU" secondAttribute="centerX" id="E1j-jS-XJY"/>
                 <constraint firstAttribute="centerX" secondItem="q8b-c4-zj5" secondAttribute="centerX" constant="0.5" id="a4J-dg-FF8"/>
+                <constraint firstItem="q8b-c4-zj5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="a5k-od-mWl"/>
                 <constraint firstAttribute="bottom" secondItem="q8b-c4-zj5" secondAttribute="bottom" constant="8" id="i1l-r1-9ag"/>
-                <constraint firstItem="q8b-c4-zj5" firstAttribute="top" secondItem="Guq-gZ-cUU" secondAttribute="bottom" constant="8" id="rPt-Yn-0CY"/>
             </constraints>
             <connections>
-                <outlet property="dateLabel" destination="Guq-gZ-cUU" id="lLp-5y-suU"/>
                 <outlet property="weekDayLabel" destination="q8b-c4-zj5" id="dSC-kA-Q4i"/>
             </connections>
             <point key="canvasLocation" x="194.5" y="330"/>

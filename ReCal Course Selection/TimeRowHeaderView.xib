@@ -11,15 +11,15 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8:00AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7h-hs-ZEW">
-                    <rect key="frame" x="252" y="14" width="60" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <rect key="frame" x="262" y="0.0" width="50" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="E7h-hs-ZEW" secondAttribute="centerY" id="3PE-ij-FOX"/>
                 <constraint firstAttribute="trailing" secondItem="E7h-hs-ZEW" secondAttribute="trailing" constant="8" id="cbV-3K-0hQ"/>
+                <constraint firstItem="E7h-hs-ZEW" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="f98-rA-dqP"/>
             </constraints>
             <connections>
                 <outlet property="timeLabel" destination="E7h-hs-ZEW" id="MHq-yV-pBr"/>

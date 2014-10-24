@@ -9,7 +9,7 @@
 import Foundation
 import ReCalCommon
 
-struct Section: Equatable, ScheduleEvent {
+struct Section: Equatable {
     let type: SectionType
     let sectionNumber: Int
     let startTime: NSDateComponents
@@ -18,6 +18,9 @@ struct Section: Equatable, ScheduleEvent {
     var displayText: String {
         return "\(self.type.sectionPrefix)\(self.sectionNumber)"
     }
+}
+
+extension Section: ScheduleEvent {
     var title: String {
         return displayText
     }
@@ -61,6 +64,24 @@ enum SectionType: String {
     }
 }
 
-enum Day: Int {
+enum Day: Int, Printable {
     case Monday = 0, Tuesday = 1, Wednesday = 2, Thursday = 3, Friday = 4, Saturday, Sunday
+    var description: String {
+        switch self {
+        case .Monday:
+            return "Monday"
+        case .Tuesday:
+            return "Tuesday"
+        case .Wednesday:
+            return "Wednesday"
+        case .Thursday:
+            return "Thursday"
+        case .Friday:
+            return "Friday"
+        case .Saturday:
+            return "Saturday"
+        case .Sunday:
+            return "Sunday"
+        }
+    }
 }

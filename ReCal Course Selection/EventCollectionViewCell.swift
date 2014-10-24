@@ -13,7 +13,18 @@ class EventCollectionViewCell: UICollectionViewCell {
     let selectedAlpha: CGFloat = 1.0
     let unselectedAlpha: CGFloat = 0.8
     
-    var color: UIColor = UIColor.redColor() {
+    var event: ScheduleEvent? = nil {
+        didSet {
+            if let event = self.event {
+                self.eventTitleLabel.text = event.title
+            } else {
+                self.eventTitleLabel.text = ""
+            }
+        }
+    }
+    
+    @IBOutlet weak var eventTitleLabel: UILabel!
+    var color: UIColor = UIColor.greenColor() {
         didSet {
             self.updateColor()
         }

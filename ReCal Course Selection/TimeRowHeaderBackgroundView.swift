@@ -20,6 +20,6 @@ class TimeRowHeaderBackgroundView: UICollectionReusableView {
     }
     
     private func initialize() {
-        self.backgroundColor = UIColor.grayColor()
+        self.backgroundColor = UIColor.darkGrayColor()
     }
 }
