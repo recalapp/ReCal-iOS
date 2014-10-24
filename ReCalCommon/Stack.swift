@@ -14,6 +14,10 @@ public struct Stack<T>: SequenceType {
         return StackGenerator<T>(stack: self)
     }
     
+    public init() {
+        
+    }
+    
     private var array:[T] = [];
     public var isEmpty: Bool {
         return self.array.count == 0;

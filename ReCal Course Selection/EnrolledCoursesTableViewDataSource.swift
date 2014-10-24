@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import ReCalCommon
 
 let courseCellIdentifier = "CourseCell"
 
 class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource {
     
     var enrolledCourses = [Course]()
+    var selectedIndexPath: NSIndexPath?
     
     override init() {
         super.init()
@@ -26,6 +28,7 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource {
     // MARK: - Table View Data Source
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(courseCellIdentifier, forIndexPath: indexPath) as EnrolledCourseTableViewCell
+        cell.expanded = indexPath == self.selectedIndexPath
         cell.course = self.courseForIndexPath(indexPath)
         return cell
     }
@@ -34,5 +37,17 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource {
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.enrolledCourses.count
+    }
+    func handleSelectionInTableView(tableView: UITableView, forRowAtIndexPath indexPath: NSIndexPath) {
+        if self.selectedIndexPath == indexPath {
+            return
+        }
+        let oldSelectedOpt = self.selectedIndexPath
+        self.selectedIndexPath = indexPath
+        if let oldSelected = oldSelectedOpt {
+            tableView.reloadRowsAtIndexPaths([oldSelected, indexPath], withRowAnimation: .Fade)
+        } else {
+            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
     }
 }

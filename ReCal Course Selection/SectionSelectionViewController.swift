@@ -71,6 +71,12 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
         self.enrolledCoursesView.reloadData()
     }
 
+    
+    // MARK: - Table View Delegate
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.enrolledCoursesTableViewDataSource.handleSelectionInTableView(tableView, forRowAtIndexPath: indexPath)
+        
+    }
     /*
     // MARK: - Navigation
 

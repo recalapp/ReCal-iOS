@@ -396,14 +396,14 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		8172B97019F5627C0070E7DF /* Data Strucutres */ = {
+		8172B97019F5627C0070E7DF /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
 				8172B96219F562590070E7DF /* Cache.swift */,
 				8172B96519F562590070E7DF /* Queue.swift */,
 				8172B96619F562590070E7DF /* Stack.swift */,
 			);
-			name = "Data Strucutres";
+			name = "Data Structures";
 			sourceTree = "<group>";
 		};
 		8172B97119F562840070E7DF /* DataSource */ = {
@@ -431,7 +431,7 @@
 				81FCD27E19F7414400B6DC2D /* SlidingSidebarViewController */,
 				8111F62219F493A500A331E3 /* Controls */,
 				8172B97219F562990070E7DF /* Calendar */,
-				8172B97019F5627C0070E7DF /* Data Strucutres */,
+				8172B97019F5627C0070E7DF /* Data Structures */,
 				8172B97119F562840070E7DF /* DataSource */,
 				8111F62B19F4947700A331E3 /* Util.swift */,
 				81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */,

@@ -14,6 +14,10 @@ public struct Queue<T>: SequenceType {
         return QueueGenerator<T>(queue: self)
     }
     
+    public init() {
+        
+    }
+    
     private var array:[T] = [];
     public var isEmpty: Bool {
         return self.array.count == 0;
