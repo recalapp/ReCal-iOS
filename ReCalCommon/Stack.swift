@@ -20,7 +20,7 @@ public struct Stack<T>: SequenceType {
     
     private var array:[T] = [];
     public var isEmpty: Bool {
-        return self.array.count == 0;
+        return self.count == 0;
     }
     
     public mutating func push(item: T) {
@@ -32,6 +32,10 @@ public struct Stack<T>: SequenceType {
             return nil;
         }
         return self.array.removeLast();
+    }
+    
+    public var count: Int {
+        return self.array.count
     }
 }
 

@@ -16,10 +16,6 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource {
     var enrolledCourses = [Course]()
     var selectedIndexPath: NSIndexPath?
     
-    override init() {
-        super.init()
-    }
-    
     func courseForIndexPath(indexPath: NSIndexPath) -> Course {
         assert(indexPath.row < enrolledCourses.count, "Invalid index path")
         return self.enrolledCourses[indexPath.row]

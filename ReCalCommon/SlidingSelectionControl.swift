@@ -136,9 +136,9 @@ public class SlidingSelectionControl: UIControl {
             let newContentSize = CGSize(width: max(oldContentSize.width, runningContentSize.width), height: oldContentSize.height + runningContentSize.height)
             return newContentSize
         }
-        let addConstraintForTrailingItem: (SlidingSelectionControlItem?)->Void = {(prevItemOpt) in
+        let addConstraintForLeadingItem: (SlidingSelectionControlItem?)->Void = {(prevItemOpt) in
             if let prevItem = prevItemOpt {
-                let trailingConstraint = NSLayoutConstraint(item: prevItem, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .RightMargin, multiplier: 1.0, constant: 0.0)
+                let trailingConstraint = NSLayoutConstraint(item: prevItem, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .LeftMargin, multiplier: 1.0, constant: 0.0)
                 self.addConstraint(trailingConstraint)
                 self.slidingSelectionControlItemConstraints.push(trailingConstraint)
             }
@@ -147,36 +147,42 @@ public class SlidingSelectionControl: UIControl {
         var contentSize = CGSizeZero
         var runningWidth: CGFloat = 0.0
         var runningHeight: CGFloat = 0.0
-        for slidingSelectionControlItem in self.slidingSelectionControlItems {
+        for slidingSelectionControlItem in reverse(self.slidingSelectionControlItems) {
             // update content size
+            let itemConstraints = slidingSelectionControlItem.constraints() as [NSLayoutConstraint]
+            for constraint in itemConstraints {
+                if constraint.firstAttribute == .Width {
+                    slidingSelectionControlItem.removeConstraint(constraint)
+                }
+            }
             let itemSize = slidingSelectionControlItem.intrinsicContentSize()
             if runningWidth + itemSize.width > maxWidth {
                 contentSize = updateContentSizeWithRunningSize(contentSize, CGSize(width: runningWidth, height: runningHeight))
                 runningHeight = 0
                 runningWidth = 0
-                addConstraintForTrailingItem(prevItemOpt)
+                addConstraintForLeadingItem(prevItemOpt)
                 prevItemOpt = nil
             }
             runningWidth += itemSize.width
             runningHeight = max(runningHeight, itemSize.height)
             
             // constraints
-            let yConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .TopMargin, multiplier: 1.0, constant: contentSize.height)
+            let yConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .BottomMargin, multiplier: 1.0, constant: -contentSize.height)
             if let prevItem = prevItemOpt {
-                let xConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Left, relatedBy: .Equal, toItem: prevItem, attribute: .Right, multiplier: 1.0, constant: 0.0)
+                let xConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Right, relatedBy: .Equal, toItem: prevItem, attribute: .Left, multiplier: 1.0, constant: 0.0)
                 self.addConstraints([xConstraint, yConstraint])
                 self.slidingSelectionControlItemConstraints.push(xConstraint)
                 self.slidingSelectionControlItemConstraints.push(yConstraint)
             }
             else {
-                let xConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .LeftMargin, multiplier: 1.0, constant: 0.0)
+                let xConstraint = NSLayoutConstraint(item: slidingSelectionControlItem, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .RightMargin, multiplier: 1.0, constant: 0.0)
                 self.addConstraints([xConstraint, yConstraint])
                 self.slidingSelectionControlItemConstraints.push(xConstraint)
                 self.slidingSelectionControlItemConstraints.push(yConstraint)
             }
             prevItemOpt = slidingSelectionControlItem
         }
-        addConstraintForTrailingItem(prevItemOpt)
+        addConstraintForLeadingItem(prevItemOpt)
         contentSize.width = max(contentSize.width, runningWidth)
         contentSize.height += runningHeight
         contentSize.width += self.layoutMargins.left + self.layoutMargins.right
@@ -233,6 +239,7 @@ class SlidingSelectionControlItem: UIControl {
     private func initialize() {
         self.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.label.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.label.textAlignment = .Center
         self.addSubview(self.label)
         
         let leadingConstraint = NSLayoutConstraint(item: self.label, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .LeftMargin, multiplier: 1.0, constant: self.xMargin)
