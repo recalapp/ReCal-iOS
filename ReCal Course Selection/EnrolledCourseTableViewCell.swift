@@ -75,9 +75,12 @@ class EnrolledCourseTableViewCell: UITableViewCell {
             var prev: UIView = self.courseLabel
             for sectionType in sectionTypes {
                 let sections = self.sectionsWithType(sectionType)
-                let titles = ["All precepts"] + sections.map { $0.displayText }
+                let titles = ["All \(sectionType.displayText.pluralize())"] + sections.map { $0.displayText }
                 let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: 0)
                 slidingSelectionControl.preferredMaxLayoutWidth = self.contentView.bounds.size.width
+                slidingSelectionControl.defaultBackgroundColor = UIColor.blackColor()
+                slidingSelectionControl.tintColor = UIColor.greenColor()
+                slidingSelectionControl.layoutMargins = UIEdgeInsetsZero
                 self.contentView.addSubview(slidingSelectionControl)
                 let topConstraint = NSLayoutConstraint(item: slidingSelectionControl, attribute: .Top, relatedBy: .Equal, toItem: prev, attribute: .Bottom, multiplier: 1, constant: 8)
                 let leadingConstraint = NSLayoutConstraint(item: slidingSelectionControl, attribute: .Leading, relatedBy: .Equal, toItem: self.contentView, attribute: .Left, multiplier: 1, constant: 0)

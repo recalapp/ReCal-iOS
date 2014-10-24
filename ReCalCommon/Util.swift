@@ -47,6 +47,9 @@ public extension UIColor {
         var brightness: CGFloat = 1.0
         var alpha: CGFloat = 1.0
         self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        if brightness == 0.0 {
+            brightness = 0.2
+        }
         return UIColor(hue: hue, saturation: saturation, brightness: min(brightness * scale, 1.0), alpha: alpha)
     }
 }
@@ -59,4 +62,15 @@ public func arraysContainSameElements<T: Equatable>(array1: [T], array2: [T]) ->
     return array1.reduce(true, combine: { (old, value) in
         return old && arrayContainsElement(array: array2, element: value)
     })
+}
+
+public extension String {
+    public func pluralize() -> String {
+        let last = self.substringFromIndex(self.endIndex.predecessor())
+        if last == "s" {
+            return self + "es"
+        } else {
+            return self + "s"
+        }
+    }
 }

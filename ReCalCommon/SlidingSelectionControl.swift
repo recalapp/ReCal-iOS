@@ -40,6 +40,22 @@ public class SlidingSelectionControl: UIControl {
         }
     }
     
+    override public var tintColor: UIColor! {
+        didSet {
+            for item in self.slidingSelectionControlItems {
+                item.tintColor = self.tintColor
+            }
+        }
+    }
+    
+    public var defaultBackgroundColor: UIColor = UIColor.whiteColor() {
+        didSet {
+            for item in self.slidingSelectionControlItems {
+                item.defaultBackgroundColor = self.defaultBackgroundColor
+            }
+        }
+    }
+    
     /// MARK: Constructors
     required public init(coder aDecoder: NSCoder) {
         self.slidingSelectionControlItems = []
@@ -62,6 +78,8 @@ public class SlidingSelectionControl: UIControl {
             // set up item
             let slidingSelectionControlItem = SlidingSelectionControlItem()
             slidingSelectionControlItem.text = item
+            slidingSelectionControlItem.tintColor = self.tintColor
+            slidingSelectionControlItem.defaultBackgroundColor = self.defaultBackgroundColor
             self.addSubview(slidingSelectionControlItem)
             
             // actions
@@ -196,6 +214,16 @@ public class SlidingSelectionControl: UIControl {
 /// MARK: Helper class
 class SlidingSelectionControlItem: UIControl {
     
+    var defaultBackgroundColor: UIColor = UIColor.whiteColor() {
+        didSet {
+            self.updateAppearance()
+        }
+    }
+    override var tintColor: UIColor! {
+        didSet {
+            self.updateAppearance()
+        }
+    }
     private let xMargin:CGFloat = 0
     private let yMargin:CGFloat = 0
     
@@ -251,10 +279,12 @@ class SlidingSelectionControlItem: UIControl {
     
     private func updateAppearance() {
         if self.selected {
-            self.backgroundColor = UIColor.greenColor()
+            self.backgroundColor = self.tintColor
+            self.label.textColor = self.tintColor.darkerColor().darkerColor().darkerColor().darkerColor().darkerColor()
         }
         else {
-            self.backgroundColor = UIColor.clearColor()
+            self.backgroundColor = self.defaultBackgroundColor
+            self.label.textColor = self.defaultBackgroundColor.lighterColor().lighterColor().lighterColor().lighterColor()
         }
     }
     
