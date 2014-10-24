@@ -10,8 +10,28 @@ import UIKit
 import ReCalCommon
 
 class SectionSelectionViewController: UIViewController, UICollectionViewDelegate, UITableViewDelegate {
-
-    private var courses = [Course]()
+    
+    private var enrollments = Dictionary<Course, Set<SectionTypeEnrollment>>()
+    
+    private var courses: [Course] = [Course]() {
+        didSet {
+            // courses have been set. initialize enrollment to being unenrolled in all section types
+            if oldValue != self.courses {
+                self.enrollments.removeAll(keepCapacity: true)
+                for course in self.courses {
+                    let sectionTypes = course.sections.reduce(Set<SectionType>(), combine: {(var set, section) in
+                        set.add(section.type)
+                        return set
+                    })
+                    let sectionTypeEnrollments: Set<SectionTypeEnrollment> = sectionTypes.map {(type: SectionType) in
+                        let enrollment = SectionTypeEnrollment(course: course, sectionType: type, enrollment: .Unenrolled)
+                        return enrollment
+                    }
+                    self.enrollments[course] = sectionTypeEnrollments
+                }
+            }
+        }
+    }
     
     private var sections: [Section] {
         return self.courses.reduce([], combine: { (allSections, course) in

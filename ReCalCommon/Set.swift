@@ -21,7 +21,7 @@ public struct Set<T: Hashable>: Equatable, SequenceType {
         return dict.count
     }
     
-    init(initialItems: [T] = []) {
+    public init(initialItems: [T] = []) {
         for items in initialItems {
             self.add(items)
         }
@@ -38,6 +38,14 @@ public struct Set<T: Hashable>: Equatable, SequenceType {
     public mutating func remove(item: T) {
         assert(self.contains(item), "Cannot remove an item that does not belong to the set to begin with")
         dict.removeValueForKey(item)
+    }
+    
+    public func map<U: Hashable>(transform: (T)->U)->Set<U> {
+        var newSet = Set<U>()
+        for item in self {
+            newSet.add(transform(item))
+        }
+        return newSet
     }
     
     public func reduce<U>(initialValue: U, combine: (U, T)->U)-> U {
