@@ -10,7 +10,7 @@ import UIKit
 import ReCalCommon
 
 class EnrolledCourseTableViewCell: UITableViewCell {
-
+    var enrollmentsBySectionType = Dictionary<SectionType, SectionEnrollment>()
     var course: Course? = nil {
         didSet {
             if oldValue != course {
@@ -76,7 +76,19 @@ class EnrolledCourseTableViewCell: UITableViewCell {
             for sectionType in sectionTypes {
                 let sections = self.sectionsWithType(sectionType)
                 let titles = ["All \(sectionType.displayText.pluralize())"] + sections.map { $0.displayText }
-                let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: 0)
+                var initialSelection = 0
+                let enrollmentOpt = self.enrollmentsBySectionType[sectionType]
+                assert(enrollmentOpt != nil, "Must pass a valid section enrollment dict")
+                switch enrollmentOpt! {
+                case .Unenrolled:
+                    initialSelection = 0
+                case .Enrolled(let section):
+                    let indexes = arrayFindIndexesOfElement(array: sections, element: section)
+                    assert(indexes.count == 1, "Section array cannot contain duplicate, and enrollment must be with an existing section")
+                    initialSelection = indexes[0] + 1
+                }
+                
+                let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: initialSelection)
                 slidingSelectionControl.preferredMaxLayoutWidth = self.contentView.bounds.size.width
                 slidingSelectionControl.defaultBackgroundColor = UIColor.blackColor()
                 slidingSelectionControl.tintColor = UIColor.greenColor()
@@ -88,12 +100,19 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 self.contentView.addConstraints([topConstraint, leadingConstraint, trailingConstraint])
                 prev = slidingSelectionControl
                 self.sectionPickerControls.push(slidingSelectionControl)
+                slidingSelectionControl.addTarget(self, action: "handleEnrollmentSelectionChanged:", forControlEvents: UIControlEvents.ValueChanged)
             }
+            
+            // add bottom constraint if needed. courseLabel's constraint is set in the storyboard
             if prev != self.courseLabel {
                 let bottomConstraint = NSLayoutConstraint(item: prev, attribute: .Bottom, relatedBy: .Equal, toItem: self.contentView, attribute: .Bottom, multiplier: 1, constant: -8)
                 self.contentView.addConstraint(bottomConstraint)
             }
         }
+    }
+    
+    func handleEnrollmentSelectionChanged(sender: SlidingSelectionControl) {
+        
     }
 
 }

@@ -86,6 +86,7 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
     }
     private func initializeEnrolledCoursesView(){
         self.enrolledCoursesTableViewDataSource.enrolledCourses = self.courses
+        self.enrolledCoursesTableViewDataSource.enrollments = self.enrollments
         self.enrolledCoursesView.dataSource = self.enrolledCoursesTableViewDataSource
         self.enrolledCoursesView.delegate = self
         self.enrolledCoursesView.reloadData()

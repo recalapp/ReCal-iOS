@@ -26,7 +26,9 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(courseCellIdentifier, forIndexPath: indexPath) as EnrolledCourseTableViewCell
         cell.expanded = indexPath == self.selectedIndexPath
-        cell.course = self.courseForIndexPath(indexPath)
+        let course = self.courseForIndexPath(indexPath)
+        cell.course = course
+        cell.enrollmentsBySectionType = self.enrollments[course]!
         return cell
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

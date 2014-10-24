@@ -54,6 +54,16 @@ public extension UIColor {
     }
 }
 
+public func arrayFindIndexesOfElement<T: Equatable>(#array: [T], #element: T) -> [Int] {
+    var indexes = [Int]()
+    for (i, elementToCheck) in enumerate(array) {
+        if element == elementToCheck {
+            indexes.append(i)
+        }
+    }
+    return indexes
+}
+
 public func arrayContainsElement<T: Equatable>(#array: [T], #element: T) -> Bool {
     return array.filter { $0 == element }.count > 0
 }
