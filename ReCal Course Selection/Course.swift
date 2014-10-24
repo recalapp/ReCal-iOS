@@ -8,8 +8,9 @@
 
 import Foundation
 import ReCalCommon
-
-struct Course: Equatable, Printable {
+private let hashPrimeMultipler = 32771
+struct Course: Equatable, Printable, Hashable {
+    
     let departmentCode: String
     let courseNumber: Int
     let sections: [Section]
@@ -20,9 +21,24 @@ struct Course: Equatable, Printable {
     var description: String {
         return self.displayText
     }
+    
+    var hashValue: Int {
+        var hash = self.departmentCode.hashValue
+        hash = hash * hashPrimeMultipler + courseNumber.hashValue
+        for section in self.sections {
+            hash = hash * hashPrimeMultipler + section.hashValue
+        }
+        return hash
+    }
 }
 
 func == (lhs: Course, rhs: Course)-> Bool {
+    if lhs.departmentCode != rhs.departmentCode {
+        return false
+    }
+    if lhs.courseNumber != rhs.courseNumber {
+        return false
+    }
     if lhs.sections.count != rhs.sections.count {
         return false
     }

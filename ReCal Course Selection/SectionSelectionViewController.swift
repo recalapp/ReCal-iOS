@@ -88,4 +88,3 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
     */
 
 }
-
