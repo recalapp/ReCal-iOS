@@ -20,6 +20,8 @@
 		8124969019F17F440081AFB2 /* TimeHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */; };
 		8124969319F18A620081AFB2 /* TimeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124969119F18A620081AFB2 /* TimeHeaderView.swift */; };
 		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
+		8134EEDB19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8134EEDA19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift */; };
+		8134EEDF19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8134EEDE19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift */; };
 		8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */; };
 		8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */; };
 		81580BD119F98E6200119517 /* SectionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BD019F98E6200119517 /* SectionSelectionViewController.swift */; };
@@ -154,6 +156,8 @@
 		8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderBackgroundView.swift; sourceTree = "<group>"; };
 		8124969119F18A620081AFB2 /* TimeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderView.swift; sourceTree = "<group>"; };
 		8124969219F18A620081AFB2 /* TimeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeHeaderView.xib; sourceTree = "<group>"; };
+		8134EEDA19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrolledCoursesTableViewDataSource.swift; sourceTree = "<group>"; };
+		8134EEDE19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrolledCourseTableViewCell.swift; sourceTree = "<group>"; };
 		8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewCell.swift; sourceTree = "<group>"; };
 		8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsCollectionViewCell.xib; sourceTree = "<group>"; };
 		81580BD019F98E6200119517 /* SectionSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionSelectionViewController.swift; sourceTree = "<group>"; };
@@ -339,6 +343,24 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8134EEDC19FA9A9D00D04DC8 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				81580BD219F9905100119517 /* ScheduleCollectionViewDataSource.swift */,
+				81580BD819F9922800119517 /* Calendar View Components */,
+			);
+			name = Schedule;
+			sourceTree = "<group>";
+		};
+		8134EEDD19FA9AA300D04DC8 /* Enrolled Courses */ = {
+			isa = PBXGroup;
+			children = (
+				8134EEDA19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift */,
+				8134EEDE19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift */,
+			);
+			name = "Enrolled Courses";
+			sourceTree = "<group>";
+		};
 		81580BD819F9922800119517 /* Calendar View Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,8 +381,8 @@
 			isa = PBXGroup;
 			children = (
 				81580BD019F98E6200119517 /* SectionSelectionViewController.swift */,
-				81580BD219F9905100119517 /* ScheduleCollectionViewDataSource.swift */,
-				81580BD819F9922800119517 /* Calendar View Components */,
+				8134EEDD19FA9AA300D04DC8 /* Enrolled Courses */,
+				8134EEDC19FA9A9D00D04DC8 /* Schedule */,
 			);
 			name = "Section Selection";
 			sourceTree = "<group>";
@@ -803,7 +825,9 @@
 				81580BD719F9922100119517 /* TimeRowHeaderBackgroundView.swift in Sources */,
 				81580BDE19F9931E00119517 /* DayColumnHeaderBackgroundView.swift in Sources */,
 				81580BE119F9938700119517 /* DayColumnHeaderView.swift in Sources */,
+				8134EEDB19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift in Sources */,
 				81FCD2B319F7EBF100B6DC2D /* CourseSearchTableViewController.swift in Sources */,
+				8134EEDF19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift in Sources */,
 				81FCD28C19F7E3E200B6DC2D /* AppDelegate.swift in Sources */,
 				81FCD28E19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld in Sources */,
 			);

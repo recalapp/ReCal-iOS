@@ -9,7 +9,7 @@
 import UIKit
 import ReCalCommon
 
-class SectionSelectionViewController: UIViewController, UICollectionViewDelegate {
+class SectionSelectionViewController: UIViewController, UICollectionViewDelegate, UITableViewDelegate {
 
     private var courses = [Course]()
     
@@ -19,29 +19,56 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
         })
     }
     
+    private let enrolledCoursesTableViewDataSource = EnrolledCoursesTableViewDataSource()
+    private let scheduleCollectionViewDataSource = ScheduleCollectionViewDataSource()
+    
     private func populateDummyData() {
-        let start = NSDateComponents()
+        var start = NSDateComponents()
         start.hour = 8
         start.minute = 0
-        let end = NSDateComponents()
-        end.hour = 10
-        end.minute = 0
-        let section1 = Section(type: .Precept, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Tuesday])
-        let course1 = Course(sections: [section1])
-        self.courses = [course1]
+        var end = NSDateComponents()
+        end.hour = 9
+        end.minute = 50
+        let section1 = Section(type: .Precept, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Wednesday])
+        start = NSDateComponents()
+        start.hour = 11
+        start.minute = 0
+        end = NSDateComponents()
+        end.hour = 12
+        end.minute = 20
+        let section2 = Section(type: .Precept, sectionNumber: 2, startTime: start, endTime: end, days:[.Tuesday, .Thursday])
+        let course1 = Course(departmentCode: "COS", courseNumber: 333, sections: [section1, section2])
+        end = NSDateComponents()
+        end.hour = 11
+        end.minute = 50
+        let section3 = Section(type: .Precept, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Wednesday, .Friday])
+        let course2 = Course(departmentCode: "ELE", courseNumber: 396, sections: [section3])
+        self.courses = [course1, course2]
     }
     
+    @IBOutlet weak var enrolledCoursesView: UITableView!
     @IBOutlet weak var scheduleView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.populateDummyData()
-        let dataSource = ScheduleCollectionViewDataSource()
+        self.initializeScheduleView()
+        self.initializeEnrolledCoursesView()
+    }
+    
+    private func initializeScheduleView(){
+        let dataSource = self.scheduleCollectionViewDataSource
         let layout = self.scheduleView.collectionViewLayout as CollectionViewCalendarWeekLayout
         dataSource.events = self.sections.map { $0 } // TODO this is a workaround, must remove once swift is fixed
         layout.dataSource = dataSource
         self.scheduleView.dataSource = dataSource
         self.scheduleView.delegate = self
         dataSource.registerReusableViewsWithCollectionView(self.scheduleView, forLayout: self.scheduleView.collectionViewLayout)
+    }
+    private func initializeEnrolledCoursesView(){
+        self.enrolledCoursesTableViewDataSource.enrolledCourses = self.courses
+        self.enrolledCoursesView.dataSource = self.enrolledCoursesTableViewDataSource
+        self.enrolledCoursesView.delegate = self
+        self.enrolledCoursesView.reloadData()
     }
 
     /*

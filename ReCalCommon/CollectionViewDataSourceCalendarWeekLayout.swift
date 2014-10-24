@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol CollectionViewDataSourceCalendarWeekLayout
+public protocol CollectionViewDataSourceCalendarWeekLayout: class
 {
     /// Return the start date in NSDate for the item at indexPath. nil if indexPath invalid
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, startDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate?

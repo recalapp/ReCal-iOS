@@ -12,9 +12,9 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="162" height="124"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dy7-NI-zQf">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dy7-NI-zQf">
                         <rect key="frame" x="60" y="8" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -22,7 +22,7 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="dy7-NI-zQf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="HZF-1W-8GG"/>
+                <constraint firstItem="dy7-NI-zQf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="HZF-1W-8GG"/>
                 <constraint firstAttribute="centerX" secondItem="dy7-NI-zQf" secondAttribute="centerX" id="Mtq-xO-rUQ"/>
             </constraints>
             <size key="customSize" width="162" height="124"/>

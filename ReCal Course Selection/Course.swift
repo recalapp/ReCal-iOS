@@ -9,8 +9,17 @@
 import Foundation
 import ReCalCommon
 
-struct Course: Equatable {
+struct Course: Equatable, Printable {
+    let departmentCode: String
+    let courseNumber: Int
     let sections: [Section]
+    
+    var displayText: String {
+        return "\(self.departmentCode) \(self.courseNumber)"
+    }
+    var description: String {
+        return self.displayText
+    }
 }
 
 func == (lhs: Course, rhs: Course)-> Bool {

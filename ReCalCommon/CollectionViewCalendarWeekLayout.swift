@@ -23,7 +23,7 @@ let dayColumnHeaderZIndex = dayColumnHeaderBackgroundZIndex + 1
 public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     
     /// MARK: Properties
-    public var dataSource: CollectionViewDataSourceCalendarWeekLayout?
+    public weak var dataSource: CollectionViewDataSourceCalendarWeekLayout?
     
     private var daySectionWidth: CGFloat {
         var finalWidth: Float = 300.0 // TODO default value?

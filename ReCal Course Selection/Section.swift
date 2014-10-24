@@ -9,7 +9,7 @@
 import Foundation
 import ReCalCommon
 
-struct Section: Equatable {
+struct Section: Equatable, Printable {
     let type: SectionType
     let sectionNumber: Int
     let startTime: NSDateComponents
@@ -17,6 +17,9 @@ struct Section: Equatable {
     let days: [Day]
     var displayText: String {
         return "\(self.type.sectionPrefix)\(self.sectionNumber)"
+    }
+    var description: String {
+        return self.displayText
     }
 }
 
