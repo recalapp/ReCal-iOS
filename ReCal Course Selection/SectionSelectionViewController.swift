@@ -11,7 +11,7 @@ import ReCalCommon
 
 class SectionSelectionViewController: UIViewController, UICollectionViewDelegate, UITableViewDelegate {
     
-    private var enrollments = Dictionary<Course, Set<SectionTypeEnrollment>>()
+    private var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
     
     private var courses: [Course] = [Course]() {
         didSet {
@@ -19,15 +19,15 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
             if oldValue != self.courses {
                 self.enrollments.removeAll(keepCapacity: true)
                 for course in self.courses {
+                    var typeEnrollment = Dictionary<SectionType, SectionEnrollment>()
                     let sectionTypes = course.sections.reduce(Set<SectionType>(), combine: {(var set, section) in
                         set.add(section.type)
                         return set
                     })
-                    let sectionTypeEnrollments: Set<SectionTypeEnrollment> = sectionTypes.map {(type: SectionType) in
-                        let enrollment = SectionTypeEnrollment(course: course, sectionType: type, enrollment: .Unenrolled)
-                        return enrollment
+                    for sectionType in sectionTypes {
+                        typeEnrollment[sectionType] = .Unenrolled
                     }
-                    self.enrollments[course] = sectionTypeEnrollments
+                    self.enrollments[course] = typeEnrollment
                 }
             }
         }

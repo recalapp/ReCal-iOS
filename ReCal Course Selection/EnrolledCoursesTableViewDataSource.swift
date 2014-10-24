@@ -13,6 +13,7 @@ let courseCellIdentifier = "CourseCell"
 
 class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource {
     
+    var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
     var enrolledCourses = [Course]()
     var selectedIndexPath: NSIndexPath?
     
