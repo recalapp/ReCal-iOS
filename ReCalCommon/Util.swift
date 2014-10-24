@@ -34,6 +34,23 @@ public extension NSLayoutConstraint {
     }
 }
 
+public extension UIColor {
+    public func darkerColor() -> UIColor {
+        return self.colorWithBrightness(scale: 0.75)
+    }
+    public func lighterColor() -> UIColor {
+        return self.colorWithBrightness(scale: 1.3)
+    }
+    public func colorWithBrightness(#scale: CGFloat) -> UIColor {
+        var hue: CGFloat = 1.0
+        var saturation: CGFloat = 1.0
+        var brightness: CGFloat = 1.0
+        var alpha: CGFloat = 1.0
+        self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        return UIColor(hue: hue, saturation: saturation, brightness: min(brightness * scale, 1.0), alpha: alpha)
+    }
+}
+
 public func arrayContainsElement<T: Equatable>(#array: [T], #element: T) -> Bool {
     return array.filter { $0 == element }.count > 0
 }

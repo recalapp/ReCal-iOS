@@ -11,7 +11,7 @@ import UIKit
 class EventCollectionViewCell: UICollectionViewCell {
 
     let selectedAlpha: CGFloat = 1.0
-    let unselectedAlpha: CGFloat = 0.8
+    let unselectedAlpha: CGFloat = 0.5
     
     var event: ScheduleEvent? = nil {
         didSet {
@@ -44,6 +44,11 @@ class EventCollectionViewCell: UICollectionViewCell {
     private func updateColor() {
         let alpha = self.selected ? selectedAlpha : unselectedAlpha
         self.backgroundColor = self.color.colorWithAlphaComponent(alpha)
+        if self.selected {
+            self.eventTitleLabel.textColor = self.color.darkerColor().darkerColor()
+        } else {
+            self.eventTitleLabel.textColor = self.color.lighterColor().lighterColor()
+        }
     }
     
     
