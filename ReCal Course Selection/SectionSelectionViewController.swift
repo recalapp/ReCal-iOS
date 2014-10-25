@@ -9,7 +9,7 @@
 import UIKit
 import ReCalCommon
 
-class SectionSelectionViewController: UIViewController, UICollectionViewDelegate, UITableViewDelegate, EnrolledCoursesTableViewDataSourceDelegate {
+class SectionSelectionViewController: UIViewController, UICollectionViewDelegate, UITableViewDelegate, EnrolledCoursesTableViewDataSourceDelegate, ScheduleCollectionViewDataSourceDelegate {
     
     private var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
     
@@ -77,6 +77,7 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
     
     private func initializeScheduleView(){
         let dataSource = self.scheduleCollectionViewDataSource
+        dataSource.delegate = self
         let layout = self.scheduleView.collectionViewLayout as CollectionViewCalendarWeekLayout
         dataSource.enrollments = self.enrollments
         dataSource.enrolledCourses = self.courses
@@ -102,12 +103,28 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
         
     }
     
+    // MARK: - Collection View Delegate
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        self.scheduleCollectionViewDataSource.handleDeselectionInCollectionView(collectionView, forItemAtIndexPath: indexPath)
+    }
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        self.scheduleCollectionViewDataSource.handleSelectionInCollectionView(collectionView, forItemAtIndexPath: indexPath)
+    }
+    
     // MARK: - Enrolled Courses Table View Data Source Delegate
     func enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource) {
-        assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object")
+        assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
         self.enrollments = dataSource.enrollments
         self.scheduleCollectionViewDataSource.enrollments = self.enrollments
         self.scheduleView.reloadData()
+    }
+    
+    // MARK: - Schedule Collection View Data Source Delegate
+    func enrollmentDidChangeForScheduleCollectionViewDataSource(dataSource: ScheduleCollectionViewDataSource) {
+        assert(dataSource == self.scheduleCollectionViewDataSource, "Wrong data source object for schedule view")
+        self.enrollments = dataSource.enrollments
+        self.enrolledCoursesTableViewDataSource.enrollments = self.enrollments
+        self.enrolledCoursesView.reloadData()
     }
     /*
     // MARK: - Navigation

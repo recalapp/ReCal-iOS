@@ -14,9 +14,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     var enrollmentsBySectionType = Dictionary<SectionType, SectionEnrollment>()
     var course: Course? = nil {
         didSet {
-            if oldValue != course {
-                self.refresh()
-            }
+            self.refresh()
         }
     }
     var sectionTypes: [SectionType] {

@@ -9,9 +9,9 @@
 import UIKit
 import ReCalCommon
 
-
-
 class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, CollectionViewDataSourceCalendarWeekLayout {
+    
+    weak var delegate: ScheduleCollectionViewDataSourceDelegate?
     
     var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
     var enrolledCourses = [Course]()
@@ -101,7 +101,10 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as EventCollectionViewCell
         let event = self.eventForIndexPath(indexPath)
         cell.event = event
-        cell.selected = self.eventIsEnrolled(event)
+        if self.eventIsEnrolled(event) {
+            collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
+            cell.selected = true
+        }
         return cell
     }
     
@@ -133,6 +136,20 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
             return supplementaryView
         }
         assert(false, "Invalid supplementary view type")
+    }
+    
+    func handleSelectionInCollectionView(collectionView: UICollectionView, forItemAtIndexPath indexPath: NSIndexPath) {
+        let event = self.eventForIndexPath(indexPath)
+        self.enrollments[event.course]![event.section.type] = .Enrolled(event.section)
+        collectionView.reloadData()
+        self.delegate?.enrollmentDidChangeForScheduleCollectionViewDataSource(self)
+    }
+    
+    func handleDeselectionInCollectionView(collectionView: UICollectionView, forItemAtIndexPath indexPath: NSIndexPath) {
+        let event = self.eventForIndexPath(indexPath)
+        self.enrollments[event.course]![event.section.type] = .Unenrolled
+        collectionView.reloadData()
+        self.delegate?.enrollmentDidChangeForScheduleCollectionViewDataSource(self)
     }
     
     // MARK: - Calendar Week View Layout Data Source
@@ -187,9 +204,6 @@ struct ScheduleEvent {
     let section: Section
 }
 
-//protocol ScheduleEvent {
-//    var title: String { get }
-//    var days: [Day] { get }
-//    var startTime: NSDateComponents { get }
-//    var endTime: NSDateComponents { get }
-//}
+protocol ScheduleCollectionViewDataSourceDelegate: class {
+    func enrollmentDidChangeForScheduleCollectionViewDataSource(dataSource: ScheduleCollectionViewDataSource)
+}
