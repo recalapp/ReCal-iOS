@@ -13,6 +13,7 @@ struct Course: Equatable, Printable, Hashable {
     
     let departmentCode: String
     let courseNumber: Int
+    let color: UIColor
     let sections: [Section]
     
     var displayText: String {

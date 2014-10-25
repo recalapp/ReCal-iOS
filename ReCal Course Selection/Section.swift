@@ -34,13 +34,6 @@ struct Section: Equatable, Printable, Hashable {
     }
 }
 
-//extension Section: ScheduleEvent {
-//    var title: String {
-//        return displayText
-//    }
-//}
-
-
 func == (lhs: Section, rhs: Section) -> Bool {
     if lhs.type != rhs.type {
         return false
