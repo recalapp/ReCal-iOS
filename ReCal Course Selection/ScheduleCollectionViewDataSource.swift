@@ -13,8 +13,23 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     weak var delegate: ScheduleCollectionViewDataSourceDelegate?
     
-    var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
-    var enrolledCourses = [Course]()
+    var enrollments: Dictionary<Course, Dictionary<SectionType, SectionEnrollment>> = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>() {
+        didSet {
+            self.eventsForDayCache.clearCache()
+        }
+    }
+    var enrolledCourses: [Course] = [Course]() {
+        didSet {
+            if oldValue != enrolledCourses {
+                self.eventsForDayCache.clearCache()
+                self.allEvents = self.enrolledCourses.reduce([], combine: { (list, course) in
+                    list + course.sections.map { ScheduleEvent(course: course, section: $0) }
+                })
+            }
+        }
+    }
+    
+    private var allEvents: [ScheduleEvent] = []
     
     // MARK: constants
     private let eventCellIdentifier = "EventsCell"
@@ -38,6 +53,28 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         return formatter
     }()
     
+    lazy private var eventsForDayCache: Cache<Day, [ScheduleEvent]> = {
+        let cache = Cache<Day, [ScheduleEvent]>()
+        cache.itemConstructor = { (day) in
+            let filtered = self.allEvents.filter { (event: ScheduleEvent) in
+                let section = event.section
+                let course = event.course
+                if !arrayContainsElement(array: section.days, element: day) {
+                    return false
+                }
+                let enrollment = self.enrollments[course]![section.type]!
+                switch enrollment {
+                case .Unenrolled:
+                    return true
+                case .Enrolled(let enrolled):
+                    return enrolled == section
+                }
+            }
+            return filtered
+        }
+        return cache
+    }()
+    
     // MARK: methods
     /// Register the collection view and layout with the appropriate view classes
     func registerReusableViewsWithCollectionView(collectionView: UICollectionView, forLayout layout: UICollectionViewLayout) {
@@ -52,19 +89,20 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     /// Returns an array of events for day
     func eventsForDay(day: Day) -> [ScheduleEvent] {
-        let allEvents = self.enrolledCourses.reduce([], combine: { (list: [ScheduleEvent], course) in
-            return list + course.sections.filter { (section: Section) in
-                let enrollment = self.enrollments[course]![section.type]!
-                switch enrollment {
-                case .Unenrolled:
-                    return true
-                case .Enrolled(let enrolled):
-                    return enrolled == section
-                }
-            }.map { ScheduleEvent(course: course, section: $0) }
-        })
-        let filtered = allEvents.filter { (event) in arrayContainsElement(array: event.section.days, element: day) }
-        return filtered
+        return eventsForDayCache[day]
+//        let allEvents = self.enrolledCourses.reduce([], combine: { (list: [ScheduleEvent], course) in
+//            return list + course.sections.filter { (section: Section) in
+//                let enrollment = self.enrollments[course]![section.type]!
+//                switch enrollment {
+//                case .Unenrolled:
+//                    return true
+//                case .Enrolled(let enrolled):
+//                    return enrolled == section
+//                }
+//            }.map { ScheduleEvent(course: course, section: $0) }
+//        })
+//        let filtered = allEvents.filter { (event) in arrayContainsElement(array: event.section.days, element: day) }
+//        return filtered
     }
     
     /// Returns the event for index path
