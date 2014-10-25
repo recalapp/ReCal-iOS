@@ -11,8 +11,9 @@ import ReCalCommon
 
 let courseCellIdentifier = "CourseCell"
 
-class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource {
+class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, EnrolledCourseTableViewCellDelegate {
     
+    weak var delegate: EnrolledCoursesTableViewDataSourceDelegate?
     var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
     var enrolledCourses = [Course]()
     var selectedIndexPath: NSIndexPath?
@@ -29,7 +30,7 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource {
         cell.enrollmentsBySectionType = self.enrollments[course]!
         cell.expanded = indexPath == self.selectedIndexPath
         cell.course = course
-        
+        cell.delegate = self
         return cell
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -50,4 +51,16 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource {
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
     }
+    
+    // MARK: - Enrolled Course Table View Cell Delegate
+    func enrollmentsDidChangeForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell) {
+        assert(cell.course != nil, "Course is nil in cell")
+        assert(self.enrollments[cell.course!] != nil, "Invalid course found in cell")
+        self.enrollments[cell.course!] = cell.enrollmentsBySectionType
+        self.delegate?.enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(self)
+    }
+}
+
+protocol EnrolledCoursesTableViewDataSourceDelegate: class {
+    func enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource)
 }

@@ -9,7 +9,7 @@
 import UIKit
 import ReCalCommon
 
-class SectionSelectionViewController: UIViewController, UICollectionViewDelegate, UITableViewDelegate {
+class SectionSelectionViewController: UIViewController, UICollectionViewDelegate, UITableViewDelegate, EnrolledCoursesTableViewDataSourceDelegate {
     
     private var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
     
@@ -85,6 +85,7 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
         dataSource.registerReusableViewsWithCollectionView(self.scheduleView, forLayout: self.scheduleView.collectionViewLayout)
     }
     private func initializeEnrolledCoursesView(){
+        self.enrolledCoursesTableViewDataSource.delegate = self
         self.enrolledCoursesTableViewDataSource.enrolledCourses = self.courses
         self.enrolledCoursesTableViewDataSource.enrollments = self.enrollments
         self.enrolledCoursesView.dataSource = self.enrolledCoursesTableViewDataSource
@@ -97,6 +98,12 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.enrolledCoursesTableViewDataSource.handleSelectionInTableView(tableView, forRowAtIndexPath: indexPath)
         
+    }
+    
+    // MARK: - Enrolled Courses Table View Data Source Delegate
+    func enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource) {
+        assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object")
+        self.enrollments = dataSource.enrollments
     }
     /*
     // MARK: - Navigation

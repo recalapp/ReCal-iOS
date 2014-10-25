@@ -10,6 +10,7 @@ import UIKit
 import ReCalCommon
 
 class EnrolledCourseTableViewCell: UITableViewCell {
+    weak var delegate: EnrolledCourseTableViewCellDelegate?
     var enrollmentsBySectionType = Dictionary<SectionType, SectionEnrollment>()
     var course: Course? = nil {
         didSet {
@@ -109,14 +110,22 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     func handleEnrollmentSelectionChanged(sender: SlidingSelectionControl) {
         for (sectionType, sectionPicker) in self.sectionPickerControls {
             if sectionPicker == sender {
+                let oldEnrollment = self.enrollmentsBySectionType[sectionType]!
                 if sender.selectedIndex == 0 {
                     self.enrollmentsBySectionType[sectionType] = .Unenrolled
                 } else {
                     let section = self.sectionsWithType(sectionType)[sender.selectedIndex - 1]
                     self.enrollmentsBySectionType[sectionType] = .Enrolled(section)
                 }
+                if oldEnrollment != self.enrollmentsBySectionType[sectionType] {
+                    self.delegate?.enrollmentsDidChangeForEnrolledCourseTableViewCell(self)
+                }
+                break
             }
         }
     }
+}
 
+protocol EnrolledCourseTableViewCellDelegate: class {
+    func enrollmentsDidChangeForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell)
 }
