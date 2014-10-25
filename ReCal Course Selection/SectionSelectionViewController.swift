@@ -78,7 +78,8 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
     private func initializeScheduleView(){
         let dataSource = self.scheduleCollectionViewDataSource
         let layout = self.scheduleView.collectionViewLayout as CollectionViewCalendarWeekLayout
-        dataSource.events = self.sections.map { $0 } // TODO this is a workaround, must remove once swift is fixed
+        dataSource.enrollments = self.enrollments
+        dataSource.enrolledCourses = self.courses
         layout.dataSource = dataSource
         self.scheduleView.dataSource = dataSource
         self.scheduleView.delegate = self
@@ -104,6 +105,8 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
     func enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource) {
         assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object")
         self.enrollments = dataSource.enrollments
+        self.scheduleCollectionViewDataSource.enrollments = self.enrollments
+        self.scheduleView.reloadData()
     }
     /*
     // MARK: - Navigation

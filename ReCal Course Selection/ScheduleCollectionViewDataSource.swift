@@ -13,6 +13,9 @@ import ReCalCommon
 
 class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, CollectionViewDataSourceCalendarWeekLayout {
     
+    var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
+    var enrolledCourses = [Course]()
+    
     // MARK: constants
     private let eventCellIdentifier = "EventsCell"
     private let dayColumnHeaderViewIdentifier = "DayHeader"
@@ -35,8 +38,6 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         return formatter
     }()
     
-    var events: [ScheduleEvent] = []
-    
     // MARK: methods
     /// Register the collection view and layout with the appropriate view classes
     func registerReusableViewsWithCollectionView(collectionView: UICollectionView, forLayout layout: UICollectionViewLayout) {
@@ -51,7 +52,19 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     /// Returns an array of events for day
     func eventsForDay(day: Day) -> [ScheduleEvent] {
-        let filtered = self.events.filter { (event) in arrayContainsElement(array: event.days, element: day) }
+        let allSections = self.enrolledCourses.reduce([], combine: { (list: [Section], course) in
+            
+            return list + course.sections.filter { (section: Section) in
+                let enrollment = self.enrollments[course]![section.type]!
+                switch enrollment {
+                case .Unenrolled:
+                    return true
+                case .Enrolled(let enrolled):
+                    return enrolled == section
+                }
+            }
+        })
+        let filtered = allSections.filter { (event) in arrayContainsElement(array: event.days, element: day) }.map {$0} as [ScheduleEvent]
         return filtered
     }
     
@@ -135,7 +148,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     /// Return the height of the day header
     func dayColumnHeaderHeightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float {
-        return 50.0
+        return 30.0
     }
     
     /// Return the width of the time header
