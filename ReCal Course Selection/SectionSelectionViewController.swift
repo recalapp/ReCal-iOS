@@ -25,7 +25,13 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
                         return set
                     })
                     for sectionType in sectionTypes {
-                        typeEnrollment[sectionType] = .Unenrolled
+                        // check how many sections there are for this type
+                        let sections = course.sections.filter { $0.type == sectionType }
+                        if sections.count == 1 {
+                            typeEnrollment[sectionType] = .Enrolled(sections[0])
+                        } else {
+                            typeEnrollment[sectionType] = .Unenrolled
+                        }
                     }
                     self.enrollments[course] = typeEnrollment
                 }

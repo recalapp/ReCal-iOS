@@ -141,15 +141,19 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     func handleSelectionInCollectionView(collectionView: UICollectionView, forItemAtIndexPath indexPath: NSIndexPath) {
         let event = self.eventForIndexPath(indexPath)
         self.enrollments[event.course]![event.section.type] = .Enrolled(event.section)
-        collectionView.reloadData()
         self.delegate?.enrollmentDidChangeForScheduleCollectionViewDataSource(self)
+        collectionView.reloadData()
     }
     
     func handleDeselectionInCollectionView(collectionView: UICollectionView, forItemAtIndexPath indexPath: NSIndexPath) {
         let event = self.eventForIndexPath(indexPath)
-        self.enrollments[event.course]![event.section.type] = .Unenrolled
+        let sections = event.course.sections.filter { $0.type == event.section.type }
+        if sections.count > 1 {
+            // only allow unenrollment if there are more than one sections
+            self.enrollments[event.course]![event.section.type] = .Unenrolled
+            self.delegate?.enrollmentDidChangeForScheduleCollectionViewDataSource(self)
+        }
         collectionView.reloadData()
-        self.delegate?.enrollmentDidChangeForScheduleCollectionViewDataSource(self)
     }
     
     // MARK: - Calendar Week View Layout Data Source

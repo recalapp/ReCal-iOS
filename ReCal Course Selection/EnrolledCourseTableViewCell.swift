@@ -69,19 +69,22 @@ class EnrolledCourseTableViewCell: UITableViewCell {
             var prev: UIView = self.courseLabel
             for sectionType in sectionTypes {
                 let sections = self.sectionsWithType(sectionType)
-                let titles = ["All \(sectionType.displayText.pluralize())"] + sections.map { $0.displayText }
+                var titles = sections.map { $0.displayText }
                 var initialSelection = 0
-                let enrollmentOpt = self.enrollmentsBySectionType[sectionType]
-                assert(enrollmentOpt != nil, "Must pass a valid section enrollment dict")
-                switch enrollmentOpt! {
-                case .Unenrolled:
-                    initialSelection = 0
-                case .Enrolled(let section):
-                    let indexes = arrayFindIndexesOfElement(array: sections, element: section)
-                    assert(indexes.count == 1, "Section array cannot contain duplicate, and enrollment must be with an existing section")
-                    initialSelection = indexes[0] + 1
+                if sections.count > 1 {
+                    // there is more than one section,
+                    titles = ["All \(sectionType.displayText.pluralize())"] + titles
+                    let enrollmentOpt = self.enrollmentsBySectionType[sectionType]
+                    assert(enrollmentOpt != nil, "Must pass a valid section enrollment dict")
+                    switch enrollmentOpt! {
+                    case .Unenrolled:
+                        initialSelection = 0
+                    case .Enrolled(let section):
+                        let indexes = arrayFindIndexesOfElement(array: sections, element: section)
+                        assert(indexes.count == 1, "Section array cannot contain duplicate, and enrollment must be with an existing section")
+                        initialSelection = indexes[0] + 1
+                    }
                 }
-                
                 let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: initialSelection)
                 slidingSelectionControl.preferredMaxLayoutWidth = self.contentView.bounds.size.width
                 slidingSelectionControl.defaultBackgroundColor = UIColor.blackColor()
