@@ -54,12 +54,15 @@ func == (lhs: Section, rhs: Section) -> Bool {
 }
 
 enum SectionType: String {
-    case Precept = "Pre"
+    case Precept = "pre"
+    case Lecture = "lec"
     
     var displayText: String {
         switch self {
         case .Precept:
             return "Precept"
+        case .Lecture:
+            return "Lecture"
         }
     }
     
@@ -67,6 +70,8 @@ enum SectionType: String {
         switch self {
         case .Precept:
             return "P"
+        case .Lecture:
+            return "L"
         }
     }
 }

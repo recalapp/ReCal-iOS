@@ -51,7 +51,7 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
     private func populateDummyData() {
         var start = NSDateComponents()
         start.hour = 8
-        start.minute = 0
+        start.minute = 30
         var end = NSDateComponents()
         end.hour = 9
         end.minute = 50
@@ -63,12 +63,29 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
         end.hour = 12
         end.minute = 20
         let section2 = Section(type: .Precept, sectionNumber: 2, startTime: start, endTime: end, days:[.Tuesday, .Thursday])
-        let course1 = Course(departmentCode: "COS", courseNumber: 333, color: UIColor.greenColor(), sections: [section1, section2])
+        start = NSDateComponents()
+        start.hour = 13
+        start.minute = 30
+        end = NSDateComponents()
+        end.hour = 14
+        end.minute = 50
+        let section3 = Section(type: .Precept, sectionNumber: 3, startTime: start, endTime: end, days:[.Tuesday, .Thursday])
+        start = NSDateComponents()
+        start.hour = 15
+        start.minute = 0
+        end = NSDateComponents()
+        end.hour = 16
+        end.minute = 20
+        let lecture1 = Section(type: .Lecture, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Wednesday, .Friday])
+        let course1 = Course(departmentCode: "COS", courseNumber: 333, color: UIColor.greenColor(), sections: [lecture1, section1, section2, section3])
+        start = NSDateComponents()
+        start.hour = 11
+        start.minute = 0
         end = NSDateComponents()
         end.hour = 11
         end.minute = 50
-        let section3 = Section(type: .Precept, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Wednesday, .Friday])
-        let course2 = Course(departmentCode: "ELE", courseNumber: 396, color: UIColor.orangeColor(), sections: [section3])
+        let section4 = Section(type: .Precept, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Wednesday, .Friday])
+        let course2 = Course(departmentCode: "ELE", courseNumber: 396, color: UIColor.orangeColor(), sections: [section4])
         self.courses = [course1, course2]
     }
     

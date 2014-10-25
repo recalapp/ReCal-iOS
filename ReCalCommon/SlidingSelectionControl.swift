@@ -91,6 +91,7 @@ public class SlidingSelectionControl: UIControl {
         self.slidingSelectionControlItems[initialSelection].selected = true
         self.selectedIndex = initialSelection
         self.updateConstraintToFitWidth(CGFloat.max)
+        self.backgroundColor = UIColor.blueColor()
     }
     
     /// MARK: Methods
@@ -126,6 +127,15 @@ public class SlidingSelectionControl: UIControl {
         }
     }
     
+    public override func layoutMarginsDidChange() {
+        let givenWidth = self.preferredMaxLayoutWidth <= 0.0 ? self.defaultPreferredMaxLayoutWidth : self.preferredMaxLayoutWidth
+        if givenWidth < self.intrinsicContentSize().width {
+            self.updateConstraintToFitWidth(givenWidth)
+            // safe to continue, because invalidation doesn't actually trigger an update on constraints.
+        }
+        super.layoutMarginsDidChange()
+    }
+    
     override public func intrinsicContentSize() -> CGSize {
         if let contentSize = self.contentSize {
             return contentSize
@@ -137,10 +147,7 @@ public class SlidingSelectionControl: UIControl {
     
     override public func updateConstraints() {
         let givenWidth = self.preferredMaxLayoutWidth <= 0.0 ? self.defaultPreferredMaxLayoutWidth : self.preferredMaxLayoutWidth
-        if givenWidth < self.intrinsicContentSize().width {
-            self.updateConstraintToFitWidth(givenWidth)
-            // safe to continue, because invalidation doesn't actually trigger an update on constraints.
-        }
+        self.updateConstraintToFitWidth(givenWidth)
         super.updateConstraints()
     }
     
