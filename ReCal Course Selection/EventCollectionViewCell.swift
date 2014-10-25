@@ -16,7 +16,7 @@ class EventCollectionViewCell: UICollectionViewCell {
     var event: ScheduleEvent? = nil {
         didSet {
             if let event = self.event {
-                self.eventTitleLabel.text = event.title
+                self.eventTitleLabel.text = event.section.displayText
             } else {
                 self.eventTitleLabel.text = ""
             }

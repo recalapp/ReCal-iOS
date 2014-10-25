@@ -83,6 +83,7 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
         layout.dataSource = dataSource
         self.scheduleView.dataSource = dataSource
         self.scheduleView.delegate = self
+        self.scheduleView.allowsMultipleSelection = true
         dataSource.registerReusableViewsWithCollectionView(self.scheduleView, forLayout: self.scheduleView.collectionViewLayout)
     }
     private func initializeEnrolledCoursesView(){

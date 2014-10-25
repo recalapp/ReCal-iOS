@@ -34,11 +34,11 @@ struct Section: Equatable, Printable, Hashable {
     }
 }
 
-extension Section: ScheduleEvent {
-    var title: String {
-        return displayText
-    }
-}
+//extension Section: ScheduleEvent {
+//    var title: String {
+//        return displayText
+//    }
+//}
 
 
 func == (lhs: Section, rhs: Section) -> Bool {

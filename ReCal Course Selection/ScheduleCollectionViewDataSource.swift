@@ -52,8 +52,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     /// Returns an array of events for day
     func eventsForDay(day: Day) -> [ScheduleEvent] {
-        let allSections = self.enrolledCourses.reduce([], combine: { (list: [Section], course) in
-            
+        let allEvents = self.enrolledCourses.reduce([], combine: { (list: [ScheduleEvent], course) in
             return list + course.sections.filter { (section: Section) in
                 let enrollment = self.enrollments[course]![section.type]!
                 switch enrollment {
@@ -62,20 +61,29 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
                 case .Enrolled(let enrolled):
                     return enrolled == section
                 }
-            }
+            }.map { ScheduleEvent(course: course, section: $0) }
         })
-        let filtered = allSections.filter { (event) in arrayContainsElement(array: event.days, element: day) }.map {$0} as [ScheduleEvent]
+        let filtered = allEvents.filter { (event) in arrayContainsElement(array: event.section.days, element: day) }
         return filtered
     }
     
     /// Returns the event for index path
-    func eventForIndexPath(indexPath: NSIndexPath) -> ScheduleEvent {
+    private func eventForIndexPath(indexPath: NSIndexPath) -> ScheduleEvent {
         let dayOpt = Day(rawValue: indexPath.section)
         assert(dayOpt != nil, "If dayOpt is nil, then the section value passed in is wrong")
         let day = dayOpt!
         let events = self.eventsForDay(day)
         assert(indexPath.row < events.count, "If row is bigger than the number of events, then the row value passed in is wrong")
         return events[indexPath.row]
+    }
+    private func eventIsEnrolled(event: ScheduleEvent) -> Bool {
+        let enrollment = self.enrollments[event.course]![event.section.type]!
+        switch enrollment {
+        case .Unenrolled:
+            return false
+        case .Enrolled(let section):
+            return section == event.section
+        }
     }
     
     // MARK: - Collection View Data Source
@@ -91,7 +99,9 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as EventCollectionViewCell
-        cell.event = self.eventForIndexPath(indexPath)
+        let event = self.eventForIndexPath(indexPath)
+        cell.event = event
+        cell.selected = self.eventIsEnrolled(event)
         return cell
     }
     
@@ -128,12 +138,12 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     // MARK: - Calendar Week View Layout Data Source
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, endDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
         let event = self.eventForIndexPath(indexPath)
-        return self.calendar.dateFromComponents(event.endTime)
+        return self.calendar.dateFromComponents(event.section.endTime)
     }
     
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, startDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
         let event = self.eventForIndexPath(indexPath)
-        return self.calendar.dateFromComponents(event.startTime)
+        return self.calendar.dateFromComponents(event.section.startTime)
     }
     
     /// Return the width for a day
@@ -172,9 +182,14 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     }
 }
 
-protocol ScheduleEvent {
-    var title: String { get }
-    var days: [Day] { get }
-    var startTime: NSDateComponents { get }
-    var endTime: NSDateComponents { get }
+struct ScheduleEvent {
+    let course: Course
+    let section: Section
 }
+
+//protocol ScheduleEvent {
+//    var title: String { get }
+//    var days: [Day] { get }
+//    var startTime: NSDateComponents { get }
+//    var endTime: NSDateComponents { get }
+//}
