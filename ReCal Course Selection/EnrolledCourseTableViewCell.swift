@@ -29,14 +29,8 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         }
         return []
     }
-    var sectionPickerControls = Stack<SlidingSelectionControl>()
-    var expanded: Bool = false {
-        didSet {
-            if oldValue != expanded {
-                self.refresh()
-            }
-        }
-    }
+    var sectionPickerControls = Dictionary<SectionType, SlidingSelectionControl>()
+    var expanded: Bool = false
     
     @IBOutlet weak var courseLabel: UILabel!
     override func awakeFromNib() {
@@ -67,9 +61,10 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         }
         
         // section pickers
-        while let sectionPicker = self.sectionPickerControls.pop() {
+        for (_, sectionPicker) in self.sectionPickerControls {
             sectionPicker.removeFromSuperview()
         }
+        self.sectionPickerControls.removeAll(keepCapacity: true)
         if self.expanded {
             let sectionTypes = self.sectionTypes
             var prev: UIView = self.courseLabel
@@ -99,7 +94,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 let trailingConstraint = NSLayoutConstraint(item: slidingSelectionControl, attribute: .Trailing, relatedBy: .Equal, toItem: self.contentView, attribute: .Right, multiplier: 1, constant: 0)
                 self.contentView.addConstraints([topConstraint, leadingConstraint, trailingConstraint])
                 prev = slidingSelectionControl
-                self.sectionPickerControls.push(slidingSelectionControl)
+                self.sectionPickerControls[sectionType] = slidingSelectionControl
                 slidingSelectionControl.addTarget(self, action: "handleEnrollmentSelectionChanged:", forControlEvents: UIControlEvents.ValueChanged)
             }
             
@@ -112,7 +107,16 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     }
     
     func handleEnrollmentSelectionChanged(sender: SlidingSelectionControl) {
-        
+        for (sectionType, sectionPicker) in self.sectionPickerControls {
+            if sectionPicker == sender {
+                if sender.selectedIndex == 0 {
+                    self.enrollmentsBySectionType[sectionType] = .Unenrolled
+                } else {
+                    let section = self.sectionsWithType(sectionType)[sender.selectedIndex - 1]
+                    self.enrollmentsBySectionType[sectionType] = .Enrolled(section)
+                }
+            }
+        }
     }
 
 }

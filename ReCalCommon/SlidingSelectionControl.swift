@@ -113,7 +113,7 @@ public class SlidingSelectionControl: UIControl {
                         if slidingSelectionControlItem.containsTouch(touch) {
                             slidingSelectionControlItem.selected = true
                             let oldSelected = self.selectedIndex
-                            self.selectedIndex = oldSelected
+                            self.selectedIndex = index
                             if oldSelected != self.selectedIndex {
                                 self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
                             }

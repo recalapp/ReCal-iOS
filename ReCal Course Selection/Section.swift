@@ -8,7 +8,7 @@
 
 import Foundation
 import ReCalCommon
-private let hashPrimeMultiplier = 65599
+private let hashPrimeMultiplier = 13//65599
 struct Section: Equatable, Printable, Hashable {
     
     let type: SectionType
@@ -17,18 +17,18 @@ struct Section: Equatable, Printable, Hashable {
     let endTime: NSDateComponents
     let days: [Day]
     var displayText: String {
-        return "\(self.type.sectionPrefix)\(self.sectionNumber)"
+        return self.type.sectionPrefix + String(format: "%.2d", self.sectionNumber)
     }
     var description: String {
         return self.displayText
     }
     var hashValue: Int {
         var hash = self.type.hashValue
-        hash = hash * hashPrimeMultiplier + self.sectionNumber.hashValue
-        hash = hash * hashPrimeMultiplier + self.startTime.hashValue
-        hash = hash * hashPrimeMultiplier + self.endTime.hashValue
+        hash = hash &* hashPrimeMultiplier &+ self.sectionNumber.hashValue
+        hash = hash &* hashPrimeMultiplier &+ self.startTime.hashValue
+        hash = hash &* hashPrimeMultiplier &+ self.endTime.hashValue
         for day in self.days {
-            hash = hash * hashPrimeMultiplier + day.hashValue
+            hash = hash &* hashPrimeMultiplier &+ day.hashValue
         }
         return hash
     }

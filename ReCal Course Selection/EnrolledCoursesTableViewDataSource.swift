@@ -25,10 +25,11 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource {
     // MARK: - Table View Data Source
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(courseCellIdentifier, forIndexPath: indexPath) as EnrolledCourseTableViewCell
-        cell.expanded = indexPath == self.selectedIndexPath
         let course = self.courseForIndexPath(indexPath)
-        cell.course = course
         cell.enrollmentsBySectionType = self.enrollments[course]!
+        cell.expanded = indexPath == self.selectedIndexPath
+        cell.course = course
+        
         return cell
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

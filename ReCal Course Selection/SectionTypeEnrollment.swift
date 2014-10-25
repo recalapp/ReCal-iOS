@@ -15,10 +15,10 @@ enum SectionEnrollment: Hashable {
         var hash = 1
         switch self {
         case .Enrolled(let section):
-            hash = hash * hashPrimeMultiplier + 1
-            hash = hash * hashPrimeMultiplier + section.hashValue
+            hash = hash &* hashPrimeMultiplier &+ 1
+            hash = hash &* hashPrimeMultiplier &+ section.hashValue
         case .Unenrolled:
-            hash = hash * hashPrimeMultiplier + 2
+            hash = hash &* hashPrimeMultiplier &+ 2
         }
         return hash
     }

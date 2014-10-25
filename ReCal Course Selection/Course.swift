@@ -24,9 +24,9 @@ struct Course: Equatable, Printable, Hashable {
     
     var hashValue: Int {
         var hash = self.departmentCode.hashValue
-        hash = hash * hashPrimeMultipler + courseNumber.hashValue
+        hash = hash &* hashPrimeMultipler &+ courseNumber.hashValue
         for section in self.sections {
-            hash = hash * hashPrimeMultipler + section.hashValue
+            hash = hash &* hashPrimeMultipler &+ section.hashValue
         }
         return hash
     }
