@@ -25,6 +25,8 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     /// MARK: Properties
     public weak var dataSource: CollectionViewDataSourceCalendarWeekLayout?
     
+    private let calendar: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+    
     private var daySectionWidth: CGFloat {
         var finalWidth: Float = 300.0 // TODO default value?
         if let sectionWidth = self.dataSource?.daySectionWidthForCollectionView(self.collectionView!, layout: self) {
@@ -196,14 +198,11 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     private func offsetYForTime(time: NSDate)-> CGFloat {
         // get how many hours this is away from min 
         let topMargin = self.dayColumnHeaderHeight
-        let calendarOpt = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-        if let calendar = calendarOpt {
-            let component = calendar.components((NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute), fromDate: time)
-            let curHour: Float = Float(component.hour) + Float(component.minute)/60.0
-            let deltaHour = curHour - Float(self.minimumHour)
-            return (deltaHour <= 0.0 ? 0.0 : floor(CGFloat(deltaHour) * self.hourSlotHeight)) + topMargin
-        }
-        assert(false, "Failure to create a calendar")
+        
+        let component = self.calendar.components((NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute), fromDate: time)
+        let curHour: Float = Float(component.hour) + Float(component.minute)/60.0
+        let deltaHour = curHour - Float(self.minimumHour)
+        return (deltaHour <= 0.0 ? 0.0 : floor(CGFloat(deltaHour) * self.hourSlotHeight)) + topMargin
     }
     
     private func calculateLayoutAttributes()

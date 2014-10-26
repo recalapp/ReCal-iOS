@@ -13,16 +13,10 @@ import ReCalCommon
 class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, CollectionViewDataSourceCalendarWeekLayout {
     
     weak var delegate: ScheduleCollectionViewDataSourceDelegate?
-//    let backgroundReloadQueue: NSOperationQueue = {
-//        let queue = NSOperationQueue()
-//        queue.maxConcurrentOperationCount = 1
-//        return queue
-//    }()
     
     var enrollments: Dictionary<Course, Dictionary<SectionType, SectionEnrollment>> = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>() {
         didSet {
-//            self.eventsForDayCache.clearCache()
-            self.preloadEventsForDayCache()
+            self.preloadCache()
         }
     }
     var enrolledCourses: [Course] = [Course]() {
@@ -30,13 +24,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
             if oldValue != enrolledCourses {
                 
                 self.allEvents = []
-                for course in self.enrolledCourses {
-                    for section in course.sections {
-                        self.allEvents.append(ScheduleEvent(course: course, section: section))
-                    }
-                }
-//                self.eventsForDayCache.clearCache()
-                self.preloadEventsForDayCache()
+                self.preloadCache()
             }
         }
     }
@@ -85,7 +73,8 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     }
     
     /// Preloads the values for events for day cache
-    private func preloadEventsForDayCache() {
+    private func preloadCache() {
+        self.allEvents = []
         eventsForDayCache[.Monday] = []
         eventsForDayCache[.Tuesday] = []
         eventsForDayCache[.Wednesday] = []
@@ -98,10 +87,10 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
                 var eventOpt: ScheduleEvent?
                 switch enrollment {
                 case .Unenrolled:
-                    eventOpt = ScheduleEvent(course: course, section: section)
+                    eventOpt = ScheduleEvent(course: course, section: section, enrolled: false)
                 case .Enrolled(let enrolledSection):
                     if enrolledSection == section {
-                        eventOpt = ScheduleEvent(course: course, section: section)
+                        eventOpt = ScheduleEvent(course: course, section: section, enrolled: true)
                     }
                 }
                 if let event = eventOpt {
@@ -111,6 +100,9 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
                             self.eventsForDayCache[day] = eventsInDays
                         }
                     }
+                    self.allEvents.append(event)
+                } else {
+                    self.allEvents.append(ScheduleEvent(course: course, section: section, enrolled: false))
                 }
             }
         }
@@ -124,15 +116,6 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         let events = self.eventsForDay(day)
         assert(indexPath.row < events.count, "If row is bigger than the number of events, then the row value passed in is wrong")
         return events[indexPath.row]
-    }
-    private func eventIsEnrolled(event: ScheduleEvent) -> Bool {
-        let enrollment = self.enrollments[event.course]![event.section.type]!
-        switch enrollment {
-        case .Unenrolled:
-            return false
-        case .Enrolled(let section):
-            return section == event.section
-        }
     }
     
     // MARK: - Collection View Data Source
@@ -150,7 +133,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as EventCollectionViewCell
         let event = self.eventForIndexPath(indexPath)
         cell.event = event
-        if self.eventIsEnrolled(event) {
+        if event.enrolled {
             collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
             cell.selected = true
         }
@@ -255,6 +238,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
 struct ScheduleEvent {
     let course: Course
     let section: Section
+    let enrolled: Bool
 }
 
 protocol ScheduleCollectionViewDataSourceDelegate: class {
