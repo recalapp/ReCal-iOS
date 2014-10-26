@@ -1,3 +1,4 @@
+
 //
 //  ScheduleCollectionViewDataSource.swift
 //  ReCal iOS
@@ -12,19 +13,30 @@ import ReCalCommon
 class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, CollectionViewDataSourceCalendarWeekLayout {
     
     weak var delegate: ScheduleCollectionViewDataSourceDelegate?
+//    let backgroundReloadQueue: NSOperationQueue = {
+//        let queue = NSOperationQueue()
+//        queue.maxConcurrentOperationCount = 1
+//        return queue
+//    }()
     
     var enrollments: Dictionary<Course, Dictionary<SectionType, SectionEnrollment>> = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>() {
         didSet {
-            self.eventsForDayCache.clearCache()
+//            self.eventsForDayCache.clearCache()
+            self.preloadEventsForDayCache()
         }
     }
     var enrolledCourses: [Course] = [Course]() {
         didSet {
             if oldValue != enrolledCourses {
-                self.eventsForDayCache.clearCache()
-                self.allEvents = self.enrolledCourses.reduce([], combine: { (list, course) in
-                    list + course.sections.map { ScheduleEvent(course: course, section: $0) }
-                })
+                
+                self.allEvents = []
+                for course in self.enrolledCourses {
+                    for section in course.sections {
+                        self.allEvents.append(ScheduleEvent(course: course, section: section))
+                    }
+                }
+//                self.eventsForDayCache.clearCache()
+                self.preloadEventsForDayCache()
             }
         }
     }
@@ -53,29 +65,9 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         return formatter
     }()
     
-    lazy private var eventsForDayCache: Cache<Day, [ScheduleEvent]> = {
-        let cache = Cache<Day, [ScheduleEvent]>()
-        cache.itemConstructor = { (day) in
-            let filtered = self.allEvents.filter { (event: ScheduleEvent) in
-                let section = event.section
-                let course = event.course
-                if !arrayContainsElement(array: section.days, element: day) {
-                    return false
-                }
-                let enrollment = self.enrollments[course]![section.type]!
-                switch enrollment {
-                case .Unenrolled:
-                    return true
-                case .Enrolled(let enrolled):
-                    return enrolled == section
-                }
-            }
-            return filtered
-        }
-        return cache
-    }()
-    
+    private var eventsForDayCache = Dictionary<Day, [ScheduleEvent]>()
     // MARK: methods
+    
     /// Register the collection view and layout with the appropriate view classes
     func registerReusableViewsWithCollectionView(collectionView: UICollectionView, forLayout layout: UICollectionViewLayout) {
         collectionView.registerNib(UINib(nibName: "EventCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: eventCellIdentifier)
@@ -89,20 +81,39 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     /// Returns an array of events for day
     func eventsForDay(day: Day) -> [ScheduleEvent] {
-        return eventsForDayCache[day]
-//        let allEvents = self.enrolledCourses.reduce([], combine: { (list: [ScheduleEvent], course) in
-//            return list + course.sections.filter { (section: Section) in
-//                let enrollment = self.enrollments[course]![section.type]!
-//                switch enrollment {
-//                case .Unenrolled:
-//                    return true
-//                case .Enrolled(let enrolled):
-//                    return enrolled == section
-//                }
-//            }.map { ScheduleEvent(course: course, section: $0) }
-//        })
-//        let filtered = allEvents.filter { (event) in arrayContainsElement(array: event.section.days, element: day) }
-//        return filtered
+        return eventsForDayCache[day]!
+    }
+    
+    /// Preloads the values for events for day cache
+    private func preloadEventsForDayCache() {
+        eventsForDayCache[.Monday] = []
+        eventsForDayCache[.Tuesday] = []
+        eventsForDayCache[.Wednesday] = []
+        eventsForDayCache[.Thursday] = []
+        eventsForDayCache[.Friday] = []
+        for course in self.enrolledCourses {
+            let courseEnrollments = self.enrollments[course]!
+            for section in course.sections {
+                let enrollment = courseEnrollments[section.type]!
+                var eventOpt: ScheduleEvent?
+                switch enrollment {
+                case .Unenrolled:
+                    eventOpt = ScheduleEvent(course: course, section: section)
+                case .Enrolled(let enrolledSection):
+                    if enrolledSection == section {
+                        eventOpt = ScheduleEvent(course: course, section: section)
+                    }
+                }
+                if let event = eventOpt {
+                    for day in event.section.days {
+                        if var eventsInDays = self.eventsForDayCache[day] {
+                            eventsInDays.append(event)
+                            self.eventsForDayCache[day] = eventsInDays
+                        }
+                    }
+                }
+            }
+        }
     }
     
     /// Returns the event for index path

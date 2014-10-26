@@ -248,8 +248,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             for section in totalSections {
                 self.calculateEventsLayoutAttributesForSection(section)
             }
-        }
-        else {
+        } else {
             for section in visibleSections {
                 self.calculateEventsLayoutAttributesForSection(section)
             }

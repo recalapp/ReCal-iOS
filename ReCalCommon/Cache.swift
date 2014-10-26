@@ -51,10 +51,28 @@ final public class Cache<Key: Hashable, Value>: SequenceType {
                 return hit
             }
             if let itemConstructor = self.itemConstructor {
+//                println("cache missed")
                 let computed = itemConstructor(key)
                 self.cacheDictionary[key] = computed
                 return computed
             }
+            assert(false, "ItemConstructor must be provided before first call to cache")
+        }
+    }
+    
+    public func preloadDataForKey(key: Key) {
+        if self.cacheDictionary[key] != nil {
+            return
+        }
+        if let itemConstructor = self.itemConstructor {
+            let computed = itemConstructor(key)
+            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                if self.cacheDictionary[key] == nil {
+                    println("preload successful")
+                    self.cacheDictionary[key] = computed
+                }
+            })
+        } else {
             assert(false, "ItemConstructor must be provided before first call to cache")
         }
     }
