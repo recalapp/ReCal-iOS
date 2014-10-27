@@ -12,25 +12,6 @@ import ReCalCommon
 
 class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, CollectionViewDataSourceCalendarWeekLayout {
     
-    weak var delegate: ScheduleCollectionViewDataSourceDelegate?
-    
-    var enrollments: Dictionary<Course, Dictionary<SectionType, SectionEnrollment>> = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>() {
-        didSet {
-            self.preloadCache()
-        }
-    }
-    var enrolledCourses: [Course] = [Course]() {
-        didSet {
-            if oldValue != enrolledCourses {
-                
-                self.allEvents = []
-                self.preloadCache()
-            }
-        }
-    }
-    
-    private var allEvents: [ScheduleEvent] = []
-    
     // MARK: constants
     private let eventCellIdentifier = "EventsCell"
     private let dayColumnHeaderViewIdentifier = "DayHeader"
@@ -41,6 +22,23 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     
     // MARK: variables
+    weak var delegate: ScheduleCollectionViewDataSourceDelegate?
+    
+    var enrollments: Dictionary<Course, Dictionary<SectionType, SectionEnrollment>> = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>() {
+        didSet {
+            self.preloadCache()
+        }
+    }
+    var enrolledCourses: [Course] = [Course]() {
+        didSet {
+            if oldValue != enrolledCourses {
+                self.preloadCache()
+            }
+        }
+    }
+    
+    private var allEvents: [ScheduleEvent] = []
+    
     lazy private var calendar: NSCalendar = {
         let calendarOpt = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
         assert(calendarOpt != nil, "Calendar cannot be nil")
@@ -54,8 +52,8 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     }()
     
     private var eventsForDayCache = Dictionary<Day, [ScheduleEvent]>()
-    // MARK: methods
     
+    // MARK: methods
     /// Register the collection view and layout with the appropriate view classes
     func registerReusableViewsWithCollectionView(collectionView: UICollectionView, forLayout layout: UICollectionViewLayout) {
         collectionView.registerNib(UINib(nibName: "EventCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: eventCellIdentifier)
@@ -72,7 +70,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         return eventsForDayCache[day]!
     }
     
-    /// Preloads the values for events for day cache
+    /// Preloads the values for events for day cache and all events array. Must be called everytime courses or enrollments info changes
     private func preloadCache() {
         self.allEvents = []
         eventsForDayCache[.Monday] = []
