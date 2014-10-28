@@ -214,8 +214,10 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         if self.shouldRecalculateDayColumnHeaderBackgroundLayoutAttributes {
             self.calculateDayColumnHeaderBackgroundLayoutAttributes()
         }
-        for section in visibleSections {
-            self.calculateDayColumnHeaderLayoutAttributesForSection(section)
+        if self.shouldRecalculateDayColumnHeaderLayoutAttributes {
+            for section in visibleSections {
+                self.calculateDayColumnHeaderLayoutAttributesForSection(section)
+            }
         }
         if self.shouldRecalculateTimeRowHeaderBackgroundLayoutAttributes {
             self.calculateTimeRowHeaderBackgroundLayoutAttributes()
@@ -223,14 +225,18 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         if self.shouldRecalculateTimeRowHeaderLayoutAttributes {
             self.calculateTimeRowHeaderLayoutAttributes()
         }
-        for section in visibleSections {
-            self.calculateVerticalGridLineForSection(section)
+        if self.shouldRecalculateVerticalGridLineLayoutAttributes {
+            for section in visibleSections {
+                self.calculateVerticalGridLineForSection(section)
+            }
         }
         if self.shouldRecalculateHorizontalGridLineLayoutAttributes {
             self.calculateHorizontalGridLineLayoutAttributes()
         }
-        for section in visibleSections {
-            self.calculateEventsLayoutAttributesForSection(section)
+        if self.shouldRecalculateEventsLayoutAttributes {
+            for section in visibleSections {
+                self.calculateEventsLayoutAttributesForSection(section)
+            }
         }
         
     }
@@ -365,20 +371,9 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             invalidateAll()
             context.contentSizeAdjustment = CGSizeZero
         }
-        if context.contentOffsetAdjustment.y != 0 {
-            // scrolling in y direction
-            //invalidateColumnHeaders()
-            self.dayColumnHeaderBackgroundLayoutAttributesCache.clearCache()
-            self.timeRowHeaderBackgroundLayoutAttributesCache.clearCache()
-            //self.verticalGridLineLayoutAttributesCache.clearCache()
-            context.contentOffsetAdjustment.y = 0 // set back to zero, otherwise super does something with scrolling
-        }
-        if context.contentOffsetAdjustment.x != 0 {
-            // scrolling in x direction
-            invalidateRowHeaders()
-            self.horizontalGridLineLayoutAttributesCache.clearCache()
-            self.dayColumnHeaderBackgroundLayoutAttributesCache.clearCache()
-            context.contentOffsetAdjustment.x = 0
+        if context.contentOffsetAdjustment != CGPointZero {
+            invalidateAll()
+            context.contentOffsetAdjustment = CGPointZero
         }
         // TODO specific items
         if debug {
