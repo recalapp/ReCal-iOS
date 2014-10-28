@@ -207,23 +207,15 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     
     private func calculateLayoutAttributes()
     {
-        let numberOfSections = self.collectionView?.numberOfSections()
-        if numberOfSections == nil {
-            return; // cannot do anything
+        if self.collectionView == nil {
+            return // cannot do anything
         }
-        let totalSections = (1...numberOfSections!).map {$0 - 1}
         let visibleSections = self.visibleDaySections
         if self.shouldRecalculateDayColumnHeaderBackgroundLayoutAttributes {
             self.calculateDayColumnHeaderBackgroundLayoutAttributes()
         }
-        if self.shouldRecalculateDayColumnHeaderLayoutAttributes {
-            for section in totalSections {
-                self.calculateDayColumnHeaderLayoutAttributesForSection(section)
-            }
-        } else {
-            for section in visibleSections {
-                self.calculateDayColumnHeaderLayoutAttributesForSection(section)
-            }
+        for section in visibleSections {
+            self.calculateDayColumnHeaderLayoutAttributesForSection(section)
         }
         if self.shouldRecalculateTimeRowHeaderBackgroundLayoutAttributes {
             self.calculateTimeRowHeaderBackgroundLayoutAttributes()
@@ -231,27 +223,16 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         if self.shouldRecalculateTimeRowHeaderLayoutAttributes {
             self.calculateTimeRowHeaderLayoutAttributes()
         }
-        if self.shouldRecalculateVerticalGridLineLayoutAttributes {
-            for section in totalSections {
-                self.calculateVerticalGridLineForSection(section)
-            }
-        } else {
-            for section in visibleSections {
-                self.calculateVerticalGridLineForSection(section)
-            }
+        for section in visibleSections {
+            self.calculateVerticalGridLineForSection(section)
         }
         if self.shouldRecalculateHorizontalGridLineLayoutAttributes {
             self.calculateHorizontalGridLineLayoutAttributes()
         }
-        if self.shouldRecalculateEventsLayoutAttributes {
-            for section in totalSections {
-                self.calculateEventsLayoutAttributesForSection(section)
-            }
-        } else {
-            for section in visibleSections {
-                self.calculateEventsLayoutAttributesForSection(section)
-            }
+        for section in visibleSections {
+            self.calculateEventsLayoutAttributesForSection(section)
         }
+        
     }
     private func calculateEventsLayoutAttributesForSection(section: Int) {
         let itemsCount = self.collectionView!.numberOfItemsInSection(section)
