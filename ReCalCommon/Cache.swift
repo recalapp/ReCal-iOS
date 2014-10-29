@@ -26,6 +26,10 @@ final public class Cache<Key: Hashable, Value>: SequenceType {
     public var keys: LazyBidirectionalCollection<MapCollectionView<Dictionary<Key, Value>, Key>> {
         return self.cacheDictionary.keys
     }
+    
+    public var values: LazyBidirectionalCollection<MapCollectionView<Dictionary<Key, Value>, Value>> {
+        return self.cacheDictionary.values
+    }
 
     public var count: Int {
         return self.cacheDictionary.count
@@ -51,12 +55,14 @@ final public class Cache<Key: Hashable, Value>: SequenceType {
                 return hit
             }
             if let itemConstructor = self.itemConstructor {
-//                println("cache missed")
                 let computed = itemConstructor(key)
                 self.cacheDictionary[key] = computed
                 return computed
             }
             assert(false, "ItemConstructor must be provided before first call to cache")
+        }
+        set {
+            self.cacheDictionary[key] = newValue
         }
     }
     

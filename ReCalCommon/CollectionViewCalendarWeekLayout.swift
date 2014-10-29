@@ -437,11 +437,12 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         let visibleFilter:(NSIndexPath, UICollectionViewLayoutAttributes)->Bool = {(_, layoutAttributes) in
             return CGRectIntersectsRect(rect, layoutAttributes.frame)
         }
+        // only need to filter elements that do not move when scrolling vertically. horizontal scrolling is automatically taken care of because we use the visible sections to create the layout, and that only changes with horizontal scrolling
         visibleAttributes += self.eventsLayoutAttributesCache.filter(visibleFilter)
-        visibleAttributes += self.dayColumnHeaderBackgroundLayoutAttributesCache.filter(visibleFilter)
-        visibleAttributes += self.dayColumnHeaderLayoutAttributesCache.filter(visibleFilter)
-        visibleAttributes += self.verticalGridLineLayoutAttributesCache.filter(visibleFilter)
-        visibleAttributes += self.timeRowHeaderBackgroundLayoutAttributesCache.filter(visibleFilter)
+        visibleAttributes += self.dayColumnHeaderBackgroundLayoutAttributesCache.values.array
+        visibleAttributes += self.dayColumnHeaderLayoutAttributesCache.values.array
+        visibleAttributes += self.verticalGridLineLayoutAttributesCache.values.array
+        visibleAttributes += self.timeRowHeaderBackgroundLayoutAttributesCache.values.array
         visibleAttributes += self.timeRowHeaderLayoutAttributesCache.filter(visibleFilter)
         visibleAttributes += self.horizontalGridLineLayoutAttributesCache.filter(visibleFilter)
         return visibleAttributes
