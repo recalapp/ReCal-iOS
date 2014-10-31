@@ -37,6 +37,10 @@ public struct Stack<T>: SequenceType {
     public var count: Int {
         return self.array.count
     }
+    
+    public func toArray() -> [T] {
+        return self.array
+    }
 }
 
 public struct StackGenerator<T>: GeneratorType {

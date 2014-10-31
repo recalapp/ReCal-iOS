@@ -261,12 +261,46 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             let height = maxY - minY
             return CGRect(x: minSectionX, y: minY, width: sectionWidth, height: height)
         }
+        var attributesStack = Stack<UICollectionViewLayoutAttributes>()
         for i in 0...itemsCount-1 {
             let indexPath = NSIndexPath(forItem: i, inSection: section)
             if let frame = calculateFrameForItemAtIndexPath(indexPath) {
                 var eventsLayoutAttributes = self.eventsLayoutAttributesCache[indexPath]
                 eventsLayoutAttributes.frame = frame
                 eventsLayoutAttributes.zIndex = eventsZIndex
+                attributesStack.push(eventsLayoutAttributes)
+            }
+        }
+        self.adjustEventsLayoutAttributesForOverlap(attributesStack.toArray())
+    }
+    private func adjustEventsLayoutAttributesForOverlap(allAttributes: [UICollectionViewLayoutAttributes]) {
+        var adjustedAttributesSet = Set<UICollectionViewLayoutAttributes>()
+        let sectionWidth = self.daySectionWidth
+        let adjustOverlap: [UICollectionViewLayoutAttributes]->Void = { (overlappingAttributes) in
+            if overlappingAttributes.count == 0 {
+                return
+            }
+            // TODO better algorithm
+            let adjustedWidth = sectionWidth / CGFloat(overlappingAttributes.count) // OK, will not be 0
+            for (index, attributes) in enumerate(overlappingAttributes) {
+                var frame = attributes.frame
+                frame.origin.x += CGFloat(index) * adjustedWidth
+                frame.size.width = adjustedWidth
+                attributes.frame = frame
+            }
+        }
+        for attributes in allAttributes {
+            if adjustedAttributesSet.contains(attributes) {
+                // already adjusted
+                continue
+            }
+            
+            // find overlapping events not already adjusted
+            let frame = attributes.frame
+            let toBeAdjusted = allAttributes.filter { !adjustedAttributesSet.contains($0) && CGRectIntersectsRect(frame, $0.frame) } // this will include the event itself by default
+            adjustOverlap(toBeAdjusted)
+            for adjusted in toBeAdjusted {
+                adjustedAttributesSet.add(adjusted)
             }
         }
     }
@@ -334,9 +368,6 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     
     /// MARK: Invalidation
-    override public func invalidateLayout() {
-        super.invalidateLayout()
-    }
     override public func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
         if debug {
             println("begin invalidation")

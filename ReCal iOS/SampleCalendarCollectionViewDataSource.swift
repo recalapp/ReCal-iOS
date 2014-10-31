@@ -35,7 +35,7 @@ class SampleCalendarCollectionViewDataSource: NSObject, UICollectionViewDataSour
         components.hour = 10
         var end = dateFromComponents(components)
         let event1 = TimeInterval(start: start, end: end)
-        components.hour = 11
+        components.hour = 9
         start = dateFromComponents(components)
         components.hour = 12
         components.minute = 30

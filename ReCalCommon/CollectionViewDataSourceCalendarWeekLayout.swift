@@ -16,9 +16,6 @@ public protocol CollectionViewDataSourceCalendarWeekLayout: class
     /// Return the end date in NSDate for the item at indexPath. nil if indexPath invalid
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, endDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate?
     
-//    /// Return the date associated with the section. The time component is ignored.
-//    func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, dateForSection section: Int) -> NSDate?
-    
     /// Return the width for a day
     func daySectionWidthForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->CollectionViewCalendarWeekLayoutDaySectionWidth
     
