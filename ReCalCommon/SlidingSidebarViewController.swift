@@ -23,6 +23,7 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
     }
     
     public var disablesScrollingInPrimaryViewWhenCollapsed = false
+    public var disablesUserInteractionInPrimaryViewWhenExpanded = true
     
     private(set) public var sidebarIsShown: Bool = true {
         didSet {
@@ -35,6 +36,9 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
                     }
                 }
             }
+            if self.disablesUserInteractionInPrimaryViewWhenExpanded {
+                self.updatePrimaryContentViewInteractions()
+            }
         }
     }
     
@@ -42,9 +46,9 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
     
     private var sidebarView: UIVisualEffectView?
     
-    private(set) public var primaryContentView: UIView?
+    private(set) public var primaryContentView: UIView!
     
-    private(set) public var sidebarContentView: UIView?
+    private(set) public var sidebarContentView: UIView!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +58,7 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         self.primaryContentView = contentView
         self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsetsZero))
         self.setUpSidebar()
+        self.updatePrimaryContentViewInteractions()
     }
     
     private func setUpSidebar() {
@@ -71,6 +76,14 @@ public class SlidingSidebarViewController: UIViewController, UIScrollViewDelegat
         sidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(sidebarContentView, inParentView: sidebarView, withInsets: UIEdgeInsets(top: 0, left: self.sidebarLeftBuffer, bottom: 0, right: self.sidebarRightBuffer)))
         
         self.setUpOverlayScrollView()
+    }
+    
+    private func updatePrimaryContentViewInteractions() {
+        if sidebarIsShown {
+            self.primaryContentView.userInteractionEnabled = false
+        } else {
+            self.primaryContentView.userInteractionEnabled = true
+        }
     }
     
     /// Set up the scroll view for sidebar

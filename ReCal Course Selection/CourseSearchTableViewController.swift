@@ -18,6 +18,9 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.courseDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
+//        let searchController = UISearchController(searchResultsController: self)
+//        self.definesPresentationContext = true
+//        self.tableView.tableHeaderView = searchController.searchBar
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

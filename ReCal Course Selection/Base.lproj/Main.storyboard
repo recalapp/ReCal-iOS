@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RkG-w0-zfD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -26,6 +26,7 @@
         <!--Course Search Table View Controller-->
         <scene sceneID="spF-SR-L4W">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DTC-mY-Oof" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="CourseSearch" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ie6-Yk-AjT" customClass="CourseSearchTableViewController" customModule="ReCal_Course_Selection" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="S8P-He-V9n">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -46,14 +47,13 @@
                         </connections>
                     </tableView>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DTC-mY-Oof" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1073" y="988"/>
         </scene>
         <!--Section Selection View Controller-->
         <scene sceneID="eBh-qA-Osj">
             <objects>
-                <viewController id="RkG-w0-zfD" customClass="SectionSelectionViewController" customModule="ReCal_Course_Selection" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SectionSelection" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RkG-w0-zfD" customClass="SectionSelectionViewController" customModule="ReCal_Course_Selection" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4pw-0X-yIK"/>
                         <viewControllerLayoutGuide type="bottom" id="Lza-UY-E5V"/>

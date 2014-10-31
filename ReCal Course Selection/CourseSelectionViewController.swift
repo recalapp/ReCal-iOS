@@ -9,7 +9,8 @@
 import UIKit
 import ReCalCommon
 
-let courseSearchViewControllerStoryboardId = "CourseSearch"
+private let courseSearchViewControllerStoryboardId = "CourseSearch"
+private let sectionSelectionViewControllerStoryboardId = "SectionSelection"
 
 class CourseSelectionViewController: SlidingSidebarViewController {
 
@@ -18,8 +19,13 @@ class CourseSelectionViewController: SlidingSidebarViewController {
         let courseSearchViewController = self.storyboard?.instantiateViewControllerWithIdentifier(courseSearchViewControllerStoryboardId) as CourseSearchTableViewController
         courseSearchViewController.view.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.addChildViewController(courseSearchViewController)
-        self.sidebarContentView?.addSubview(courseSearchViewController.view)
-        self.sidebarContentView?.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(courseSearchViewController.view, inParentView: self.sidebarContentView!, withInsets: UIEdgeInsetsZero))
+        self.sidebarContentView.addSubview(courseSearchViewController.view)
+        self.sidebarContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(courseSearchViewController.view, inParentView: self.sidebarContentView, withInsets: UIEdgeInsetsZero))
+        let sectionSelectionViewController = self.storyboard?.instantiateViewControllerWithIdentifier(sectionSelectionViewControllerStoryboardId) as SectionSelectionViewController
+        self.addChildViewController(sectionSelectionViewController)
+        sectionSelectionViewController.view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.primaryContentView.addSubview(sectionSelectionViewController.view)
+        self.primaryContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(sectionSelectionViewController.view, inParentView: self.primaryContentView, withInsets: UIEdgeInsetsZero))
     }
 
     
