@@ -84,7 +84,7 @@ class SectionSelectionViewController: UIViewController, UICollectionViewDelegate
         end = NSDateComponents()
         end.hour = 11
         end.minute = 50
-        let section4 = Section(type: .Precept, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Wednesday, .Friday])
+        let section4 = Section(type: .Precept, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Tuesday, .Wednesday, .Friday])
         let course2 = Course(departmentCode: "ELE", courseNumber: 396, color: UIColor.orangeColor(), sections: [section4])
         self.courses = [course1, course2]
     }
