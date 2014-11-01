@@ -8,7 +8,8 @@
 
 import UIKit
 
-private let animationSpeed = 0.1
+private let animationSpeed: NSTimeInterval = 0.5
+private let sidebarCoverBlurEffectStyle: UIBlurEffectStyle = .Dark
 
 public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate {
 
@@ -36,6 +37,10 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     /// The view containing the entire right sidebar view
     private var rightSidebarView: UIView!
     
+    /// The views that cover the sidebars when they are not selected
+    private var leftSidebarCoverView: UIVisualEffectView!
+    private var rightSidebarCoverView: UIVisualEffectView!
+    
     /// The logical primary content view exposed to subclass. Add subviews here
     private(set) public var primaryContentView: UIView!
     
@@ -50,17 +55,25 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         didSet {
             if oldValue != sidebarState {
                 var translation: CGAffineTransform
+                var leftCoverHidden: Bool
+                var rightCoverHidden: Bool
                 switch sidebarState {
                 case .Unselected:
                     translation = CGAffineTransformIdentity
+                    leftCoverHidden = false
+                    rightCoverHidden = false
                 case .LeftSidebarShown:
                     translation = CGAffineTransformMakeTranslation(self.sidebarWidth/2, 0)
+                    leftCoverHidden = true
+                    rightCoverHidden = false
                 case .RightSidebarShown:
                     translation = CGAffineTransformMakeTranslation(-self.sidebarWidth/2, 0)
+                    leftCoverHidden = false
+                    rightCoverHidden = true
                 }
-                UIView.animateWithDuration(animationSpeed, animations: { () -> Void in
+                UIView.animateWithDuration(animationSpeed, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
                     self.primaryContentView.transform = translation
-                })
+                }, completion: nil)
             }
         }
     }
@@ -113,6 +126,18 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         
         self.rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarContentView, inParentView: self.rightSidebarView, withInsets: UIEdgeInsets(top: 0, left: self.sidebarInnerPadding, bottom: 0, right: self.sidebarOuterPadding)))
         
+        // add the covers
+        self.leftSidebarCoverView = UIVisualEffectView(effect: UIBlurEffect(style: sidebarCoverBlurEffectStyle))
+        self.leftSidebarCoverView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.leftSidebarCoverView.userInteractionEnabled = false
+        self.leftSidebarView.addSubview(self.leftSidebarCoverView)
+        self.leftSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.leftSidebarCoverView, inParentView: self.leftSidebarView, withInsets: UIEdgeInsetsZero))
+        self.rightSidebarCoverView = UIVisualEffectView(effect: UIBlurEffect(style: sidebarCoverBlurEffectStyle))
+        self.rightSidebarCoverView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.rightSidebarCoverView.userInteractionEnabled = false
+        self.rightSidebarView.addSubview(self.rightSidebarCoverView)
+        self.rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarCoverView, inParentView: self.rightSidebarView, withInsets: UIEdgeInsetsZero))
+        
         self.setUpOverlayScrollView()
     }
     
@@ -142,6 +167,12 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.leftSidebarView.backgroundColor = UIColor.redColor()
         self.rightSidebarView.backgroundColor = UIColor.redColor()
         self.primaryContentView.backgroundColor = UIColor.greenColor()
+    }
+    
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        let halfSidebarWidth = self.sidebarWidth/2
+        self.leftSidebarCoverView.alpha = min(max(scrollView.contentOffset.x / halfSidebarWidth, 0.0), 1.0)
+        self.rightSidebarCoverView.alpha = min(max((self.sidebarWidth - scrollView.contentOffset.x) / halfSidebarWidth, 0.0), 1.0)
     }
     
     public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, var targetContentOffset: UnsafeMutablePointer<CGPoint>) {
