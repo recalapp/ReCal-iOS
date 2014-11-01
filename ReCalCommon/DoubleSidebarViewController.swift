@@ -11,6 +11,14 @@ import UIKit
 private let animationSpeed: NSTimeInterval = 0.5
 private let sidebarCoverBlurEffectStyle: UIBlurEffectStyle = .Dark
 
+private func breakCharacters(string: String) -> String {
+    var newString = ""
+    for s in string {
+        newString += "\(s)\n"
+    }
+    return newString.substringToIndex(newString.endIndex.predecessor())
+}
+
 public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate {
 
     /// The padding between the sidebar and the space outside of the view (so for the left sidebar, it's the left padding)
@@ -31,23 +39,39 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     /// The scrollview containing the sidebars
     private var sidebarContainerScrollView: UIScrollView!
     
-    /// The view containing the entire left sidebar view
+    /// The view containing the entire sidebar views
     private var leftSidebarView: UIView!
-    
-    /// The view containing the entire right sidebar view
     private var rightSidebarView: UIView!
     
     /// The views that cover the sidebars when they are not selected
     private var leftSidebarCoverView: UIVisualEffectView!
     private var rightSidebarCoverView: UIVisualEffectView!
     
+    /// The text to be put on the cover view
+    private var leftSidebarCoverText: String = "SEARCH" {
+        didSet {
+            if oldValue != leftSidebarCoverText {
+                leftSidebarCoverLabel.text = breakCharacters(leftSidebarCoverText)
+            }
+        }
+    }
+    private var rightSidebarCoverText: String = "ENROLLED" {
+        didSet {
+            if oldValue != rightSidebarCoverText {
+                rightSidebarCoverLabel.text = breakCharacters(rightSidebarCoverText)
+            }
+        }
+    }
+    
+    /// The labels to hold the cover text
+    private var leftSidebarCoverLabel: UILabel!
+    private var rightSidebarCoverLabel: UILabel!
+    
     /// The logical primary content view exposed to subclass. Add subviews here
     private(set) public var primaryContentView: UIView!
     
-    /// The logical left sidebar content view exposed to subclass. Add subviews here
+    /// The logical sidebar content view exposed to subclass. Add subviews here
     private(set) public var leftSidebarContentView: UIView!
-    
-    /// The logical right sidebar content view exposed to subclass. Add subviews here
     private(set) public var rightSidebarContentView: UIView!
     
     /// The state of the sidebars
@@ -73,6 +97,8 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
                 }
                 UIView.animateWithDuration(animationSpeed, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
                     self.primaryContentView.transform = translation
+                    self.leftSidebarCoverView.alpha = leftCoverHidden ? 0.0 : 1.0
+                    self.rightSidebarCoverView.alpha = rightCoverHidden ? 0.0 : 1.0
                 }, completion: nil)
             }
         }
@@ -127,16 +153,41 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarContentView, inParentView: self.rightSidebarView, withInsets: UIEdgeInsets(top: 0, left: self.sidebarInnerPadding, bottom: 0, right: self.sidebarOuterPadding)))
         
         // add the covers
-        self.leftSidebarCoverView = UIVisualEffectView(effect: UIBlurEffect(style: sidebarCoverBlurEffectStyle))
+        let leftBlurEffect = UIBlurEffect(style: sidebarCoverBlurEffectStyle)
+        let rightBlurEffect = UIBlurEffect(style: sidebarCoverBlurEffectStyle)
+        self.leftSidebarCoverView = UIVisualEffectView(effect: leftBlurEffect)
         self.leftSidebarCoverView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.leftSidebarCoverView.userInteractionEnabled = false
         self.leftSidebarView.addSubview(self.leftSidebarCoverView)
         self.leftSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.leftSidebarCoverView, inParentView: self.leftSidebarView, withInsets: UIEdgeInsetsZero))
-        self.rightSidebarCoverView = UIVisualEffectView(effect: UIBlurEffect(style: sidebarCoverBlurEffectStyle))
+        self.rightSidebarCoverView = UIVisualEffectView(effect: rightBlurEffect)
         self.rightSidebarCoverView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.rightSidebarCoverView.userInteractionEnabled = false
         self.rightSidebarView.addSubview(self.rightSidebarCoverView)
         self.rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarCoverView, inParentView: self.rightSidebarView, withInsets: UIEdgeInsetsZero))
+        
+        // add cover labels
+        let addCoverLabelForView: (UILabel, UIVisualEffectView, Bool)->Void = { (label, coverView, isLeft) in
+            label.setTranslatesAutoresizingMaskIntoConstraints(false)
+            label.textAlignment = .Center
+            label.font = UIFont.systemFontOfSize(UIFont.labelFontSize()*2)
+            label.lineBreakMode = .ByCharWrapping
+            label.numberOfLines = 0
+            let leftVibrancyEffect = UIVibrancyEffect(forBlurEffect: coverView.effect as UIBlurEffect)
+            let leftVibrancyEffectView = UIVisualEffectView(effect: leftVibrancyEffect)
+            leftVibrancyEffectView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            leftVibrancyEffectView.contentView.addSubview(label)
+            leftVibrancyEffectView.contentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(label, inParentView: leftVibrancyEffectView.contentView, withInsets: UIEdgeInsetsZero))
+            coverView.contentView.addSubview(leftVibrancyEffectView)
+            coverView.contentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(leftVibrancyEffectView, inParentView: coverView.contentView, withInsets: UIEdgeInsets(top: 0, left: isLeft ? self.sidebarOuterPadding + self.sidebarWidth/2 : 0, bottom: 0, right: isLeft ? 0 : self.sidebarOuterPadding + self.sidebarWidth/2)))
+        }
+        self.leftSidebarCoverLabel = UILabel()
+        self.leftSidebarCoverLabel.text = breakCharacters(self.leftSidebarCoverText)
+        addCoverLabelForView(self.leftSidebarCoverLabel, self.leftSidebarCoverView, true)
+        self.rightSidebarCoverLabel = UILabel()
+        self.rightSidebarCoverLabel.text = breakCharacters(self.rightSidebarCoverText)
+        addCoverLabelForView(self.rightSidebarCoverLabel, self.rightSidebarCoverView, false)
+        
         
         self.setUpOverlayScrollView()
     }
@@ -169,10 +220,13 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.primaryContentView.backgroundColor = UIColor.greenColor()
     }
     
+    
+    // MARK: - Scroll View Delegate
+    
     public func scrollViewDidScroll(scrollView: UIScrollView) {
-        let halfSidebarWidth = self.sidebarWidth/2
-        self.leftSidebarCoverView.alpha = min(max(scrollView.contentOffset.x / halfSidebarWidth, 0.0), 1.0)
-        self.rightSidebarCoverView.alpha = min(max((self.sidebarWidth - scrollView.contentOffset.x) / halfSidebarWidth, 0.0), 1.0)
+//        let halfSidebarWidth = self.sidebarWidth/2
+//        self.leftSidebarCoverView.alpha = min(max(scrollView.contentOffset.x / halfSidebarWidth, 0.0), 1.0)
+//        self.rightSidebarCoverView.alpha = min(max((self.sidebarWidth - scrollView.contentOffset.x) / halfSidebarWidth, 0.0), 1.0)
     }
     
     public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, var targetContentOffset: UnsafeMutablePointer<CGPoint>) {
