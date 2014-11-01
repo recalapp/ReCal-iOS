@@ -26,7 +26,6 @@
         <!--Course Search Table View Controller-->
         <scene sceneID="spF-SR-L4W">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DTC-mY-Oof" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="CourseSearch" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ie6-Yk-AjT" customClass="CourseSearchTableViewController" customModule="ReCal_Course_Selection" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="S8P-He-V9n">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -47,6 +46,7 @@
                         </connections>
                     </tableView>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DTC-mY-Oof" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1073" y="988"/>
         </scene>

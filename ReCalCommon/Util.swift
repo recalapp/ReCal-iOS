@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 func ASSERT_MAIN_THREAD() {
     assert(NSThread.isMainThread(), "This method must be called on the main thread");
