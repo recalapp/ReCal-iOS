@@ -8,6 +8,8 @@
 
 import UIKit
 
+private let animationSpeed = 0.1
+
 public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate {
 
     /// The padding between the sidebar and the space outside of the view (so for the left sidebar, it's the left padding)
@@ -44,7 +46,24 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     private(set) public var rightSidebarContentView: UIView!
     
     /// The state of the sidebars
-    private var sidebarState: DoubleSidebarState = .Unselected
+    private var sidebarState: DoubleSidebarState = .Unselected {
+        didSet {
+            if oldValue != sidebarState {
+                var translation: CGAffineTransform
+                switch sidebarState {
+                case .Unselected:
+                    translation = CGAffineTransformIdentity
+                case .LeftSidebarShown:
+                    translation = CGAffineTransformMakeTranslation(self.sidebarWidth/2, 0)
+                case .RightSidebarShown:
+                    translation = CGAffineTransformMakeTranslation(-self.sidebarWidth/2, 0)
+                }
+                UIView.animateWithDuration(animationSpeed, animations: { () -> Void in
+                    self.primaryContentView.transform = translation
+                })
+            }
+        }
+    }
     
     /// What the content offset should be for the current state
     private var calculatedContentOffset: CGPoint {
@@ -71,7 +90,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.view.addSubview(contentView)
         self.primaryContentView = contentView
-        self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsetsZero))
+        self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsets(top: 0, left: self.sidebarWidth/2, bottom: 0, right: self.sidebarWidth/2)))
         self.setUpSidebar()
     }
     
@@ -122,6 +141,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         
         self.leftSidebarView.backgroundColor = UIColor.redColor()
         self.rightSidebarView.backgroundColor = UIColor.redColor()
+        self.primaryContentView.backgroundColor = UIColor.greenColor()
     }
     
     public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, var targetContentOffset: UnsafeMutablePointer<CGPoint>) {
