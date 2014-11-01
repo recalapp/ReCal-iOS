@@ -100,6 +100,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
                     self.leftSidebarCoverView.alpha = leftCoverHidden ? 0.0 : 1.0
                     self.rightSidebarCoverView.alpha = rightCoverHidden ? 0.0 : 1.0
                 }, completion: nil)
+                self.updateSidebarUserInteraction()
             }
         }
     }
@@ -131,6 +132,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.primaryContentView = contentView
         self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsets(top: 0, left: self.sidebarWidth/2, bottom: 0, right: self.sidebarWidth/2)))
         self.setUpSidebar()
+        self.updateSidebarUserInteraction()
     }
     
     private func setUpSidebar() {
@@ -218,6 +220,11 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.leftSidebarView.backgroundColor = UIColor.redColor()
         self.rightSidebarView.backgroundColor = UIColor.redColor()
         self.primaryContentView.backgroundColor = UIColor.greenColor()
+    }
+    
+    private func updateSidebarUserInteraction() {
+        self.leftSidebarContentView.userInteractionEnabled = sidebarState == .LeftSidebarShown
+        self.rightSidebarContentView.userInteractionEnabled = sidebarState == .RightSidebarShown
     }
     
     
