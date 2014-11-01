@@ -190,6 +190,13 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.rightSidebarCoverLabel.text = breakCharacters(self.rightSidebarCoverText)
         addCoverLabelForView(self.rightSidebarCoverLabel, self.rightSidebarCoverView, false)
         
+        // tap gesture recognizers
+        let addTapGestureRecognizer: (UIView)->Void = {(sidebarView) in
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleSidebarTap:")
+            sidebarView.addGestureRecognizer(tapGestureRecognizer)
+        }
+        addTapGestureRecognizer(self.leftSidebarView)
+        addTapGestureRecognizer(self.rightSidebarView)
         
         self.setUpOverlayScrollView()
     }
@@ -220,6 +227,20 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.leftSidebarView.backgroundColor = UIColor.redColor()
         self.rightSidebarView.backgroundColor = UIColor.redColor()
         self.primaryContentView.backgroundColor = UIColor.greenColor()
+    }
+    
+    public func handleSidebarTap(sender: UITapGestureRecognizer) {
+        if sender.view == self.leftSidebarView {
+            if self.sidebarState != .LeftSidebarShown {
+                self.sidebarState = .LeftSidebarShown
+                self.sidebarContainerScrollView.setContentOffset(self.calculatedContentOffset, animated: true)
+            }
+        } else if sender.view == self.rightSidebarView {
+            if self.sidebarState != .RightSidebarShown {
+                self.sidebarState = .RightSidebarShown
+                self.sidebarContainerScrollView.setContentOffset(self.calculatedContentOffset, animated: true)
+            }
+        }
     }
     
     private func updateSidebarUserInteraction() {
