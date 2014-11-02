@@ -12,7 +12,12 @@ private let searchResultCellIdentifier = "SearchResult"
 private let paddingCellIdentifier = "Padding"
 private let courseDetailsViewControllerStoryboardId = "CourseDetails"
 
-class CourseSearchTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate  {
+class CourseSearchTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate, UISearchControllerDelegate {
+    
+    var enrolledCourses: [Course] = []
+    var allCourses: [Course] = []
+    private var filteredCourses: [Course] = []
+    var recommendedCourses: [Course] = []
 
     lazy private var courseDetailsViewController: CourseDetailsViewController = {
         return self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
@@ -28,8 +33,9 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             let searchController = UISearchController(searchResultsController: nil)
             searchController.searchBar.frame = CGRect(origin: CGPointZero, size: CGSize(width: self.tableView.bounds.size.width, height: 44))
             searchController.searchBar.barStyle = .Black
-            searchController.searchBar.placeholder = "COS 333"
+            searchController.delegate = self
             searchController.dimsBackgroundDuringPresentation = false
+            self.tableView.tableHeaderView = searchController.searchBar
             return searchController
         }()
         
@@ -44,7 +50,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -54,22 +60,14 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        return 10
-    }
-
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.searchController.searchBar.bounds.size.height
-    }
-    
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return self.searchController.searchBar
+        return 10 * 2
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row % 2 == 1 {
             return 66
         } else {
-            return 16 // padding
+            return 8 // padding
         }
     }
     
@@ -81,7 +79,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         if indexPath.row % 2 == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as UITableViewCell
             
-            cell.backgroundColor = UIColor.darkBlackGrayColor()
+            cell.backgroundColor = UIColor.lightBlackGrayColor()
+            cell.tintColor = UIColor.lightTextColor()
             
             return cell
         }
@@ -156,6 +155,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         
     }
     
+    // MARK: - Search Controller Delegate
+    
     // MARK: - Adaptive Presentation Controller Delegate
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return .None
@@ -167,7 +168,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             self.courseDetailsViewController.indexPath = nil
             self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
         }
-        
     }
     
     /*

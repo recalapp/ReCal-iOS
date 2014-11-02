@@ -20,19 +20,21 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     /// The width of the sidebars
     override var sidebarWidth: CGFloat {
         get {
-            return self.view.bounds.size.width / 4.0
+            return self.view.bounds.size.width / 3.5
         }
     }
     
     // MARK: Models
+    private var allCourses: [Course] = [Course]()
+    
     private var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
     
-    private var courses: [Course] = [Course]() {
+    private var enrolledCourses: [Course] = [Course]() {
         didSet {
             // courses have been set. initialize enrollment to being unenrolled in all section types
-            if oldValue != self.courses {
+            if oldValue != self.enrolledCourses {
                 self.enrollments.removeAll(keepCapacity: true)
-                for course in self.courses {
+                for course in self.enrolledCourses {
                     var typeEnrollment = Dictionary<SectionType, SectionEnrollment>()
                     let sectionTypes = course.sections.reduce(Set<SectionType>(), combine: {(var set, section) in
                         set.add(section.type)
@@ -54,7 +56,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private var sections: [Section] {
-        return self.courses.reduce([], combine: { (allSections, course) in
+        return self.enrolledCourses.reduce([], combine: { (allSections, course) in
             return allSections + course.sections
         })
     }
@@ -113,7 +115,17 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         end.minute = 50
         let section4 = Section(type: .Precept, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Tuesday, .Wednesday, .Friday])
         let course2 = Course(departmentCode: "ELE", courseNumber: 396, color: UIColor.orangeColor(), sections: [section4])
-        self.courses = [course1, course2]
+        self.enrolledCourses = [course1, course2]
+        
+        let course3 = Course(departmentCode: "COS", courseNumber: 340, color: UIColor.grayColor(), sections: [])
+        let course4 = Course(departmentCode: "COS", courseNumber: 226, color: UIColor.grayColor(), sections: [])
+        let course5 = Course(departmentCode: "COS", courseNumber: 217, color: UIColor.grayColor(), sections: [])
+        let course6 = Course(departmentCode: "ELE", courseNumber: 201, color: UIColor.grayColor(), sections: [])
+        let course7 = Course(departmentCode: "ELE", courseNumber: 206, color: UIColor.grayColor(), sections: [])
+        let course8 = Course(departmentCode: "PHY", courseNumber: 103, color: UIColor.grayColor(), sections: [])
+        let course9 = Course(departmentCode: "PHY", courseNumber: 105, color: UIColor.grayColor(), sections: [])
+        let course10 = Course(departmentCode: "PHY", courseNumber: 101, color: UIColor.grayColor(), sections: [])
+        self.allCourses = self.enrolledCourses + [course3, course4, course5, course6, course7, course8, course9, course10]
     }
     
     private func initializeScheduleView() {
@@ -130,7 +142,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         dataSource.delegate = self
         let layout = self.scheduleView.collectionViewLayout as CollectionViewCalendarWeekLayout
         dataSource.enrollments = self.enrollments
-        dataSource.enrolledCourses = self.courses
+        dataSource.enrolledCourses = self.enrolledCourses
         layout.dataSource = dataSource
         self.scheduleView.dataSource = dataSource
         self.scheduleView.delegate = self
@@ -181,7 +193,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }()
         
         self.enrolledCoursesTableViewDataSource.delegate = self
-        self.enrolledCoursesTableViewDataSource.enrolledCourses = self.courses
+        self.enrolledCoursesTableViewDataSource.enrolledCourses = self.enrolledCourses
         self.enrolledCoursesTableViewDataSource.enrollments = self.enrollments
         self.enrolledCoursesView.dataSource = self.enrolledCoursesTableViewDataSource
         self.enrolledCoursesView.delegate = self
@@ -197,6 +209,8 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             self.addChildViewController(searchViewController)
             self.leftSidebarContentView.addSubview(searchViewController.view)
             self.leftSidebarContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(searchViewController.view, inParentView: self.leftSidebarContentView, withInsets: UIEdgeInsetsZero))
+            searchViewController.allCourses = self.allCourses
+            searchViewController.enrolledCourses = self.enrolledCourses
             return searchViewController
         }()
     }
