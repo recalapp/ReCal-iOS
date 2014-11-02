@@ -186,7 +186,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         let addCoverLabelForView: (UILabel, UIVisualEffectView, Bool)->Void = { (label, coverView, isLeft) in
             label.setTranslatesAutoresizingMaskIntoConstraints(false)
             label.textAlignment = .Center
-            label.font = UIFont.systemFontOfSize(UIFont.labelFontSize()*2)
+            label.font = UIFont.systemFontOfSize(UIFont.labelFontSize()*1.5)
             label.lineBreakMode = .ByCharWrapping
             label.numberOfLines = 0
             let leftVibrancyEffect = UIVibrancyEffect(forBlurEffect: coverView.effect as UIBlurEffect)
