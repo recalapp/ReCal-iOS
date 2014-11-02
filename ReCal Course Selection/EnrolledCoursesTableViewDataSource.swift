@@ -9,7 +9,7 @@
 import UIKit
 import ReCalCommon
 
-let courseCellIdentifier = "CourseCell"
+private let courseCellIdentifier = "CourseCell"
 
 class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, EnrolledCourseTableViewCellDelegate {
     

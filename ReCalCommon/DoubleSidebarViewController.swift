@@ -12,6 +12,9 @@ private let animationSpeed: NSTimeInterval = 0.5
 private let sidebarCoverBlurEffectStyle: UIBlurEffectStyle = .Dark
 
 private func breakCharacters(string: String) -> String {
+    if string == "" {
+        return string
+    }
     var newString = ""
     for s in string {
         newString += "\(s)\n"
@@ -19,8 +22,11 @@ private func breakCharacters(string: String) -> String {
     return newString.substringToIndex(newString.endIndex.predecessor())
 }
 
+
+// MARK: - Double Sidebar View Controller
 public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate {
 
+    // Mark: Variables
     /// The padding between the sidebar and the space outside of the view (so for the left sidebar, it's the left padding)
     private var sidebarOuterPadding: CGFloat {
         return self.view.bounds.size.width
@@ -30,7 +36,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     private let sidebarInnerPadding: CGFloat = 0.0
     
     /// The width of the sidebars
-    private var sidebarWidth: CGFloat {
+    public var sidebarWidth: CGFloat {
         get {
             return self.view.bounds.size.width / 5.0
         }
@@ -43,19 +49,23 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     private var leftSidebarView: UIView!
     private var rightSidebarView: UIView!
     
+    /// The gesture recognizers for sidebar views
+    private var leftSidebarTapGestureRecognizer: UITapGestureRecognizer!
+    private var rightSidebarTapGestureRecognizer: UITapGestureRecognizer!
+    
     /// The views that cover the sidebars when they are not selected
     private var leftSidebarCoverView: UIVisualEffectView!
     private var rightSidebarCoverView: UIVisualEffectView!
     
     /// The text to be put on the cover view
-    private var leftSidebarCoverText: String = "SEARCH" {
+    public var leftSidebarCoverText: String = "" {
         didSet {
             if oldValue != leftSidebarCoverText {
                 leftSidebarCoverLabel.text = breakCharacters(leftSidebarCoverText)
             }
         }
     }
-    private var rightSidebarCoverText: String = "ENROLLED" {
+    public var rightSidebarCoverText: String = "" {
         didSet {
             if oldValue != rightSidebarCoverText {
                 rightSidebarCoverLabel.text = breakCharacters(rightSidebarCoverText)
@@ -101,6 +111,8 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
                     self.rightSidebarCoverView.alpha = rightCoverHidden ? 0.0 : 1.0
                 }, completion: nil)
                 self.updateSidebarUserInteraction()
+                self.leftSidebarTapGestureRecognizer.enabled = sidebarState == .Unselected
+                self.rightSidebarTapGestureRecognizer.enabled = sidebarState == .Unselected
             }
         }
     }
@@ -109,6 +121,8 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     private var calculatedContentOffset: CGPoint {
         return self.contentOffsetForDoubleSidebarState(self.sidebarState)
     }
+    
+    // MARK: Methods
     
     /// Calculate the content offset for the given state
     private func contentOffsetForDoubleSidebarState(state: DoubleSidebarState) -> CGPoint {
@@ -191,12 +205,10 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         addCoverLabelForView(self.rightSidebarCoverLabel, self.rightSidebarCoverView, false)
         
         // tap gesture recognizers
-        let addTapGestureRecognizer: (UIView)->Void = {(sidebarView) in
-            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleSidebarTap:")
-            sidebarView.addGestureRecognizer(tapGestureRecognizer)
-        }
-        addTapGestureRecognizer(self.leftSidebarView)
-        addTapGestureRecognizer(self.rightSidebarView)
+        self.leftSidebarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleSidebarTap:")
+        self.leftSidebarView.addGestureRecognizer(self.leftSidebarTapGestureRecognizer)
+        self.rightSidebarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleSidebarTap:")
+        self.rightSidebarView.addGestureRecognizer(self.rightSidebarTapGestureRecognizer)
         
         self.setUpOverlayScrollView()
     }
@@ -223,10 +235,6 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.rightSidebarView.frame = CGRect(x: scrollView.contentSize.width - (self.sidebarWidth + self.sidebarInnerPadding), y: 0, width: self.sidebarWidth + self.sidebarInnerPadding + self.sidebarOuterPadding, height: scrollView.contentSize.height)
         
         scrollView.setContentOffset(self.calculatedContentOffset, animated: false)
-        
-        self.leftSidebarView.backgroundColor = UIColor.redColor()
-        self.rightSidebarView.backgroundColor = UIColor.redColor()
-        self.primaryContentView.backgroundColor = UIColor.greenColor()
     }
     
     public func handleSidebarTap(sender: UITapGestureRecognizer) {
@@ -249,7 +257,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     }
     
     
-    // MARK: - Scroll View Delegate
+    // MARK: Scroll View Delegate
     
     public func scrollViewDidScroll(scrollView: UIScrollView) {
 //        let halfSidebarWidth = self.sidebarWidth/2
@@ -258,46 +266,48 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     }
     
     public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, var targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        switch self.sidebarState {
-        case .Unselected:
-            if velocity.x > 0 {
-                // sidebar moving forward, meaning content moving to the left
-                self.sidebarState = .RightSidebarShown
-            } else if velocity.x < 0 {
-                self.sidebarState = .LeftSidebarShown
-            } else {
-                // no velocity, tie break using target content offset
-                if targetContentOffset.memory.x > self.calculatedContentOffset.x {
+        if scrollView == self.sidebarContainerScrollView {
+            switch self.sidebarState {
+            case .Unselected:
+                if velocity.x > 0 {
+                    // sidebar moving forward, meaning content moving to the left
                     self.sidebarState = .RightSidebarShown
-                } else if targetContentOffset.memory.x < self.calculatedContentOffset.x {
+                } else if velocity.x < 0 {
                     self.sidebarState = .LeftSidebarShown
+                } else {
+                    // no velocity, tie break using target content offset
+                    if targetContentOffset.memory.x > self.calculatedContentOffset.x {
+                        self.sidebarState = .RightSidebarShown
+                    } else if targetContentOffset.memory.x < self.calculatedContentOffset.x {
+                        self.sidebarState = .LeftSidebarShown
+                    }
+                }
+            case .LeftSidebarShown:
+                // the only way to go to the right sidebar state from here is if the content offset is already closer to that
+                let unselectedContentOffset = self.contentOffsetForDoubleSidebarState(.Unselected)
+                if scrollView.contentOffset.x > unselectedContentOffset.x {
+                    self.sidebarState = .RightSidebarShown
+                } else {
+                    // otherwise, if the velocity is positive or if target content offset is greater than the current content offset, then set it to unselected
+                    if velocity.x > 0 || targetContentOffset.memory.x > self.calculatedContentOffset.x {
+                        self.sidebarState = .Unselected
+                    }
+                }
+            case .RightSidebarShown:
+                // reverse the logic of the left state
+                // the only way to go to the right sidebar state from here is if the content offset is already closer to that
+                let unselectedContentOffset = self.contentOffsetForDoubleSidebarState(.Unselected)
+                if scrollView.contentOffset.x < unselectedContentOffset.x {
+                    self.sidebarState = .LeftSidebarShown
+                } else {
+                    // otherwise, if the velocity is positive or if target content offset is greater than the current content offset, then set it to unselected
+                    if velocity.x < 0 || targetContentOffset.memory.x < self.calculatedContentOffset.x {
+                        self.sidebarState = .Unselected
+                    }
                 }
             }
-        case .LeftSidebarShown:
-            // the only way to go to the right sidebar state from here is if the content offset is already closer to that
-            let unselectedContentOffset = self.contentOffsetForDoubleSidebarState(.Unselected)
-            if scrollView.contentOffset.x > unselectedContentOffset.x {
-                self.sidebarState = .RightSidebarShown
-            } else {
-                // otherwise, if the velocity is positive or if target content offset is greater than the current content offset, then set it to unselected
-                if velocity.x > 0 || targetContentOffset.memory.x > self.calculatedContentOffset.x {
-                    self.sidebarState = .Unselected
-                }
-            }
-        case .RightSidebarShown:
-            // reverse the logic of the left state
-            // the only way to go to the right sidebar state from here is if the content offset is already closer to that
-            let unselectedContentOffset = self.contentOffsetForDoubleSidebarState(.Unselected)
-            if scrollView.contentOffset.x < unselectedContentOffset.x {
-                self.sidebarState = .LeftSidebarShown
-            } else {
-                // otherwise, if the velocity is positive or if target content offset is greater than the current content offset, then set it to unselected
-                if velocity.x < 0 || targetContentOffset.memory.x < self.calculatedContentOffset.x {
-                    self.sidebarState = .Unselected
-                }
-            }
+            targetContentOffset.put(self.calculatedContentOffset)
         }
-        targetContentOffset.put(self.calculatedContentOffset)
     }
 }
 

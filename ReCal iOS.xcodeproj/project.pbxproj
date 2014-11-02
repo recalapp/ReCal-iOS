@@ -37,6 +37,7 @@
 		81580BEF19F9C21D00119517 /* EventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81580BED19F9C21D00119517 /* EventCollectionViewCell.xib */; };
 		81580BF119F9C3B400119517 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BF019F9C3B400119517 /* Section.swift */; };
 		81580BF419F9C6C300119517 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BF319F9C6C300119517 /* Course.swift */; };
+		816BDDFA1A05ADD40002C75C /* EnrolledCourseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 816BDDF91A05ADD40002C75C /* EnrolledCourseTableViewCell.xib */; };
 		8172B96A19F562590070E7DF /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96219F562590070E7DF /* Cache.swift */; };
 		8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96319F562590070E7DF /* CollectionViewCalendarWeekLayout.swift */; };
 		8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */; };
@@ -176,6 +177,7 @@
 		81580BED19F9C21D00119517 /* EventCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCollectionViewCell.xib; sourceTree = "<group>"; };
 		81580BF019F9C3B400119517 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		81580BF319F9C6C300119517 /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		816BDDF91A05ADD40002C75C /* EnrolledCourseTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnrolledCourseTableViewCell.xib; sourceTree = "<group>"; };
 		8172B96019F562590070E7DF /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
 		8172B96119F562590070E7DF /* BasicDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicDataSource.swift; sourceTree = "<group>"; };
 		8172B96219F562590070E7DF /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 			children = (
 				8134EEDA19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift */,
 				8134EEDE19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift */,
+				816BDDF91A05ADD40002C75C /* EnrolledCourseTableViewCell.xib */,
 			);
 			name = "Enrolled Courses";
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				81580BE219F9938700119517 /* DayColumnHeaderView.xib in Resources */,
 				81FCD29519F7E3E200B6DC2D /* Images.xcassets in Resources */,
 				81580BEF19F9C21D00119517 /* EventCollectionViewCell.xib in Resources */,
+				816BDDFA1A05ADD40002C75C /* EnrolledCourseTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CourseCell" id="k3o-C9-LzH" customClass="EnrolledCourseTableViewCell" customModule="ReCal_Course_Selection" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k3o-C9-LzH" id="vBk-bz-hDn">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5W-gT-hN8">
+                        <rect key="frame" x="8" y="8" width="42" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="f5W-gT-hN8" firstAttribute="leading" secondItem="vBk-bz-hDn" secondAttribute="leadingMargin" id="Xoi-ui-piV"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="f5W-gT-hN8" secondAttribute="bottom" constant="6.5" id="g4L-aE-40T"/>
+                    <constraint firstItem="f5W-gT-hN8" firstAttribute="top" secondItem="vBk-bz-hDn" secondAttribute="topMargin" id="sxb-a5-y6w"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+            <connections>
+                <outlet property="courseLabel" destination="f5W-gT-hN8" id="bqM-9Y-jTH"/>
+            </connections>
+            <point key="canvasLocation" x="282" y="217"/>
+        </tableViewCell>
+    </objects>
+</document>

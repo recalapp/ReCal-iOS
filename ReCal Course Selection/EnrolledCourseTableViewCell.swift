@@ -31,15 +31,43 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     var sectionPickerControls = Dictionary<SectionType, SlidingSelectionControl>()
     var expanded: Bool = false
     
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.initialize()
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.initialize()
+    }
+    override init() {
+        super.init()
+        self.initialize()
+    }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.initialize()
+    }
+    
+    private func initialize() {
+        // TODO this doesn't work with a nib anymore
+//        self.contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        let label = UILabel()
+//        label.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        self.courseLabel = label
+//        self.courseLabel.textColor = UIColor.lightTextColor()
+//        self.contentView.addSubview(self.courseLabel)
+//        let topConstraint = NSLayoutConstraint(item: self.contentView, attribute: .TopMargin, relatedBy: .Equal, toItem: self.courseLabel, attribute: .Top, multiplier: 0, constant: 0)
+//        let leadingConstraint = NSLayoutConstraint(item: self.courseLabel, attribute: .Leading, relatedBy: .Equal, toItem: self.contentView, attribute: .Left, multiplier: 0, constant: 0)
+//        let bottomConstraint = NSLayoutConstraint(item: self.contentView, attribute: .BottomMargin, relatedBy: .GreaterThanOrEqual, toItem: self.courseLabel, attribute: .Bottom, multiplier: 0, constant: 8)
+//        self.contentView.addConstraints([topConstraint, bottomConstraint, leadingConstraint])
+//        self.backgroundColor = UIColor.redColor()
+    }
+    
     @IBOutlet weak var courseLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
     }
     
     /// return all sections with the specified section type

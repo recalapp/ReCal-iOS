@@ -138,8 +138,17 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     
     /// MARK: Methods
+    public override init() {
+        super.init()
+        self.initialize()
+    }
+    
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.initialize()
+    }
+    
+    private func initialize() {
         self.eventsLayoutAttributesCache.itemConstructor = {(indexPath: NSIndexPath) in
             return UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         }
