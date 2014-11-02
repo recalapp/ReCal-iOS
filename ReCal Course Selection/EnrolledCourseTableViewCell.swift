@@ -17,6 +17,18 @@ class EnrolledCourseTableViewCell: UITableViewCell {
             self.refresh()
         }
     }
+    private var colorTag: UIColor? {
+        return self.allEnrolled ? self.course?.color : self.course?.color.darkerColor().darkerColor()
+    }
+    /// returns true if all possible sections have enrollment
+    private var allEnrolled: Bool {
+        for (_, enrollment) in self.enrollmentsBySectionType {
+            if enrollment == .Unenrolled {
+                return false
+            }
+        }
+        return true
+    }
     var sectionTypes: [SectionType] {
         if let course = self.course {
             return course.sections.reduce([], combine: { (var allSectionTypes, section) in
@@ -35,7 +47,6 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.initialize()
     }
-
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.initialize()
@@ -50,20 +61,9 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     }
     
     private func initialize() {
-        // TODO this doesn't work with a nib anymore
-//        self.contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
-//        let label = UILabel()
-//        label.setTranslatesAutoresizingMaskIntoConstraints(false)
-//        self.courseLabel = label
-//        self.courseLabel.textColor = UIColor.lightTextColor()
-//        self.contentView.addSubview(self.courseLabel)
-//        let topConstraint = NSLayoutConstraint(item: self.contentView, attribute: .TopMargin, relatedBy: .Equal, toItem: self.courseLabel, attribute: .Top, multiplier: 0, constant: 0)
-//        let leadingConstraint = NSLayoutConstraint(item: self.courseLabel, attribute: .Leading, relatedBy: .Equal, toItem: self.contentView, attribute: .Left, multiplier: 0, constant: 0)
-//        let bottomConstraint = NSLayoutConstraint(item: self.contentView, attribute: .BottomMargin, relatedBy: .GreaterThanOrEqual, toItem: self.courseLabel, attribute: .Bottom, multiplier: 0, constant: 8)
-//        self.contentView.addConstraints([topConstraint, bottomConstraint, leadingConstraint])
-//        self.backgroundColor = UIColor.redColor()
     }
     
+    @IBOutlet weak var colorTagView: UIView!
     @IBOutlet weak var courseLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -92,6 +92,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
             sectionPicker.removeFromSuperview()
         }
         self.sectionPickerControls.removeAll(keepCapacity: true)
+        self.colorTagView.backgroundColor = self.colorTag
         if self.expanded {
             let sectionTypes = self.sectionTypes
             var prev: UIView = self.courseLabel
@@ -130,7 +131,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
             
             // add bottom constraint if needed. courseLabel's constraint is set in the storyboard
             if prev != self.courseLabel {
-                let bottomConstraint = NSLayoutConstraint(item: prev, attribute: .Bottom, relatedBy: .Equal, toItem: self.contentView, attribute: .Bottom, multiplier: 1, constant: -8)
+                let bottomConstraint = NSLayoutConstraint(item: prev, attribute: .Bottom, relatedBy: .Equal, toItem: self.contentView, attribute: .BottomMargin, multiplier: 1, constant: -8)
                 self.contentView.addConstraint(bottomConstraint)
             }
         }
@@ -152,6 +153,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 break
             }
         }
+        self.colorTagView.backgroundColor = self.colorTag
     }
 }
 

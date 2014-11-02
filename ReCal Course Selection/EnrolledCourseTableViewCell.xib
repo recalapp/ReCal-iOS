@@ -19,16 +19,38 @@
                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="joP-DI-ShX">
+                        <rect key="frame" x="58" y="8" width="10" height="20.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="Dvo-di-nxq"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FbL-UM-St7">
+                        <rect key="frame" x="8" y="34.5" width="304" height="1"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="7b0-gh-Uix"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
+                    <constraint firstItem="FbL-UM-St7" firstAttribute="leading" secondItem="vBk-bz-hDn" secondAttribute="leadingMargin" id="2Ab-OS-1Qw"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="FbL-UM-St7" secondAttribute="bottom" id="Czj-zi-FQB"/>
                     <constraint firstItem="f5W-gT-hN8" firstAttribute="leading" secondItem="vBk-bz-hDn" secondAttribute="leadingMargin" id="Xoi-ui-piV"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="FbL-UM-St7" secondAttribute="trailing" id="YFC-8D-U51"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="f5W-gT-hN8" secondAttribute="bottom" constant="6.5" id="g4L-aE-40T"/>
+                    <constraint firstItem="joP-DI-ShX" firstAttribute="height" secondItem="f5W-gT-hN8" secondAttribute="height" id="hnV-zM-66X"/>
+                    <constraint firstItem="joP-DI-ShX" firstAttribute="top" secondItem="f5W-gT-hN8" secondAttribute="top" id="nBe-bu-7Cg"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="joP-DI-ShX" secondAttribute="trailing" id="pIa-TA-bXg"/>
                     <constraint firstItem="f5W-gT-hN8" firstAttribute="top" secondItem="vBk-bz-hDn" secondAttribute="topMargin" id="sxb-a5-y6w"/>
+                    <constraint firstItem="joP-DI-ShX" firstAttribute="leading" secondItem="f5W-gT-hN8" secondAttribute="trailing" constant="8" id="vSZ-1v-jX7"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
             <connections>
+                <outlet property="colorTagView" destination="joP-DI-ShX" id="TVU-rM-9jn"/>
                 <outlet property="courseLabel" destination="f5W-gT-hN8" id="bqM-9Y-jTH"/>
             </connections>
             <point key="canvasLocation" x="282" y="217"/>
