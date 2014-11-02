@@ -52,6 +52,12 @@ public extension UIColor {
         }
         return UIColor(hue: hue, saturation: saturation, brightness: min(brightness * scale, 1.0), alpha: alpha)
     }
+    public class func darkBlackGrayColor() -> UIColor {
+        return UIColor(red: 32.0/255.0, green: 32.0/255.0, blue: 29.0/255.0, alpha: 1.0)
+    }
+    public class func lightBlackGrayColor() -> UIColor {
+        return UIColor(red: 47.0/255.0, green: 47.0/255.0, blue: 42.0/255.0, alpha: 1.0)
+    }
 }
 
 public func arrayFindIndexesOfElement<T: Equatable>(#array: [T], #element: T) -> [Int] {

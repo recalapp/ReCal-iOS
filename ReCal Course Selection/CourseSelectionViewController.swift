@@ -138,7 +138,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func initializeEnrolledCoursesView() {
-        self.rightSidebarContentView.backgroundColor = UIColor.darkGrayColor()
+        self.rightSidebarBackgroundColor = UIColor.lightBlackGrayColor()
         
         let enrolledLabel: UILabel = {
             let enrolledLabel = UILabel()
@@ -167,7 +167,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         
         self.enrolledCoursesView = {
             let enrolledCoursesView = UITableView()
-            enrolledCoursesView.backgroundColor = UIColor.darkGrayColor()
+            enrolledCoursesView.backgroundColor = UIColor.clearColor()
             enrolledCoursesView.separatorStyle = .None
             enrolledCoursesView.setTranslatesAutoresizingMaskIntoConstraints(false)
             enrolledCoursesView.registerNib(UINib(nibName: "EnrolledCourseTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: courseCellIdentifier)
@@ -189,6 +189,8 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func initializeSearchViewController() {
+        self.leftSidebarBackgroundColor = UIColor.lightBlackGrayColor()
+        
         self.searchViewController = {
             let searchViewController = self.storyboard?.instantiateViewControllerWithIdentifier(searchViewControllerStoryboardId) as CourseSearchTableViewController
             searchViewController.view.setTranslatesAutoresizingMaskIntoConstraints(false)

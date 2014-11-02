@@ -28,8 +28,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             let searchController = UISearchController(searchResultsController: nil)
             searchController.searchBar.frame = CGRect(origin: CGPointZero, size: CGSize(width: self.tableView.bounds.size.width, height: 44))
             searchController.searchBar.barStyle = .Black
+            searchController.searchBar.placeholder = "COS 333"
             searchController.dimsBackgroundDuringPresentation = false
-            self.tableView.tableHeaderView = searchController.searchBar
             return searchController
         }()
         
@@ -57,6 +57,14 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         return 10
     }
 
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return self.searchController.searchBar.bounds.size.height
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return self.searchController.searchBar
+    }
+    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row % 2 == 1 {
             return 66
@@ -73,7 +81,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         if indexPath.row % 2 == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as UITableViewCell
             
-            // Configure the cell...
+            cell.backgroundColor = UIColor.darkBlackGrayColor()
             
             return cell
         }

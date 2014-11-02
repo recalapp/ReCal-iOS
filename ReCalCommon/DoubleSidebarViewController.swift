@@ -49,6 +49,24 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     private var leftSidebarView: UIView!
     private var rightSidebarView: UIView!
     
+    /// The background color of the sidebar
+    public var leftSidebarBackgroundColor: UIColor? {
+        get {
+            return self.leftSidebarView.backgroundColor
+        }
+        set {
+            self.leftSidebarView.backgroundColor = newValue
+        }
+    }
+    public var rightSidebarBackgroundColor: UIColor? {
+        get {
+            return self.rightSidebarView.backgroundColor
+        }
+        set {
+            self.rightSidebarView.backgroundColor = newValue
+        }
+    }
+    
     /// The gesture recognizers for sidebar views
     private var leftSidebarTapGestureRecognizer: UITapGestureRecognizer!
     private var rightSidebarTapGestureRecognizer: UITapGestureRecognizer!

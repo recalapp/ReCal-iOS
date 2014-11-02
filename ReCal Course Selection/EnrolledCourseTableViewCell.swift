@@ -93,6 +93,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         }
         self.sectionPickerControls.removeAll(keepCapacity: true)
         self.colorTagView.backgroundColor = self.colorTag
+        self.backgroundColor = self.expanded ? UIColor.darkBlackGrayColor() : UIColor.lightBlackGrayColor()
         if self.expanded {
             let sectionTypes = self.sectionTypes
             var prev: UIView = self.courseLabel
@@ -116,7 +117,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 }
                 let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: initialSelection)
                 slidingSelectionControl.preferredMaxLayoutWidth = self.contentView.bounds.size.width
-                slidingSelectionControl.defaultBackgroundColor = UIColor.blackColor()
+                slidingSelectionControl.defaultBackgroundColor = UIColor.darkBlackGrayColor()
                 slidingSelectionControl.tintColor = self.course?.color
                 slidingSelectionControl.layoutMargins = UIEdgeInsetsZero
                 self.contentView.addSubview(slidingSelectionControl)
