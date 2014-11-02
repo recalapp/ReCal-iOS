@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8105F39E1A066AE800B2F20A /* SampleSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F39D1A066AE800B2F20A /* SampleSearchTableViewController.swift */; };
 		8111F63319F4947700A331E3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62B19F4947700A331E3 /* Util.swift */; };
 		8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */; };
 		811D481819ED7EB000E3F360 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D481719ED7EB000E3F360 /* AppDelegate.swift */; };
@@ -60,7 +61,6 @@
 		81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */; };
 		81FCD28C19F7E3E200B6DC2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28B19F7E3E200B6DC2D /* AppDelegate.swift */; };
 		81FCD28E19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28D19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld */; };
-		81FCD29019F7E3E200B6DC2D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28F19F7E3E200B6DC2D /* ViewController.swift */; };
 		81FCD29319F7E3E200B6DC2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81FCD29119F7E3E200B6DC2D /* Main.storyboard */; };
 		81FCD29519F7E3E200B6DC2D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81FCD29419F7E3E200B6DC2D /* Images.xcassets */; };
 		81FCD29819F7E3E200B6DC2D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81FCD29619F7E3E200B6DC2D /* LaunchScreen.xib */; };
@@ -143,6 +143,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8105F39D1A066AE800B2F20A /* SampleSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleSearchTableViewController.swift; sourceTree = "<group>"; };
 		8111F62B19F4947700A331E3 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSelectionControl.swift; sourceTree = "<group>"; };
 		811D481219ED7EB000E3F360 /* ReCal iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,7 +207,6 @@
 		81FCD28719F7E3E200B6DC2D /* ReCal Course Selection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal Course Selection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81FCD28A19F7E3E200B6DC2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81FCD28B19F7E3E200B6DC2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		81FCD28F19F7E3E200B6DC2D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		81FCD29219F7E3E200B6DC2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		81FCD29419F7E3E200B6DC2D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		81FCD29719F7E3E200B6DC2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -266,6 +266,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8105F39F1A066DFD00B2F20A /* Course Search */ = {
+			isa = PBXGroup;
+			children = (
+				81FCD2B419F7F9C000B6DC2D /* CourseDetailsViewController.swift */,
+				81FCD2B219F7EBF100B6DC2D /* CourseSearchTableViewController.swift */,
+			);
+			name = "Course Search";
+			sourceTree = "<group>";
+		};
 		8111F62219F493A500A331E3 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +316,7 @@
 				811E64C919F56681007B0148 /* SampleTableViewController.swift */,
 				811D481C19ED7EB000E3F360 /* ViewController.swift */,
 				811D481E19ED7EB000E3F360 /* Main.storyboard */,
+				8105F39D1A066AE800B2F20A /* SampleSearchTableViewController.swift */,
 				811D482119ED7EB000E3F360 /* Images.xcassets */,
 				811D482319ED7EB000E3F360 /* LaunchScreen.xib */,
 				811D481919ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld */,
@@ -390,8 +400,6 @@
 			isa = PBXGroup;
 			children = (
 				81580BD019F98E6200119517 /* SectionSelectionViewController.swift */,
-				8134EEDD19FA9AA300D04DC8 /* Enrolled Courses */,
-				8134EEDC19FA9A9D00D04DC8 /* Schedule */,
 			);
 			name = "Section Selection";
 			sourceTree = "<group>";
@@ -490,10 +498,10 @@
 			isa = PBXGroup;
 			children = (
 				81FCD28B19F7E3E200B6DC2D /* AppDelegate.swift */,
-				81FCD28F19F7E3E200B6DC2D /* ViewController.swift */,
-				81FCD2B219F7EBF100B6DC2D /* CourseSearchTableViewController.swift */,
-				81FCD2B419F7F9C000B6DC2D /* CourseDetailsViewController.swift */,
 				81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */,
+				8105F39F1A066DFD00B2F20A /* Course Search */,
+				8134EEDC19FA9A9D00D04DC8 /* Schedule */,
+				8134EEDD19FA9AA300D04DC8 /* Enrolled Courses */,
 				81580BF219F9C3C700119517 /* Model */,
 				81580BE519F99C5900119517 /* Section Selection */,
 				81FCD29119F7E3E200B6DC2D /* Main.storyboard */,
@@ -785,6 +793,7 @@
 				8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */,
 				819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */,
 				81D270D819F0946100DED75D /* HeaderView.swift in Sources */,
+				8105F39E1A066AE800B2F20A /* SampleSearchTableViewController.swift in Sources */,
 				811E64CA19F56681007B0148 /* SampleTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -834,7 +843,6 @@
 				81580BE419F9958400119517 /* GridLineView.swift in Sources */,
 				81FCD2B519F7F9C000B6DC2D /* CourseDetailsViewController.swift in Sources */,
 				81FCD2B119F7E41900B6DC2D /* CourseSelectionViewController.swift in Sources */,
-				81FCD29019F7E3E200B6DC2D /* ViewController.swift in Sources */,
 				81580BF419F9C6C300119517 /* Course.swift in Sources */,
 				81580BD119F98E6200119517 /* SectionSelectionViewController.swift in Sources */,
 				81580BD719F9922100119517 /* TimeRowHeaderBackgroundView.swift in Sources */,

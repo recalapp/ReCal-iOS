@@ -1,24 +1,31 @@
 //
-//  CourseSearchTableViewController.swift
+//  SampleSearchTableViewController.swift
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 10/22/14.
+//  Created by Naphat Sanguansin on 11/2/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
 import UIKit
 
-let searchResultCellIdentifier = "SearchResult"
-let courseDetailsViewControllerStoryboardId = "CourseDetails"
+let searchResultsViewControllerStoryboardId = "SearchResults"
 
-class CourseSearchTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate  {
+class SampleSearchTableViewController: UITableViewController, UISearchResultsUpdating {
 
-    private var courseDetailsViewController: CourseDetailsViewController!
-    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        println("called")
+    }
+    var searchController: UISearchController!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.courseDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
-        
+
+        let searchResultsController = self.storyboard?.instantiateViewControllerWithIdentifier(searchResultsViewControllerStoryboardId) as UIViewController
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        self.definesPresentationContext = true
+        self.tableView.tableHeaderView = searchController.searchBar
+        searchController.searchBar.frame = CGRectMake(0, 0, self.tableView.frame.size.width, 44)
+        self.searchController = searchController
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -34,23 +41,26 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 1
+        return 0
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 10
+        return 0
     }
 
-    
+    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
 
         // Configure the cell...
 
         return cell
     }
+    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -87,48 +97,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     }
     */
 
-    // MARK: Table View Delegate
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath == self.courseDetailsViewController?.indexPath {
-            return
-        } else {
-            let present:()->Void = {
-                let cell = tableView.cellForRowAtIndexPath(indexPath)!
-                
-                self.courseDetailsViewController.modalPresentationStyle = .Popover
-                self.courseDetailsViewController.indexPath = indexPath
-                self.courseDetailsViewController.popoverPresentationController?.delegate = self
-                self.presentViewController(self.courseDetailsViewController, animated: true, completion: nil)
-                
-                let popoverPresentationController = self.courseDetailsViewController.popoverPresentationController
-                popoverPresentationController?.permittedArrowDirections = .Left
-                popoverPresentationController?.sourceView = cell
-                popoverPresentationController?.sourceRect = cell.bounds
-            }
-            if self.presentedViewController == self.courseDetailsViewController {
-                self.courseDetailsViewController.dismissViewControllerAnimated(false) {
-                    present()
-                }
-            } else {
-                present()
-            }
-        }
-    }
-    
-    // MARK: - Adaptive Presentation Controller Delegate
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .None
-    }
-    
-    // MARK: Popover Presentation Controller Delegate
-    func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
-        if let indexPath = self.courseDetailsViewController.indexPath {
-            self.courseDetailsViewController.indexPath = nil
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        }
-        
-    }
-    
     /*
     // MARK: - Navigation
 
