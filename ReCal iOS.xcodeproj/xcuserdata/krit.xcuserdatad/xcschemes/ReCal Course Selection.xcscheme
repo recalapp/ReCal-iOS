@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "81FCD28619F7E3E200B6DC2D"
+               BlueprintIdentifier = "81A0949E1A067D6200A0C3CE"
                BuildableName = "ReCal Course Selection.app"
                BlueprintName = "ReCal Course Selection"
+               ReferencedContainer = "container:ReCal iOS.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "81A094B21A067D6200A0C3CE"
+               BuildableName = "ReCal Course SelectionTests.xctest"
+               BlueprintName = "ReCal Course SelectionTests"
                ReferencedContainer = "container:ReCal iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,11 +42,21 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "81A094B21A067D6200A0C3CE"
+               BuildableName = "ReCal Course SelectionTests.xctest"
+               BlueprintName = "ReCal Course SelectionTests"
+               ReferencedContainer = "container:ReCal iOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "81FCD28619F7E3E200B6DC2D"
+            BlueprintIdentifier = "81A0949E1A067D6200A0C3CE"
             BuildableName = "ReCal Course Selection.app"
             BlueprintName = "ReCal Course Selection"
             ReferencedContainer = "container:ReCal iOS.xcodeproj">
@@ -51,7 +75,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "81FCD28619F7E3E200B6DC2D"
+            BlueprintIdentifier = "81A0949E1A067D6200A0C3CE"
             BuildableName = "ReCal Course Selection.app"
             BlueprintName = "ReCal Course Selection"
             ReferencedContainer = "container:ReCal iOS.xcodeproj">
@@ -69,7 +93,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "81FCD28619F7E3E200B6DC2D"
+            BlueprintIdentifier = "81A0949E1A067D6200A0C3CE"
             BuildableName = "ReCal Course Selection.app"
             BlueprintName = "ReCal Course Selection"
             ReferencedContainer = "container:ReCal iOS.xcodeproj">

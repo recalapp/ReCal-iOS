@@ -21,24 +21,8 @@
 		8124969019F17F440081AFB2 /* TimeHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */; };
 		8124969319F18A620081AFB2 /* TimeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124969119F18A620081AFB2 /* TimeHeaderView.swift */; };
 		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
-		8134EEDB19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8134EEDA19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift */; };
-		8134EEDF19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8134EEDE19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift */; };
 		8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */; };
 		8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */; };
-		81580BD119F98E6200119517 /* SectionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BD019F98E6200119517 /* SectionSelectionViewController.swift */; };
-		81580BD319F9905100119517 /* ScheduleCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BD219F9905100119517 /* ScheduleCollectionViewDataSource.swift */; };
-		81580BD719F9922100119517 /* TimeRowHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BD619F9922100119517 /* TimeRowHeaderBackgroundView.swift */; };
-		81580BDB19F9927500119517 /* TimeRowHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BD919F9927500119517 /* TimeRowHeaderView.swift */; };
-		81580BDC19F9927500119517 /* TimeRowHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81580BDA19F9927500119517 /* TimeRowHeaderView.xib */; };
-		81580BDE19F9931E00119517 /* DayColumnHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BDD19F9931E00119517 /* DayColumnHeaderBackgroundView.swift */; };
-		81580BE119F9938700119517 /* DayColumnHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BDF19F9938700119517 /* DayColumnHeaderView.swift */; };
-		81580BE219F9938700119517 /* DayColumnHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81580BE019F9938700119517 /* DayColumnHeaderView.xib */; };
-		81580BE419F9958400119517 /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BE319F9958400119517 /* GridLineView.swift */; };
-		81580BEE19F9C21D00119517 /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BEC19F9C21D00119517 /* EventCollectionViewCell.swift */; };
-		81580BEF19F9C21D00119517 /* EventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81580BED19F9C21D00119517 /* EventCollectionViewCell.xib */; };
-		81580BF119F9C3B400119517 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BF019F9C3B400119517 /* Section.swift */; };
-		81580BF419F9C6C300119517 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81580BF319F9C6C300119517 /* Course.swift */; };
-		816BDDFA1A05ADD40002C75C /* EnrolledCourseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 816BDDF91A05ADD40002C75C /* EnrolledCourseTableViewCell.xib */; };
 		8172B96A19F562590070E7DF /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96219F562590070E7DF /* Cache.swift */; };
 		8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96319F562590070E7DF /* CollectionViewCalendarWeekLayout.swift */; };
 		8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */; };
@@ -46,6 +30,34 @@
 		8172B96E19F562590070E7DF /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96619F562590070E7DF /* Stack.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819193CD19F1652700E3A3B8 /* GridLineView.swift */; };
+		81A094BA1A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094B91A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift */; };
+		81A094C51A067DBB00A0C3CE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A094C11A067DBB00A0C3CE /* LaunchScreen.xib */; };
+		81A094C61A067DBB00A0C3CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A094C31A067DBB00A0C3CE /* Main.storyboard */; };
+		81A094C81A067DC200A0C3CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094C71A067DC200A0C3CE /* AppDelegate.swift */; };
+		81A094E71A067DFD00A0C3CE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094CE1A067DFD00A0C3CE /* Course.swift */; };
+		81A094E81A067DFD00A0C3CE /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094CF1A067DFD00A0C3CE /* CourseDetailsViewController.swift */; };
+		81A094E91A067DFD00A0C3CE /* CourseSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094D01A067DFD00A0C3CE /* CourseSearchTableViewController.swift */; };
+		81A094EA1A067DFD00A0C3CE /* CourseSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094D11A067DFD00A0C3CE /* CourseSelectionViewController.swift */; };
+		81A094EB1A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094D21A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift */; };
+		81A094EC1A067DFD00A0C3CE /* DayColumnHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094D31A067DFD00A0C3CE /* DayColumnHeaderView.swift */; };
+		81A094ED1A067DFD00A0C3CE /* DayColumnHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A094D41A067DFD00A0C3CE /* DayColumnHeaderView.xib */; };
+		81A094EE1A067DFD00A0C3CE /* EnrolledCoursesTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094D51A067DFD00A0C3CE /* EnrolledCoursesTableViewDataSource.swift */; };
+		81A094EF1A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094D61A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift */; };
+		81A094F01A067DFD00A0C3CE /* EnrolledCourseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A094D71A067DFD00A0C3CE /* EnrolledCourseTableViewCell.xib */; };
+		81A094F11A067DFD00A0C3CE /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094D81A067DFD00A0C3CE /* EventCollectionViewCell.swift */; };
+		81A094F21A067DFD00A0C3CE /* EventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A094D91A067DFD00A0C3CE /* EventCollectionViewCell.xib */; };
+		81A094F31A067DFD00A0C3CE /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094DA1A067DFD00A0C3CE /* GridLineView.swift */; };
+		81A094F41A067DFD00A0C3CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A094DB1A067DFD00A0C3CE /* Images.xcassets */; };
+		81A094F51A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81A094DC1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld */; };
+		81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094DE1A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift */; };
+		81A094F71A067DFD00A0C3CE /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094DF1A067DFD00A0C3CE /* Section.swift */; };
+		81A094F81A067DFD00A0C3CE /* SectionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094E01A067DFD00A0C3CE /* SectionSelectionViewController.swift */; };
+		81A094F91A067DFD00A0C3CE /* SectionTypeEnrollment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094E11A067DFD00A0C3CE /* SectionTypeEnrollment.swift */; };
+		81A094FA1A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094E21A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift */; };
+		81A094FB1A067DFD00A0C3CE /* TimeRowHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094E31A067DFD00A0C3CE /* TimeRowHeaderView.swift */; };
+		81A094FC1A067DFD00A0C3CE /* TimeRowHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A094E41A067DFD00A0C3CE /* TimeRowHeaderView.xib */; };
+		81A094FD1A067E2100A0C3CE /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
+		81A094FE1A067E2100A0C3CE /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		81C1F5D919F05C010042AB61 /* SampleCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */; };
 		81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */; };
 		81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D270D419F090E700DED75D /* HeaderBackgroundView.swift */; };
@@ -55,21 +67,9 @@
 		81D9F26C19EF4D9600F987B9 /* ReCalCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */; };
 		81D9F26F19EF4D9600F987B9 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
 		81D9F27019EF4D9600F987B9 /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		81DA060C19FAEC76004FBA77 /* SectionTypeEnrollment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA060B19FAEC76004FBA77 /* SectionTypeEnrollment.swift */; };
 		81E6406D19FACDCA003A49F8 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E6406C19FACDCA003A49F8 /* Set.swift */; };
 		81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */; };
 		81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */; };
-		81FCD28C19F7E3E200B6DC2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28B19F7E3E200B6DC2D /* AppDelegate.swift */; };
-		81FCD28E19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28D19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld */; };
-		81FCD29319F7E3E200B6DC2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81FCD29119F7E3E200B6DC2D /* Main.storyboard */; };
-		81FCD29519F7E3E200B6DC2D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81FCD29419F7E3E200B6DC2D /* Images.xcassets */; };
-		81FCD29819F7E3E200B6DC2D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81FCD29619F7E3E200B6DC2D /* LaunchScreen.xib */; };
-		81FCD2A419F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD2A319F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift */; };
-		81FCD2AB19F7E3FD00B6DC2D /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
-		81FCD2AC19F7E3FD00B6DC2D /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		81FCD2B119F7E41900B6DC2D /* CourseSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */; };
-		81FCD2B319F7EBF100B6DC2D /* CourseSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD2B219F7EBF100B6DC2D /* CourseSearchTableViewController.swift */; };
-		81FCD2B519F7F9C000B6DC2D /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD2B419F7F9C000B6DC2D /* CourseDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +79,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 811D481119ED7EB000E3F360;
 			remoteInfo = "ReCal iOS";
+		};
+		81A094B41A067D6200A0C3CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81A0949E1A067D6200A0C3CE;
+			remoteInfo = "ReCal Course Selection";
+		};
+		81A094FF1A067E2100A0C3CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81D9F25A19EF4D9600F987B9;
+			remoteInfo = ReCalCommon;
 		};
 		81D9F26619EF4D9600F987B9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -101,20 +115,6 @@
 			remoteGlobalIDString = 81D9F25A19EF4D9600F987B9;
 			remoteInfo = ReCalCommon;
 		};
-		81FCD29E19F7E3E200B6DC2D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 81FCD28619F7E3E200B6DC2D;
-			remoteInfo = "ReCal Course Selection";
-		};
-		81FCD2AD19F7E3FD00B6DC2D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 81D9F25A19EF4D9600F987B9;
-			remoteInfo = ReCalCommon;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -129,13 +129,13 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		81FCD2AF19F7E3FD00B6DC2D /* Embed Frameworks */ = {
+		81A095011A067E2100A0C3CE /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				81FCD2AC19F7E3FD00B6DC2D /* ReCalCommon.framework in Embed Frameworks */,
+				81A094FE1A067E2100A0C3CE /* ReCalCommon.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,24 +161,8 @@
 		8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderBackgroundView.swift; sourceTree = "<group>"; };
 		8124969119F18A620081AFB2 /* TimeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderView.swift; sourceTree = "<group>"; };
 		8124969219F18A620081AFB2 /* TimeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeHeaderView.xib; sourceTree = "<group>"; };
-		8134EEDA19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrolledCoursesTableViewDataSource.swift; sourceTree = "<group>"; };
-		8134EEDE19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrolledCourseTableViewCell.swift; sourceTree = "<group>"; };
 		8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewCell.swift; sourceTree = "<group>"; };
 		8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsCollectionViewCell.xib; sourceTree = "<group>"; };
-		81580BD019F98E6200119517 /* SectionSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionSelectionViewController.swift; sourceTree = "<group>"; };
-		81580BD219F9905100119517 /* ScheduleCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewDataSource.swift; sourceTree = "<group>"; };
-		81580BD619F9922100119517 /* TimeRowHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderBackgroundView.swift; sourceTree = "<group>"; };
-		81580BD919F9927500119517 /* TimeRowHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderView.swift; sourceTree = "<group>"; };
-		81580BDA19F9927500119517 /* TimeRowHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeRowHeaderView.xib; sourceTree = "<group>"; };
-		81580BDD19F9931E00119517 /* DayColumnHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayColumnHeaderBackgroundView.swift; sourceTree = "<group>"; };
-		81580BDF19F9938700119517 /* DayColumnHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayColumnHeaderView.swift; sourceTree = "<group>"; };
-		81580BE019F9938700119517 /* DayColumnHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayColumnHeaderView.xib; sourceTree = "<group>"; };
-		81580BE319F9958400119517 /* GridLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLineView.swift; sourceTree = "<group>"; };
-		81580BEC19F9C21D00119517 /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
-		81580BED19F9C21D00119517 /* EventCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCollectionViewCell.xib; sourceTree = "<group>"; };
-		81580BF019F9C3B400119517 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
-		81580BF319F9C6C300119517 /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
-		816BDDF91A05ADD40002C75C /* EnrolledCourseTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnrolledCourseTableViewCell.xib; sourceTree = "<group>"; };
 		8172B96019F562590070E7DF /* BaseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
 		8172B96119F562590070E7DF /* BasicDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicDataSource.swift; sourceTree = "<group>"; };
 		8172B96219F562590070E7DF /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -189,6 +173,36 @@
 		8172B96719F562590070E7DF /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819193CD19F1652700E3A3B8 /* GridLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLineView.swift; sourceTree = "<group>"; };
+		81A0949F1A067D6200A0C3CE /* ReCal Course Selection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal Course Selection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81A094A21A067D6200A0C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81A094B31A067D6200A0C3CE /* ReCal Course SelectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal Course SelectionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81A094B81A067D6200A0C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81A094B91A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_Course_SelectionTests.swift; sourceTree = "<group>"; };
+		81A094C21A067DBB00A0C3CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		81A094C41A067DBB00A0C3CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		81A094C71A067DC200A0C3CE /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		81A094CE1A067DFD00A0C3CE /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		81A094CF1A067DFD00A0C3CE /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
+		81A094D01A067DFD00A0C3CE /* CourseSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSearchTableViewController.swift; sourceTree = "<group>"; };
+		81A094D11A067DFD00A0C3CE /* CourseSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionViewController.swift; sourceTree = "<group>"; };
+		81A094D21A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayColumnHeaderBackgroundView.swift; sourceTree = "<group>"; };
+		81A094D31A067DFD00A0C3CE /* DayColumnHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayColumnHeaderView.swift; sourceTree = "<group>"; };
+		81A094D41A067DFD00A0C3CE /* DayColumnHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayColumnHeaderView.xib; sourceTree = "<group>"; };
+		81A094D51A067DFD00A0C3CE /* EnrolledCoursesTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrolledCoursesTableViewDataSource.swift; sourceTree = "<group>"; };
+		81A094D61A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrolledCourseTableViewCell.swift; sourceTree = "<group>"; };
+		81A094D71A067DFD00A0C3CE /* EnrolledCourseTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnrolledCourseTableViewCell.xib; sourceTree = "<group>"; };
+		81A094D81A067DFD00A0C3CE /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
+		81A094D91A067DFD00A0C3CE /* EventCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCollectionViewCell.xib; sourceTree = "<group>"; };
+		81A094DA1A067DFD00A0C3CE /* GridLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLineView.swift; sourceTree = "<group>"; };
+		81A094DB1A067DFD00A0C3CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		81A094DD1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReCal_Course_Selection.xcdatamodel; sourceTree = "<group>"; };
+		81A094DE1A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		81A094DF1A067DFD00A0C3CE /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		81A094E01A067DFD00A0C3CE /* SectionSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionSelectionViewController.swift; sourceTree = "<group>"; };
+		81A094E11A067DFD00A0C3CE /* SectionTypeEnrollment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionTypeEnrollment.swift; sourceTree = "<group>"; };
+		81A094E21A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderBackgroundView.swift; sourceTree = "<group>"; };
+		81A094E31A067DFD00A0C3CE /* TimeRowHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderView.swift; sourceTree = "<group>"; };
+		81A094E41A067DFD00A0C3CE /* TimeRowHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeRowHeaderView.xib; sourceTree = "<group>"; };
 		81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarViewController.swift; sourceTree = "<group>"; };
 		81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		81D270D419F090E700DED75D /* HeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderBackgroundView.swift; sourceTree = "<group>"; };
@@ -200,22 +214,9 @@
 		81D9F26519EF4D9600F987B9 /* ReCalCommonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReCalCommonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D9F26A19EF4D9600F987B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCalCommonTests.swift; sourceTree = "<group>"; };
-		81DA060B19FAEC76004FBA77 /* SectionTypeEnrollment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionTypeEnrollment.swift; sourceTree = "<group>"; };
 		81E6406C19FACDCA003A49F8 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSidebarViewController.swift; sourceTree = "<group>"; };
 		81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayScrollView.swift; sourceTree = "<group>"; };
-		81FCD28719F7E3E200B6DC2D /* ReCal Course Selection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal Course Selection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		81FCD28A19F7E3E200B6DC2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		81FCD28B19F7E3E200B6DC2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		81FCD29219F7E3E200B6DC2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		81FCD29419F7E3E200B6DC2D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		81FCD29719F7E3E200B6DC2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		81FCD29D19F7E3E200B6DC2D /* ReCal Course SelectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal Course SelectionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		81FCD2A219F7E3E200B6DC2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		81FCD2A319F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_Course_SelectionTests.swift; sourceTree = "<group>"; };
-		81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionViewController.swift; sourceTree = "<group>"; };
-		81FCD2B219F7EBF100B6DC2D /* CourseSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSearchTableViewController.swift; sourceTree = "<group>"; };
-		81FCD2B419F7F9C000B6DC2D /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +229,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		811D482719ED7EB100E3F360 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81A0949C1A067D6200A0C3CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81A094FD1A067E2100A0C3CE /* ReCalCommon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81A094B01A067D6200A0C3CE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -248,33 +264,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		81FCD28419F7E3E200B6DC2D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				81FCD2AB19F7E3FD00B6DC2D /* ReCalCommon.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		81FCD29A19F7E3E200B6DC2D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8105F39F1A066DFD00B2F20A /* Course Search */ = {
-			isa = PBXGroup;
-			children = (
-				81FCD2B419F7F9C000B6DC2D /* CourseDetailsViewController.swift */,
-				81FCD2B219F7EBF100B6DC2D /* CourseSearchTableViewController.swift */,
-			);
-			name = "Course Search";
-			sourceTree = "<group>";
-		};
 		8111F62219F493A500A331E3 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,8 +282,8 @@
 				811D482D19ED7EB100E3F360 /* ReCal iOSTests */,
 				81D9F25C19EF4D9600F987B9 /* ReCalCommon */,
 				81D9F26819EF4D9600F987B9 /* ReCalCommonTests */,
-				81FCD28819F7E3E200B6DC2D /* ReCal Course Selection */,
-				81FCD2A019F7E3E200B6DC2D /* ReCal Course SelectionTests */,
+				81A094A01A067D6200A0C3CE /* ReCal Course Selection */,
+				81A094B61A067D6200A0C3CE /* ReCal Course SelectionTests */,
 				811D481319ED7EB000E3F360 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -303,8 +295,8 @@
 				811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */,
 				81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */,
 				81D9F26519EF4D9600F987B9 /* ReCalCommonTests.xctest */,
-				81FCD28719F7E3E200B6DC2D /* ReCal Course Selection.app */,
-				81FCD29D19F7E3E200B6DC2D /* ReCal Course SelectionTests.xctest */,
+				81A0949F1A067D6200A0C3CE /* ReCal Course Selection.app */,
+				81A094B31A067D6200A0C3CE /* ReCal Course SelectionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -361,59 +353,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8134EEDC19FA9A9D00D04DC8 /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-				81580BD219F9905100119517 /* ScheduleCollectionViewDataSource.swift */,
-				81580BD819F9922800119517 /* Calendar View Components */,
-			);
-			name = Schedule;
-			sourceTree = "<group>";
-		};
-		8134EEDD19FA9AA300D04DC8 /* Enrolled Courses */ = {
-			isa = PBXGroup;
-			children = (
-				8134EEDA19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift */,
-				8134EEDE19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift */,
-				816BDDF91A05ADD40002C75C /* EnrolledCourseTableViewCell.xib */,
-			);
-			name = "Enrolled Courses";
-			sourceTree = "<group>";
-		};
-		81580BD819F9922800119517 /* Calendar View Components */ = {
-			isa = PBXGroup;
-			children = (
-				81580BD619F9922100119517 /* TimeRowHeaderBackgroundView.swift */,
-				81580BD919F9927500119517 /* TimeRowHeaderView.swift */,
-				81580BDA19F9927500119517 /* TimeRowHeaderView.xib */,
-				81580BDD19F9931E00119517 /* DayColumnHeaderBackgroundView.swift */,
-				81580BDF19F9938700119517 /* DayColumnHeaderView.swift */,
-				81580BE019F9938700119517 /* DayColumnHeaderView.xib */,
-				81580BE319F9958400119517 /* GridLineView.swift */,
-				81580BEC19F9C21D00119517 /* EventCollectionViewCell.swift */,
-				81580BED19F9C21D00119517 /* EventCollectionViewCell.xib */,
-			);
-			name = "Calendar View Components";
-			sourceTree = "<group>";
-		};
-		81580BE519F99C5900119517 /* Section Selection */ = {
-			isa = PBXGroup;
-			children = (
-				81580BD019F98E6200119517 /* SectionSelectionViewController.swift */,
-			);
-			name = "Section Selection";
-			sourceTree = "<group>";
-		};
-		81580BF219F9C3C700119517 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				81580BF019F9C3B400119517 /* Section.swift */,
-				81DA060B19FAEC76004FBA77 /* SectionTypeEnrollment.swift */,
-				81580BF319F9C6C300119517 /* Course.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
 		8172B97019F5627C0070E7DF /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,6 +381,104 @@
 				8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */,
 			);
 			name = Calendar;
+			sourceTree = "<group>";
+		};
+		81A094A01A067D6200A0C3CE /* ReCal Course Selection */ = {
+			isa = PBXGroup;
+			children = (
+				81A095021A067E7E00A0C3CE /* Models */,
+				81A095031A067E8800A0C3CE /* Course Search */,
+				81A094D11A067DFD00A0C3CE /* CourseSelectionViewController.swift */,
+				81A095051A067EBB00A0C3CE /* Schedule */,
+				81A095061A067EC400A0C3CE /* Enrolled Courses */,
+				81A094DB1A067DFD00A0C3CE /* Images.xcassets */,
+				81A094DC1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld */,
+				81A094E01A067DFD00A0C3CE /* SectionSelectionViewController.swift */,
+				81A094C71A067DC200A0C3CE /* AppDelegate.swift */,
+				81A094C11A067DBB00A0C3CE /* LaunchScreen.xib */,
+				81A094C31A067DBB00A0C3CE /* Main.storyboard */,
+				81A094A11A067D6200A0C3CE /* Supporting Files */,
+			);
+			path = "ReCal Course Selection";
+			sourceTree = "<group>";
+		};
+		81A094A11A067D6200A0C3CE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				81A094A21A067D6200A0C3CE /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		81A094B61A067D6200A0C3CE /* ReCal Course SelectionTests */ = {
+			isa = PBXGroup;
+			children = (
+				81A094B91A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift */,
+				81A094B71A067D6200A0C3CE /* Supporting Files */,
+			);
+			path = "ReCal Course SelectionTests";
+			sourceTree = "<group>";
+		};
+		81A094B71A067D6200A0C3CE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				81A094B81A067D6200A0C3CE /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		81A095021A067E7E00A0C3CE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				81A094E11A067DFD00A0C3CE /* SectionTypeEnrollment.swift */,
+				81A094CE1A067DFD00A0C3CE /* Course.swift */,
+				81A094DF1A067DFD00A0C3CE /* Section.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		81A095031A067E8800A0C3CE /* Course Search */ = {
+			isa = PBXGroup;
+			children = (
+				81A094CF1A067DFD00A0C3CE /* CourseDetailsViewController.swift */,
+				81A094D01A067DFD00A0C3CE /* CourseSearchTableViewController.swift */,
+			);
+			name = "Course Search";
+			sourceTree = "<group>";
+		};
+		81A095041A067E9600A0C3CE /* Calendar Components */ = {
+			isa = PBXGroup;
+			children = (
+				81A094E21A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift */,
+				81A094E31A067DFD00A0C3CE /* TimeRowHeaderView.swift */,
+				81A094E41A067DFD00A0C3CE /* TimeRowHeaderView.xib */,
+				81A094D81A067DFD00A0C3CE /* EventCollectionViewCell.swift */,
+				81A094D91A067DFD00A0C3CE /* EventCollectionViewCell.xib */,
+				81A094D21A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift */,
+				81A094D31A067DFD00A0C3CE /* DayColumnHeaderView.swift */,
+				81A094D41A067DFD00A0C3CE /* DayColumnHeaderView.xib */,
+				81A094DA1A067DFD00A0C3CE /* GridLineView.swift */,
+			);
+			name = "Calendar Components";
+			sourceTree = "<group>";
+		};
+		81A095051A067EBB00A0C3CE /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				81A095041A067E9600A0C3CE /* Calendar Components */,
+				81A094DE1A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift */,
+			);
+			name = Schedule;
+			sourceTree = "<group>";
+		};
+		81A095061A067EC400A0C3CE /* Enrolled Courses */ = {
+			isa = PBXGroup;
+			children = (
+				81A094D51A067DFD00A0C3CE /* EnrolledCoursesTableViewDataSource.swift */,
+				81A094D61A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift */,
+				81A094D71A067DFD00A0C3CE /* EnrolledCourseTableViewCell.xib */,
+			);
+			name = "Enrolled Courses";
 			sourceTree = "<group>";
 		};
 		81D9F25C19EF4D9600F987B9 /* ReCalCommon */ = {
@@ -492,50 +529,6 @@
 				818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */,
 			);
 			name = SlidingSidebarViewController;
-			sourceTree = "<group>";
-		};
-		81FCD28819F7E3E200B6DC2D /* ReCal Course Selection */ = {
-			isa = PBXGroup;
-			children = (
-				81FCD28B19F7E3E200B6DC2D /* AppDelegate.swift */,
-				81FCD2B019F7E41900B6DC2D /* CourseSelectionViewController.swift */,
-				8105F39F1A066DFD00B2F20A /* Course Search */,
-				8134EEDC19FA9A9D00D04DC8 /* Schedule */,
-				8134EEDD19FA9AA300D04DC8 /* Enrolled Courses */,
-				81580BF219F9C3C700119517 /* Model */,
-				81580BE519F99C5900119517 /* Section Selection */,
-				81FCD29119F7E3E200B6DC2D /* Main.storyboard */,
-				81FCD29419F7E3E200B6DC2D /* Images.xcassets */,
-				81FCD29619F7E3E200B6DC2D /* LaunchScreen.xib */,
-				81FCD28D19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld */,
-				81FCD28919F7E3E200B6DC2D /* Supporting Files */,
-			);
-			path = "ReCal Course Selection";
-			sourceTree = "<group>";
-		};
-		81FCD28919F7E3E200B6DC2D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				81FCD28A19F7E3E200B6DC2D /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		81FCD2A019F7E3E200B6DC2D /* ReCal Course SelectionTests */ = {
-			isa = PBXGroup;
-			children = (
-				81FCD2A319F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift */,
-				81FCD2A119F7E3E200B6DC2D /* Supporting Files */,
-			);
-			path = "ReCal Course SelectionTests";
-			sourceTree = "<group>";
-		};
-		81FCD2A119F7E3E200B6DC2D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				81FCD2A219F7E3E200B6DC2D /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -590,6 +583,43 @@
 			productReference = 811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		81A0949E1A067D6200A0C3CE /* ReCal Course Selection */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81A094BB1A067D6200A0C3CE /* Build configuration list for PBXNativeTarget "ReCal Course Selection" */;
+			buildPhases = (
+				81A0949B1A067D6200A0C3CE /* Sources */,
+				81A0949C1A067D6200A0C3CE /* Frameworks */,
+				81A0949D1A067D6200A0C3CE /* Resources */,
+				81A095011A067E2100A0C3CE /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				81A095001A067E2100A0C3CE /* PBXTargetDependency */,
+			);
+			name = "ReCal Course Selection";
+			productName = "ReCal Course Selection";
+			productReference = 81A0949F1A067D6200A0C3CE /* ReCal Course Selection.app */;
+			productType = "com.apple.product-type.application";
+		};
+		81A094B21A067D6200A0C3CE /* ReCal Course SelectionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81A094BE1A067D6200A0C3CE /* Build configuration list for PBXNativeTarget "ReCal Course SelectionTests" */;
+			buildPhases = (
+				81A094AF1A067D6200A0C3CE /* Sources */,
+				81A094B01A067D6200A0C3CE /* Frameworks */,
+				81A094B11A067D6200A0C3CE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				81A094B51A067D6200A0C3CE /* PBXTargetDependency */,
+			);
+			name = "ReCal Course SelectionTests";
+			productName = "ReCal Course SelectionTests";
+			productReference = 81A094B31A067D6200A0C3CE /* ReCal Course SelectionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		81D9F25A19EF4D9600F987B9 /* ReCalCommon */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81D9F27319EF4D9600F987B9 /* Build configuration list for PBXNativeTarget "ReCalCommon" */;
@@ -626,43 +656,6 @@
 			productReference = 81D9F26519EF4D9600F987B9 /* ReCalCommonTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		81FCD28619F7E3E200B6DC2D /* ReCal Course Selection */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 81FCD2A919F7E3E200B6DC2D /* Build configuration list for PBXNativeTarget "ReCal Course Selection" */;
-			buildPhases = (
-				81FCD28319F7E3E200B6DC2D /* Sources */,
-				81FCD28419F7E3E200B6DC2D /* Frameworks */,
-				81FCD28519F7E3E200B6DC2D /* Resources */,
-				81FCD2AF19F7E3FD00B6DC2D /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				81FCD2AE19F7E3FD00B6DC2D /* PBXTargetDependency */,
-			);
-			name = "ReCal Course Selection";
-			productName = "ReCal Course Selection";
-			productReference = 81FCD28719F7E3E200B6DC2D /* ReCal Course Selection.app */;
-			productType = "com.apple.product-type.application";
-		};
-		81FCD29C19F7E3E200B6DC2D /* ReCal Course SelectionTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 81FCD2AA19F7E3E200B6DC2D /* Build configuration list for PBXNativeTarget "ReCal Course SelectionTests" */;
-			buildPhases = (
-				81FCD29919F7E3E200B6DC2D /* Sources */,
-				81FCD29A19F7E3E200B6DC2D /* Frameworks */,
-				81FCD29B19F7E3E200B6DC2D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				81FCD29F19F7E3E200B6DC2D /* PBXTargetDependency */,
-			);
-			name = "ReCal Course SelectionTests";
-			productName = "ReCal Course SelectionTests";
-			productReference = 81FCD29D19F7E3E200B6DC2D /* ReCal Course SelectionTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -680,19 +673,19 @@
 						CreatedOnToolsVersion = 6.0.1;
 						TestTargetID = 811D481119ED7EB000E3F360;
 					};
+					81A0949E1A067D6200A0C3CE = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					81A094B21A067D6200A0C3CE = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 81A0949E1A067D6200A0C3CE;
+					};
 					81D9F25A19EF4D9600F987B9 = {
 						CreatedOnToolsVersion = 6.0.1;
 					};
 					81D9F26419EF4D9600F987B9 = {
 						CreatedOnToolsVersion = 6.0.1;
 						TestTargetID = 811D481119ED7EB000E3F360;
-					};
-					81FCD28619F7E3E200B6DC2D = {
-						CreatedOnToolsVersion = 6.1;
-					};
-					81FCD29C19F7E3E200B6DC2D = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = 81FCD28619F7E3E200B6DC2D;
 					};
 				};
 			};
@@ -713,8 +706,8 @@
 				811D482919ED7EB100E3F360 /* ReCal iOSTests */,
 				81D9F25A19EF4D9600F987B9 /* ReCalCommon */,
 				81D9F26419EF4D9600F987B9 /* ReCalCommonTests */,
-				81FCD28619F7E3E200B6DC2D /* ReCal Course Selection */,
-				81FCD29C19F7E3E200B6DC2D /* ReCal Course SelectionTests */,
+				81A0949E1A067D6200A0C3CE /* ReCal Course Selection */,
+				81A094B21A067D6200A0C3CE /* ReCal Course SelectionTests */,
 			);
 		};
 /* End PBXProject section */
@@ -740,6 +733,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81A0949D1A067D6200A0C3CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81A094C51A067DBB00A0C3CE /* LaunchScreen.xib in Resources */,
+				81A094F41A067DFD00A0C3CE /* Images.xcassets in Resources */,
+				81A094C61A067DBB00A0C3CE /* Main.storyboard in Resources */,
+				81A094ED1A067DFD00A0C3CE /* DayColumnHeaderView.xib in Resources */,
+				81A094FC1A067DFD00A0C3CE /* TimeRowHeaderView.xib in Resources */,
+				81A094F21A067DFD00A0C3CE /* EventCollectionViewCell.xib in Resources */,
+				81A094F01A067DFD00A0C3CE /* EnrolledCourseTableViewCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81A094B11A067D6200A0C3CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81D9F25919EF4D9600F987B9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -748,27 +762,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		81D9F26319EF4D9600F987B9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		81FCD28519F7E3E200B6DC2D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				81FCD29319F7E3E200B6DC2D /* Main.storyboard in Resources */,
-				81580BDC19F9927500119517 /* TimeRowHeaderView.xib in Resources */,
-				81FCD29819F7E3E200B6DC2D /* LaunchScreen.xib in Resources */,
-				81580BE219F9938700119517 /* DayColumnHeaderView.xib in Resources */,
-				81FCD29519F7E3E200B6DC2D /* Images.xcassets in Resources */,
-				81580BEF19F9C21D00119517 /* EventCollectionViewCell.xib in Resources */,
-				816BDDFA1A05ADD40002C75C /* EnrolledCourseTableViewCell.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		81FCD29B19F7E3E200B6DC2D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -806,6 +799,39 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81A0949B1A067D6200A0C3CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81A094EB1A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift in Sources */,
+				81A094FA1A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift in Sources */,
+				81A094F31A067DFD00A0C3CE /* GridLineView.swift in Sources */,
+				81A094F11A067DFD00A0C3CE /* EventCollectionViewCell.swift in Sources */,
+				81A094F71A067DFD00A0C3CE /* Section.swift in Sources */,
+				81A094EC1A067DFD00A0C3CE /* DayColumnHeaderView.swift in Sources */,
+				81A094F81A067DFD00A0C3CE /* SectionSelectionViewController.swift in Sources */,
+				81A094FB1A067DFD00A0C3CE /* TimeRowHeaderView.swift in Sources */,
+				81A094EE1A067DFD00A0C3CE /* EnrolledCoursesTableViewDataSource.swift in Sources */,
+				81A094EA1A067DFD00A0C3CE /* CourseSelectionViewController.swift in Sources */,
+				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
+				81A094E81A067DFD00A0C3CE /* CourseDetailsViewController.swift in Sources */,
+				81A094E71A067DFD00A0C3CE /* Course.swift in Sources */,
+				81A094EF1A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift in Sources */,
+				81A094E91A067DFD00A0C3CE /* CourseSearchTableViewController.swift in Sources */,
+				81A094F91A067DFD00A0C3CE /* SectionTypeEnrollment.swift in Sources */,
+				81A094C81A067DC200A0C3CE /* AppDelegate.swift in Sources */,
+				81A094F51A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81A094AF1A067D6200A0C3CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81A094BA1A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81D9F25619EF4D9600F987B9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -832,39 +858,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		81FCD28319F7E3E200B6DC2D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				81580BF119F9C3B400119517 /* Section.swift in Sources */,
-				81580BD319F9905100119517 /* ScheduleCollectionViewDataSource.swift in Sources */,
-				81580BEE19F9C21D00119517 /* EventCollectionViewCell.swift in Sources */,
-				81580BDB19F9927500119517 /* TimeRowHeaderView.swift in Sources */,
-				81580BE419F9958400119517 /* GridLineView.swift in Sources */,
-				81FCD2B519F7F9C000B6DC2D /* CourseDetailsViewController.swift in Sources */,
-				81FCD2B119F7E41900B6DC2D /* CourseSelectionViewController.swift in Sources */,
-				81580BF419F9C6C300119517 /* Course.swift in Sources */,
-				81580BD119F98E6200119517 /* SectionSelectionViewController.swift in Sources */,
-				81580BD719F9922100119517 /* TimeRowHeaderBackgroundView.swift in Sources */,
-				81580BDE19F9931E00119517 /* DayColumnHeaderBackgroundView.swift in Sources */,
-				81580BE119F9938700119517 /* DayColumnHeaderView.swift in Sources */,
-				8134EEDB19FA958B00D04DC8 /* EnrolledCoursesTableViewDataSource.swift in Sources */,
-				81FCD2B319F7EBF100B6DC2D /* CourseSearchTableViewController.swift in Sources */,
-				81DA060C19FAEC76004FBA77 /* SectionTypeEnrollment.swift in Sources */,
-				8134EEDF19FA9ABF00D04DC8 /* EnrolledCourseTableViewCell.swift in Sources */,
-				81FCD28C19F7E3E200B6DC2D /* AppDelegate.swift in Sources */,
-				81FCD28E19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		81FCD29919F7E3E200B6DC2D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				81FCD2A419F7E3E200B6DC2D /* ReCal_Course_SelectionTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -872,6 +865,16 @@
 			isa = PBXTargetDependency;
 			target = 811D481119ED7EB000E3F360 /* ReCal iOS */;
 			targetProxy = 811D482B19ED7EB100E3F360 /* PBXContainerItemProxy */;
+		};
+		81A094B51A067D6200A0C3CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81A0949E1A067D6200A0C3CE /* ReCal Course Selection */;
+			targetProxy = 81A094B41A067D6200A0C3CE /* PBXContainerItemProxy */;
+		};
+		81A095001A067E2100A0C3CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81D9F25A19EF4D9600F987B9 /* ReCalCommon */;
+			targetProxy = 81A094FF1A067E2100A0C3CE /* PBXContainerItemProxy */;
 		};
 		81D9F26719EF4D9600F987B9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -887,16 +890,6 @@
 			isa = PBXTargetDependency;
 			target = 81D9F25A19EF4D9600F987B9 /* ReCalCommon */;
 			targetProxy = 81D9F27119EF4D9600F987B9 /* PBXContainerItemProxy */;
-		};
-		81FCD29F19F7E3E200B6DC2D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 81FCD28619F7E3E200B6DC2D /* ReCal Course Selection */;
-			targetProxy = 81FCD29E19F7E3E200B6DC2D /* PBXContainerItemProxy */;
-		};
-		81FCD2AE19F7E3FD00B6DC2D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 81D9F25A19EF4D9600F987B9 /* ReCalCommon */;
-			targetProxy = 81FCD2AD19F7E3FD00B6DC2D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -917,20 +910,20 @@
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
-		81FCD29119F7E3E200B6DC2D /* Main.storyboard */ = {
+		81A094C11A067DBB00A0C3CE /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				81FCD29219F7E3E200B6DC2D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		81FCD29619F7E3E200B6DC2D /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				81FCD29719F7E3E200B6DC2D /* Base */,
+				81A094C21A067DBB00A0C3CE /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		81A094C31A067DBB00A0C3CE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81A094C41A067DBB00A0C3CE /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1070,6 +1063,72 @@
 			};
 			name = Release;
 		};
+		81A094BC1A067D6200A0C3CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal Course Selection/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		81A094BD1A067D6200A0C3CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = "ReCal Course Selection/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		81A094BF1A067D6200A0C3CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal Course SelectionTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal Course Selection.app/ReCal Course Selection";
+			};
+			name = Debug;
+		};
+		81A094C01A067D6200A0C3CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal Course SelectionTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal Course Selection.app/ReCal Course Selection";
+			};
+			name = Release;
+		};
 		81D9F27419EF4D9600F987B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1146,76 +1205,6 @@
 			};
 			name = Release;
 		};
-		81FCD2A519F7E3E200B6DC2D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ReCal Course Selection/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		81FCD2A619F7E3E200B6DC2D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				GCC_OPTIMIZATION_LEVEL = fast;
-				INFOPLIST_FILE = "ReCal Course Selection/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		81FCD2A719F7E3E200B6DC2D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ReCal Course SelectionTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal Course Selection.app/ReCal Course Selection";
-			};
-			name = Debug;
-		};
-		81FCD2A819F7E3E200B6DC2D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ReCal Course SelectionTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal Course Selection.app/ReCal Course Selection";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1246,6 +1235,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		81A094BB1A067D6200A0C3CE /* Build configuration list for PBXNativeTarget "ReCal Course Selection" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81A094BC1A067D6200A0C3CE /* Debug */,
+				81A094BD1A067D6200A0C3CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81A094BE1A067D6200A0C3CE /* Build configuration list for PBXNativeTarget "ReCal Course SelectionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81A094BF1A067D6200A0C3CE /* Debug */,
+				81A094C01A067D6200A0C3CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		81D9F27319EF4D9600F987B9 /* Build configuration list for PBXNativeTarget "ReCalCommon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1264,24 +1271,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81FCD2A919F7E3E200B6DC2D /* Build configuration list for PBXNativeTarget "ReCal Course Selection" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				81FCD2A519F7E3E200B6DC2D /* Debug */,
-				81FCD2A619F7E3E200B6DC2D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		81FCD2AA19F7E3E200B6DC2D /* Build configuration list for PBXNativeTarget "ReCal Course SelectionTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				81FCD2A719F7E3E200B6DC2D /* Debug */,
-				81FCD2A819F7E3E200B6DC2D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
@@ -1295,10 +1284,12 @@
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
-		81FCD28D19F7E3E200B6DC2D /* ReCal_Course_Selection.xcdatamodeld */ = {
+		81A094DC1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				81A094DD1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodel */,
 			);
+			currentVersion = 81A094DD1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodel */;
 			path = ReCal_Course_Selection.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

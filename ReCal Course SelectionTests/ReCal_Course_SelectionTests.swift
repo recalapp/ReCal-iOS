@@ -2,7 +2,7 @@
 //  ReCal_Course_SelectionTests.swift
 //  ReCal Course SelectionTests
 //
-//  Created by Naphat Sanguansin on 10/22/14.
+//  Created by Naphat Sanguansin on 11/2/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 

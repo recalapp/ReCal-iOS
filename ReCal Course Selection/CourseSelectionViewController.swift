@@ -10,6 +10,7 @@ import UIKit
 import ReCalCommon
 
 private let courseCellIdentifier = "CourseCell"
+private let searchViewControllerStoryboardId = "CourseSearch"
 
 class CourseSelectionViewController: DoubleSidebarViewController, UICollectionViewDelegate, UITableViewDelegate, ScheduleCollectionViewDataSourceDelegate, EnrolledCoursesTableViewDataSourceDelegate {
     
@@ -58,18 +59,21 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         })
     }
     
-    // MARK: Views
+    // MARK: Views and View Controllers
     private var scheduleView: UICollectionView!
     private var enrolledCoursesView: UITableView!
+    private var searchViewController: CourseSearchTableViewController!
     
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.definesPresentationContext = true
         self.leftSidebarCoverText = "SEARCH"
         self.rightSidebarCoverText = "ENROLLED"
         self.populateDummyData()
         self.initializeScheduleView()
         self.initializeEnrolledCoursesView()
+        self.initializeSearchViewController()
     }
     private func populateDummyData() {
         var start = NSDateComponents()
@@ -112,7 +116,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.courses = [course1, course2]
     }
     
-    private func initializeScheduleView(){
+    private func initializeScheduleView() {
         self.scheduleView = {
             let scheduleView = UICollectionView(frame: CGRectZero, collectionViewLayout: CollectionViewCalendarWeekLayout())
             scheduleView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -133,8 +137,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         dataSource.registerReusableViewsWithCollectionView(self.scheduleView, forLayout: self.scheduleView.collectionViewLayout)
     }
     
-    private func initializeEnrolledCoursesView(){
+    private func initializeEnrolledCoursesView() {
         self.rightSidebarContentView.backgroundColor = UIColor.darkGrayColor()
+        
         let enrolledLabel: UILabel = {
             let enrolledLabel = UILabel()
             enrolledLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -146,6 +151,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             self.rightSidebarContentView.addConstraints([topLabelConstraint, leadingLabelConstraint])
             return enrolledLabel
         }()
+        
         let line: UIView = {
             let line = UIView()
             line.backgroundColor = UIColor.lightTextColor()
@@ -180,6 +186,17 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.enrolledCoursesView.dataSource = self.enrolledCoursesTableViewDataSource
         self.enrolledCoursesView.delegate = self
         self.enrolledCoursesView.reloadData()
+    }
+    
+    private func initializeSearchViewController() {
+        self.searchViewController = {
+            let searchViewController = self.storyboard?.instantiateViewControllerWithIdentifier(searchViewControllerStoryboardId) as CourseSearchTableViewController
+            searchViewController.view.setTranslatesAutoresizingMaskIntoConstraints(false)
+            self.addChildViewController(searchViewController)
+            self.leftSidebarContentView.addSubview(searchViewController.view)
+            self.leftSidebarContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(searchViewController.view, inParentView: self.leftSidebarContentView, withInsets: UIEdgeInsetsZero))
+            return searchViewController
+        }()
     }
     
     // MARK: - Table View Delegate

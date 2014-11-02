@@ -8,6 +8,7 @@
 
 import Foundation
 import ReCalCommon
+
 private let hashPrimeMultiplier = 13//65599
 struct Section: Equatable, Printable, Hashable {
     

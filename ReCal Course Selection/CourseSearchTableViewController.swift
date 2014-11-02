@@ -8,16 +8,30 @@
 
 import UIKit
 
-let searchResultCellIdentifier = "SearchResult"
-let courseDetailsViewControllerStoryboardId = "CourseDetails"
+private let searchResultCellIdentifier = "SearchResult"
+private let paddingCellIdentifier = "Padding"
+private let courseDetailsViewControllerStoryboardId = "CourseDetails"
 
 class CourseSearchTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate  {
 
-    private var courseDetailsViewController: CourseDetailsViewController!
+    lazy private var courseDetailsViewController: CourseDetailsViewController = {
+        return self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
+    }()
+    
+    private var searchController: UISearchController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.courseDetailsViewController = self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
+        self.definesPresentationContext = true
+        self.tableView.keyboardDismissMode = .OnDrag
+        self.searchController = {
+            let searchController = UISearchController(searchResultsController: nil)
+            searchController.searchBar.frame = CGRect(origin: CGPointZero, size: CGSize(width: self.tableView.bounds.size.width, height: 44))
+            searchController.searchBar.barStyle = .Black
+            searchController.dimsBackgroundDuringPresentation = false
+            self.tableView.tableHeaderView = searchController.searchBar
+            return searchController
+        }()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -43,13 +57,29 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         return 10
     }
 
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row % 2 == 1 {
+            return 66
+        } else {
+            return 16 // padding
+        }
+    }
+    
+    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return indexPath.row % 2 == 1
+    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as UITableViewCell
-
-        // Configure the cell...
-
-        return cell
+        if indexPath.row % 2 == 1 {
+            let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+            
+            // Configure the cell...
+            
+            return cell
+        }
+        else {
+            return tableView.dequeueReusableCellWithIdentifier(paddingCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+        }
     }
 
     /*
@@ -88,8 +118,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     */
 
     // MARK: Table View Delegate
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath == self.courseDetailsViewController?.indexPath {
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        if indexPath == self.courseDetailsViewController.indexPath {
             return
         } else {
             let present:()->Void = {
@@ -113,6 +143,9 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
                 present()
             }
         }
+    }
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
     }
     
     // MARK: - Adaptive Presentation Controller Delegate
