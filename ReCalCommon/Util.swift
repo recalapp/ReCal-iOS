@@ -34,6 +34,12 @@ public extension NSLayoutConstraint {
     }
 }
 
+public extension String {
+    public func contains(other: String, caseSensitive: Bool = true) -> Bool {
+        return self.rangeOfString(other, options: caseSensitive ? NSStringCompareOptions.allZeros : NSStringCompareOptions.CaseInsensitiveSearch) != nil
+    }
+}
+
 public extension UIColor {
     public func darkerColor() -> UIColor {
         return self.colorWithBrightness(scale: 0.75)

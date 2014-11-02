@@ -7,18 +7,36 @@
 //
 
 import UIKit
+import ReCalCommon
 
 private let searchResultCellIdentifier = "SearchResult"
 private let paddingCellIdentifier = "Padding"
 private let courseDetailsViewControllerStoryboardId = "CourseDetails"
 
-class CourseSearchTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate, UISearchControllerDelegate {
+class CourseSearchTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     
     var enrolledCourses: [Course] = []
     var allCourses: [Course] = []
     private var filteredCourses: [Course] = []
-    var recommendedCourses: [Course] = []
+    
+    private var visibleCourses: [Course] {
+        if self.searchController == nil || self.searchController.searchBar.text == "" {
+            return self.allCourses // TODO display recommended courses instead?
+        }
+        return self.filteredCourses
+    }
 
+    lazy private var courseSearchPredicate: SearchPredicate<Course, String> = {
+        // TODO add more predicates
+        let departmentCodePredicate = ClosureSearchPredicate<Course, String> { (course, query) in
+            course.departmentCode.contains(query, caseSensitive: false)
+        }
+        let courseNumberPredicate = ClosureSearchPredicate<Course, String> { (course, query) in
+            course.courseNumber.description.contains(query, caseSensitive: false)
+        }
+        return OrSearchPredicate(childPredicates: [departmentCodePredicate, courseNumberPredicate])
+    }()
+    
     lazy private var courseDetailsViewController: CourseDetailsViewController = {
         return self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
     }()
@@ -32,6 +50,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         self.searchController = {
             let searchController = UISearchController(searchResultsController: nil)
             searchController.searchBar.frame = CGRect(origin: CGPointZero, size: CGSize(width: self.tableView.bounds.size.width, height: 44))
+            searchController.searchResultsUpdater = self
             searchController.searchBar.barStyle = .Black
             searchController.delegate = self
             searchController.dimsBackgroundDuringPresentation = false
@@ -50,6 +69,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    
     
     // MARK: - Table view data source
 
@@ -60,7 +81,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        return 10 * 2
+        return self.visibleCourses.count * 2
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -77,10 +98,9 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row % 2 == 1 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as CourseSearchResultTableViewCell
             
-            cell.backgroundColor = UIColor.lightBlackGrayColor()
-            cell.tintColor = UIColor.lightTextColor()
+            cell.course = self.visibleCourses[indexPath.row / 2]
             
             return cell
         }
@@ -151,8 +171,14 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             }
         }
     }
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+    
+    // MARK: - Search Results Updating
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if searchController == self.searchController {
+            let query = searchController.searchBar.text
+            self.filteredCourses = self.allCourses.filter { self.courseSearchPredicate.evaluate($0, withQuery: query) }
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: - Search Controller Delegate

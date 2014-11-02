@@ -74,6 +74,7 @@
 		81F9A4021A06B47E00083E55 /* OrSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A4011A06B47E00083E55 /* OrSearchPredicate.swift */; };
 		81F9A4041A06B4D100083E55 /* NotSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A4031A06B4D100083E55 /* NotSearchPredicate.swift */; };
 		81F9A4061A06BE3300083E55 /* ClosureSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A4051A06BE3300083E55 /* ClosureSearchPredicate.swift */; };
+		81F9A40C1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A40B1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift */; };
 		81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */; };
 		81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */; };
 /* End PBXBuildFile section */
@@ -227,6 +228,7 @@
 		81F9A4011A06B47E00083E55 /* OrSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrSearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A4031A06B4D100083E55 /* NotSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotSearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A4051A06BE3300083E55 /* ClosureSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosureSearchPredicate.swift; sourceTree = "<group>"; };
+		81F9A40B1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSidebarViewController.swift; sourceTree = "<group>"; };
 		81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -454,6 +456,7 @@
 			children = (
 				81A094CF1A067DFD00A0C3CE /* CourseDetailsViewController.swift */,
 				81A094D01A067DFD00A0C3CE /* CourseSearchTableViewController.swift */,
+				81F9A40B1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift */,
 			);
 			name = "Course Search";
 			sourceTree = "<group>";
@@ -860,6 +863,7 @@
 				81A094E71A067DFD00A0C3CE /* Course.swift in Sources */,
 				81A094EF1A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift in Sources */,
 				81A094E91A067DFD00A0C3CE /* CourseSearchTableViewController.swift in Sources */,
+				81F9A40C1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift in Sources */,
 				81A094F91A067DFD00A0C3CE /* SectionTypeEnrollment.swift in Sources */,
 				81A094C81A067DC200A0C3CE /* AppDelegate.swift in Sources */,
 				81A094F51A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld in Sources */,
