@@ -68,6 +68,12 @@
 		81D9F26F19EF4D9600F987B9 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
 		81D9F27019EF4D9600F987B9 /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		81E6406D19FACDCA003A49F8 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E6406C19FACDCA003A49F8 /* Set.swift */; };
+		81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */; };
+		81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */; };
+		81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */; };
+		81F9A4021A06B47E00083E55 /* OrSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A4011A06B47E00083E55 /* OrSearchPredicate.swift */; };
+		81F9A4041A06B4D100083E55 /* NotSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A4031A06B4D100083E55 /* NotSearchPredicate.swift */; };
+		81F9A4061A06BE3300083E55 /* ClosureSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A4051A06BE3300083E55 /* ClosureSearchPredicate.swift */; };
 		81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */; };
 		81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */; };
 /* End PBXBuildFile section */
@@ -215,6 +221,12 @@
 		81D9F26A19EF4D9600F987B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCalCommonTests.swift; sourceTree = "<group>"; };
 		81E6406C19FACDCA003A49F8 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
+		81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPredicate.swift; sourceTree = "<group>"; };
+		81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSearchPredicate.swift; sourceTree = "<group>"; };
+		81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndSearchPredicate.swift; sourceTree = "<group>"; };
+		81F9A4011A06B47E00083E55 /* OrSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrSearchPredicate.swift; sourceTree = "<group>"; };
+		81F9A4031A06B4D100083E55 /* NotSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotSearchPredicate.swift; sourceTree = "<group>"; };
+		81F9A4051A06BE3300083E55 /* ClosureSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosureSearchPredicate.swift; sourceTree = "<group>"; };
 		81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSidebarViewController.swift; sourceTree = "<group>"; };
 		81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -484,6 +496,7 @@
 		81D9F25C19EF4D9600F987B9 /* ReCalCommon */ = {
 			isa = PBXGroup;
 			children = (
+				81F9A3F91A06B2B400083E55 /* Search Predicates */,
 				81FCD27E19F7414400B6DC2D /* SlidingSidebarViewController */,
 				8111F62219F493A500A331E3 /* Controls */,
 				8172B97219F562990070E7DF /* Calendar */,
@@ -519,6 +532,35 @@
 				81D9F26A19EF4D9600F987B9 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		81F9A3F91A06B2B400083E55 /* Search Predicates */ = {
+			isa = PBXGroup;
+			children = (
+				81F9A4071A06BEC500083E55 /* Base Predicates */,
+				81F9A4081A06BED200083E55 /* Built-in Predicates */,
+			);
+			name = "Search Predicates";
+			sourceTree = "<group>";
+		};
+		81F9A4071A06BEC500083E55 /* Base Predicates */ = {
+			isa = PBXGroup;
+			children = (
+				81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */,
+				81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */,
+			);
+			name = "Base Predicates";
+			sourceTree = "<group>";
+		};
+		81F9A4081A06BED200083E55 /* Built-in Predicates */ = {
+			isa = PBXGroup;
+			children = (
+				81F9A4051A06BE3300083E55 /* ClosureSearchPredicate.swift */,
+				81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */,
+				81F9A4011A06B47E00083E55 /* OrSearchPredicate.swift */,
+				81F9A4031A06B4D100083E55 /* NotSearchPredicate.swift */,
+			);
+			name = "Built-in Predicates";
 			sourceTree = "<group>";
 		};
 		81FCD27E19F7414400B6DC2D /* SlidingSidebarViewController */ = {
@@ -838,15 +880,21 @@
 			files = (
 				81E6406D19FACDCA003A49F8 /* Set.swift in Sources */,
 				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,
+				81F9A4061A06BE3300083E55 /* ClosureSearchPredicate.swift in Sources */,
 				8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */,
+				81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */,
 				8172B96E19F562590070E7DF /* Stack.swift in Sources */,
 				818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */,
 				81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */,
 				8172B96A19F562590070E7DF /* Cache.swift in Sources */,
 				8172B96D19F562590070E7DF /* Queue.swift in Sources */,
+				81F9A4021A06B47E00083E55 /* OrSearchPredicate.swift in Sources */,
 				8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */,
+				81F9A4041A06B4D100083E55 /* NotSearchPredicate.swift in Sources */,
 				8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */,
+				81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */,
 				8111F63319F4947700A331E3 /* Util.swift in Sources */,
+				81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
