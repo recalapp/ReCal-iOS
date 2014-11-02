@@ -105,11 +105,16 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
                     leftCoverHidden = false
                     rightCoverHidden = true
                 }
-                UIView.animateWithDuration(animationSpeed, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+                self.leftSidebarCoverView.hidden = false
+                self.rightSidebarCoverView.hidden = false
+                UIView.animateWithDuration(animationSpeed, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
                     self.primaryContentView.transform = translation
                     self.leftSidebarCoverView.alpha = leftCoverHidden ? 0.0 : 1.0
                     self.rightSidebarCoverView.alpha = rightCoverHidden ? 0.0 : 1.0
-                }, completion: nil)
+                    }, completion: { (completed) -> Void in
+                        self.leftSidebarCoverView.hidden = completed && leftCoverHidden
+                        self.rightSidebarCoverView.hidden = completed && rightCoverHidden
+                })
                 self.updateSidebarUserInteraction()
                 self.leftSidebarTapGestureRecognizer.enabled = sidebarState == .Unselected
                 self.rightSidebarTapGestureRecognizer.enabled = sidebarState == .Unselected

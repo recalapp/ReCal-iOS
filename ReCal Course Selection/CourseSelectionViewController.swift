@@ -131,13 +131,35 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func initializeEnrolledCoursesView(){
+        self.rightSidebarContentView.backgroundColor = UIColor.darkGrayColor()
+        let enrolledLabel = UILabel()
+        enrolledLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        enrolledLabel.textColor = UIColor.lightTextColor()
+        enrolledLabel.text = "Enrolled"
+        let line = UIView()
+        line.backgroundColor = UIColor.lightTextColor()
+        line.setTranslatesAutoresizingMaskIntoConstraints(false)
+        line.addConstraint(NSLayoutConstraint(item: line, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 0, constant: 1))
+        self.rightSidebarContentView.addSubview(line)
+        self.rightSidebarContentView.addSubview(enrolledLabel)
+        let topLabelConstraint = NSLayoutConstraint(item: self.rightSidebarContentView, attribute: .TopMargin, relatedBy: .Equal, toItem: enrolledLabel, attribute: .Top, multiplier: 1, constant: 0)
+        let leadingLabelConstraint = NSLayoutConstraint(item: self.rightSidebarContentView, attribute: .LeadingMargin, relatedBy: .Equal, toItem: enrolledLabel, attribute: .Leading, multiplier: 1, constant: 0)
+        let topLineConstraint = NSLayoutConstraint(item: line, attribute: .Top, relatedBy: .Equal, toItem: enrolledLabel, attribute: .Bottom, multiplier: 1.0, constant: 8.0)
+        let leadingLineConstraint = NSLayoutConstraint(item: self.rightSidebarContentView, attribute: .Left, relatedBy: .Equal, toItem: line, attribute: .Leading, multiplier: 1, constant: 0)
+        let trailingLineConstraint = NSLayoutConstraint(item: self.rightSidebarContentView, attribute: .Right, relatedBy: .Equal, toItem: line, attribute: .Trailing, multiplier: 1, constant: 0)
+        self.rightSidebarContentView.addConstraints([topLabelConstraint, leadingLabelConstraint, topLineConstraint, leadingLineConstraint, trailingLineConstraint])
+        
         self.enrolledCoursesView = UITableView()
         self.enrolledCoursesView.backgroundColor = UIColor.darkGrayColor()
         self.enrolledCoursesView.separatorStyle = .None
         self.enrolledCoursesView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.enrolledCoursesView.registerNib(UINib(nibName: "EnrolledCourseTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: courseCellIdentifier)
         self.rightSidebarContentView.addSubview(self.enrolledCoursesView)
-        self.rightSidebarContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.enrolledCoursesView, inParentView: self.rightSidebarContentView, withInsets: UIEdgeInsetsZero))
+        let topConstraint = NSLayoutConstraint(item: self.enrolledCoursesView, attribute: .Top, relatedBy: .Equal, toItem: line, attribute: .Bottom, multiplier: 1.0, constant: 0)
+        let leadingConstraint = NSLayoutConstraint(item: self.rightSidebarContentView, attribute: .Left, relatedBy: .Equal, toItem: self.enrolledCoursesView, attribute: .Leading, multiplier: 1, constant: 0)
+        let trailingConstraint = NSLayoutConstraint(item: self.rightSidebarContentView, attribute: .Right, relatedBy: .Equal, toItem: self.enrolledCoursesView, attribute: .Trailing, multiplier: 1, constant: 0)
+        let bottomConstraint = NSLayoutConstraint(item: self.rightSidebarContentView, attribute: .BottomMargin, relatedBy: .Equal, toItem: self.enrolledCoursesView, attribute: .Bottom, multiplier: 1.0, constant: 0)
+        self.rightSidebarContentView.addConstraints([topConstraint, leadingConstraint, trailingConstraint, bottomConstraint])
         
         self.enrolledCoursesTableViewDataSource.delegate = self
         self.enrolledCoursesTableViewDataSource.enrolledCourses = self.courses
