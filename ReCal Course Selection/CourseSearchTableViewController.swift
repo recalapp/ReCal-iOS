@@ -150,7 +150,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         let label = UILabel()
         label.setTranslatesAutoresizingMaskIntoConstraints(false)
         headerView.addSubview(label)
-        headerView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(label, inParentView: headerView, withInsets: UIEdgeInsetsZero))
+        headerView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(label, inParentView: headerView, withInsets: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)))
         switch section {
         case 0:
             label.text = "Unenrolled"
