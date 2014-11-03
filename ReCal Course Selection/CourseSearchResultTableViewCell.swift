@@ -25,7 +25,11 @@ class CourseSearchResultTableViewCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+        if selected {
+            self.backgroundColor = UIColor.darkBlackGrayColor()
+        } else {
+            self.backgroundColor = UIColor.lightBlackGrayColor()
+        }
         // Configure the view for the selected state
     }
     

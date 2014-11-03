@@ -31,7 +31,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="SearchResult" textLabel="hom-iE-Gvs" detailTextLabel="zdk-5r-Hpf" rowHeight="66" style="IBUITableViewCellStyleSubtitle" id="5ag-LA-KuT" customClass="CourseSearchResultTableViewCell" customModule="ReCal_Course_Selection" customModuleProvider="target">
+                            <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="none" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="SearchResult" textLabel="hom-iE-Gvs" detailTextLabel="zdk-5r-Hpf" rowHeight="66" style="IBUITableViewCellStyleSubtitle" id="5ag-LA-KuT" customClass="CourseSearchResultTableViewCell" customModule="ReCal_Course_Selection" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5ag-LA-KuT" id="FaG-qA-6an">
                                     <autoresizingMask key="autoresizingMask"/>

@@ -28,13 +28,16 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
 
     lazy private var courseSearchPredicate: SearchPredicate<Course, String> = {
         // TODO add more predicates
+        let titlePredicate = ClosureSearchPredicate<Course, String> { (course, query) in
+            course.title.contains(query, caseSensitive: false)
+        }
         let departmentCodePredicate = ClosureSearchPredicate<Course, String> { (course, query) in
             course.departmentCode.contains(query, caseSensitive: false)
         }
         let courseNumberPredicate = ClosureSearchPredicate<Course, String> { (course, query) in
             course.courseNumber.description.contains(query, caseSensitive: false)
         }
-        return OrSearchPredicate(childPredicates: [departmentCodePredicate, courseNumberPredicate])
+        return OrSearchPredicate(childPredicates: [titlePredicate, departmentCodePredicate, courseNumberPredicate])
     }()
     
     lazy private var courseDetailsViewController: CourseDetailsViewController = {
