@@ -11,6 +11,7 @@ import ReCalCommon
 private let hashPrimeMultipler = 32771
 struct Course: Equatable, Printable, Hashable {
     
+    let title: String
     let departmentCode: String
     let courseNumber: Int
     let color: UIColor

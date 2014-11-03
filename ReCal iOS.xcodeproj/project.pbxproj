@@ -51,7 +51,6 @@
 		81A094F51A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81A094DC1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld */; };
 		81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094DE1A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift */; };
 		81A094F71A067DFD00A0C3CE /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094DF1A067DFD00A0C3CE /* Section.swift */; };
-		81A094F81A067DFD00A0C3CE /* SectionSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094E01A067DFD00A0C3CE /* SectionSelectionViewController.swift */; };
 		81A094F91A067DFD00A0C3CE /* SectionTypeEnrollment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094E11A067DFD00A0C3CE /* SectionTypeEnrollment.swift */; };
 		81A094FA1A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094E21A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift */; };
 		81A094FB1A067DFD00A0C3CE /* TimeRowHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094E31A067DFD00A0C3CE /* TimeRowHeaderView.swift */; };
@@ -205,7 +204,6 @@
 		81A094DD1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReCal_Course_Selection.xcdatamodel; sourceTree = "<group>"; };
 		81A094DE1A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		81A094DF1A067DFD00A0C3CE /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
-		81A094E01A067DFD00A0C3CE /* SectionSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionSelectionViewController.swift; sourceTree = "<group>"; };
 		81A094E11A067DFD00A0C3CE /* SectionTypeEnrollment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionTypeEnrollment.swift; sourceTree = "<group>"; };
 		81A094E21A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderBackgroundView.swift; sourceTree = "<group>"; };
 		81A094E31A067DFD00A0C3CE /* TimeRowHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderView.swift; sourceTree = "<group>"; };
@@ -407,7 +405,6 @@
 				81A095061A067EC400A0C3CE /* Enrolled Courses */,
 				81A094DB1A067DFD00A0C3CE /* Images.xcassets */,
 				81A094DC1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld */,
-				81A094E01A067DFD00A0C3CE /* SectionSelectionViewController.swift */,
 				81A094C71A067DC200A0C3CE /* AppDelegate.swift */,
 				81A094C11A067DBB00A0C3CE /* LaunchScreen.xib */,
 				81A094C31A067DBB00A0C3CE /* Main.storyboard */,
@@ -854,7 +851,6 @@
 				81A094F11A067DFD00A0C3CE /* EventCollectionViewCell.swift in Sources */,
 				81A094F71A067DFD00A0C3CE /* Section.swift in Sources */,
 				81A094EC1A067DFD00A0C3CE /* DayColumnHeaderView.swift in Sources */,
-				81A094F81A067DFD00A0C3CE /* SectionSelectionViewController.swift in Sources */,
 				81A094FB1A067DFD00A0C3CE /* TimeRowHeaderView.swift in Sources */,
 				81A094EE1A067DFD00A0C3CE /* EnrolledCoursesTableViewDataSource.swift in Sources */,
 				81A094EA1A067DFD00A0C3CE /* CourseSelectionViewController.swift in Sources */,

@@ -106,7 +106,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         end.hour = 16
         end.minute = 20
         let lecture1 = Section(type: .Lecture, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Wednesday, .Friday])
-        let course1 = Course(departmentCode: "COS", courseNumber: 333, color: UIColor.greenColor(), sections: [lecture1, section1, section2, section3])
+        let course1 = Course(title: "Advanced Programming Techniques", departmentCode: "COS", courseNumber: 333, color: UIColor.greenColor(), sections: [lecture1, section1, section2, section3])
         start = NSDateComponents()
         start.hour = 11
         start.minute = 0
@@ -114,17 +114,17 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         end.hour = 11
         end.minute = 50
         let section4 = Section(type: .Precept, sectionNumber: 1, startTime: start, endTime: end, days: [.Monday, .Tuesday, .Wednesday, .Friday])
-        let course2 = Course(departmentCode: "ELE", courseNumber: 396, color: UIColor.orangeColor(), sections: [section4])
+        let course2 = Course(title: "Introduction to Quantum Computing", departmentCode: "ELE", courseNumber: 396, color: UIColor.orangeColor(), sections: [section4])
         self.enrolledCourses = [course1, course2]
         
-        let course3 = Course(departmentCode: "COS", courseNumber: 340, color: UIColor.grayColor(), sections: [])
-        let course4 = Course(departmentCode: "COS", courseNumber: 226, color: UIColor.grayColor(), sections: [])
-        let course5 = Course(departmentCode: "COS", courseNumber: 217, color: UIColor.grayColor(), sections: [])
-        let course6 = Course(departmentCode: "ELE", courseNumber: 201, color: UIColor.grayColor(), sections: [])
-        let course7 = Course(departmentCode: "ELE", courseNumber: 206, color: UIColor.grayColor(), sections: [])
-        let course8 = Course(departmentCode: "PHY", courseNumber: 103, color: UIColor.grayColor(), sections: [])
-        let course9 = Course(departmentCode: "PHY", courseNumber: 105, color: UIColor.grayColor(), sections: [])
-        let course10 = Course(departmentCode: "PHY", courseNumber: 101, color: UIColor.grayColor(), sections: [])
+        let course3 = Course(title: "Reasoning About Computation", departmentCode: "COS", courseNumber: 340, color: UIColor.grayColor(), sections: [])
+        let course4 = Course(title: "Algorithms", departmentCode: "COS", courseNumber: 226, color: UIColor.grayColor(), sections: [])
+        let course5 = Course(title: "Introduction to System Programming", departmentCode: "COS", courseNumber: 217, color: UIColor.grayColor(), sections: [])
+        let course6 = Course(title: "Information Signals", departmentCode: "ELE", courseNumber: 201, color: UIColor.grayColor(), sections: [])
+        let course7 = Course(title: "Contemporary Logic Design", departmentCode: "ELE", courseNumber: 206, color: UIColor.grayColor(), sections: [])
+        let course8 = Course(title: "General Physics I", departmentCode: "PHY", courseNumber: 103, color: UIColor.grayColor(), sections: [])
+        let course9 = Course(title: "Advanced Physics (Mechanics)", departmentCode: "PHY", courseNumber: 105, color: UIColor.grayColor(), sections: [])
+        let course10 = Course(title: "Introductory Physics I", departmentCode: "PHY", courseNumber: 101, color: UIColor.grayColor(), sections: [])
         self.allCourses = self.enrolledCourses + [course3, course4, course5, course6, course7, course8, course9, course10]
     }
     

@@ -32,6 +32,7 @@ class CourseSearchResultTableViewCell: UITableViewCell {
     private func refresh() {
         if let course = self.course {
             self.textLabel.text = course.displayText
+            self.detailTextLabel?.text = course.title
         }
     }
 
