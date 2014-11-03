@@ -59,6 +59,12 @@ public struct Set<T: Hashable>: Equatable, SequenceType {
     public func anyItem() -> T? {
         return self.dict.keys.first
     }
+    
+    public func toArray() -> [T] {
+        return self.reduce([], combine: { (array, item) in
+            return array + [item]
+        })
+    }
 }
 
 public struct SetGenerator<T: Hashable>: GeneratorType {

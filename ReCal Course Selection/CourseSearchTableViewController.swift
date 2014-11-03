@@ -15,7 +15,17 @@ private let courseDetailsViewControllerStoryboardId = "CourseDetails"
 
 class CourseSearchTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     
-    var enrolledCourses: [Course] = []
+    weak var delegate: CourseSearchTableViewControllerDelegate?
+    
+    var enrolledCourses: [Course] {
+        set {
+            self.enrolledCoursesSet = Set<Course>(initialItems: newValue)
+        }
+        get {
+            return self.enrolledCoursesSet.toArray()
+        }
+    }
+    private var enrolledCoursesSet: Set<Course> = Set<Course>()
     var allCourses: [Course] = []
     private var filteredCourses: [Course] = []
     
@@ -101,9 +111,15 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row % 2 == 1 {
+            assert(indexPath.row/2 < self.visibleCourses.count, "Invalid index path")
             let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as CourseSearchResultTableViewCell
             
-            cell.course = self.visibleCourses[indexPath.row / 2]
+            let course = self.visibleCourses[indexPath.row / 2]
+            
+            cell.course = course
+            if self.enrolledCoursesSet.contains(course) {
+                tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+            }
             
             return cell
         }
@@ -149,6 +165,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
 
     // MARK: Table View Delegate
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        assert(indexPath.row/2 < self.visibleCourses.count, "Invalid index path")
         if self.visibleCourses[indexPath.row/2] == self.courseDetailsViewController.course {
             return
         } else {
@@ -173,6 +190,21 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
                 present()
             }
         }
+    }
+    
+    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        assert(indexPath.row/2 < self.visibleCourses.count, "Invalid index path")
+        let course = self.visibleCourses[indexPath.row/2]
+        assert(self.enrolledCoursesSet.contains(course), "Deselecting an unselected cell")
+        self.enrolledCoursesSet.remove(course)
+        self.delegate?.enrollmentsDidChangeForCourseSearchTableViewController(self)
+    }
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        assert(indexPath.row/2 < self.visibleCourses.count, "Invalid index path")
+        let course = self.visibleCourses[indexPath.row/2]
+        assert(!self.enrolledCoursesSet.contains(course), "Selecting an selected cell")
+        self.enrolledCoursesSet.add(course)
+        self.delegate?.enrollmentsDidChangeForCourseSearchTableViewController(self)
     }
     
     // MARK: - Search Results Updating
@@ -209,3 +241,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     */
 
 }
+
+protocol CourseSearchTableViewControllerDelegate: class {
+    func enrollmentsDidChangeForCourseSearchTableViewController(viewController: CourseSearchTableViewController)
+}
+

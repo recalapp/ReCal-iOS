@@ -12,7 +12,7 @@ import ReCalCommon
 private let courseCellIdentifier = "CourseCell"
 private let searchViewControllerStoryboardId = "CourseSearch"
 
-class CourseSelectionViewController: DoubleSidebarViewController, UICollectionViewDelegate, UITableViewDelegate, ScheduleCollectionViewDataSourceDelegate, EnrolledCoursesTableViewDataSourceDelegate {
+class CourseSelectionViewController: DoubleSidebarViewController, UICollectionViewDelegate, UITableViewDelegate, ScheduleCollectionViewDataSourceDelegate, EnrolledCoursesTableViewDataSourceDelegate, CourseSearchTableViewControllerDelegate {
     
     // MARK: - Variables
     private let enrolledCoursesTableViewDataSource = EnrolledCoursesTableViewDataSource()
@@ -31,10 +31,14 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     
     private var enrolledCourses: [Course] = [Course]() {
         didSet {
-            // courses have been set. initialize enrollment to being unenrolled in all section types
+            // courses have been set. initialize enrollment to being unenrolled in all section types for new courses
             if oldValue != self.enrolledCourses {
-                self.enrollments.removeAll(keepCapacity: true)
+                var oldEnrolled = Set(initialItems: oldValue)
                 for course in self.enrolledCourses {
+                    if self.enrollments[course] != nil {
+                        oldEnrolled.remove(course)
+                        continue
+                    }
                     var typeEnrollment = Dictionary<SectionType, SectionEnrollment>()
                     let sectionTypes = course.sections.reduce(Set<SectionType>(), combine: {(var set, section) in
                         set.add(section.type)
@@ -50,6 +54,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                         }
                     }
                     self.enrollments[course] = typeEnrollment
+                }
+                for removed in oldEnrolled {
+                    self.enrollments.removeValueForKey(removed)
                 }
             }
         }
@@ -141,12 +148,11 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         let dataSource = self.scheduleCollectionViewDataSource
         dataSource.delegate = self
         let layout = self.scheduleView.collectionViewLayout as CollectionViewCalendarWeekLayout
-        dataSource.enrollments = self.enrollments
-        dataSource.enrolledCourses = self.enrolledCourses
         layout.dataSource = dataSource
         self.scheduleView.dataSource = dataSource
         self.scheduleView.delegate = self
         dataSource.registerReusableViewsWithCollectionView(self.scheduleView, forLayout: self.scheduleView.collectionViewLayout)
+        self.reloadScheduleView()
     }
     
     private func initializeEnrolledCoursesView() {
@@ -193,11 +199,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }()
         
         self.enrolledCoursesTableViewDataSource.delegate = self
-        self.enrolledCoursesTableViewDataSource.enrolledCourses = self.enrolledCourses
-        self.enrolledCoursesTableViewDataSource.enrollments = self.enrollments
         self.enrolledCoursesView.dataSource = self.enrolledCoursesTableViewDataSource
         self.enrolledCoursesView.delegate = self
-        self.enrolledCoursesView.reloadData()
+        self.reloadEnrolledCoursesView()
     }
     
     private func initializeSearchViewController() {
@@ -209,10 +213,26 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             self.addChildViewController(searchViewController)
             self.leftSidebarContentView.addSubview(searchViewController.view)
             self.leftSidebarContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(searchViewController.view, inParentView: self.leftSidebarContentView, withInsets: UIEdgeInsetsZero))
-            searchViewController.allCourses = self.allCourses
-            searchViewController.enrolledCourses = self.enrolledCourses
+            
+            searchViewController.delegate = self
             return searchViewController
         }()
+        self.reloadSearchViewController()
+    }
+    
+    private func reloadEnrolledCoursesView() {
+        self.enrolledCoursesTableViewDataSource.enrollments = self.enrollments
+        self.enrolledCoursesView.reloadData()
+    }
+    
+    private func reloadScheduleView() {
+        self.scheduleCollectionViewDataSource.enrollments = self.enrollments
+        self.scheduleView.reloadData()
+    }
+    
+    private func reloadSearchViewController() {
+        self.searchViewController.allCourses = self.allCourses
+        self.searchViewController.enrolledCourses = self.enrolledCourses
     }
     
     // MARK: - Table View Delegate
@@ -238,15 +258,21 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     func enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource) {
         assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
         self.enrollments = dataSource.enrollments
-        self.scheduleCollectionViewDataSource.enrollments = self.enrollments
-        self.scheduleView.reloadData()
+        self.reloadScheduleView()
     }
     
     // MARK: - Schedule Collection View Data Source Delegate
     func enrollmentDidChangeForScheduleCollectionViewDataSource(dataSource: ScheduleCollectionViewDataSource) {
         assert(dataSource == self.scheduleCollectionViewDataSource, "Wrong data source object for schedule view")
         self.enrollments = dataSource.enrollments
-        self.enrolledCoursesTableViewDataSource.enrollments = self.enrollments
-        self.enrolledCoursesView.reloadData()
+        self.reloadEnrolledCoursesView()
+    }
+    
+    // MARK: - Course Search Table View Controller Delegate
+    func enrollmentsDidChangeForCourseSearchTableViewController(viewController: CourseSearchTableViewController) {
+        assert(viewController == self.searchViewController, "Wrong view controller")
+        self.enrolledCourses = viewController.enrolledCourses
+        self.reloadScheduleView()
+        self.reloadEnrolledCoursesView()
     }
 }

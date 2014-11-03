@@ -29,12 +29,8 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
             self.preloadCache()
         }
     }
-    var enrolledCourses: [Course] = [Course]() {
-        didSet {
-            if oldValue != enrolledCourses {
-                self.preloadCache()
-            }
-        }
+    private var enrolledCourses: [Course] {
+        return self.enrollments.keys.array
     }
     
     private var allEvents: [ScheduleEvent] = []

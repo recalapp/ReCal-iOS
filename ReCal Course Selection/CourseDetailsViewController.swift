@@ -12,7 +12,11 @@ private let singleLabelCellReuseIdentifier = "SingleLabel"
 
 class CourseDetailsViewController: UITableViewController {
 
-    var course: Course? 
+    var course: Course? {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +47,7 @@ class CourseDetailsViewController: UITableViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier(singleLabelCellReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
             if let course = self.course {
                 let label = cell.contentView.viewWithTag(1) as UILabel
+                label.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
                 label.text = "Description goes here\nMore Description"
             }
             return cell

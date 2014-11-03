@@ -15,7 +15,9 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
     
     weak var delegate: EnrolledCoursesTableViewDataSourceDelegate?
     var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
-    var enrolledCourses = [Course]()
+    var enrolledCourses: [Course] {
+        return self.enrollments.keys.array
+    }
     var selectedIndexPath: NSIndexPath?
     
     func courseForIndexPath(indexPath: NSIndexPath) -> Course {
