@@ -149,14 +149,14 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
 
     // MARK: Table View Delegate
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        if indexPath == self.courseDetailsViewController.indexPath {
+        if self.visibleCourses[indexPath.row/2] == self.courseDetailsViewController.course {
             return
         } else {
             let present:()->Void = {
                 let cell = tableView.cellForRowAtIndexPath(indexPath)!
                 
                 self.courseDetailsViewController.modalPresentationStyle = .Popover
-                self.courseDetailsViewController.indexPath = indexPath
+                self.courseDetailsViewController.course = self.visibleCourses[indexPath.row/2]
                 self.courseDetailsViewController.popoverPresentationController?.delegate = self
                 self.presentViewController(self.courseDetailsViewController, animated: true, completion: nil)
                 
@@ -193,9 +193,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     // MARK: Popover Presentation Controller Delegate
     func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
-        if let indexPath = self.courseDetailsViewController.indexPath {
-            self.courseDetailsViewController.indexPath = nil
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        if let course = self.courseDetailsViewController.course {
+            self.courseDetailsViewController.course = nil
         }
     }
     

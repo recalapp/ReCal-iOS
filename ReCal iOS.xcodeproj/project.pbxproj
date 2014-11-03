@@ -35,7 +35,6 @@
 		81A094C61A067DBB00A0C3CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A094C31A067DBB00A0C3CE /* Main.storyboard */; };
 		81A094C81A067DC200A0C3CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094C71A067DC200A0C3CE /* AppDelegate.swift */; };
 		81A094E71A067DFD00A0C3CE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094CE1A067DFD00A0C3CE /* Course.swift */; };
-		81A094E81A067DFD00A0C3CE /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094CF1A067DFD00A0C3CE /* CourseDetailsViewController.swift */; };
 		81A094E91A067DFD00A0C3CE /* CourseSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094D01A067DFD00A0C3CE /* CourseSearchTableViewController.swift */; };
 		81A094EA1A067DFD00A0C3CE /* CourseSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094D11A067DFD00A0C3CE /* CourseSelectionViewController.swift */; };
 		81A094EB1A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094D21A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift */; };
@@ -74,6 +73,7 @@
 		81F9A4041A06B4D100083E55 /* NotSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A4031A06B4D100083E55 /* NotSearchPredicate.swift */; };
 		81F9A4061A06BE3300083E55 /* ClosureSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A4051A06BE3300083E55 /* ClosureSearchPredicate.swift */; };
 		81F9A40C1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A40B1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift */; };
+		81F9A40E1A070B1600083E55 /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A40D1A070B1600083E55 /* CourseDetailsViewController.swift */; };
 		81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */; };
 		81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */; };
 /* End PBXBuildFile section */
@@ -188,7 +188,6 @@
 		81A094C41A067DBB00A0C3CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		81A094C71A067DC200A0C3CE /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81A094CE1A067DFD00A0C3CE /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
-		81A094CF1A067DFD00A0C3CE /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
 		81A094D01A067DFD00A0C3CE /* CourseSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSearchTableViewController.swift; sourceTree = "<group>"; };
 		81A094D11A067DFD00A0C3CE /* CourseSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionViewController.swift; sourceTree = "<group>"; };
 		81A094D21A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayColumnHeaderBackgroundView.swift; sourceTree = "<group>"; };
@@ -227,6 +226,7 @@
 		81F9A4031A06B4D100083E55 /* NotSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotSearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A4051A06BE3300083E55 /* ClosureSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosureSearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A40B1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSearchResultTableViewCell.swift; sourceTree = "<group>"; };
+		81F9A40D1A070B1600083E55 /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
 		81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSidebarViewController.swift; sourceTree = "<group>"; };
 		81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -451,9 +451,9 @@
 		81A095031A067E8800A0C3CE /* Course Search */ = {
 			isa = PBXGroup;
 			children = (
-				81A094CF1A067DFD00A0C3CE /* CourseDetailsViewController.swift */,
 				81A094D01A067DFD00A0C3CE /* CourseSearchTableViewController.swift */,
 				81F9A40B1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift */,
+				81F9A40D1A070B1600083E55 /* CourseDetailsViewController.swift */,
 			);
 			name = "Course Search";
 			sourceTree = "<group>";
@@ -855,9 +855,9 @@
 				81A094EE1A067DFD00A0C3CE /* EnrolledCoursesTableViewDataSource.swift in Sources */,
 				81A094EA1A067DFD00A0C3CE /* CourseSelectionViewController.swift in Sources */,
 				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
-				81A094E81A067DFD00A0C3CE /* CourseDetailsViewController.swift in Sources */,
 				81A094E71A067DFD00A0C3CE /* Course.swift in Sources */,
 				81A094EF1A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift in Sources */,
+				81F9A40E1A070B1600083E55 /* CourseDetailsViewController.swift in Sources */,
 				81A094E91A067DFD00A0C3CE /* CourseSearchTableViewController.swift in Sources */,
 				81F9A40C1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift in Sources */,
 				81A094F91A067DFD00A0C3CE /* SectionTypeEnrollment.swift in Sources */,
