@@ -42,6 +42,10 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         }
     }
     
+    private var contentOffsetBuffer: CGFloat {
+        return self.sidebarWidth / 4
+    }
+    
     /// The scrollview containing the sidebars
     private var sidebarContainerScrollView: UIScrollView!
     
@@ -293,20 +297,20 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
                     self.sidebarState = .LeftSidebarShown
                 } else {
                     // no velocity, tie break using target content offset
-                    if targetContentOffset.memory.x > self.calculatedContentOffset.x {
+                    if targetContentOffset.memory.x > self.calculatedContentOffset.x + self.contentOffsetBuffer {
                         self.sidebarState = .RightSidebarShown
-                    } else if targetContentOffset.memory.x < self.calculatedContentOffset.x {
+                    } else if targetContentOffset.memory.x < self.calculatedContentOffset.x - self.contentOffsetBuffer {
                         self.sidebarState = .LeftSidebarShown
                     }
                 }
             case .LeftSidebarShown:
                 // the only way to go to the right sidebar state from here is if the content offset is already closer to that
                 let unselectedContentOffset = self.contentOffsetForDoubleSidebarState(.Unselected)
-                if scrollView.contentOffset.x > unselectedContentOffset.x {
+                if scrollView.contentOffset.x > unselectedContentOffset.x + self.contentOffsetBuffer {
                     self.sidebarState = .RightSidebarShown
                 } else {
                     // otherwise, if the velocity is positive or if target content offset is greater than the current content offset, then set it to unselected
-                    if velocity.x > 0 || targetContentOffset.memory.x > self.calculatedContentOffset.x {
+                    if velocity.x > 0 || targetContentOffset.memory.x > self.calculatedContentOffset.x + self.contentOffsetBuffer {
                         self.sidebarState = .Unselected
                     }
                 }
@@ -314,11 +318,11 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
                 // reverse the logic of the left state
                 // the only way to go to the right sidebar state from here is if the content offset is already closer to that
                 let unselectedContentOffset = self.contentOffsetForDoubleSidebarState(.Unselected)
-                if scrollView.contentOffset.x < unselectedContentOffset.x {
+                if scrollView.contentOffset.x < unselectedContentOffset.x - self.contentOffsetBuffer {
                     self.sidebarState = .LeftSidebarShown
                 } else {
                     // otherwise, if the velocity is positive or if target content offset is greater than the current content offset, then set it to unselected
-                    if velocity.x < 0 || targetContentOffset.memory.x < self.calculatedContentOffset.x {
+                    if velocity.x < 0 || targetContentOffset.memory.x < self.calculatedContentOffset.x - self.contentOffsetBuffer {
                         self.sidebarState = .Unselected
                     }
                 }
