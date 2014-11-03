@@ -28,6 +28,7 @@
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <gestureRecognizers/>
                 <constraints>
                     <constraint firstItem="f5W-gT-hN8" firstAttribute="leading" secondItem="vBk-bz-hDn" secondAttribute="leadingMargin" id="Xoi-ui-piV"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="f5W-gT-hN8" secondAttribute="bottom" constant="6.5" id="g4L-aE-40T"/>

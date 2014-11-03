@@ -260,6 +260,25 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.enrollments = dataSource.enrollments
         self.reloadScheduleView()
     }
+    func dataSource(dataSource: EnrolledCoursesTableViewDataSource, courseDeletePromptShouldBeShownForCourse course: Course) {
+        assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
+        assert(arrayContainsElement(array: self.enrolledCourses, element: course), "Trying to delete a course that wasn't enrolled")
+        let alertController = UIAlertController(title: "Delete \(course)", message: "Are you sure you want to delete this course?", preferredStyle: .ActionSheet)
+        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+            let index = arrayFindIndexesOfElement(array: self.enrolledCourses, element: course).last
+            assert(index != nil, "Trying to delete a course that wasn't enrolled")
+            self.enrolledCourses.removeAtIndex(index!)
+            self.reloadEnrolledCoursesView()
+            self.reloadScheduleView()
+            self.reloadSearchViewController()
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
+            
+        })
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
     
     // MARK: - Schedule Collection View Data Source Delegate
     func enrollmentDidChangeForScheduleCollectionViewDataSource(dataSource: ScheduleCollectionViewDataSource) {

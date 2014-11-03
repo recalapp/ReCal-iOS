@@ -25,6 +25,13 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
         return self.enrolledCourses[indexPath.row]
     }
     
+    func handleGestureRecognizer(sender: UIGestureRecognizer) {
+        if let course = (sender.view as? EnrolledCourseTableViewCell)?.course {
+            self.delegate?.dataSource(self, courseDeletePromptShouldBeShownForCourse: course)
+            
+        }
+    }
+    
     // MARK: - Table View Data Source
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(courseCellIdentifier, forIndexPath: indexPath) as EnrolledCourseTableViewCell
@@ -65,4 +72,5 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
 
 protocol EnrolledCoursesTableViewDataSourceDelegate: class {
     func enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource)
+    func dataSource(dataSource: EnrolledCoursesTableViewDataSource, courseDeletePromptShouldBeShownForCourse course: Course)
 }
