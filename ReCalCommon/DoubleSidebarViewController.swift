@@ -282,12 +282,6 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     
     // MARK: Scroll View Delegate
     
-    public func scrollViewDidScroll(scrollView: UIScrollView) {
-//        let halfSidebarWidth = self.sidebarWidth/2
-//        self.leftSidebarCoverView.alpha = min(max(scrollView.contentOffset.x / halfSidebarWidth, 0.0), 1.0)
-//        self.rightSidebarCoverView.alpha = min(max((self.sidebarWidth - scrollView.contentOffset.x) / halfSidebarWidth, 0.0), 1.0)
-    }
-    
     public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, var targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if scrollView == self.sidebarContainerScrollView {
             switch self.sidebarState {
@@ -330,6 +324,10 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
                 }
             }
             targetContentOffset.put(self.calculatedContentOffset)
+            if velocity.x == 0 {
+                // must animate manually
+                scrollView.setContentOffset(self.calculatedContentOffset, animated: true)
+            }
         }
     }
 }
