@@ -8,7 +8,7 @@
 
 import CoreData
 
-extension CDSection {
+extension CDSectionMeeting {
     var days: [Day] {
         let daysStringArray = self.daysStorage.componentsSeparatedByString(" ")
         return daysStringArray.reduce([Day](), combine: { (days, dayString) in

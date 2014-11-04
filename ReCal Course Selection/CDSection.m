@@ -8,16 +8,14 @@
 
 #import "CDSection.h"
 #import "CDCourse.h"
+#import "CDSectionMeeting.h"
 
 
 @implementation CDSection
 
-@dynamic startMinute;
-@dynamic startHour;
-@dynamic endHour;
-@dynamic daysStorage;
-@dynamic endMinute;
 @dynamic sectionTypeCode;
+@dynamic name;
 @dynamic course;
+@dynamic meetings;
 
 @end

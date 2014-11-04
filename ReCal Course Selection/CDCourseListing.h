@@ -1,5 +1,5 @@
 //
-//  CDCourseListings.h
+//  CDCourseListing.h
 //  ReCal iOS
 //
 //  Created by Naphat Sanguansin on 11/4/14.
@@ -8,14 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "CDServerObject.h"
 
 @class CDCourse;
 
-@interface CDCourseListings : CDServerObject
+@interface CDCourseListing : NSManagedObject
 
+@property (nonatomic, retain) NSString * courseNumber;
 @property (nonatomic, retain) NSString * departmentCode;
-@property (nonatomic, retain) NSNumber * courseNumber;
 @property (nonatomic, retain) NSNumber * isPrimary;
 @property (nonatomic, retain) CDCourse *course;
 

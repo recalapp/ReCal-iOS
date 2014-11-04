@@ -10,13 +10,29 @@ import UIKit
 import CoreData
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
 
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    private let userDefaultsKeyNotFirstLaunch = "not_first_launch"
+    private let initialCoursesFileName = "courses"
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        CoreDataImporter.defaultImporter.persistentStoreCoordinator = self.persistentStoreCoordinator
+        if true || !NSUserDefaults.standardUserDefaults().boolForKey(userDefaultsKeyNotFirstLaunch) {
+            println("saving")
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: userDefaultsKeyNotFirstLaunch)
+            let filePathOpt = NSBundle.mainBundle().pathForResource(initialCoursesFileName, ofType: "json")
+            if let filePath = filePathOpt {
+                let initialDataOpt = NSData(contentsOfFile: filePath)
+                if let initialData = initialDataOpt {
+                    CoreDataImporter.defaultImporter.writeJSONDataToPendingItemsDirectory(initialData)
+                }
+            }
+        }
+        NSOperationQueue().addOperationWithBlock {
+            CoreDataImporter.defaultImporter.importPendingItems()
+        }
         return true
     }
 

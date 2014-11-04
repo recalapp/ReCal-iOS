@@ -10,16 +10,21 @@
 #import <CoreData/CoreData.h>
 #import "CDServerObject.h"
 
-@class CDCourse;
+@class CDCourse, CDSectionMeeting;
 
 @interface CDSection : CDServerObject
 
-@property (nonatomic, retain) NSNumber * startMinute;
-@property (nonatomic, retain) NSNumber * startHour;
-@property (nonatomic, retain) NSNumber * endHour;
-@property (nonatomic, retain) NSString * daysStorage;
-@property (nonatomic, retain) NSNumber * endMinute;
 @property (nonatomic, retain) NSString * sectionTypeCode;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) CDCourse *course;
+@property (nonatomic, retain) NSSet *meetings;
+@end
+
+@interface CDSection (CoreDataGeneratedAccessors)
+
+- (void)addMeetingsObject:(CDSectionMeeting *)value;
+- (void)removeMeetingsObject:(CDSectionMeeting *)value;
+- (void)addMeetings:(NSSet *)values;
+- (void)removeMeetings:(NSSet *)values;
 
 @end

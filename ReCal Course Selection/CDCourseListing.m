@@ -1,19 +1,19 @@
 //
-//  CDCourseListings.m
+//  CDCourseListing.m
 //  ReCal iOS
 //
 //  Created by Naphat Sanguansin on 11/4/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
-#import "CDCourseListings.h"
+#import "CDCourseListing.h"
 #import "CDCourse.h"
 
 
-@implementation CDCourseListings
+@implementation CDCourseListing
 
-@dynamic departmentCode;
 @dynamic courseNumber;
+@dynamic departmentCode;
 @dynamic isPrimary;
 @dynamic course;
 

@@ -7,17 +7,17 @@
 //
 
 #import "CDCourse.h"
-#import "CDCourseListings.h"
+#import "CDCourseListing.h"
 #import "CDSection.h"
 #import "CDSemester.h"
 
 
 @implementation CDCourse
 
-@dynamic title;
 @dynamic courseDescription;
-@dynamic semester;
-@dynamic sections;
+@dynamic title;
 @dynamic courseListings;
+@dynamic sections;
+@dynamic semester;
 
 @end

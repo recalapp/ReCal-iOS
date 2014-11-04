@@ -10,27 +10,27 @@
 #import <CoreData/CoreData.h>
 #import "CDServerObject.h"
 
-@class CDCourseListings, CDSection, CDSemester;
+@class CDCourseListing, CDSection, CDSemester;
 
 @interface CDCourse : CDServerObject
 
-@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * courseDescription;
-@property (nonatomic, retain) CDSemester *semester;
-@property (nonatomic, retain) NSSet *sections;
+@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSSet *courseListings;
+@property (nonatomic, retain) NSSet *sections;
+@property (nonatomic, retain) CDSemester *semester;
 @end
 
 @interface CDCourse (CoreDataGeneratedAccessors)
+
+- (void)addCourseListingsObject:(CDCourseListing *)value;
+- (void)removeCourseListingsObject:(CDCourseListing *)value;
+- (void)addCourseListings:(NSSet *)values;
+- (void)removeCourseListings:(NSSet *)values;
 
 - (void)addSectionsObject:(CDSection *)value;
 - (void)removeSectionsObject:(CDSection *)value;
 - (void)addSections:(NSSet *)values;
 - (void)removeSections:(NSSet *)values;
-
-- (void)addCourseListingsObject:(CDCourseListings *)value;
-- (void)removeCourseListingsObject:(CDCourseListings *)value;
-- (void)addCourseListings:(NSSet *)values;
-- (void)removeCourseListings:(NSSet *)values;
 
 @end
