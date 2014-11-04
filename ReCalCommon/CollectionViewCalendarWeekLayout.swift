@@ -37,7 +37,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
                 finalWidth = floor(Float(self.collectionView!.frame.size.width - self.timeRowHeaderWidth) / Float(days))
             }
         }
-        return CGFloat(finalWidth)
+        return max(CGFloat(finalWidth), 0) // if collection view width is smaller than time row header width, then we could get a negative value
     }
     private var layoutHeight: CGFloat {
         var finalHeight: Float = 300.0 // TODO default value?
@@ -73,6 +73,9 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
         let contentOffset = self.collectionView!.contentOffset
         let bounds = self.collectionView!.bounds
         let sectionWidth = self.daySectionWidth
+        if sectionWidth == 0 {
+            return []
+        }
         let possibleMinSection = Int((contentOffset.x - leftMargin)/sectionWidth) // ok to cast down, we just want a section that's to the left of the left most visible section
         let sectionDelta = Int(ceil(bounds.width / sectionWidth))
         let possibleMaxSection = possibleMinSection + sectionDelta

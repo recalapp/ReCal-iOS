@@ -26,6 +26,9 @@ private func breakCharacters(string: String) -> String {
 // MARK: - Double Sidebar View Controller
 public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate {
 
+    // MARK: Options
+    private let primaryContentViewInScrollView = true
+    
     // Mark: Variables
     /// The padding between the sidebar and the space outside of the view (so for the left sidebar, it's the left padding)
     private var sidebarOuterPadding: CGFloat {
@@ -130,7 +133,9 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
                 self.leftSidebarCoverView.hidden = false
                 self.rightSidebarCoverView.hidden = false
                 UIView.animateWithDuration(animationSpeed, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
-                    self.primaryContentView.transform = translation
+                    if !self.primaryContentViewInScrollView {
+                        self.primaryContentView.transform = translation
+                    }
                     self.leftSidebarCoverView.alpha = leftCoverHidden ? 0.0 : 1.0
                     self.rightSidebarCoverView.alpha = rightCoverHidden ? 0.0 : 1.0
                     }, completion: { (completed) -> Void in
@@ -168,11 +173,16 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     override public func viewDidLoad() {
         super.viewDidLoad()
         let contentView = UIView()
-        contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.view.addSubview(contentView)
         self.primaryContentView = contentView
-        self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsets(top: 0, left: self.sidebarWidth/2, bottom: 0, right: self.sidebarWidth/2)))
         self.setUpSidebar()
+        if !self.primaryContentViewInScrollView {
+            contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            self.view.addSubview(contentView)
+            self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsets(top: 0, left: self.sidebarWidth/2, bottom: 0, right: self.sidebarWidth/2)))
+        } else {
+            self.sidebarContainerScrollView.addSubview(self.primaryContentView)
+            self.primaryContentView.frame = CGRect(origin: CGPoint(x: self.sidebarWidth, y: 0), size: CGSize(width: self.view.bounds.size.width - self.sidebarWidth, height: self.view.bounds.size.height))
+        }
         self.updateSidebarUserInteraction()
     }
     
