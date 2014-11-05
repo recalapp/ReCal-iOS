@@ -25,7 +25,7 @@ class CourseSelectionContainerViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.courseSelectionViewController.viewContentSize = self.contentView.bounds.size
+        //self.courseSelectionViewController.viewContentSize = self.contentView.bounds.size
     }
 
     override func didReceiveMemoryWarning() {

@@ -27,54 +27,37 @@ private func breakCharacters(string: String) -> String {
 public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate {
 
     // MARK: Options
-    private let primaryContentViewInScrollView = true
     
     // Mark: Variables
     /// The padding between the sidebar and the space outside of the view (so for the left sidebar, it's the left padding)
-    private var sidebarOuterPadding: CGFloat {
-        return 400.0
-    }
+    private let sidebarOuterPadding: CGFloat = 400.0
     
     /// The padding between the sidebars and the primary view
     private let sidebarInnerPadding: CGFloat = 0.0
     
     /// The width of the sidebars
-    public var sidebarWidth: CGFloat {
-        return self.viewContentSize.width / 5.0
-    }
-    
     private var contentOffsetBuffer: CGFloat {
-        return self.sidebarWidth / 4
-    }
-    
-    public var viewContentSize: CGSize! {
-        didSet {
-            self.updateSidebarContainerScrollViewContentSize()
-        }
+        return self.sidebarContainerScrollView.sidebarWidth / 4
     }
     
     /// The scrollview containing the sidebars
-    private var sidebarContainerScrollView: UIScrollView!
-    
-    /// The view containing the entire sidebar views
-    private var leftSidebarView: UIView!
-    private var rightSidebarView: UIView!
+    private var sidebarContainerScrollView: DoubleSidebarScrollView!
     
     /// The background color of the sidebar
     public var leftSidebarBackgroundColor: UIColor? {
         get {
-            return self.leftSidebarView.backgroundColor
+            return self.sidebarContainerScrollView.leftSidebarView.backgroundColor
         }
         set {
-            self.leftSidebarView.backgroundColor = newValue
+            self.sidebarContainerScrollView.leftSidebarView.backgroundColor = newValue
         }
     }
     public var rightSidebarBackgroundColor: UIColor? {
         get {
-            return self.rightSidebarView.backgroundColor
+            return self.sidebarContainerScrollView.rightSidebarView.backgroundColor
         }
         set {
-            self.rightSidebarView.backgroundColor = newValue
+            self.sidebarContainerScrollView.rightSidebarView.backgroundColor = newValue
         }
     }
     
@@ -107,7 +90,9 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     private var rightSidebarCoverLabel: UILabel!
     
     /// The logical primary content view exposed to subclass. Add subviews here
-    private(set) public var primaryContentView: UIView!
+    public var primaryContentView: UIView {
+        return self.sidebarContainerScrollView.primaryView
+    }
     
     /// The logical sidebar content view exposed to subclass. Add subviews here
     private(set) public var leftSidebarContentView: UIView!
@@ -117,29 +102,22 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     private var sidebarState: DoubleSidebarState = .Unselected {
         didSet {
             if oldValue != sidebarState {
-                var translation: CGAffineTransform
                 var leftCoverHidden: Bool
                 var rightCoverHidden: Bool
                 switch sidebarState {
                 case .Unselected:
-                    translation = CGAffineTransformIdentity
                     leftCoverHidden = false
                     rightCoverHidden = false
                 case .LeftSidebarShown:
-                    translation = CGAffineTransformMakeTranslation(self.sidebarWidth/2, 0)
                     leftCoverHidden = true
                     rightCoverHidden = false
                 case .RightSidebarShown:
-                    translation = CGAffineTransformMakeTranslation(-self.sidebarWidth/2, 0)
                     leftCoverHidden = false
                     rightCoverHidden = true
                 }
                 self.leftSidebarCoverView.hidden = false
                 self.rightSidebarCoverView.hidden = false
                 UIView.animateWithDuration(animationSpeed, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
-                    if !self.primaryContentViewInScrollView {
-                        self.primaryContentView.transform = translation
-                    }
                     self.leftSidebarCoverView.alpha = leftCoverHidden ? 0.0 : 1.0
                     self.rightSidebarCoverView.alpha = rightCoverHidden ? 0.0 : 1.0
                     }, completion: { (completed) -> Void in
@@ -159,74 +137,44 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     }
     
     // MARK: Methods
-    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        self.viewContentSize = size
-    }
-    
-    private func updateSidebarContainerScrollViewContentSize() {
-        if self.sidebarContainerScrollView == nil {
-            return
-        }
-        let screenSize = self.viewContentSize
-        self.sidebarContainerScrollView.contentSize = CGSize(width: self.sidebarWidth + screenSize.width, height: screenSize.height)
-        
-        // adding sidebar
-        self.leftSidebarView.frame = CGRect(x: -self.sidebarOuterPadding, y: 0, width: self.sidebarWidth + self.sidebarInnerPadding + self.sidebarOuterPadding, height: self.sidebarContainerScrollView.contentSize.height)
-        
-        self.rightSidebarView.frame = CGRect(x: self.sidebarContainerScrollView.contentSize.width - (self.sidebarWidth + self.sidebarInnerPadding), y: 0, width: self.sidebarWidth + self.sidebarInnerPadding + self.sidebarOuterPadding, height: self.sidebarContainerScrollView.contentSize.height)
-        
-        self.primaryContentView.frame = CGRect(origin: CGPoint(x: self.sidebarWidth, y: 0), size: CGSize(width: screenSize.width - self.sidebarWidth, height: screenSize.height))
-        
-        self.sidebarContainerScrollView.setContentOffset(self.calculatedContentOffset, animated: false)
-    }
     
     /// Calculate the content offset for the given state
     private func contentOffsetForDoubleSidebarState(state: DoubleSidebarState) -> CGPoint {
         var x: CGFloat
         switch state {
         case .Unselected:
-            x = self.sidebarWidth/2.0
+            x = self.sidebarContainerScrollView.sidebarWidth/2.0
         case .LeftSidebarShown:
             x = 0
         case .RightSidebarShown:
-            x = self.sidebarWidth
+            x = self.sidebarContainerScrollView.sidebarWidth
         }
         return CGPoint(x: x, y: 0)
     }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.viewContentSize = self.viewContentSize ?? self.view.bounds.size
-        let contentView = UIView()
-        self.primaryContentView = contentView
-        self.setUpSidebar()
-        if !self.primaryContentViewInScrollView {
-            contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
-            self.view.addSubview(contentView)
-            self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsets(top: 0, left: self.sidebarWidth/2, bottom: 0, right: self.sidebarWidth/2)))
-        }
+        self.setUpScrollView()
+        self.setUpSidebars()
+        self.sidebarContainerScrollView.setContentOffset(self.calculatedContentOffset, animated: false)
         self.updateSidebarUserInteraction()
     }
     
-    private func setUpSidebar() {
-        // sidebar view
-        self.leftSidebarView = UIView()
-        // TODO autoresizing mask?
-        self.rightSidebarView = UIView()
-        
+    private func setUpSidebars() {
+        let leftSidebarView = self.sidebarContainerScrollView.leftSidebarView
+        let rightSidebarView = self.sidebarContainerScrollView.rightSidebarView
         // sidebar content view
         self.leftSidebarContentView = UIView()
         self.leftSidebarContentView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.rightSidebarContentView = UIView()
         self.rightSidebarContentView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.leftSidebarView.addSubview(self.leftSidebarContentView)
-        self.rightSidebarView.addSubview(self.rightSidebarContentView)
+        leftSidebarView.addSubview(self.leftSidebarContentView)
+        rightSidebarView.addSubview(self.rightSidebarContentView)
         
         // constraints
-        self.leftSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.leftSidebarContentView, inParentView: self.leftSidebarView, withInsets: UIEdgeInsets(top: 0, left: self.sidebarOuterPadding, bottom: 0, right: self.sidebarInnerPadding)))
+        leftSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.leftSidebarContentView, inParentView: leftSidebarView, withInsets: UIEdgeInsetsZero))
         
-        self.rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarContentView, inParentView: self.rightSidebarView, withInsets: UIEdgeInsets(top: 0, left: self.sidebarInnerPadding, bottom: 0, right: self.sidebarOuterPadding)))
+        rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarContentView, inParentView: rightSidebarView, withInsets: UIEdgeInsetsZero))
         
         // add the covers
         let leftBlurEffect = UIBlurEffect(style: sidebarCoverBlurEffectStyle)
@@ -234,13 +182,13 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.leftSidebarCoverView = UIVisualEffectView(effect: leftBlurEffect)
         self.leftSidebarCoverView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.leftSidebarCoverView.userInteractionEnabled = false
-        self.leftSidebarView.addSubview(self.leftSidebarCoverView)
-        self.leftSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.leftSidebarCoverView, inParentView: self.leftSidebarView, withInsets: UIEdgeInsetsZero))
+        leftSidebarView.addSubview(self.leftSidebarCoverView)
+        leftSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.leftSidebarCoverView, inParentView: leftSidebarView, withInsets: UIEdgeInsets(top: 0, left: -self.sidebarOuterPadding, bottom: 0, right: -self.sidebarInnerPadding)))
         self.rightSidebarCoverView = UIVisualEffectView(effect: rightBlurEffect)
         self.rightSidebarCoverView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.rightSidebarCoverView.userInteractionEnabled = false
-        self.rightSidebarView.addSubview(self.rightSidebarCoverView)
-        self.rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarCoverView, inParentView: self.rightSidebarView, withInsets: UIEdgeInsetsZero))
+        rightSidebarView.addSubview(self.rightSidebarCoverView)
+        rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarCoverView, inParentView: rightSidebarView, withInsets: UIEdgeInsets(top: 0, left: -self.sidebarInnerPadding, bottom: 0, right: -self.sidebarOuterPadding)))
         
         // add cover labels
         let addCoverLabelForView: (UILabel, UIVisualEffectView, Bool)->Void = { (label, coverView, isLeft) in
@@ -255,7 +203,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
             leftVibrancyEffectView.contentView.addSubview(label)
             leftVibrancyEffectView.contentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(label, inParentView: leftVibrancyEffectView.contentView, withInsets: UIEdgeInsetsZero))
             coverView.contentView.addSubview(leftVibrancyEffectView)
-            coverView.contentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(leftVibrancyEffectView, inParentView: coverView.contentView, withInsets: UIEdgeInsets(top: 0, left: isLeft ? self.sidebarOuterPadding + self.sidebarWidth/2 : 0, bottom: 0, right: isLeft ? 0 : self.sidebarOuterPadding + self.sidebarWidth/2)))
+            coverView.contentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(leftVibrancyEffectView, inParentView: coverView.contentView, withInsets: UIEdgeInsets(top: 0, left: isLeft ? self.sidebarOuterPadding + self.sidebarContainerScrollView.sidebarWidth / 2 : 0, bottom: 0, right: isLeft ? 0 : self.sidebarOuterPadding + self.sidebarContainerScrollView.sidebarWidth / 2)))
         }
         self.leftSidebarCoverLabel = UILabel()
         self.leftSidebarCoverLabel.text = breakCharacters(self.leftSidebarCoverText)
@@ -266,17 +214,16 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         
         // tap gesture recognizers
         self.leftSidebarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleSidebarTap:")
-        self.leftSidebarView.addGestureRecognizer(self.leftSidebarTapGestureRecognizer)
+        leftSidebarView.addGestureRecognizer(self.leftSidebarTapGestureRecognizer)
         self.rightSidebarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleSidebarTap:")
-        self.rightSidebarView.addGestureRecognizer(self.rightSidebarTapGestureRecognizer)
+        rightSidebarView.addGestureRecognizer(self.rightSidebarTapGestureRecognizer)
         
-        self.setUpOverlayScrollView()
     }
     
     /// Set up the scroll view for sidebar
-    private func setUpOverlayScrollView() {
+    private func setUpScrollView() {
         // creating and setting constraints
-        let scrollView = OverlayScrollView()
+        let scrollView = DoubleSidebarScrollView()
         scrollView.delegate = self
         scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
         scrollView.showsHorizontalScrollIndicator = false
@@ -285,26 +232,15 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.view.addSubview(scrollView)
         self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(scrollView, inParentView: self.view, withInsets: UIEdgeInsetsZero))
         self.view.addGestureRecognizer(scrollView.panGestureRecognizer)
-        
-        // adding sidebar
-        scrollView.addSubview(self.leftSidebarView)
-        
-        scrollView.addSubview(self.rightSidebarView)
-        
-        if self.primaryContentViewInScrollView {
-            scrollView.addSubview(self.primaryContentView)
-        }
-        self.updateSidebarContainerScrollViewContentSize()
-        println(self.view.frame.size)
     }
     
     public func handleSidebarTap(sender: UITapGestureRecognizer) {
-        if sender.view == self.leftSidebarView {
+        if sender.view == self.sidebarContainerScrollView.leftSidebarView {
             if self.sidebarState != .LeftSidebarShown {
                 self.sidebarState = .LeftSidebarShown
                 self.sidebarContainerScrollView.setContentOffset(self.calculatedContentOffset, animated: true)
             }
-        } else if sender.view == self.rightSidebarView {
+        } else if sender.view == self.sidebarContainerScrollView.rightSidebarView {
             if self.sidebarState != .RightSidebarShown {
                 self.sidebarState = .RightSidebarShown
                 self.sidebarContainerScrollView.setContentOffset(self.calculatedContentOffset, animated: true)

@@ -17,12 +17,6 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     // MARK: - Variables
     private let enrolledCoursesTableViewDataSource = EnrolledCoursesTableViewDataSource()
     private let scheduleCollectionViewDataSource = ScheduleCollectionViewDataSource()
-    /// The width of the sidebars
-    override var sidebarWidth: CGFloat {
-        get {
-            return self.viewContentSize.width / 3.5
-        }
-    }
     
     // MARK: Models
     private var semesterTermCode = "1152"
@@ -105,6 +99,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func initializeEnrolledCoursesView() {
+        return
         self.rightSidebarBackgroundColor = UIColor.lightBlackGrayColor()
         
         let enrolledLabel: UILabel = {
