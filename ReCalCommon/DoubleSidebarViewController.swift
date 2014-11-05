@@ -32,7 +32,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     // Mark: Variables
     /// The padding between the sidebar and the space outside of the view (so for the left sidebar, it's the left padding)
     private var sidebarOuterPadding: CGFloat {
-        return self.view.bounds.size.width
+        return 400.0
     }
     
     /// The padding between the sidebars and the primary view
@@ -40,13 +40,17 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     
     /// The width of the sidebars
     public var sidebarWidth: CGFloat {
-        get {
-            return self.view.bounds.size.width / 5.0
-        }
+        return self.viewContentSize.width / 5.0
     }
     
     private var contentOffsetBuffer: CGFloat {
         return self.sidebarWidth / 4
+    }
+    
+    public var viewContentSize: CGSize! {
+        didSet {
+            self.updateSidebarContainerScrollViewContentSize()
+        }
     }
     
     /// The scrollview containing the sidebars
@@ -155,6 +159,27 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     }
     
     // MARK: Methods
+    public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        self.viewContentSize = size
+    }
+    
+    private func updateSidebarContainerScrollViewContentSize() {
+        if self.sidebarContainerScrollView == nil {
+            return
+        }
+        let screenSize = self.viewContentSize
+        self.sidebarContainerScrollView.contentSize = CGSize(width: self.sidebarWidth + screenSize.width, height: screenSize.height)
+        
+        // adding sidebar
+        self.leftSidebarView.frame = CGRect(x: -self.sidebarOuterPadding, y: 0, width: self.sidebarWidth + self.sidebarInnerPadding + self.sidebarOuterPadding, height: self.sidebarContainerScrollView.contentSize.height)
+        
+        self.rightSidebarView.frame = CGRect(x: self.sidebarContainerScrollView.contentSize.width - (self.sidebarWidth + self.sidebarInnerPadding), y: 0, width: self.sidebarWidth + self.sidebarInnerPadding + self.sidebarOuterPadding, height: self.sidebarContainerScrollView.contentSize.height)
+        
+        self.primaryContentView.frame = CGRect(origin: CGPoint(x: self.sidebarWidth, y: 0), size: CGSize(width: screenSize.width - self.sidebarWidth, height: screenSize.height))
+        
+        self.sidebarContainerScrollView.setContentOffset(self.calculatedContentOffset, animated: false)
+    }
     
     /// Calculate the content offset for the given state
     private func contentOffsetForDoubleSidebarState(state: DoubleSidebarState) -> CGPoint {
@@ -172,6 +197,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        self.viewContentSize = self.viewContentSize ?? self.view.bounds.size
         let contentView = UIView()
         self.primaryContentView = contentView
         self.setUpSidebar()
@@ -179,9 +205,6 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
             contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
             self.view.addSubview(contentView)
             self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsets(top: 0, left: self.sidebarWidth/2, bottom: 0, right: self.sidebarWidth/2)))
-        } else {
-            self.sidebarContainerScrollView.addSubview(self.primaryContentView)
-            self.primaryContentView.frame = CGRect(origin: CGPoint(x: self.sidebarWidth, y: 0), size: CGSize(width: self.view.bounds.size.width - self.sidebarWidth, height: self.view.bounds.size.height))
         }
         self.updateSidebarUserInteraction()
     }
@@ -261,17 +284,18 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.sidebarContainerScrollView = scrollView
         self.view.addSubview(scrollView)
         self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(scrollView, inParentView: self.view, withInsets: UIEdgeInsetsZero))
-        scrollView.contentSize = CGSize(width: self.sidebarWidth + self.view.bounds.size.width, height: self.view.bounds.size.height)
         self.view.addGestureRecognizer(scrollView.panGestureRecognizer)
         
         // adding sidebar
         scrollView.addSubview(self.leftSidebarView)
-        self.leftSidebarView.frame = CGRect(x: -self.sidebarOuterPadding, y: 0, width: self.sidebarWidth + self.sidebarInnerPadding + self.sidebarOuterPadding, height: scrollView.contentSize.height)
         
         scrollView.addSubview(self.rightSidebarView)
-        self.rightSidebarView.frame = CGRect(x: scrollView.contentSize.width - (self.sidebarWidth + self.sidebarInnerPadding), y: 0, width: self.sidebarWidth + self.sidebarInnerPadding + self.sidebarOuterPadding, height: scrollView.contentSize.height)
         
-        scrollView.setContentOffset(self.calculatedContentOffset, animated: false)
+        if self.primaryContentViewInScrollView {
+            scrollView.addSubview(self.primaryContentView)
+        }
+        self.updateSidebarContainerScrollViewContentSize()
+        println(self.view.frame.size)
     }
     
     public func handleSidebarTap(sender: UITapGestureRecognizer) {

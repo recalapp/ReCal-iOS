@@ -28,6 +28,7 @@
 		8152BE6F1A096A4900D1BF70 /* CDCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 8152BE6E1A096A4900D1BF70 /* CDCourse.m */; };
 		8152BE721A096A5900D1BF70 /* CDCourseListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8152BE711A096A5900D1BF70 /* CDCourseListing.m */; };
 		815E81B51A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E81B41A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift */; };
+		815E81BB1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E81BA1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift */; };
 		816CBB471A09211D002C610A /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB461A09211D002C610A /* CDSemester.m */; };
 		816CBB501A09211E002C610A /* CDServerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB4F1A09211E002C610A /* CDServerObject.m */; };
 		816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB511A092144002C610A /* CoreDataExtensions.swift */; };
@@ -189,6 +190,7 @@
 		8152BE701A096A5900D1BF70 /* CDCourseListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourseListing.h; sourceTree = "<group>"; };
 		8152BE711A096A5900D1BF70 /* CDCourseListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourseListing.m; sourceTree = "<group>"; };
 		815E81B41A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataToCourseStructConverter.swift; sourceTree = "<group>"; };
+		815E81BA1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionContainerViewController.swift; sourceTree = "<group>"; };
 		816CBB1D1A091D16002C610A /* ReCal Course Selection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReCal Course Selection-Bridging-Header.h"; sourceTree = "<group>"; };
 		816CBB451A09211D002C610A /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
 		816CBB461A09211D002C610A /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
@@ -451,7 +453,8 @@
 				81A095021A067E7E00A0C3CE /* Models */,
 				81A095031A067E8800A0C3CE /* Course Search */,
 				81A094D11A067DFD00A0C3CE /* CourseSelectionViewController.swift */,
-				81A095051A067EBB00A0C3CE /* Schedule */,
+				815E81BA1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift */,
+				81A095051A067EBB00A0C3CE /* Schedule Calendar */,
 				81A095061A067EC400A0C3CE /* Enrolled Courses */,
 				81A094DB1A067DFD00A0C3CE /* Images.xcassets */,
 				81A094DC1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld */,
@@ -529,13 +532,13 @@
 			name = "Calendar Components";
 			sourceTree = "<group>";
 		};
-		81A095051A067EBB00A0C3CE /* Schedule */ = {
+		81A095051A067EBB00A0C3CE /* Schedule Calendar */ = {
 			isa = PBXGroup;
 			children = (
 				81A095041A067E9600A0C3CE /* Calendar Components */,
 				81A094DE1A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift */,
 			);
-			name = Schedule;
+			name = "Schedule Calendar";
 			sourceTree = "<group>";
 		};
 		81A095061A067EC400A0C3CE /* Enrolled Courses */ = {
@@ -918,6 +921,7 @@
 				81A094EA1A067DFD00A0C3CE /* CourseSelectionViewController.swift in Sources */,
 				816CBB561A092909002C610A /* CoreDataImporter.swift in Sources */,
 				81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */,
+				815E81BB1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift in Sources */,
 				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
 				816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */,
 				81A094E71A067DFD00A0C3CE /* Course.swift in Sources */,

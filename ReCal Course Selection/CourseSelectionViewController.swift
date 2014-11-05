@@ -20,7 +20,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     /// The width of the sidebars
     override var sidebarWidth: CGFloat {
         get {
-            return self.view.bounds.size.width / 3.5
+            return self.viewContentSize.width / 3.5
         }
     }
     
