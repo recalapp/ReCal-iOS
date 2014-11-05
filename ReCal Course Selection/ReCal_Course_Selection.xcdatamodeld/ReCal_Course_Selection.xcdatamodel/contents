@@ -15,7 +15,7 @@
     </entity>
     <entity name="CDSection" representedClassName="CDSection" parentEntity="CDServerObject" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="sectionTypeCode" attributeType="String" syncable="YES"/>
+        <attribute name="sectionTypeCode" attributeType="String" regularExpressionString="(lab|cla|dri|lec|pre|sem|stu|ear|fil)" syncable="YES"/>
         <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="sections" inverseEntity="CDCourse" syncable="YES"/>
         <relationship name="meetings" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSectionMeeting" inverseName="section" inverseEntity="CDSectionMeeting" syncable="YES"/>
     </entity>

@@ -8,6 +8,32 @@
 
 import CoreData
 
+extension CDCourse {
+    var primaryListing: CDCourseListing {
+        return self.courseListings.filteredSetUsingPredicate(NSPredicate(block: { (item, _) -> Bool in
+            if let courseListing = item as? CDCourseListing {
+                return courseListing.isPrimary.boolValue
+            }
+            return false
+        })).anyObject()! as CDCourseListing
+    }
+    var displayText: String {
+        return self.primaryListing.displayText
+    }
+}
+
+extension CDCourseListing {
+    var displayText: String {
+        return "\(self.departmentCode) \(self.courseNumber)"
+    }
+}
+
+extension CDSection {
+    var sectionType: SectionType {
+        return SectionType(rawValue: self.sectionTypeCode)!
+    }
+}
+
 extension CDSectionMeeting {
     var days: [Day] {
         let daysStringArray = self.daysStorage.componentsSeparatedByString(" ")
@@ -17,5 +43,17 @@ extension CDSectionMeeting {
             }
             return days
         }).sorted { $0.rawValue < $1.rawValue }
+    }
+    var startTime: NSDateComponents {
+        var component = NSDateComponents()
+        component.hour = self.startHour.integerValue
+        component.minute = self.startMinute.integerValue
+        return component
+    }
+    var endTime: NSDateComponents {
+        var component = NSDateComponents()
+        component.hour = self.endHour.integerValue
+        component.minute = self.endMinute.integerValue
+        return component
     }
 }

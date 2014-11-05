@@ -33,8 +33,6 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         return self.enrollments.keys.array
     }
     
-    private var allEvents: [ScheduleEvent] = []
-    
     lazy private var calendar: NSCalendar = {
         let calendarOpt = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
         assert(calendarOpt != nil, "Calendar cannot be nil")
@@ -50,6 +48,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     private var eventsForDayCache = Dictionary<Day, [ScheduleEvent]>()
     
     // MARK: methods
+    
     /// Register the collection view and layout with the appropriate view classes
     func registerReusableViewsWithCollectionView(collectionView: UICollectionView, forLayout layout: UICollectionViewLayout) {
         collectionView.registerNib(UINib(nibName: "EventCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: eventCellIdentifier)
@@ -68,7 +67,6 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     /// Preloads the values for events for day cache and all events array. Must be called everytime courses or enrollments info changes
     private func preloadCache() {
-        self.allEvents = []
         eventsForDayCache[.Monday] = []
         eventsForDayCache[.Tuesday] = []
         eventsForDayCache[.Wednesday] = []
@@ -78,25 +76,26 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
             let courseEnrollments = self.enrollments[course]!
             for section in course.sections {
                 let enrollment = courseEnrollments[section.type]!
-                var eventOpt: ScheduleEvent?
+                // if section belongs to an unenrolled type, then we add it automatically. otherwise, it must be the enrolled section
+                var shouldAddSection: Bool
+                var sectionIsEnrolled: Bool
                 switch enrollment {
                 case .Unenrolled:
-                    eventOpt = ScheduleEvent(course: course, section: section, enrolled: false)
+                    shouldAddSection = true
+                    sectionIsEnrolled = false
                 case .Enrolled(let enrolledSection):
-                    if enrolledSection == section {
-                        eventOpt = ScheduleEvent(course: course, section: section, enrolled: true)
-                    }
+                    shouldAddSection = enrolledSection == section
+                    sectionIsEnrolled = shouldAddSection
                 }
-                if let event = eventOpt {
-                    for day in event.section.days {
-                        if var eventsInDays = self.eventsForDayCache[day] {
-                            eventsInDays.append(event)
-                            self.eventsForDayCache[day] = eventsInDays
+                if shouldAddSection {
+                    for meeting in section.sectionMeetings {
+                        for day in meeting.days {
+                            if var eventsInDays = self.eventsForDayCache[day] {
+                                eventsInDays.append(ScheduleEvent(course: course, section: section, sectionMeeting: meeting, enrolled: sectionIsEnrolled))
+                                self.eventsForDayCache[day] = eventsInDays
+                            }
                         }
                     }
-                    self.allEvents.append(event)
-                } else {
-                    self.allEvents.append(ScheduleEvent(course: course, section: section, enrolled: false))
                 }
             }
         }
@@ -185,12 +184,12 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     // MARK: - Calendar Week View Layout Data Source
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, endDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
         let event = self.eventForIndexPath(indexPath)
-        return self.calendar.dateFromComponents(event.section.endTime)
+        return self.calendar.dateFromComponents(event.sectionMeeting.endTime)
     }
     
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, startDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
         let event = self.eventForIndexPath(indexPath)
-        return self.calendar.dateFromComponents(event.section.startTime)
+        return self.calendar.dateFromComponents(event.sectionMeeting.startTime)
     }
     
     /// Return the width for a day
@@ -232,6 +231,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
 struct ScheduleEvent {
     let course: Course
     let section: Section
+    let sectionMeeting: SectionMeeting
     let enrolled: Bool
 }
 

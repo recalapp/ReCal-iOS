@@ -17,6 +17,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     weak var delegate: CourseSearchTableViewControllerDelegate?
     
+    var semesterTermCode: String = ""
+    
     var enrolledCourses: [Course] {
         set {
             self.enrolledCoursesSet = Set<Course>(initialItems: newValue)
@@ -26,12 +28,11 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         }
     }
     private var enrolledCoursesSet: Set<Course> = Set<Course>()
-    var allCourses: [Course] = []
     private var filteredCourses: [Course] = []
     
     private var visibleCourses: [Course] {
-        if self.searchController == nil || self.searchController.searchBar.text == "" {
-            return self.allCourses // TODO display recommended courses instead?
+        if self.searchController != nil && self.searchController.searchBar.text == "" {
+            return self.enrolledCourses
         }
         return self.filteredCourses
     }
@@ -43,26 +44,28 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     private var visibleUnenrolledCourses: [Course] {
         return self.visibleCourses.filter { !self.enrolledCoursesSet.contains($0) }
     }
-
-    lazy private var courseSearchPredicate: SearchPredicate<Course, String> = {
-        // TODO add more predicates
-        let titlePredicate = ClosureSearchPredicate<Course, String> { (course, query) in
-            course.title.contains(query, caseSensitive: false)
-        }
-        let departmentCodePredicate = ClosureSearchPredicate<Course, String> { (course, query) in
-            course.departmentCode.contains(query, caseSensitive: false)
-        }
-        let courseNumberPredicate = ClosureSearchPredicate<Course, String> { (course, query) in
-            course.courseNumber.description.contains(query, caseSensitive: false)
-        }
-        return OrSearchPredicate(childPredicates: [titlePredicate, departmentCodePredicate, courseNumberPredicate])
-    }()
     
     lazy private var courseDetailsViewController: CourseDetailsViewController = {
         return self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
     }()
     
     private var searchController: UISearchController!
+    
+    lazy private var searchOperationQueue: NSOperationQueue = {
+        let queue = NSOperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+    
+    lazy private var searchManagedObjectContext: NSManagedObjectContext = {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        return managedObjectContext
+    }()
+    
+    lazy private var coreDataConverter: CoreDataToCourseStructConverter = CoreDataToCourseStructConverter()
+    
+    private var notificationObservers: [NSObjectProtocol] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,11 +82,21 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             return searchController
         }()
         
+        let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+            self.searchManagedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+        }
+        self.notificationObservers.append(observer)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -104,11 +117,13 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         }
     }
 
-    private func indexPathForCourse(course: Course) -> NSIndexPath {
+    private func indexPathForCourse(course: Course) -> NSIndexPath? {
         let toSearch = self.enrolledCoursesSet.contains(course) ? self.visibleEnrolledCourses : self.visibleUnenrolledCourses
         let indexes = arrayFindIndexesOfElement(array: toSearch, element: course)
-        assert(indexes.count != 0, "Trying to search for a course that is not visible")
-        assert(indexes.count == 1, "Duplicate courses")
+        if indexes.count == 0 {
+            return nil
+        }
+        assert(indexes.count <= 1, "Duplicate courses")
         let section = self.enrolledCoursesSet.contains(course) ? 1 : 0
         return NSIndexPath(forRow: indexes.last! * 2  + 1, inSection: section)
     }
@@ -250,11 +265,16 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         assert(self.enrolledCoursesSet.contains(course), "Deselecting an unselected cell")
         self.enrolledCoursesSet.remove(course)
         self.delegate?.enrollmentsDidChangeForCourseSearchTableViewController(self)
-        let newIndexPath = self.indexPathForCourse(course)
-        tableView.beginUpdates()
-        tableView.moveRowAtIndexPath(NSIndexPath(forRow: indexPath.row - 1, inSection: indexPath.section), toIndexPath: NSIndexPath(forRow: newIndexPath.row - 1, inSection: newIndexPath.section))
-        tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
-        tableView.endUpdates()
+        if let newIndexPath = self.indexPathForCourse(course) {
+            tableView.beginUpdates()
+            tableView.moveRowAtIndexPath(NSIndexPath(forRow: indexPath.row - 1, inSection: indexPath.section), toIndexPath: NSIndexPath(forRow: newIndexPath.row - 1, inSection: newIndexPath.section))
+            tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+            tableView.endUpdates()
+        } else {
+            tableView.beginUpdates()
+            tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath.row - 1, inSection: indexPath.section), indexPath], withRowAnimation: .Automatic)
+            tableView.endUpdates()
+        }
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let course = self.courseAtIndexPath(indexPath)
@@ -262,18 +282,30 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         self.enrolledCoursesSet.add(course)
         self.delegate?.enrollmentsDidChangeForCourseSearchTableViewController(self)
         let newIndexPath = self.indexPathForCourse(course)
-        tableView.beginUpdates()
-        tableView.moveRowAtIndexPath(NSIndexPath(forRow: indexPath.row - 1, inSection: indexPath.section), toIndexPath: NSIndexPath(forRow: newIndexPath.row - 1, inSection: newIndexPath.section))
-        tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
-        tableView.endUpdates()
+        if let newIndexPath = self.indexPathForCourse(course) {
+            tableView.beginUpdates()
+            tableView.moveRowAtIndexPath(NSIndexPath(forRow: indexPath.row - 1, inSection: indexPath.section), toIndexPath: NSIndexPath(forRow: newIndexPath.row - 1, inSection: newIndexPath.section))
+            tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+            tableView.endUpdates()
+        } else {
+            tableView.beginUpdates()
+            tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath.row - 1, inSection: indexPath.section), indexPath], withRowAnimation: .Automatic)
+            tableView.endUpdates()
+        }
     }
     
     // MARK: - Search Results Updating
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if searchController == self.searchController {
             let query = searchController.searchBar.text
-            self.filteredCourses = self.allCourses.filter { self.courseSearchPredicate.evaluate($0, withQuery: query) }
-            self.tableView.reloadData()
+            let searchOperation = CourseSearchOperation(searchQuery: query, managedObjectContext: self.searchManagedObjectContext, successHandler: { (courses: [CDCourse]) in
+                self.filteredCourses = courses.map { self.coreDataConverter.courseStructFromCoreData($0) }
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.tableView.reloadData()
+                })
+            })
+            self.searchOperationQueue.cancelAllOperations()
+            self.searchOperationQueue.addOperation(searchOperation)
         }
     }
     

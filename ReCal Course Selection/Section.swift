@@ -9,23 +9,36 @@
 import Foundation
 import ReCalCommon
 
-private let hashPrimeMultiplier = 13//65599
-struct Section: Equatable, Printable, Hashable {
+private let hashPrimeMultiplier = 65599
+struct Section: Printable, Hashable {
     
     let type: SectionType
-    let sectionNumber: Int
-    let startTime: NSDateComponents
-    let endTime: NSDateComponents
-    let days: [Day]
+    let sectionName: String
+    let sectionMeetings: [SectionMeeting]
+    
     var displayText: String {
-        return self.type.sectionPrefix + String(format: "%.2d", self.sectionNumber)
+        return self.sectionName
     }
     var description: String {
         return self.displayText
     }
     var hashValue: Int {
         var hash = self.type.hashValue
-        hash = hash &* hashPrimeMultiplier &+ self.sectionNumber.hashValue
+        hash = hash &* hashPrimeMultiplier &+ self.sectionName.hashValue
+        for meeting in self.sectionMeetings {
+            hash = hash &* hashPrimeMultiplier &+ meeting.hashValue
+        }
+        return hash
+    }
+}
+
+struct SectionMeeting: Hashable {
+    let startTime: NSDateComponents
+    let endTime: NSDateComponents
+    let location: String
+    let days: [Day]
+    var hashValue: Int {
+        var hash = self.location.hashValue
         hash = hash &* hashPrimeMultiplier &+ self.startTime.hashValue
         hash = hash &* hashPrimeMultiplier &+ self.endTime.hashValue
         for day in self.days {
@@ -35,13 +48,7 @@ struct Section: Equatable, Printable, Hashable {
     }
 }
 
-func == (lhs: Section, rhs: Section) -> Bool {
-    if lhs.type != rhs.type {
-        return false
-    }
-    if lhs.sectionNumber != rhs.sectionNumber {
-        return false
-    }
+func == (lhs: SectionMeeting, rhs: SectionMeeting) -> Bool {
     if !lhs.startTime.isEqual(rhs.startTime) {
         return false
     }
@@ -54,9 +61,21 @@ func == (lhs: Section, rhs: Section) -> Bool {
     return true
 }
 
+func == (lhs: Section, rhs: Section) -> Bool {
+    if lhs.type != rhs.type {
+        return false
+    }
+    if lhs.sectionName != rhs.sectionName {
+        return false
+    }
+    if !arraysContainSameElements(lhs.sectionMeetings, rhs.sectionMeetings) {
+        return false
+    }
+    return true
+}
+
 enum SectionType: String {
-    case Precept = "pre"
-    case Lecture = "lec"
+    case Precept = "pre", Lecture = "lec", Drill = "dri", Class = "cla", Seminar = "sem", Studio = "stu", Film = "fil", Ear = "ear", Lab = "lab"
     
     var displayText: String {
         switch self {
@@ -64,15 +83,20 @@ enum SectionType: String {
             return "Precept"
         case .Lecture:
             return "Lecture"
-        }
-    }
-    
-    var sectionPrefix: String {
-        switch self {
-        case .Precept:
-            return "P"
-        case .Lecture:
-            return "L"
+        case .Drill:
+            return "Drill"
+        case .Class:
+            return "Class"
+        case .Seminar:
+            return "Seminar"
+        case .Studio:
+            return "Studio"
+        case .Film:
+            return "Film"
+        case .Ear:
+            return "Ear Training"
+        case .Lab:
+            return "Lab"
         }
     }
 }

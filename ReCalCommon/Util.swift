@@ -81,7 +81,7 @@ public func arrayContainsElement<T: Equatable>(#array: [T], #element: T) -> Bool
 }
 
 public func arraysContainSameElements<T: Equatable>(array1: [T], array2: [T]) -> Bool {
-    return array1.reduce(true, combine: { (old, value) in
+    return array1.count == array2.count && array1.reduce(true, combine: { (old, value) in
         return old && arrayContainsElement(array: array2, element: value)
     })
 }

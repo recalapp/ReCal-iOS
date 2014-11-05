@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         CoreDataImporter.defaultImporter.persistentStoreCoordinator = self.persistentStoreCoordinator
-        if true || !NSUserDefaults.standardUserDefaults().boolForKey(userDefaultsKeyNotFirstLaunch) {
+        if !NSUserDefaults.standardUserDefaults().boolForKey(userDefaultsKeyNotFirstLaunch) {
             println("saving")
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: userDefaultsKeyNotFirstLaunch)
             let filePathOpt = NSBundle.mainBundle().pathForResource(initialCoursesFileName, ofType: "json")

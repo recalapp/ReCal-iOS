@@ -27,6 +27,7 @@
 		8152BE6C1A09682C00D1BF70 /* CDSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8152BE6B1A09682C00D1BF70 /* CDSection.m */; };
 		8152BE6F1A096A4900D1BF70 /* CDCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 8152BE6E1A096A4900D1BF70 /* CDCourse.m */; };
 		8152BE721A096A5900D1BF70 /* CDCourseListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8152BE711A096A5900D1BF70 /* CDCourseListing.m */; };
+		815E81B51A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E81B41A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift */; };
 		816CBB471A09211D002C610A /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB461A09211D002C610A /* CDSemester.m */; };
 		816CBB501A09211E002C610A /* CDServerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB4F1A09211E002C610A /* CDServerObject.m */; };
 		816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB511A092144002C610A /* CoreDataExtensions.swift */; };
@@ -70,6 +71,7 @@
 		81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D270D419F090E700DED75D /* HeaderBackgroundView.swift */; };
 		81D270D819F0946100DED75D /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D270D619F0946100DED75D /* HeaderView.swift */; };
 		81D270D919F0946100DED75D /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81D270D719F0946100DED75D /* HeaderView.xib */; };
+		81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D93B7F1A09A7E900914FB3 /* CourseSearchOperation.swift */; };
 		81D9F26019EF4D9600F987B9 /* ReCalCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81D9F26C19EF4D9600F987B9 /* ReCalCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */; };
 		81D9F26F19EF4D9600F987B9 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
@@ -186,6 +188,7 @@
 		8152BE6E1A096A4900D1BF70 /* CDCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourse.m; sourceTree = "<group>"; };
 		8152BE701A096A5900D1BF70 /* CDCourseListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourseListing.h; sourceTree = "<group>"; };
 		8152BE711A096A5900D1BF70 /* CDCourseListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourseListing.m; sourceTree = "<group>"; };
+		815E81B41A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataToCourseStructConverter.swift; sourceTree = "<group>"; };
 		816CBB1D1A091D16002C610A /* ReCal Course Selection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReCal Course Selection-Bridging-Header.h"; sourceTree = "<group>"; };
 		816CBB451A09211D002C610A /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
 		816CBB461A09211D002C610A /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
@@ -237,6 +240,7 @@
 		81D270D419F090E700DED75D /* HeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderBackgroundView.swift; sourceTree = "<group>"; };
 		81D270D619F0946100DED75D /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		81D270D719F0946100DED75D /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
+		81D93B7F1A09A7E900914FB3 /* CourseSearchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSearchOperation.swift; sourceTree = "<group>"; };
 		81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReCalCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D9F25E19EF4D9600F987B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReCalCommon.h; sourceTree = "<group>"; };
@@ -393,8 +397,6 @@
 		816CBB1C1A091CFB002C610A /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				816CBB551A092909002C610A /* CoreDataImporter.swift */,
-				816CBB511A092144002C610A /* CoreDataExtensions.swift */,
 				816CBB4E1A09211E002C610A /* CDServerObject.h */,
 				816CBB4F1A09211E002C610A /* CDServerObject.m */,
 				816CBB451A09211D002C610A /* CDSemester.h */,
@@ -492,6 +494,9 @@
 				81A094E11A067DFD00A0C3CE /* SectionTypeEnrollment.swift */,
 				81A094CE1A067DFD00A0C3CE /* Course.swift */,
 				81A094DF1A067DFD00A0C3CE /* Section.swift */,
+				816CBB551A092909002C610A /* CoreDataImporter.swift */,
+				816CBB511A092144002C610A /* CoreDataExtensions.swift */,
+				815E81B41A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift */,
 				816CBB1C1A091CFB002C610A /* Core Data */,
 			);
 			name = Models;
@@ -503,6 +508,7 @@
 				81A094D01A067DFD00A0C3CE /* CourseSearchTableViewController.swift */,
 				81F9A40B1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift */,
 				81F9A40D1A070B1600083E55 /* CourseDetailsViewController.swift */,
+				81D93B7F1A09A7E900914FB3 /* CourseSearchOperation.swift */,
 			);
 			name = "Course Search";
 			sourceTree = "<group>";
@@ -895,6 +901,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				815E81B51A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift in Sources */,
 				81A094EB1A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift in Sources */,
 				81A094FA1A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift in Sources */,
 				81A094F31A067DFD00A0C3CE /* GridLineView.swift in Sources */,
@@ -910,6 +917,7 @@
 				8152BE721A096A5900D1BF70 /* CDCourseListing.m in Sources */,
 				81A094EA1A067DFD00A0C3CE /* CourseSelectionViewController.swift in Sources */,
 				816CBB561A092909002C610A /* CoreDataImporter.swift in Sources */,
+				81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */,
 				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
 				816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */,
 				81A094E71A067DFD00A0C3CE /* Course.swift in Sources */,
