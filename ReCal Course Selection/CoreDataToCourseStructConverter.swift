@@ -26,7 +26,7 @@ class CoreDataToCourseStructConverter {
     func courseStructFromCoreData(course: CDCourse) -> Course {
         let listings = course.courseListings.allObjects.map { self.courseListingStructFromCoreData($0 as CDCourseListing) }
         let sections = course.sections.allObjects.map { self.sectionStructFromCoreData($0 as CDSection) }.sorted { $0.sectionName < $1.sectionName }
-        let courseStruct = Course(courseListings: listings, title: course.title, color: UIColor.greenColor(), sections: sections)
+        let courseStruct = Course(courseListings: listings, title: course.title, courseDescription: course.courseDescription, color: UIColor.greenColor(), sections: sections)
         return courseStruct
     }
 }

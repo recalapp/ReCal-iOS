@@ -48,7 +48,7 @@ class CourseDetailsViewController: UITableViewController {
             if let course = self.course {
                 let label = cell.contentView.viewWithTag(1) as UILabel
                 label.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
-                label.text = "Description goes here\nMore Description"
+                label.text = course.courseDescription
             }
             return cell
         default:

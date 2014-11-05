@@ -13,6 +13,7 @@ struct Course: Printable, Hashable {
     
     let courseListings: [CourseListing]
     let title: String
+    let courseDescription: String
     let color: UIColor
     let sections: [Section]
     
@@ -29,6 +30,7 @@ struct Course: Printable, Hashable {
     
     var hashValue: Int {
         var hash = self.title.hashValue
+        hash = hash &* hashPrimeMultipler &+ self.courseDescription.hashValue
         for listing in self.courseListings {
             hash = hash &* hashPrimeMultipler &+ listing.hashValue
         }
@@ -71,6 +73,9 @@ func == (lhs: CourseListing, rhs: CourseListing)-> Bool {
 
 func == (lhs: Course, rhs: Course)-> Bool {
     if lhs.title != rhs.title {
+        return false
+    }
+    if lhs.courseDescription != rhs.courseDescription {
         return false
     }
     if !arraysContainSameElements(lhs.courseListings, rhs.courseListings) {
