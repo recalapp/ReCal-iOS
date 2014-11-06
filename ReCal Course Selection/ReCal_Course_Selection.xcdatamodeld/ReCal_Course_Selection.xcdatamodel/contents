@@ -13,6 +13,9 @@
         <attribute name="isPrimary" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="courseListings" inverseEntity="CDCourse" syncable="YES"/>
     </entity>
+    <entity name="CDSchedule" parentEntity="CDServerObject" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="CDSection" representedClassName="CDSection" parentEntity="CDServerObject" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="sectionTypeCode" attributeType="String" regularExpressionString="(lab|cla|dri|lec|pre|sem|stu|ear|fil)" syncable="YES"/>
@@ -41,6 +44,7 @@
         <element name="CDSection" positionX="-3035" positionY="-3708" width="128" height="103"/>
         <element name="CDSectionMeeting" positionX="-3051" positionY="-3888" width="128" height="148"/>
         <element name="CDSemester" positionX="-3492" positionY="-3726" width="128" height="73"/>
-        <element name="CDServerObject" positionX="-3429" positionY="-3933" width="128" height="58"/>
+        <element name="CDServerObject" positionX="-3377" positionY="-3996" width="128" height="58"/>
+        <element name="CDSchedule" positionX="-3654" positionY="-3634" width="128" height="58"/>
     </elements>
 </model>

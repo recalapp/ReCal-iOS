@@ -21,10 +21,8 @@ class CourseSelectionContainerViewController: UIViewController {
     
     }
     
-    override func viewWillAppear(animated: Bool) {
-    }
-    
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         self.courseSelectionViewController.viewContentSize = self.contentView.bounds.size
     }
 

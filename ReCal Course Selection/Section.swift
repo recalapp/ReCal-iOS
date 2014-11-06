@@ -10,11 +10,24 @@ import Foundation
 import ReCalCommon
 
 private let hashPrimeMultiplier = 65599
-struct Section: Printable, Hashable {
-    
+struct Section: Printable, ManagedObjectProxy {
+    typealias ManagedObject = CDSection
     let type: SectionType
     let sectionName: String
     let sectionMeetings: [SectionMeeting]
+    
+    let managedObjectProxyId: ManagedObjectProxyId
+    
+    init(managedObject: CDSection) {
+        self.sectionName = managedObject.name
+        self.type = managedObject.sectionType
+        self.sectionMeetings = managedObject.meetings.allObjects.map { SectionMeeting(managedObject: $0 as CDSectionMeeting) }
+        self.managedObjectProxyId = .Existing(managedObject.objectID)
+    }
+    
+    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
+        assertionFailure("Not implemented")
+    }
     
     var displayText: String {
         return self.sectionName
@@ -32,11 +45,48 @@ struct Section: Printable, Hashable {
     }
 }
 
-struct SectionMeeting: Hashable {
+struct SectionMeeting: Hashable, ManagedObjectProxy {
+    typealias ManagedObject = CDSectionMeeting
     let startTime: NSDateComponents
     let endTime: NSDateComponents
     let location: String
     let days: [Day]
+    
+    let managedObjectProxyId: ManagedObjectProxyId
+    
+    init(managedObject: CDSectionMeeting) {
+        self.startTime = managedObject.startTime
+        self.endTime = managedObject.endTime
+        self.location = managedObject.location
+        self.days = managedObject.days
+        self.managedObjectProxyId = .Existing(managedObject.objectID)
+    }
+    
+    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
+        switch self.managedObjectProxyId {
+        case .Existing(let objectId):
+            var sectionMeetingOpt: CDSectionMeeting?
+            managedObjectContext.performBlockAndWait {
+                sectionMeetingOpt = managedObjectContext.objectWithID(objectId) as? CDSectionMeeting
+            }
+            if let sectionMeeting = sectionMeetingOpt {
+                sectionMeeting.startHour = self.startTime.hour
+                sectionMeeting.startMinute = self.startTime.minute
+                sectionMeeting.endHour = self.endTime.hour
+                sectionMeeting.endMinute = self.endTime.minute
+                sectionMeeting.location = self.location
+                sectionMeeting.daysStorage = self.days.reduce("", combine: { (dayString, day) in
+                    dayString + " \(day.shortDayString)"
+                })
+                return .Success(sectionMeeting)
+            }
+            return .Failure
+        case .NewObject:
+            assertionFailure("Not implemented")
+            return .Failure
+        }
+    }
+    
     var hashValue: Int {
         var hash = self.location.hashValue
         hash = hash &* hashPrimeMultiplier &+ self.startTime.hashValue
@@ -159,6 +209,24 @@ enum Day: Int, Printable {
             return "Saturday"
         case .Sunday:
             return "Sunday"
+        }
+    }
+    var shortDayString: String {
+        switch self {
+        case .Monday:
+            return "m"
+        case .Tuesday:
+            return "t"
+        case .Wednesday:
+            return "w"
+        case .Thursday:
+            return "th"
+        case .Friday:
+            return "f"
+        case .Saturday:
+            return "sa"
+        case .Sunday:
+            return "su"
         }
     }
 }

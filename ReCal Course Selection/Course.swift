@@ -9,13 +9,27 @@
 import Foundation
 import ReCalCommon
 private let hashPrimeMultipler = 32771
-struct Course: Printable, Hashable {
-    
+struct Course: Printable, ManagedObjectProxy {
+    typealias ManagedObject = CDCourse
     let courseListings: [CourseListing]
     let title: String
     let courseDescription: String
     let color: UIColor
     let sections: [Section]
+    let managedObjectProxyId: ManagedObjectProxyId
+    
+    init(managedObject: CDCourse) {
+        self.title = managedObject.title
+        self.courseDescription = managedObject.courseDescription
+        self.color = UIColor.greenColor() // TODO get proper color
+        self.courseListings = managedObject.courseListings.allObjects.map { CourseListing(managedObject: $0 as CDCourseListing) }
+        self.sections = managedObject.sections.allObjects.map { Section(managedObject: $0 as CDSection) }
+        self.managedObjectProxyId = .Existing(managedObject.objectID)
+    }
+    
+    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
+        assertionFailure("Not implemented")
+    }
     
     var primaryListing: CourseListing {
         return self.courseListings.filter { $0.isPrimary }.last!
@@ -41,10 +55,19 @@ struct Course: Printable, Hashable {
     }
 }
 
-struct CourseListing: Hashable, Printable {
+struct CourseListing: Printable, ManagedObjectProxy {
+    typealias ManagedObject = CDCourseListing
+    
     let courseNumber: String
     let departmentCode: String
     let isPrimary: Bool
+    let managedObjectProxyId: ManagedObjectProxyId
+    init(managedObject: CDCourseListing) {
+        self.courseNumber = managedObject.courseNumber
+        self.departmentCode = managedObject.departmentCode
+        self.isPrimary = managedObject.isPrimary.boolValue
+        self.managedObjectProxyId = .Existing(managedObject.objectID)
+    }
     
     var description: String {
         return "\(self.departmentCode) \(self.courseNumber)"
@@ -55,6 +78,25 @@ struct CourseListing: Hashable, Printable {
         hash = hash &* hashPrimeMultipler &+ self.departmentCode.hashValue
         hash = hash &* hashPrimeMultipler &+ self.isPrimary.hashValue
         return hash
+    }
+    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
+        switch self.managedObjectProxyId {
+        case .Existing(let objectId):
+            var courseListingOpt: CDCourseListing?
+            managedObjectContext.performBlockAndWait {
+                courseListingOpt = managedObjectContext.objectWithID(objectId) as? CDCourseListing
+            }
+            if let courseListing = courseListingOpt {
+                courseListing.courseNumber = self.courseNumber
+                courseListing.departmentCode = self.departmentCode
+                courseListing.isPrimary = NSNumber(bool: self.isPrimary)
+                return .Success(courseListing)
+            }
+            return .Failure
+        case .NewObject:
+            assertionFailure("Not implemented")
+            return .Failure
+        }
     }
 }
 

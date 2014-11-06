@@ -212,7 +212,6 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     private func setUpSidebar() {
         // sidebar view
         self.leftSidebarView = UIView()
-        // TODO autoresizing mask?
         self.rightSidebarView = UIView()
         
         // sidebar content view
@@ -295,7 +294,6 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
             scrollView.addSubview(self.primaryContentView)
         }
         self.updateSidebarContainerScrollViewContentSize()
-        println(self.view.frame.size)
     }
     
     public func handleSidebarTap(sender: UITapGestureRecognizer) {
