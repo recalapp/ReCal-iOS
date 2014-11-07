@@ -11,6 +11,7 @@ import Foundation
 private let debug = true
 
 public struct OrderedSet<T: Hashable>: Equatable, SequenceType {
+    typealias CallBack = OrderedSet<T>->Void
     typealias Generator = OrderedSetGenerator<T>
     
     private var itemsArray: [T] = []
@@ -30,6 +31,11 @@ public struct OrderedSet<T: Hashable>: Equatable, SequenceType {
             self.itemsSet.add(newValue)
         }
     }
+    
+    public var didAdd: CallBack?
+    public var didRemove: CallBack?
+    public var willAdd: CallBack?
+    public var willRemove: CallBack?
     
     public var count: Int {
         return self.itemsArray.count
@@ -51,16 +57,20 @@ public struct OrderedSet<T: Hashable>: Equatable, SequenceType {
     
     public mutating func append(item: T) {
         assert(!self.contains(item), "Cannot append an item that already belong to the set to begin with")
+        self.willAdd?(self)
         self.itemsSet.add(item)
         self.itemsArray.append(item)
         self.checkInvariants()
+        self.didAdd?(self)
     }
     
     public mutating func insert(item: T, atIndex index: Int) {
         assert(!self.contains(item), "Cannot add an item that already belong to the set to begin with")
+        self.willAdd?(self)
         self.itemsSet.add(item)
         self.itemsArray.insert(item, atIndex: index)
         self.checkInvariants()
+        self.didAdd?(self)
     }
     
     public mutating func swapItemsAtIndex(index1: Int, withItemAtIndex index2: Int) {
@@ -76,11 +86,13 @@ public struct OrderedSet<T: Hashable>: Equatable, SequenceType {
     
     public mutating func remove(item: T) {
         assert(self.contains(item), "Cannot remove an item that does not belong to the set to begin with")
+        self.willRemove?(self)
         self.itemsSet.remove(item)
         let indexes = arrayFindIndexesOfElement(array: self.itemsArray, element: item)
         assert(indexes.count == 1, "True by invariant")
         self.itemsArray.removeAtIndex(indexes[0])
         self.checkInvariants()
+        self.didRemove?(self)
     }
     
     public func contains(item: T) -> Bool {
@@ -126,7 +138,8 @@ public struct OrderedSetGenerator<T: Hashable>: GeneratorType {
     
     public mutating func next()->T? {
         if index < self.items.count {
-            return self.items[index]
+            index++
+            return self.items[index - 1]
         }
         return nil
     }

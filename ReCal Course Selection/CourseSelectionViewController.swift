@@ -25,47 +25,14 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     // MARK: Models
-    private var semesterTermCode = "1152"
-    
-    private var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>>()
-    
-    private var enrolledCourses: [Course] = [Course]() {
+    var schedule: Schedule! {
         didSet {
-            // courses have been set. initialize enrollment to being unenrolled in all section types for new courses
-            if oldValue != self.enrolledCourses {
-                var oldEnrolled = Set(initialItems: oldValue)
-                for course in self.enrolledCourses {
-                    if self.enrollments[course] != nil {
-                        oldEnrolled.remove(course)
-                        continue
-                    }
-                    var typeEnrollment = Dictionary<SectionType, SectionEnrollmentStatus>()
-                    let sectionTypes = course.sections.reduce(Set<SectionType>(), combine: {(var set, section) in
-                        set.add(section.type)
-                        return set
-                    })
-                    for sectionType in sectionTypes {
-                        // check how many sections there are for this type
-                        let sections = course.sections.filter { $0.type == sectionType }
-                        if sections.count == 1 {
-                            typeEnrollment[sectionType] = .Enrolled(sections[0])
-                        } else {
-                            typeEnrollment[sectionType] = .Unenrolled
-                        }
-                    }
-                    self.enrollments[course] = typeEnrollment
-                }
-                for removed in oldEnrolled {
-                    self.enrollments.removeValueForKey(removed)
-                }
+            if oldValue != schedule {
+                self.reloadScheduleView()
+                self.reloadEnrolledCoursesView()
+                self.reloadSearchViewController()
             }
         }
-    }
-    
-    private var sections: [Section] {
-        return self.enrolledCourses.reduce([], combine: { (allSections, course) in
-            return allSections + course.sections
-        })
     }
     
     // MARK: Views and View Controllers
@@ -170,27 +137,38 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func reloadEnrolledCoursesView() {
-        self.enrolledCoursesTableViewDataSource.enrollments = self.enrollments
+        if self.schedule == nil {
+            return
+        }
+        self.enrolledCoursesTableViewDataSource.enrollments = self.schedule.courseSectionTypeEnrollments
         self.enrolledCoursesView.reloadData()
     }
     
     private func reloadScheduleView() {
-        self.scheduleCollectionViewDataSource.enrollments = self.enrollments
+        if self.schedule == nil {
+            return
+        }
+        self.scheduleCollectionViewDataSource.enrollments = self.schedule.courseSectionTypeEnrollments
         self.scheduleView.reloadData()
     }
     
     private func reloadSearchViewController() {
-        self.searchViewController.semesterTermCode = self.semesterTermCode
-        self.searchViewController.enrolledCourses = self.enrolledCourses
+        if self.schedule == nil {
+            return
+        }
+        self.searchViewController.semesterTermCode = self.schedule.termCode
+        self.searchViewController.enrolledCourses = self.schedule.enrolledCourses.toArray()
     }
     
     private func showCourseDeletePromptForCourse(course: Course) {
-        assert(arrayContainsElement(array: self.enrolledCourses, element: course), "Trying to delete a course that wasn't enrolled")
+        if self.schedule == nil {
+            return
+        }
+        assert(self.schedule.enrolledCourses.contains(course), "Trying to delete a course that wasn't enrolled")
         let alertController = UIAlertController(title: "Delete \(course)", message: "Are you sure you want to delete this course?", preferredStyle: .ActionSheet)
         let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
-            let index = arrayFindIndexesOfElement(array: self.enrolledCourses, element: course).last
-            assert(index != nil, "Trying to delete a course that wasn't enrolled")
-            self.enrolledCourses.removeAtIndex(index!)
+            self.schedule.enrolledCourses.remove(course)
+            self.schedule.updateCourseSectionTypeEnrollments()
             self.reloadEnrolledCoursesView()
             self.reloadScheduleView()
             self.reloadSearchViewController()
@@ -225,21 +203,22 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     // MARK: - Enrolled Courses Table View Data Source Delegate
     func enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource) {
         assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
-        self.enrollments = dataSource.enrollments
+        self.schedule.courseSectionTypeEnrollments = dataSource.enrollments
         self.reloadScheduleView()
     }
     
     // MARK: - Schedule Collection View Data Source Delegate
     func enrollmentDidChangeForScheduleCollectionViewDataSource(dataSource: ScheduleCollectionViewDataSource) {
         assert(dataSource == self.scheduleCollectionViewDataSource, "Wrong data source object for schedule view")
-        self.enrollments = dataSource.enrollments
+        self.schedule.courseSectionTypeEnrollments = dataSource.enrollments
         self.reloadEnrolledCoursesView()
     }
     
     // MARK: - Course Search Table View Controller Delegate
     func enrollmentsDidChangeForCourseSearchTableViewController(viewController: CourseSearchTableViewController) {
         assert(viewController == self.searchViewController, "Wrong view controller")
-        self.enrolledCourses = viewController.enrolledCourses
+        self.schedule.enrolledCourses = OrderedSet(initialValues: viewController.enrolledCourses)
+        self.schedule.updateCourseSectionTypeEnrollments()
         self.reloadScheduleView()
         self.reloadEnrolledCoursesView()
     }

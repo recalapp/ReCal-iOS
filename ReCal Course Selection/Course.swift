@@ -29,13 +29,36 @@ struct Course: Printable, ManagedObjectProxy {
         self.sections = managedObject.sections.allObjects.map { Section(managedObject: $0 as CDSection) }.sorted { $0.sectionName < $1.sectionName }
         self.managedObjectProxyId = .Existing(managedObject.objectID)
         self.allSectionTypes = self.sections.map { $0.type }.reduce(Set<SectionType>(), combine: {(var set, type) in
-            set.add(type)
+            if !set.contains(type){
+                set.add(type)
+            }
             return set
         }).toArray()
     }
     
     func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
-        assertionFailure("Not implemented")
+        let updateManagedObject: ManagedObject -> ManagedObjectProxyCommitResult<ManagedObject> = { (course) in
+            // TODO update course
+            return .Success(course)
+        }
+        switch self.managedObjectProxyId {
+        case .Existing(let objectId):
+            let managedObject: CDCourse? = {
+                var managedObject: CDCourse?
+                managedObjectContext.performBlockAndWait {
+                    managedObject = managedObjectContext.objectWithID(objectId) as? CDCourse
+                }
+                return managedObject
+            }()
+            if let course = managedObject {
+                return updateManagedObject(course)
+            } else {
+                return .Failure
+            }
+        case .NewObject:
+            assertionFailure("Not implemented")
+            return .Failure
+        }
     }
     
     var primaryListing: CourseListing {

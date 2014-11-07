@@ -19,6 +19,7 @@ struct Schedule : ManagedObjectProxy {
     let termCode: String
     var enrolledCourses: OrderedSet<Course>
     var courseSectionTypeEnrollments: Dictionary<Course, SectionTypeEnrollment>
+    
     var enrolledSections: [Section] {
         let sectionTypeEnrollments = self.courseSectionTypeEnrollments.values.array
         let nested = sectionTypeEnrollments.map { (sectionTypeEnrollment: SectionTypeEnrollment) -> [Section?] in
@@ -73,6 +74,29 @@ struct Schedule : ManagedObjectProxy {
         self.enrolledCourses = OrderedSet()
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
     }
+    
+    mutating func updateCourseSectionTypeEnrollments() {
+        for course in self.courseSectionTypeEnrollments.keys {
+            if !self.enrolledCourses.contains(course) {
+                self.courseSectionTypeEnrollments.removeValueForKey(course)
+            }
+        }
+        for course in self.enrolledCourses {
+            if self.courseSectionTypeEnrollments[course] == nil {
+                var sectionTypeEnrollment = SectionTypeEnrollment()
+                for sectionType in course.allSectionTypes {
+                    let sectionsForType = course.sections.filter { $0.type == sectionType }
+                    if sectionsForType.count == 1 {
+                        sectionTypeEnrollment[sectionType] = .Enrolled(sectionsForType[0])
+                    } else {
+                        sectionTypeEnrollment[sectionType] = .Unenrolled
+                    }
+                }
+                self.courseSectionTypeEnrollments[course] = sectionTypeEnrollment
+            }
+        }
+    }
+    
     func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
         let updateManagedObject = { (schedule: CDSchedule) -> ManagedObjectProxyCommitResult<CDSchedule> in
             schedule.removeEnrolledCourses(schedule.enrolledCourses)

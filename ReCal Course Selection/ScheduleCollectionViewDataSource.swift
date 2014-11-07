@@ -62,7 +62,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     /// Returns an array of events for day
     func eventsForDay(day: Day) -> [ScheduleEvent] {
-        return eventsForDayCache[day]!
+        return eventsForDayCache[day] ?? []
     }
     
     /// Preloads the values for events for day cache and all events array. Must be called everytime courses or enrollments info changes

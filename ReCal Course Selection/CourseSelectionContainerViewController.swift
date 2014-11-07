@@ -12,13 +12,24 @@ let courseSelectionViewControllerStoryboardId = "CourseSelection"
 let courseSelectionEmbedSegueId = "CourseSelectionEmbed"
 
 class CourseSelectionContainerViewController: UIViewController {
-
     
+    @IBOutlet weak var navigationBarTitleItem: UINavigationItem!
     private var courseSelectionViewController: CourseSelectionViewController!
+    private var currentSchedule: Schedule! {
+        didSet {
+            if oldValue != currentSchedule {
+                assert(currentSchedule != nil)
+                self.navigationBarTitleItem.title = currentSchedule.name
+                if let courseSelectionViewController = self.courseSelectionViewController {
+                    courseSelectionViewController.schedule = self.currentSchedule
+                }
+            }
+        }
+    }
     @IBOutlet weak var contentView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        self.currentSchedule = Schedule(name: "Test Schedule", termCode: "1152")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -56,7 +67,7 @@ class CourseSelectionContainerViewController: UIViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == courseSelectionEmbedSegueId {
             self.courseSelectionViewController = segue.destinationViewController as CourseSelectionViewController
-            
+            self.courseSelectionViewController.schedule = self.currentSchedule
         }
     }
     

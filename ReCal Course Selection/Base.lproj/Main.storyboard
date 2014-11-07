@@ -46,6 +46,7 @@
                     </view>
                     <connections>
                         <outlet property="contentView" destination="Vy0-WG-5z2" id="Mmt-F1-H6g"/>
+                        <outlet property="navigationBarTitleItem" destination="kdd-XO-5c7" id="0d6-yQ-nkz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SK3-vO-Bkw" userLabel="First Responder" sceneMemberID="firstResponder"/>
