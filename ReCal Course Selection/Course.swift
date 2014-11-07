@@ -37,24 +37,9 @@ struct Course: Printable, ManagedObjectProxy {
     }
     
     func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
-        let updateManagedObject: ManagedObject -> ManagedObjectProxyCommitResult = { (course) in
-            // TODO update course
-            return .Success(course.objectID)
-        }
         switch self.managedObjectProxyId {
         case .Existing(let objectId):
-            let managedObject: CDCourse? = {
-                var managedObject: CDCourse?
-                managedObjectContext.performBlockAndWait {
-                    managedObject = managedObjectContext.objectWithID(objectId) as? CDCourse
-                }
-                return managedObject
-            }()
-            if let course = managedObject {
-                return updateManagedObject(course)
-            } else {
-                return .Failure
-            }
+            return .Success(objectId)
         case .NewObject:
             assertionFailure("Not implemented")
             return .Failure

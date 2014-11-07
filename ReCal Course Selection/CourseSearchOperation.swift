@@ -12,7 +12,7 @@ import CoreData
 class CourseSearchOperation: NSOperation {
     
     // MARK: - Constants
-    let minimumQueryLength = 3
+    let minimumQueryLength = 2
     
     // MARK: - Variables
     let managedObjectContext: NSManagedObjectContext

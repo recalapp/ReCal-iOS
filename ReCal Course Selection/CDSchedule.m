@@ -15,8 +15,9 @@
 @implementation CDSchedule
 
 @dynamic name;
-@dynamic enrolledCourses;
+@dynamic enrolledCoursesOrder;
 @dynamic enrolledSections;
 @dynamic semester;
+@dynamic enrolledCourses;
 
 @end

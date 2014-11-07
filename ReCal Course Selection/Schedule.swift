@@ -44,7 +44,14 @@ struct Schedule : ManagedObjectProxy {
         self.managedObjectProxyId = .Existing(managedObject.objectID)
         self.name = managedObject.name
         self.termCode = managedObject.semester.termCode
-        self.enrolledCourses = OrderedSet(initialValues: managedObject.enrolledCourses.array.map { Course(managedObject: $0 as CDCourse) } )
+        let enrolledCourses: [CDCourse] = managedObject.enrolledCourses.allObjects.map { $0 as CDCourse }
+        let enrolledCoursesOrder = managedObject.enrolledCoursesOrder as [NSURL]
+        self.enrolledCourses = OrderedSet()
+        for courseId in enrolledCoursesOrder {
+            if let course = enrolledCourses.filter({ $0.objectID.URIRepresentation().isEqual(courseId) }).last {
+                self.enrolledCourses.append(Course(managedObject: course))
+            }
+        }
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
         for course in self.enrolledCourses {
             var sectionTypeEnrollment = SectionTypeEnrollment()
@@ -99,20 +106,34 @@ struct Schedule : ManagedObjectProxy {
     
     mutating func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
         let updateManagedObject = { (schedule: CDSchedule) -> ManagedObjectProxyCommitResult in
-            for course in schedule.enrolledCourses.array {
+            for course in schedule.enrolledCourses.allObjects {
                 schedule.removeEnrolledCoursesObject(course as CDCourse)
             }
             for course in self.enrolledCourses {
-                // swift compiler has a bug with this piece of code. Try again later
                 switch course.commitToManagedObjectContext(managedObjectContext) {
                 case .Success(let objectId):
+                    var courseOpt: CDCourse?
                     managedObjectContext.performBlockAndWait {
-                        schedule.addEnrolledCoursesObject(managedObjectContext.objectWithID(objectId) as CDCourse)
+                        courseOpt = managedObjectContext.objectWithID(objectId) as? CDCourse
+                    }
+                    if let courseManagedObject: CDCourse = courseOpt {
+                        schedule.addEnrolledCoursesObject(courseManagedObject)
+                    } else {
+                        return .Failure
                     }
                 case .Failure:
                     return .Failure
                 }
             }
+            let courseIdsOrdered: [NSManagedObjectID?] = self.enrolledCourses.toArray().map { (course) -> NSManagedObjectID? in
+                switch course.managedObjectProxyId {
+                case .Existing(let objectId):
+                    return objectId
+                case .NewObject:
+                    return nil
+                }
+            }.filter { $0 != nil }
+            schedule.enrolledCoursesOrder = courseIdsOrdered.map { $0!.URIRepresentation() as AnyObject }
             schedule.removeEnrolledSections(schedule.enrolledSections)
             for section in self.enrolledSections {
                 switch section.managedObjectProxyId {

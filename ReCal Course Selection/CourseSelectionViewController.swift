@@ -24,6 +24,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }
     }
     
+    lazy private var managedObjectContext: NSManagedObjectContext = {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        return managedObjectContext
+    }()
+    
     // MARK: Models
     var schedule: Schedule! {
         didSet {
@@ -49,6 +55,19 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.initializeScheduleView()
         self.initializeEnrolledCoursesView()
         self.initializeSearchViewController()
+    }
+    
+    private func saveSchedule() {
+        if self.schedule != nil {
+            self.schedule.commitToManagedObjectContext(self.managedObjectContext)
+            var errorOpt: NSError?
+            self.managedObjectContext.performBlock {
+                let _ = self.managedObjectContext.save(&errorOpt)
+            }
+            if let error = errorOpt {
+                println("Error saving. Error: \(error)")
+            }
+        }
     }
     
     private func initializeScheduleView() {
@@ -205,6 +224,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
         self.schedule.courseSectionTypeEnrollments = dataSource.enrollments
         self.reloadScheduleView()
+        self.saveSchedule()
     }
     
     // MARK: - Schedule Collection View Data Source Delegate
@@ -212,6 +232,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         assert(dataSource == self.scheduleCollectionViewDataSource, "Wrong data source object for schedule view")
         self.schedule.courseSectionTypeEnrollments = dataSource.enrollments
         self.reloadEnrolledCoursesView()
+        self.saveSchedule()
     }
     
     // MARK: - Course Search Table View Controller Delegate
@@ -221,5 +242,6 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.schedule.updateCourseSectionTypeEnrollments()
         self.reloadScheduleView()
         self.reloadEnrolledCoursesView()
+        self.saveSchedule()
     }
 }
