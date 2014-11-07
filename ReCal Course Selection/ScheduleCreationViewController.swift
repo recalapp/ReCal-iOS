@@ -44,8 +44,17 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
             var createdSchedule = Schedule(name: name, termCode: "1152")
             switch createdSchedule.commitToManagedObjectContext(self.managedObjectContext) {
             case .Success(_):
-                self.delegate?.didSelectSchedule(createdSchedule)
-                self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                var success = false
+                var error: NSError?
+                self.managedObjectContext.performBlockAndWait {
+                    success = self.managedObjectContext.save(&error)
+                }
+                if success {
+                    self.delegate?.didSelectSchedule(createdSchedule)
+                } else {
+                    println("error saving. error: \(error)")
+                    assertionFailure("Failed to save schedule")
+                }
             case .Failure:
                 assertionFailure("Failed to save schedule")
                 break

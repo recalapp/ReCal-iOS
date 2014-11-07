@@ -48,6 +48,7 @@ class CourseSelectionContainerViewController: UIViewController, ScheduleSelectio
     // MARK: - Schedule Selection Delegate
     func didSelectSchedule(schedule: Schedule) {
         self.currentSchedule = schedule
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     // MARK: - Content Container
     

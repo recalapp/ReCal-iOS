@@ -24,10 +24,12 @@ class ScheduleSelectionViewController: UITableViewController {
             self.visibleSemesters = self.semesterToSchedulesMapping.keys.array.sorted { $0.termCode < $1.termCode }
         }
     }
+    
+    private var notificationObservers: [NSObjectProtocol] = []
 
     private func fetchSchedules() {
         let fetchRequest = NSFetchRequest(entityName: "CDSemester")
-        fetchRequest.predicate = NSPredicate(format: "schedules.count > 0")
+        fetchRequest.predicate = NSPredicate(format: "schedules.@count > 0")
         var fetched: [CDSemester]?
         var errorOpt: NSError?
         self.managedObjectContext.performBlockAndWait {
@@ -52,28 +54,42 @@ class ScheduleSelectionViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+            self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+            self.fetchSchedules()
+        }
+        self.notificationObservers.append(observer)
+        self.fetchSchedules()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    private func scheduleAtIndexPath(indexPath: NSIndexPath) -> CDSchedule? {
+        return self.semesterToSchedulesMapping[self.visibleSemesters[indexPath.section]]?[indexPath.row]
+    }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return self.visibleSemesters.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         let semester = self.visibleSemesters[section]
         return self.semesterToSchedulesMapping[semester]?.count ?? 0
@@ -87,7 +103,8 @@ class ScheduleSelectionViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(scheduleCellIdentifier, forIndexPath: indexPath) as UITableViewCell
 
-        if let schedule = self.semesterToSchedulesMapping[self.visibleSemesters[indexPath.section]]?[indexPath.row] {
+        cell.textLabel.textColor = UIColor.lightTextColor()
+        if let schedule = self.scheduleAtIndexPath(indexPath) {
             cell.textLabel.text = schedule.name
         } else {
             cell.textLabel.text = "(Empty)"
@@ -131,7 +148,13 @@ class ScheduleSelectionViewController: UITableViewController {
         return true
     }
     */
-
+    
+    // MARK: - Table View Delegate
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let schedule = self.scheduleAtIndexPath(indexPath) {
+            self.delegate?.didSelectSchedule(Schedule(managedObject: schedule))
+        }
+    }
     
     // MARK: - Navigation
 

@@ -178,13 +178,13 @@ struct Schedule : ManagedObjectProxy {
     private func semesterWithTermCode(termCode: String, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> CDSemester? {
         let fetchRequest = NSFetchRequest(entityName: "CDSemester")
         fetchRequest.fetchLimit = 1
-        fetchRequest.predicate = NSPredicate(format: "termCode = %@", termCode)
-        var result: CDSemester?
+        fetchRequest.predicate = NSPredicate(format: "termCode LIKE[c] %@", termCode)
+        var fetched: [CDSemester]?
         var error: NSError?
         managedObjectContext.performBlockAndWait {
-            result = managedObjectContext.executeFetchRequest(fetchRequest, error: &error)?.last as? CDSemester
+            fetched = managedObjectContext.executeFetchRequest(fetchRequest, error: &error) as? [CDSemester]
         }
-        return result
+        return fetched?.last
     }
     
     var hashValue: Int {
