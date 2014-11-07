@@ -2,7 +2,7 @@
 //  CDCourse.h
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 11/4/14.
+//  Created by Naphat Sanguansin on 11/6/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "CDServerObject.h"
 
-@class CDCourseListing, CDSection, CDSemester;
+@class CDCourseListing, CDSchedule, CDSection, CDSemester;
 
 @interface CDCourse : CDServerObject
 
@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSSet *courseListings;
 @property (nonatomic, retain) NSSet *sections;
 @property (nonatomic, retain) CDSemester *semester;
+@property (nonatomic, retain) NSSet *schedules;
 @end
 
 @interface CDCourse (CoreDataGeneratedAccessors)
@@ -32,5 +33,10 @@
 - (void)removeSectionsObject:(CDSection *)value;
 - (void)addSections:(NSSet *)values;
 - (void)removeSections:(NSSet *)values;
+
+- (void)addSchedulesObject:(CDSchedule *)value;
+- (void)removeSchedulesObject:(CDSchedule *)value;
+- (void)addSchedules:(NSSet *)values;
+- (void)removeSchedules:(NSSet *)values;
 
 @end

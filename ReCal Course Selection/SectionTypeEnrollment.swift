@@ -9,7 +9,9 @@
 import Foundation
 private let hashPrimeMultiplier = 131071
 
-enum SectionEnrollment: Hashable {
+typealias SectionTypeEnrollment = Dictionary<SectionType, SectionEnrollmentStatus>
+
+enum SectionEnrollmentStatus: Hashable {
     case Enrolled(Section), Unenrolled
     var hashValue: Int {
         var hash = 1
@@ -24,7 +26,7 @@ enum SectionEnrollment: Hashable {
     }
 }
 
-func == (lhs: SectionEnrollment, rhs: SectionEnrollment) -> Bool {
+func == (lhs: SectionEnrollmentStatus, rhs: SectionEnrollmentStatus) -> Bool {
     switch (lhs, rhs) {
     case (.Unenrolled, .Unenrolled):
         return true

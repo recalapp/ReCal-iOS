@@ -27,7 +27,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     // MARK: Models
     private var semesterTermCode = "1152"
     
-    private var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
+    private var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>>()
     
     private var enrolledCourses: [Course] = [Course]() {
         didSet {
@@ -39,7 +39,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                         oldEnrolled.remove(course)
                         continue
                     }
-                    var typeEnrollment = Dictionary<SectionType, SectionEnrollment>()
+                    var typeEnrollment = Dictionary<SectionType, SectionEnrollmentStatus>()
                     let sectionTypes = course.sections.reduce(Set<SectionType>(), combine: {(var set, section) in
                         set.add(section.type)
                         return set

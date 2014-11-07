@@ -24,7 +24,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     // MARK: variables
     weak var delegate: ScheduleCollectionViewDataSourceDelegate?
     
-    var enrollments: Dictionary<Course, Dictionary<SectionType, SectionEnrollment>> = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>() {
+    var enrollments: Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>> = Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>>() {
         didSet {
             self.preloadCache()
         }

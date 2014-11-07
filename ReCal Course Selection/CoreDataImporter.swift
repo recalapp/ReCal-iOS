@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import ReCalCommon
 
 private struct Static {
@@ -149,9 +150,11 @@ class CoreDataImporter {
                 let sectionServerId = "\(sectionServerIdObject)"
                 let section = self.fetchOrCreateEntityWithServerId(sectionServerId, entityName: "CDSection") as CDSection
                 section.removeMeetings(section.meetings)
+                var meetings = NSMutableSet()
                 for sectionMeetingDict in sectionDict["meetings"] as [Dictionary<String, AnyObject>] {
-                    section.addMeetingsObject(processSectionMeetingDictionary(sectionMeetingDict))
+                    meetings.addObject(processSectionMeetingDictionary(sectionMeetingDict))
                 }
+                section.addMeetings(meetings)
                 section.name = sectionDict["name"] as String
                 section.sectionTypeCode = (sectionDict["section_type"] as String).lowercaseString
                 return section
@@ -180,15 +183,20 @@ class CoreDataImporter {
                     listing?.courseNumber = targetCourseNumber
                     return listing!
                 }
+                course.removeCourseListings(course.courseListings)
+                let listings = NSMutableSet()
                 for courseListingDict in courseDict["course_listings"] as [Dictionary<String, AnyObject>] {
-                    course.addCourseListingsObject(processCourseListingDictionary(courseListingDict))
+                    listings.addObject(processCourseListingDictionary(courseListingDict))
                 }
+                course.addCourseListings(listings)
                 
                 // sections
                 course.removeSections(course.sections)
+                let sections = NSMutableSet()
                 for sectionDict in courseDict["sections"] as [Dictionary<String, AnyObject>] {
-                    course.addSectionsObject(processSectionDictionary(sectionDict))
+                    sections.addObject(processSectionDictionary(sectionDict))
                 }
+                course.addSections(sections)
                 
                 // other course info
                 course.title = courseDict["title"] as String

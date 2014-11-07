@@ -14,7 +14,7 @@ private let courseCellIdentifier = "CourseCell"
 class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, EnrolledCourseTableViewCellDelegate {
     
     weak var delegate: EnrolledCoursesTableViewDataSourceDelegate?
-    var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollment>>()
+    var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>>()
     var enrolledCourses: [Course] {
         return self.enrollments.keys.array
     }

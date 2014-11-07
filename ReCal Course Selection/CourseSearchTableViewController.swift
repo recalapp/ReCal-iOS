@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 import ReCalCommon
 
 private let searchResultCellIdentifier = "SearchResult"

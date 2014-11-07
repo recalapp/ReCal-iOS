@@ -7,3 +7,4 @@
 #import "CDSection.h"
 #import "CDSectionMeeting.h"
 #import "CDSemester.h"
+#import "CDSchedule.h"

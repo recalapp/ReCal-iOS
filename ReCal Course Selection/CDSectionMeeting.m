@@ -2,7 +2,7 @@
 //  CDSectionMeeting.m
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 11/4/14.
+//  Created by Naphat Sanguansin on 11/6/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
@@ -15,9 +15,9 @@
 @dynamic daysStorage;
 @dynamic endHour;
 @dynamic endMinute;
+@dynamic location;
 @dynamic startHour;
 @dynamic startMinute;
-@dynamic location;
 @dynamic section;
 
 @end

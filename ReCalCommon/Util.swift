@@ -86,6 +86,10 @@ public func arraysContainSameElements<T: Equatable>(array1: [T], array2: [T]) ->
     })
 }
 
+public func arrayFlatten<T>(array: [[T]]) -> [T] {
+    return array.reduce([], combine: {(flattened, item) in flattened + item })
+}
+
 public extension String {
     public func pluralize() -> String {
         let last = self.substringFromIndex(self.endIndex.predecessor())

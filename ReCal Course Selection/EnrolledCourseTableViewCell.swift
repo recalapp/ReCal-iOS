@@ -11,7 +11,7 @@ import ReCalCommon
 
 class EnrolledCourseTableViewCell: UITableViewCell {
     weak var delegate: EnrolledCourseTableViewCellDelegate?
-    var enrollmentsBySectionType = Dictionary<SectionType, SectionEnrollment>()
+    var enrollmentsBySectionType = Dictionary<SectionType, SectionEnrollmentStatus>()
     var course: Course? = nil {
         didSet {
             self.refresh()

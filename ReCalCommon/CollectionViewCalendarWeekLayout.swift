@@ -8,7 +8,7 @@
 
 import UIKit
 
-let debug = false
+private let debug = false
 
 let gridLineWidth: CGFloat = 0.5
 let gridLineZIndex = 1
