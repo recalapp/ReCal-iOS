@@ -23,6 +23,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     var enrolledCourses: [Course] {
         set {
             self.enrolledCoursesSet = Set<Course>(initialItems: newValue)
+            self.clearVisibleCoursesStorageCache()
+            self.tableView.reloadData()
         }
         get {
             return self.enrolledCoursesSet.toArray()
