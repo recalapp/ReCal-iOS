@@ -38,6 +38,9 @@ public extension String {
     public func contains(other: String, caseSensitive: Bool = true) -> Bool {
         return self.rangeOfString(other, options: caseSensitive ? NSStringCompareOptions.allZeros : NSStringCompareOptions.CaseInsensitiveSearch) != nil
     }
+    public func isNumeric() -> Bool {
+        return self.toInt() != nil
+    }
 }
 
 public extension UIColor {

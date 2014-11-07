@@ -28,13 +28,20 @@ class CourseSearchOperation: NSOperation {
     
     private var searchPredicate: NSPredicate {
         let queries = self.searchQuery.componentsSeparatedByString(" ").filter { countElements($0) > 0 }
-        let predicates = queries.map {(query: String) -> NSPredicate in
-            let deptPredicate = NSPredicate(format: "ANY courseListings.departmentCode CONTAINS[c] %@", argumentArray: [query])
-            let numPredicate = NSPredicate(format: "ANY courseListings.courseNumber CONTAINS[c] %@", argumentArray: [query])
-            let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", argumentArray: [query])
-            return NSCompoundPredicate.orPredicateWithSubpredicates([deptPredicate, numPredicate, titlePredicate])
-        }
+        let predicates = queries.map { self.predicateForQuery($0) }
         return NSCompoundPredicate.andPredicateWithSubpredicates(predicates)
+    }
+    
+    private func predicateForQuery(query: String) -> NSPredicate {
+        switch query {
+        case _ where query.isNumeric():
+            let numberPredicate = NSPredicate(format: "ANY courseListings.courseNumber CONTAINS[c] %@", query)
+            return numberPredicate!
+        default:
+            let deptPredicate = NSPredicate(format: "ANY courseListings.departmentCode CONTAINS[c] %@", argumentArray: [query])
+            let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", argumentArray: [query])
+            return NSCompoundPredicate.orPredicateWithSubpredicates([deptPredicate, titlePredicate])
+        }
     }
     
     override func main() {

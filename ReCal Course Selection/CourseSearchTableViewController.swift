@@ -28,8 +28,21 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             return self.enrolledCoursesSet.toArray()
         }
     }
-    private var enrolledCoursesSet: Set<Course> = Set<Course>()
-    private var filteredCourses: [Course] = []
+    private var enrolledCoursesSet: Set<Course> = Set<Course>() {
+        didSet {
+            enrolledCoursesSet.didAdd = { (_) in
+                self.clearVisibleCoursesStorageCache()
+            }
+            enrolledCoursesSet.didRemove = { (_) in
+                self.clearVisibleCoursesStorageCache()
+            }
+        }
+    }
+    private var filteredCourses: [Course] = [] {
+        didSet {
+            self.clearVisibleCoursesStorageCache()
+        }
+    }
     
     private var visibleCourses: [Course] {
         if self.searchController != nil && self.searchController.searchBar.text == "" {
@@ -38,12 +51,22 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         return self.filteredCourses
     }
     
+    private var visibleEnrolledCoursesStorage: [Course]?
+    
     private var visibleEnrolledCourses: [Course] {
-        return self.visibleCourses.filter { self.enrolledCoursesSet.contains($0) }
+        if visibleEnrolledCoursesStorage == nil {
+            visibleEnrolledCoursesStorage = self.visibleCourses.filter { self.enrolledCoursesSet.contains($0) }
+        }
+        return visibleEnrolledCoursesStorage!
     }
     
+    private var visibleUnenrolledCoursesStorage: [Course]?
+    
     private var visibleUnenrolledCourses: [Course] {
-        return self.visibleCourses.filter { !self.enrolledCoursesSet.contains($0) }
+        if visibleUnenrolledCoursesStorage == nil {
+            visibleUnenrolledCoursesStorage = self.visibleCourses.filter { !self.enrolledCoursesSet.contains($0) }
+        }
+        return visibleUnenrolledCoursesStorage!
     }
     
     lazy private var courseDetailsViewController: CourseDetailsViewController = {
@@ -67,6 +90,11 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     lazy private var coreDataConverter: CoreDataToCourseStructConverter = CoreDataToCourseStructConverter()
     
     private var notificationObservers: [NSObjectProtocol] = []
+    
+    private func clearVisibleCoursesStorageCache() {
+        self.visibleEnrolledCoursesStorage = nil
+        self.visibleUnenrolledCoursesStorage = nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
