@@ -102,6 +102,21 @@ struct Schedule : ManagedObjectProxy {
             schedule.removeEnrolledCourses(schedule.enrolledCourses)
             
             for course in self.enrolledCourses {
+                
+                switch course.managedObjectProxyId {
+                case .Existing(let objectId):
+                    var courseOpt: CDCourse?
+                    managedObjectContext.performBlockAndWait {
+                        courseOpt = managedObjectContext.objectWithID(objectId) as? CDCourse
+                    }
+                    if let course = courseOpt {
+                        schedule.addEnrolledCoursesObject(course)
+                    } else {
+                        return .Failure
+                    }
+                case .NewObject:
+                    return .Failure
+                }
                 // TODO swift compiler has a bug with this piece of code. Try again later
 //                switch course.commitToManagedObjectContext(managedObjectContext) {
 //                case .Success(let courseManagedObject):
@@ -112,6 +127,20 @@ struct Schedule : ManagedObjectProxy {
             }
             schedule.removeEnrolledSections(schedule.enrolledSections)
             for section in self.enrolledSections {
+                switch section.managedObjectProxyId {
+                case .Existing(let objectId):
+                    var sectionOpt: CDSection?
+                    managedObjectContext.performBlockAndWait {
+                        sectionOpt = managedObjectContext.objectWithID(objectId) as? CDSection
+                    }
+                    if let section = sectionOpt {
+                        schedule.addEnrolledSectionsObject(section)
+                    } else {
+                        return .Failure
+                    }
+                case .NewObject:
+                    return .Failure
+                }
 //                switch section.commitToManagedObjectContext(managedObjectContext) {
 //                case .Success(let sectionManagedObject):
 //                    schedule.addEnrolledSectionsObject(sectionManagedObject)
