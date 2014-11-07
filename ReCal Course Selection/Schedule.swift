@@ -19,6 +19,7 @@ struct Schedule : ManagedObjectProxy {
     let termCode: String
     var enrolledCourses: OrderedSet<Course>
     var courseSectionTypeEnrollments: Dictionary<Course, SectionTypeEnrollment>
+    var courseColorMap: Dictionary<Course, UIColor>
     
     var enrolledSections: [Section] {
         let sectionTypeEnrollments = self.courseSectionTypeEnrollments.values.array
@@ -73,6 +74,8 @@ struct Schedule : ManagedObjectProxy {
             }
             self.courseSectionTypeEnrollments[course] = sectionTypeEnrollment
         }
+        self.courseColorMap = Dictionary()
+        self.updateCourseColorMap()
     }
     init(name: String, termCode: String) {
         self.managedObjectProxyId = .NewObject
@@ -80,6 +83,7 @@ struct Schedule : ManagedObjectProxy {
         self.termCode = termCode
         self.enrolledCourses = OrderedSet()
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
+        self.courseColorMap = Dictionary()
     }
     
     mutating func updateCourseSectionTypeEnrollments() {
@@ -100,6 +104,14 @@ struct Schedule : ManagedObjectProxy {
                     }
                 }
                 self.courseSectionTypeEnrollments[course] = sectionTypeEnrollment
+            }
+        }
+    }
+    
+    mutating func updateCourseColorMap() {
+        for course in self.enrolledCourses {
+            if self.courseColorMap[course] == nil {
+                self.courseColorMap[course] = UIColor.greenColor()
             }
         }
     }

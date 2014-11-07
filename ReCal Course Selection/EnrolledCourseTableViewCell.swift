@@ -17,8 +17,9 @@ class EnrolledCourseTableViewCell: UITableViewCell {
             self.refresh()
         }
     }
+    var color: UIColor? 
     private var colorTag: UIColor? {
-        return self.allEnrolled ? self.course?.color : self.course?.color.darkerColor().darkerColor()
+        return self.allEnrolled ? self.color? : self.color?.darkerColor().darkerColor()
     }
     /// returns true if all possible sections have enrollment
     private var allEnrolled: Bool {
@@ -118,7 +119,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: initialSelection)
                 slidingSelectionControl.preferredMaxLayoutWidth = self.contentView.bounds.size.width
                 slidingSelectionControl.defaultBackgroundColor = UIColor.darkBlackGrayColor()
-                slidingSelectionControl.tintColor = self.course?.color
+                slidingSelectionControl.tintColor = self.color?
                 slidingSelectionControl.layoutMargins = UIEdgeInsetsZero
                 self.contentView.addSubview(slidingSelectionControl)
                 let topConstraint = NSLayoutConstraint(item: slidingSelectionControl, attribute: .Top, relatedBy: .Equal, toItem: prev, attribute: .Bottom, multiplier: 1, constant: 8)

@@ -159,6 +159,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         if self.schedule == nil {
             return
         }
+        self.enrolledCoursesTableViewDataSource.courseColorMap = self.schedule.courseColorMap
         self.enrolledCoursesTableViewDataSource.enrollments = self.schedule.courseSectionTypeEnrollments
         self.enrolledCoursesView.reloadData()
     }
@@ -168,6 +169,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             return
         }
         self.scheduleCollectionViewDataSource.enrollments = self.schedule.courseSectionTypeEnrollments
+        self.scheduleCollectionViewDataSource.courseColorMap = self.schedule.courseColorMap
         self.scheduleView.reloadData()
     }
     
@@ -240,6 +242,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         assert(viewController == self.searchViewController, "Wrong view controller")
         self.schedule.enrolledCourses = OrderedSet(initialValues: viewController.enrolledCourses)
         self.schedule.updateCourseSectionTypeEnrollments()
+        self.schedule.updateCourseColorMap()
         self.reloadScheduleView()
         self.reloadEnrolledCoursesView()
         self.saveSchedule()

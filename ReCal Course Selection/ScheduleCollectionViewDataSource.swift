@@ -29,6 +29,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
             self.preloadCache()
         }
     }
+    var courseColorMap: Dictionary<Course, UIColor> = Dictionary()
     private var enrolledCourses: [Course] {
         return self.enrollments.keys.array
     }
@@ -126,6 +127,9 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as EventCollectionViewCell
         let event = self.eventForIndexPath(indexPath)
         cell.event = event
+        if let color = self.courseColorMap[event.course] {
+            cell.color = color
+        }
         if event.enrolled {
             collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
             cell.selected = true

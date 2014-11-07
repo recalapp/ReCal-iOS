@@ -15,6 +15,7 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
     
     weak var delegate: EnrolledCoursesTableViewDataSourceDelegate?
     var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>>()
+    var courseColorMap: Dictionary<Course, UIColor> = Dictionary()
     var enrolledCourses: [Course] {
         return self.enrollments.keys.array
     }
@@ -31,6 +32,8 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
         let course = self.courseForIndexPath(indexPath)
         cell.enrollmentsBySectionType = self.enrollments[course]!
         cell.expanded = indexPath == self.selectedIndexPath
+        // color must be set before course, as setting course forces a refresh
+        cell.color = self.courseColorMap[course]
         cell.course = course
         cell.delegate = self
         return cell

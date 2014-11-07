@@ -16,7 +16,6 @@ struct Course: Printable, ManagedObjectProxy {
     let courseListings: [CourseListing]
     let title: String
     let courseDescription: String
-    let color: UIColor
     let sections: [Section]
     let managedObjectProxyId: ManagedObjectProxyId
     let allSectionTypes: [SectionType]
@@ -24,7 +23,6 @@ struct Course: Printable, ManagedObjectProxy {
     init(managedObject: CDCourse) {
         self.title = managedObject.title
         self.courseDescription = managedObject.courseDescription
-        self.color = UIColor.greenColor() // TODO get proper color
         self.courseListings = managedObject.courseListings.allObjects.map { CourseListing(managedObject: $0 as CDCourseListing) }
         self.sections = managedObject.sections.allObjects.map { Section(managedObject: $0 as CDSection) }.sorted { $0.sectionName < $1.sectionName }
         self.managedObjectProxyId = .Existing(managedObject.objectID)

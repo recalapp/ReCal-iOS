@@ -25,12 +25,9 @@ class EventCollectionViewCell: UICollectionViewCell {
     }
     
     @IBOutlet weak var eventTitleLabel: UILabel!
-    var color: UIColor {
-        get {
-            if let course = self.event?.course {
-                return course.color
-            }
-            return UIColor.greenColor()
+    var color: UIColor = UIColor.greenColor() {
+        didSet {
+            self.updateColor()
         }
     }
     
