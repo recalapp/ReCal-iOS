@@ -43,14 +43,16 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
     }
     func handleSelectionInTableView(tableView: UITableView, forRowAtIndexPath indexPath: NSIndexPath) {
         if self.selectedIndexPath == indexPath {
-            return
-        }
-        let oldSelectedOpt = self.selectedIndexPath
-        self.selectedIndexPath = indexPath
-        if let oldSelected = oldSelectedOpt {
-            tableView.reloadRowsAtIndexPaths([oldSelected, indexPath], withRowAnimation: .Fade)
-        } else {
+            self.selectedIndexPath = nil
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else {
+            let oldSelectedOpt = self.selectedIndexPath
+            self.selectedIndexPath = indexPath
+            if let oldSelected = oldSelectedOpt {
+                tableView.reloadRowsAtIndexPaths([oldSelected, indexPath], withRowAnimation: .Fade)
+            } else {
+                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
         }
     }
     
