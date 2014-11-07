@@ -13,7 +13,7 @@ public protocol ManagedObjectProxy: Hashable {
     typealias ManagedObject : NSManagedObject
     init(managedObject: ManagedObject)
     var managedObjectProxyId: ManagedObjectProxyId { get }
-    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext)->ManagedObjectProxyCommitResult<ManagedObject>
+    mutating func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext)->ManagedObjectProxyCommitResult
 }
 
 public enum ManagedObjectProxyId: Hashable {
@@ -41,7 +41,7 @@ public func == (lhs: ManagedObjectProxyId, rhs: ManagedObjectProxyId) -> Bool {
     }
 }
 
-public enum ManagedObjectProxyCommitResult<T: NSManagedObject> {
-    case Success(T)
+public enum ManagedObjectProxyCommitResult {
+    case Success(NSManagedObjectID)
     case Failure
 }

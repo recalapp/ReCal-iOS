@@ -14,7 +14,7 @@ private let hashPrimeMultiplier = 524287
 struct Schedule : ManagedObjectProxy {
     typealias ManagedObject = CDSchedule
     private typealias SectionTypeEnrollmentDictionary = Dictionary<SectionType, SectionEnrollmentStatus>
-    let managedObjectProxyId: ManagedObjectProxyId
+    private(set) internal var managedObjectProxyId: ManagedObjectProxyId
     let name: String
     let termCode: String
     var enrolledCourses: OrderedSet<Course>
@@ -97,33 +97,21 @@ struct Schedule : ManagedObjectProxy {
         }
     }
     
-    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
-        let updateManagedObject = { (schedule: CDSchedule) -> ManagedObjectProxyCommitResult<CDSchedule> in
-            schedule.removeEnrolledCourses(schedule.enrolledCourses)
-            
+    mutating func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
+        let updateManagedObject = { (schedule: CDSchedule) -> ManagedObjectProxyCommitResult in
+            for course in schedule.enrolledCourses.array {
+                schedule.removeEnrolledCoursesObject(course as CDCourse)
+            }
             for course in self.enrolledCourses {
-                
-                switch course.managedObjectProxyId {
-                case .Existing(let objectId):
-                    var courseOpt: CDCourse?
+                // swift compiler has a bug with this piece of code. Try again later
+                switch course.commitToManagedObjectContext(managedObjectContext) {
+                case .Success(let objectId):
                     managedObjectContext.performBlockAndWait {
-                        courseOpt = managedObjectContext.objectWithID(objectId) as? CDCourse
+                        schedule.addEnrolledCoursesObject(managedObjectContext.objectWithID(objectId) as CDCourse)
                     }
-                    if let course = courseOpt {
-                        schedule.addEnrolledCoursesObject(course)
-                    } else {
-                        return .Failure
-                    }
-                case .NewObject:
+                case .Failure:
                     return .Failure
                 }
-                // TODO swift compiler has a bug with this piece of code. Try again later
-//                switch course.commitToManagedObjectContext(managedObjectContext) {
-//                case .Success(let courseManagedObject):
-//                    schedule.addEnrolledCoursesObject(courseManagedObject)
-//                case .Failure:
-//                    return .Failure
-//                }
             }
             schedule.removeEnrolledSections(schedule.enrolledSections)
             for section in self.enrolledSections {
@@ -141,14 +129,17 @@ struct Schedule : ManagedObjectProxy {
                 case .NewObject:
                     return .Failure
                 }
-//                switch section.commitToManagedObjectContext(managedObjectContext) {
-//                case .Success(let sectionManagedObject):
-//                    schedule.addEnrolledSectionsObject(sectionManagedObject)
-//                case .Failure:
-//                    return .Failure
-//                }
+                switch section.commitToManagedObjectContext(managedObjectContext) {
+                case .Success(let objectId):
+                    managedObjectContext.performBlockAndWait {
+                        schedule.addEnrolledSectionsObject(managedObjectContext.objectWithID(objectId) as CDSection)
+                    }
+                case .Failure:
+                    return .Failure
+                }
             }
-            return .Success(schedule)
+            self.managedObjectProxyId = .Existing(schedule.objectID)
+            return .Success(schedule.objectID)
         }
         switch self.managedObjectProxyId {
         case .Existing(let objectId):

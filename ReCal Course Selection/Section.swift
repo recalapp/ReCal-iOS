@@ -26,8 +26,14 @@ struct Section: Printable, ManagedObjectProxy {
         self.managedObjectProxyId = .Existing(managedObject.objectID)
     }
     
-    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
-        assertionFailure("Not implemented")
+    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
+        // TODO proper implementation
+        switch self.managedObjectProxyId {
+        case .Existing(let objectId):
+            return .Success(objectId)
+        case .NewObject:
+            return .Failure
+        }
     }
     
     var displayText: String {
@@ -63,7 +69,7 @@ struct SectionMeeting: Hashable, ManagedObjectProxy {
         self.managedObjectProxyId = .Existing(managedObject.objectID)
     }
     
-    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
+    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
         switch self.managedObjectProxyId {
         case .Existing(let objectId):
             var sectionMeetingOpt: CDSectionMeeting?
@@ -79,7 +85,7 @@ struct SectionMeeting: Hashable, ManagedObjectProxy {
                 sectionMeeting.daysStorage = self.days.reduce("", combine: { (dayString, day) in
                     dayString + " \(day.shortDayString)"
                 })
-                return .Success(sectionMeeting)
+                return .Success(sectionMeeting.objectID)
             }
             return .Failure
         case .NewObject:

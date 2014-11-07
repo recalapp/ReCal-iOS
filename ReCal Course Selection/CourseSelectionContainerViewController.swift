@@ -8,10 +8,11 @@
 
 import UIKit
 
-let courseSelectionViewControllerStoryboardId = "CourseSelection"
-let courseSelectionEmbedSegueId = "CourseSelectionEmbed"
+private let courseSelectionViewControllerStoryboardId = "CourseSelection"
+private let courseSelectionEmbedSegueId = "CourseSelectionEmbed"
+private let changeScheduleSegueId = "ChangeSchedule"
 
-class CourseSelectionContainerViewController: UIViewController {
+class CourseSelectionContainerViewController: UIViewController, ScheduleSelectionDelegate {
     
     @IBOutlet weak var navigationBarTitleItem: UINavigationItem!
     private var courseSelectionViewController: CourseSelectionViewController!
@@ -29,12 +30,14 @@ class CourseSelectionContainerViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.currentSchedule = Schedule(name: "Test Schedule", termCode: "1152")
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.courseSelectionViewController.viewContentSize = self.contentView.bounds.size
+        if self.currentSchedule == nil {
+            self.performSegueWithIdentifier(changeScheduleSegueId, sender: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,10 +45,11 @@ class CourseSelectionContainerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - Content Container
-    override func preferredContentSizeDidChangeForChildContentContainer(container: UIContentContainer) {
-        
+    // MARK: - Schedule Selection Delegate
+    func didSelectSchedule(schedule: Schedule) {
+        self.currentSchedule = schedule
     }
+    // MARK: - Content Container
     
     override func sizeForChildContentContainer(container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         if container === self.courseSelectionViewController {
@@ -65,9 +69,15 @@ class CourseSelectionContainerViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == courseSelectionEmbedSegueId {
+        switch segue {
+        case let _ where segue.identifier == courseSelectionEmbedSegueId:
             self.courseSelectionViewController = segue.destinationViewController as CourseSelectionViewController
             self.courseSelectionViewController.schedule = self.currentSchedule
+        case let _ where segue.identifier == changeScheduleSegueId:
+            let scheduleSelectionViewController = (segue.destinationViewController as UINavigationController).topViewController as ScheduleSelectionViewController
+            scheduleSelectionViewController.delegate = self
+        default:
+            break
         }
     }
     

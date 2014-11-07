@@ -77,6 +77,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             searchController.searchBar.frame = CGRect(origin: CGPointZero, size: CGSize(width: self.tableView.bounds.size.width, height: 44))
             searchController.searchResultsUpdater = self
             searchController.searchBar.barStyle = .Black
+            searchController.searchBar.keyboardAppearance = .Dark
             searchController.delegate = self
             searchController.dimsBackgroundDuringPresentation = false
             self.tableView.tableHeaderView = searchController.searchBar

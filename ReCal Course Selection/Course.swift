@@ -36,10 +36,10 @@ struct Course: Printable, ManagedObjectProxy {
         }).toArray()
     }
     
-    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
-        let updateManagedObject: ManagedObject -> ManagedObjectProxyCommitResult<ManagedObject> = { (course) in
+    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
+        let updateManagedObject: ManagedObject -> ManagedObjectProxyCommitResult = { (course) in
             // TODO update course
-            return .Success(course)
+            return .Success(course.objectID)
         }
         switch self.managedObjectProxyId {
         case .Existing(let objectId):
@@ -111,7 +111,7 @@ struct CourseListing: Printable, ManagedObjectProxy {
         hash = hash &* hashPrimeMultipler &+ self.isPrimary.hashValue
         return hash
     }
-    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult<ManagedObject> {
+    func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
         switch self.managedObjectProxyId {
         case .Existing(let objectId):
             var courseListingOpt: CDCourseListing?
@@ -122,7 +122,7 @@ struct CourseListing: Printable, ManagedObjectProxy {
                 courseListing.courseNumber = self.courseNumber
                 courseListing.departmentCode = self.departmentCode
                 courseListing.isPrimary = NSNumber(bool: self.isPrimary)
-                return .Success(courseListing)
+                return .Success(courseListing.objectID)
             }
             return .Failure
         case .NewObject:
