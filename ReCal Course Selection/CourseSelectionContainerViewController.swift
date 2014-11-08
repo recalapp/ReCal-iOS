@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReCalCommon
 
 private let courseSelectionViewControllerStoryboardId = "CourseSelection"
 private let courseSelectionEmbedSegueId = "CourseSelectionEmbed"
@@ -14,6 +15,7 @@ private let changeScheduleSegueId = "ChangeSchedule"
 
 class CourseSelectionContainerViewController: UIViewController, ScheduleSelectionDelegate {
     
+    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var navigationBarTitleItem: UINavigationItem!
     private var courseSelectionViewController: CourseSelectionViewController!
     private var currentSchedule: Schedule! {
@@ -31,6 +33,12 @@ class CourseSelectionContainerViewController: UIViewController, ScheduleSelectio
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.tintColor = ColorScheme.currentColorScheme.actionableTextColor
+        switch Settings.currentSettings.theme {
+        case .Light:
+            self.navigationBar.barStyle = .Default
+        case .Dark:
+            self.navigationBar.barStyle = .Black
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -76,7 +84,15 @@ class CourseSelectionContainerViewController: UIViewController, ScheduleSelectio
             self.courseSelectionViewController = segue.destinationViewController as CourseSelectionViewController
             self.courseSelectionViewController.schedule = self.currentSchedule
         case let _ where segue.identifier == changeScheduleSegueId:
-            let scheduleSelectionViewController = (segue.destinationViewController as UINavigationController).topViewController as ScheduleSelectionViewController
+            let navigationController = segue.destinationViewController as UINavigationController
+            switch Settings.currentSettings.theme {
+            case .Light:
+                navigationController.navigationBar.barStyle = .Default
+            case .Dark:
+                navigationController.navigationBar.barStyle = .Black
+            }
+            
+            let scheduleSelectionViewController = navigationController.topViewController as ScheduleSelectionViewController
             scheduleSelectionViewController.delegate = self
         default:
             break

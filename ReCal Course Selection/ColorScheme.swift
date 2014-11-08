@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ColorScheme {
+public class ColorScheme {
     // MARK: - Singleton pattern
     private struct Static {
         static var instance: ColorScheme?
     }
-    class var currentColorScheme: ColorScheme {
+    
+    public class var currentColorScheme: ColorScheme {
         get {
             return Static.instance!
         }
@@ -22,98 +23,117 @@ class ColorScheme {
         }
     }
     
+    public init(){
+        
+    }
+    
     // MARK: - Colors
     /// The background color for views that do not display actual content
-    var accessoryBackgroundColor: UIColor {
+    public var accessoryBackgroundColor: UIColor {
         return UIColor.whiteColor()
     }
     
     /// Color used when one content is portrayed to be less important than the main content, such as a table view header
-    var secondaryContentBackgroundColor: UIColor {
+    public var secondaryContentBackgroundColor: UIColor {
         return UIColor.lightGrayColor()
     }
     
     /// The background color for views that do display content
-    var contentBackgroundColor: UIColor {
+    public var contentBackgroundColor: UIColor {
         return UIColor.lightGrayColor()
     }
     
     /// The background color for selected items
-    var selectedContentBackgroundColor: UIColor {
+    public var selectedContentBackgroundColor: UIColor {
         return UIColor.blueColor()
     }
     
     /// The text color for content
-    var textColor: UIColor {
+    public var textColor: UIColor {
         return UIColor.darkTextColor()
     }
     
     /// Color to indicate that a text is a button, or is actionable
-    var actionableTextColor: UIColor {
+    public var actionableTextColor: UIColor {
         return UIColor.blueColor()
+    }
+    
+    /// The blur effect to be used throughout the app
+    public var blurEffect: UIVisualEffect {
+        return UIBlurEffect(style: .Light)
     }
 }
 
-class LightColorScheme: ColorScheme {
+public class LightColorScheme: ColorScheme {
     /// The background color for views that do not display actual content
-    override var accessoryBackgroundColor: UIColor {
-        return UIColor.whiteColor()
+    public override var accessoryBackgroundColor: UIColor {
+        return UIColor(red: 201.0/255.0, green: 201.0/255.0, blue: 206.0/255.0, alpha: 1)
     }
     
     /// Color used when one content is portrayed to be less important than the main content, such as a table view header
-    override var secondaryContentBackgroundColor: UIColor {
+    public override var secondaryContentBackgroundColor: UIColor {
+        return self.accessoryBackgroundColor.lighterColor()
+    }
+    
+    /// The background color for views that do display content
+    public override var contentBackgroundColor: UIColor {
+        return UIColor.whiteColor()
+    }
+    
+    /// The background color for selected items
+    public override var selectedContentBackgroundColor: UIColor {
         return UIColor.lightGrayColor().lighterColor()
     }
     
-    /// The background color for views that do display content
-    override var contentBackgroundColor: UIColor {
-        return UIColor.lightGrayColor()
-    }
-    
-    /// The background color for selected items
-    override var selectedContentBackgroundColor: UIColor {
-        return UIColor.darkGrayColor()
-    }
-    
     /// The text color for content
-    override var textColor: UIColor {
+    public override var textColor: UIColor {
         return UIColor.darkTextColor()
     }
     
     /// Color to indicate that a text is a button, or is actionable
-    override var actionableTextColor: UIColor {
+    public override var actionableTextColor: UIColor {
         return UIColor.blueColor()
+    }
+    
+    /// The blur effect to be used throughout the app
+    public override var blurEffect: UIVisualEffect {
+        return UIBlurEffect(style: .Light)
     }
 }
 
-class DarkColorScheme: ColorScheme {
+public class DarkColorScheme: ColorScheme {
     /// The background color for views that do not display actual content
-    override var accessoryBackgroundColor: UIColor {
+    public override var accessoryBackgroundColor: UIColor {
         return UIColor.lightBlackGrayColor()
     }
     
     /// Color used when one content is portrayed to be less important than the main content, such as a table view header
-    override var secondaryContentBackgroundColor: UIColor {
+    public override var secondaryContentBackgroundColor: UIColor {
         return UIColor.lightBlackGrayColor().lighterColor()
     }
     
     /// The background color for views that do display content
-    override var contentBackgroundColor: UIColor {
+    public override var contentBackgroundColor: UIColor {
         return UIColor.darkBlackGrayColor().lighterColor()
     }
     
     /// The background color for selected items
-    override var selectedContentBackgroundColor: UIColor {
+    public override var selectedContentBackgroundColor: UIColor {
         return UIColor.darkBlackGrayColor()
     }
     
     /// The text color for content
-    override var textColor: UIColor {
+    public override var textColor: UIColor {
         return UIColor.whiteColor()
     }
     
     /// Color to indicate that a text is a button, or is actionable
-    override var actionableTextColor: UIColor {
+    public override var actionableTextColor: UIColor {
         return UIColor(red: 52.0/255.0, green: 152.0/255.0, blue: 219.0/255.0, alpha: 1)
+    }
+    
+    /// The blur effect to be used throughout the app
+    public override var blurEffect: UIVisualEffect {
+        return UIBlurEffect(style: .Dark)
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReCalCommon
 
 class TimeRowHeaderBackgroundView: UICollectionReusableView {
     override init(frame: CGRect) {

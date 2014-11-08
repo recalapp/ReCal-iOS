@@ -52,6 +52,7 @@
                     </view>
                     <connections>
                         <outlet property="contentView" destination="Vy0-WG-5z2" id="Mmt-F1-H6g"/>
+                        <outlet property="navigationBar" destination="8RR-VC-gvW" id="Sb3-f5-lM1"/>
                         <outlet property="navigationBarTitleItem" destination="kdd-XO-5c7" id="0d6-yQ-nkz"/>
                     </connections>
                 </viewController>
@@ -108,7 +109,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="b7e-dq-dSC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.12549019607843137" green="0.12549019607843137" blue="0.11372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NameCell" id="zOB-rK-4qW">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -117,7 +118,6 @@
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Schedule Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Ji-fG-UON">
                                             <rect key="frame" x="8" y="8" width="584" height="27.5"/>
-                                            <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardAppearance="alert"/>
                                             <connections>
@@ -126,7 +126,6 @@
                                             </connections>
                                         </textField>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.18431372549019609" green="0.18431372549019609" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="3Ji-fG-UON" secondAttribute="bottom" id="5za-Nh-S8q"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="3Ji-fG-UON" secondAttribute="trailing" id="7ae-jL-LLz"/>

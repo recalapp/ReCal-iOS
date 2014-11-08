@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReCalCommon
 
 class CourseSearchResultTableViewCell: UITableViewCell {
 
@@ -22,7 +23,7 @@ class CourseSearchResultTableViewCell: UITableViewCell {
         self.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
         self.textLabel.textColor = ColorScheme.currentColorScheme.textColor
         self.detailTextLabel?.textColor = ColorScheme.currentColorScheme.textColor
-        self.tintColor = ColorScheme.currentColorScheme.textColor
+        //self.tintColor = ColorScheme.currentColorScheme.textColor
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

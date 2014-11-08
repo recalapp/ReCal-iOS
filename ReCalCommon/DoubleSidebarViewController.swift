@@ -9,7 +9,6 @@
 import UIKit
 
 private let animationSpeed: NSTimeInterval = 0.5
-private let sidebarCoverBlurEffectStyle: UIBlurEffectStyle = .Dark
 
 private func breakCharacters(string: String) -> String {
     if string == "" {
@@ -228,8 +227,8 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarContentView, inParentView: self.rightSidebarView, withInsets: UIEdgeInsets(top: 0, left: self.sidebarInnerPadding, bottom: 0, right: self.sidebarOuterPadding)))
         
         // add the covers
-        let leftBlurEffect = UIBlurEffect(style: sidebarCoverBlurEffectStyle)
-        let rightBlurEffect = UIBlurEffect(style: sidebarCoverBlurEffectStyle)
+        let leftBlurEffect = ColorScheme.currentColorScheme.blurEffect
+        let rightBlurEffect = ColorScheme.currentColorScheme.blurEffect
         self.leftSidebarCoverView = UIVisualEffectView(effect: leftBlurEffect)
         self.leftSidebarCoverView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.leftSidebarCoverView.userInteractionEnabled = false

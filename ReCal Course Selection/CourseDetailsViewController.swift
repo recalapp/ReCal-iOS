@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReCalCommon
 
 private let singleLabelCellReuseIdentifier = "SingleLabel"
 
@@ -41,7 +42,9 @@ class CourseDetailsViewController: UITableViewController {
             if let course = self.course {
                 let label = cell.contentView.viewWithTag(1) as UILabel
                 label.text = "\(course) - \(course.title)"
+                label.textColor = ColorScheme.currentColorScheme.textColor
             }
+            cell.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
             return cell
         case (1, 0):
             let cell = tableView.dequeueReusableCellWithIdentifier(singleLabelCellReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
@@ -49,7 +52,9 @@ class CourseDetailsViewController: UITableViewController {
                 let label = cell.contentView.viewWithTag(1) as UILabel
                 label.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
                 label.text = course.courseDescription
+                label.textColor = ColorScheme.currentColorScheme.textColor
             }
+            cell.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
             return cell
         default:
             assertionFailure("not implemented")

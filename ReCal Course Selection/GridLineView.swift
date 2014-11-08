@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReCalCommon
 
 class GridLineView: UICollectionReusableView {
     override init(frame: CGRect) {

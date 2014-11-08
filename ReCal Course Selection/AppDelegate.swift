@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import ReCalCommon
 
 @UIApplicationMain
 
@@ -18,6 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        switch Settings.currentSettings.theme {
+        case .Light:
+            ColorScheme.currentColorScheme = LightColorScheme()
+        case .Dark:
+            ColorScheme.currentColorScheme = DarkColorScheme()
+        }
+        
         CoreDataImporter.defaultImporter.persistentStoreCoordinator = self.persistentStoreCoordinator
         if !NSUserDefaults.standardUserDefaults().boolForKey(userDefaultsKeyNotFirstLaunch) {
             println("saving")
@@ -34,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             CoreDataImporter.defaultImporter.importPendingItems()
         }
         
-        ColorScheme.currentColorScheme = DarkColorScheme()
+        
         return true
     }
 

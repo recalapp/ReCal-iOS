@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReCalCommon
 
 private let nameCellIdentifier = "NameCell"
 
@@ -21,7 +22,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.tableView.backgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -31,6 +32,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     
     override func viewDidAppear(animated: Bool) {
         self.nameTextField?.becomeFirstResponder()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -92,6 +94,18 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(nameCellIdentifier, forIndexPath: indexPath) as UITableViewCell
 
+        cell.textLabel.textColor = ColorScheme.currentColorScheme.textColor
+        cell.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
+        if let nameTextField = cell.viewWithTag(1) as? UITextField {
+            nameTextField.textColor = ColorScheme.currentColorScheme.textColor
+            nameTextField.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
+            switch Settings.currentSettings.theme {
+            case .Light:
+                nameTextField.keyboardAppearance = .Light
+            case .Dark:
+                nameTextField.keyboardAppearance = .Dark
+            }
+        }
         return cell
     }
 

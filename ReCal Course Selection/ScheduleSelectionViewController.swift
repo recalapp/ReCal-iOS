@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReCalCommon
 
 private let scheduleCellIdentifier = "ScheduleCell"
 
@@ -54,6 +55,8 @@ class ScheduleSelectionViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.backgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
+        
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
             self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             self.fetchSchedules()
@@ -103,7 +106,8 @@ class ScheduleSelectionViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(scheduleCellIdentifier, forIndexPath: indexPath) as UITableViewCell
 
-        cell.textLabel.textColor = UIColor.lightTextColor()
+        cell.textLabel.textColor = ColorScheme.currentColorScheme.textColor
+        cell.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
         if let schedule = self.scheduleAtIndexPath(indexPath) {
             cell.textLabel.text = schedule.name
         } else {

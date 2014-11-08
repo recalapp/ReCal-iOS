@@ -120,7 +120,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 }
                 let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: initialSelection)
                 slidingSelectionControl.preferredMaxLayoutWidth = self.contentView.bounds.size.width
-                slidingSelectionControl.defaultBackgroundColor = self.backgroundColor ?? ColorScheme.currentColorScheme.selectedContentBackgroundColor
+                slidingSelectionControl.defaultBackgroundColor = ColorScheme.currentColorScheme.selectedContentBackgroundColor
                 slidingSelectionControl.tintColor = self.color?
                 slidingSelectionControl.layoutMargins = UIEdgeInsetsZero
                 self.contentView.addSubview(slidingSelectionControl)

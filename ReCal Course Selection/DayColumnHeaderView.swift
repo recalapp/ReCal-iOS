@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReCalCommon
 
 class DayColumnHeaderView: UICollectionReusableView {
     @IBOutlet weak var weekDayLabel: UILabel!
