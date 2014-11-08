@@ -119,6 +119,13 @@ func == (lhs: SectionMeeting, rhs: SectionMeeting) -> Bool {
 }
 
 func == (lhs: Section, rhs: Section) -> Bool {
+    switch (lhs.managedObjectProxyId, rhs.managedObjectProxyId) {
+    case let (.Existing(lhsId), .Existing(rhsId)):
+        // shortcut, because sections are never modified
+        return lhsId == rhsId
+    default:
+        break
+    }
     if lhs.type != rhs.type {
         return false
     }

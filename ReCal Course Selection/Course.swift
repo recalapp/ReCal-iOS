@@ -129,6 +129,13 @@ func == (lhs: CourseListing, rhs: CourseListing)-> Bool {
 }
 
 func == (lhs: Course, rhs: Course)-> Bool {
+    switch (lhs.managedObjectProxyId, rhs.managedObjectProxyId) {
+    case let (.Existing(lhsId), .Existing(rhsId)):
+        // shortcut, because courses are never modified
+        return lhsId == rhsId
+    default:
+        break
+    }
     if lhs.title != rhs.title {
         return false
     }
