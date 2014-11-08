@@ -36,7 +36,6 @@
 		814D4E781A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E771A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift */; };
 		8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */; };
 		8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */; };
-		815E81B51A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E81B41A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift */; };
 		815E81BB1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E81BA1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift */; };
 		816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB511A092144002C610A /* CoreDataExtensions.swift */; };
 		816CBB541A0926F9002C610A /* courses.json in Resources */ = {isa = PBXBuildFile; fileRef = 816CBB531A0926F9002C610A /* courses.json */; };
@@ -222,7 +221,6 @@
 		814D4E771A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleSelectionDelegate.swift; sourceTree = "<group>"; };
 		8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewCell.swift; sourceTree = "<group>"; };
 		8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsCollectionViewCell.xib; sourceTree = "<group>"; };
-		815E81B41A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataToCourseStructConverter.swift; sourceTree = "<group>"; };
 		815E81BA1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionContainerViewController.swift; sourceTree = "<group>"; };
 		816CBB1D1A091D16002C610A /* ReCal Course Selection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReCal Course Selection-Bridging-Header.h"; sourceTree = "<group>"; };
 		816CBB511A092144002C610A /* CoreDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtensions.swift; sourceTree = "<group>"; };
@@ -586,7 +584,6 @@
 				81130BCD1A0C0D7D00F1F496 /* Day.swift */,
 				816CBB551A092909002C610A /* CoreDataImporter.swift */,
 				816CBB511A092144002C610A /* CoreDataExtensions.swift */,
-				815E81B41A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift */,
 				8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */,
 				816CBB1C1A091CFB002C610A /* Core Data */,
 			);
@@ -1094,7 +1091,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				814D4E671A0C573D00C21848 /* CDCourseListing.m in Sources */,
-				815E81B51A09C44E0086C8D3 /* CoreDataToCourseStructConverter.swift in Sources */,
 				81A094EB1A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift in Sources */,
 				814D4E641A0C573D00C21848 /* CDSection.m in Sources */,
 				814D4E781A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift in Sources */,

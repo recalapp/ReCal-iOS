@@ -67,8 +67,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         return managedObjectContext
     }()
     
-    lazy private var coreDataConverter: CoreDataToCourseStructConverter = CoreDataToCourseStructConverter()
-    
     private var notificationObservers: [NSObjectProtocol] = []
     
     private func clearVisibleCoursesStorageCache() {
@@ -297,8 +295,9 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         if searchController == self.searchController {
             let query = searchController.searchBar.text
             let searchOperation = CourseSearchOperation(searchQuery: query, managedObjectContext: self.searchManagedObjectContext, successHandler: { (courses: [CDCourse]) in
-                self.filteredCourses = courses.map { self.coreDataConverter.courseStructFromCoreData($0) }
+                let filtered = courses.map { Course(managedObject:$0) }
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.filteredCourses = filtered
                     self.tableView.reloadData()
                 })
             })
