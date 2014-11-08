@@ -88,6 +88,12 @@
 		81D9F26C19EF4D9600F987B9 /* ReCalCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */; };
 		81D9F26F19EF4D9600F987B9 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
 		81D9F27019EF4D9600F987B9 /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		81E50D441A0DB5420074F381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E50D431A0DB5420074F381 /* AppDelegate.swift */; };
+		81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81E50D451A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld */; };
+		81E50D4C1A0DB5420074F381 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81E50D4A1A0DB5420074F381 /* Main.storyboard */; };
+		81E50D4E1A0DB5420074F381 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81E50D4D1A0DB5420074F381 /* Images.xcassets */; };
+		81E50D511A0DB5420074F381 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81E50D4F1A0DB5420074F381 /* LaunchScreen.xib */; };
+		81E50D5D1A0DB5420074F381 /* ReCal_CalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E50D5C1A0DB5420074F381 /* ReCal_CalendarTests.swift */; };
 		81E6406D19FACDCA003A49F8 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E6406C19FACDCA003A49F8 /* Set.swift */; };
 		81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */; };
 		81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */; };
@@ -143,6 +149,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 81D9F25A19EF4D9600F987B9;
 			remoteInfo = ReCalCommon;
+		};
+		81E50D571A0DB5420074F381 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81E50D3E1A0DB5420074F381;
+			remoteInfo = "ReCal Calendar";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -271,6 +284,16 @@
 		81D9F26519EF4D9600F987B9 /* ReCalCommonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReCalCommonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D9F26A19EF4D9600F987B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCalCommonTests.swift; sourceTree = "<group>"; };
+		81E50D3F1A0DB5420074F381 /* ReCal Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81E50D421A0DB5420074F381 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81E50D431A0DB5420074F381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		81E50D461A0DB5420074F381 /* ReCal_Calendar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReCal_Calendar.xcdatamodel; sourceTree = "<group>"; };
+		81E50D4B1A0DB5420074F381 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		81E50D4D1A0DB5420074F381 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		81E50D501A0DB5420074F381 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		81E50D561A0DB5420074F381 /* ReCal CalendarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal CalendarTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81E50D5B1A0DB5420074F381 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81E50D5C1A0DB5420074F381 /* ReCal_CalendarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_CalendarTests.swift; sourceTree = "<group>"; };
 		81E6406C19FACDCA003A49F8 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSearchPredicate.swift; sourceTree = "<group>"; };
@@ -329,6 +352,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81E50D3C1A0DB5420074F381 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E50D531A0DB5420074F381 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -349,6 +386,8 @@
 				81D9F26819EF4D9600F987B9 /* ReCalCommonTests */,
 				81A094A01A067D6200A0C3CE /* ReCal Course Selection */,
 				81A094B61A067D6200A0C3CE /* ReCal Course SelectionTests */,
+				81E50D401A0DB5420074F381 /* ReCal Calendar */,
+				81E50D591A0DB5420074F381 /* ReCal CalendarTests */,
 				811D481319ED7EB000E3F360 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -362,6 +401,8 @@
 				81D9F26519EF4D9600F987B9 /* ReCalCommonTests.xctest */,
 				81A0949F1A067D6200A0C3CE /* ReCal Course Selection.app */,
 				81A094B31A067D6200A0C3CE /* ReCal Course SelectionTests.xctest */,
+				81E50D3F1A0DB5420074F381 /* ReCal Calendar.app */,
+				81E50D561A0DB5420074F381 /* ReCal CalendarTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -641,6 +682,44 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		81E50D401A0DB5420074F381 /* ReCal Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				81E50D431A0DB5420074F381 /* AppDelegate.swift */,
+				81E50D4A1A0DB5420074F381 /* Main.storyboard */,
+				81E50D4D1A0DB5420074F381 /* Images.xcassets */,
+				81E50D4F1A0DB5420074F381 /* LaunchScreen.xib */,
+				81E50D451A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld */,
+				81E50D411A0DB5420074F381 /* Supporting Files */,
+			);
+			path = "ReCal Calendar";
+			sourceTree = "<group>";
+		};
+		81E50D411A0DB5420074F381 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				81E50D421A0DB5420074F381 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		81E50D591A0DB5420074F381 /* ReCal CalendarTests */ = {
+			isa = PBXGroup;
+			children = (
+				81E50D5C1A0DB5420074F381 /* ReCal_CalendarTests.swift */,
+				81E50D5A1A0DB5420074F381 /* Supporting Files */,
+			);
+			path = "ReCal CalendarTests";
+			sourceTree = "<group>";
+		};
+		81E50D5A1A0DB5420074F381 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				81E50D5B1A0DB5420074F381 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		81F9A3F91A06B2B400083E55 /* Search Predicates */ = {
 			isa = PBXGroup;
 			children = (
@@ -805,6 +884,41 @@
 			productReference = 81D9F26519EF4D9600F987B9 /* ReCalCommonTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		81E50D3E1A0DB5420074F381 /* ReCal Calendar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81E50D621A0DB5420074F381 /* Build configuration list for PBXNativeTarget "ReCal Calendar" */;
+			buildPhases = (
+				81E50D3B1A0DB5420074F381 /* Sources */,
+				81E50D3C1A0DB5420074F381 /* Frameworks */,
+				81E50D3D1A0DB5420074F381 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ReCal Calendar";
+			productName = "ReCal Calendar";
+			productReference = 81E50D3F1A0DB5420074F381 /* ReCal Calendar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		81E50D551A0DB5420074F381 /* ReCal CalendarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81E50D631A0DB5420074F381 /* Build configuration list for PBXNativeTarget "ReCal CalendarTests" */;
+			buildPhases = (
+				81E50D521A0DB5420074F381 /* Sources */,
+				81E50D531A0DB5420074F381 /* Frameworks */,
+				81E50D541A0DB5420074F381 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				81E50D581A0DB5420074F381 /* PBXTargetDependency */,
+			);
+			name = "ReCal CalendarTests";
+			productName = "ReCal CalendarTests";
+			productReference = 81E50D561A0DB5420074F381 /* ReCal CalendarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -836,6 +950,13 @@
 						CreatedOnToolsVersion = 6.0.1;
 						TestTargetID = 811D481119ED7EB000E3F360;
 					};
+					81E50D3E1A0DB5420074F381 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					81E50D551A0DB5420074F381 = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 81E50D3E1A0DB5420074F381;
+					};
 				};
 			};
 			buildConfigurationList = 811D480D19ED7EB000E3F360 /* Build configuration list for PBXProject "ReCal iOS" */;
@@ -857,6 +978,8 @@
 				81D9F26419EF4D9600F987B9 /* ReCalCommonTests */,
 				81A0949E1A067D6200A0C3CE /* ReCal Course Selection */,
 				81A094B21A067D6200A0C3CE /* ReCal Course SelectionTests */,
+				81E50D3E1A0DB5420074F381 /* ReCal Calendar */,
+				81E50D551A0DB5420074F381 /* ReCal CalendarTests */,
 			);
 		};
 /* End PBXProject section */
@@ -912,6 +1035,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		81D9F26319EF4D9600F987B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E50D3D1A0DB5420074F381 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81E50D4C1A0DB5420074F381 /* Main.storyboard in Resources */,
+				81E50D511A0DB5420074F381 /* LaunchScreen.xib in Resources */,
+				81E50D4E1A0DB5420074F381 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E50D541A0DB5420074F381 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1036,6 +1176,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81E50D3B1A0DB5420074F381 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81E50D441A0DB5420074F381 /* AppDelegate.swift in Sources */,
+				81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E50D521A0DB5420074F381 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81E50D5D1A0DB5420074F381 /* ReCal_CalendarTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1068,6 +1225,11 @@
 			isa = PBXTargetDependency;
 			target = 81D9F25A19EF4D9600F987B9 /* ReCalCommon */;
 			targetProxy = 81D9F27119EF4D9600F987B9 /* PBXContainerItemProxy */;
+		};
+		81E50D581A0DB5420074F381 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81E50D3E1A0DB5420074F381 /* ReCal Calendar */;
+			targetProxy = 81E50D571A0DB5420074F381 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1102,6 +1264,22 @@
 				81A094C41A067DBB00A0C3CE /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		81E50D4A1A0DB5420074F381 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81E50D4B1A0DB5420074F381 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		81E50D4F1A0DB5420074F381 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81E50D501A0DB5420074F381 /* Base */,
+			);
+			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1388,6 +1566,68 @@
 			};
 			name = Release;
 		};
+		81E50D5E1A0DB5420074F381 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal Calendar/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		81E50D5F1A0DB5420074F381 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "ReCal Calendar/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		81E50D601A0DB5420074F381 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal CalendarTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal Calendar.app/ReCal Calendar";
+			};
+			name = Debug;
+		};
+		81E50D611A0DB5420074F381 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "ReCal CalendarTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal Calendar.app/ReCal Calendar";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1454,6 +1694,22 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		81E50D621A0DB5420074F381 /* Build configuration list for PBXNativeTarget "ReCal Calendar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81E50D5E1A0DB5420074F381 /* Debug */,
+				81E50D5F1A0DB5420074F381 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		81E50D631A0DB5420074F381 /* Build configuration list for PBXNativeTarget "ReCal CalendarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81E50D601A0DB5420074F381 /* Debug */,
+				81E50D611A0DB5420074F381 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
@@ -1474,6 +1730,16 @@
 			);
 			currentVersion = 81A094DD1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodel */;
 			path = ReCal_Course_Selection.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		81E50D451A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				81E50D461A0DB5420074F381 /* ReCal_Calendar.xcdatamodel */,
+			);
+			currentVersion = 81E50D461A0DB5420074F381 /* ReCal_Calendar.xcdatamodel */;
+			path = ReCal_Calendar.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
