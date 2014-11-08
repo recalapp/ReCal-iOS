@@ -30,6 +30,7 @@ class CourseSelectionContainerViewController: UIViewController, ScheduleSelectio
     @IBOutlet weak var contentView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.tintColor = ColorScheme.currentColorScheme.actionableTextColor
     }
     
     override func viewDidAppear(animated: Bool) {

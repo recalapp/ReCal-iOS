@@ -50,7 +50,10 @@ struct Schedule : ManagedObjectProxy {
         self.enrolledCourses = OrderedSet()
         for courseId in enrolledCoursesOrder {
             if let course = enrolledCourses.filter({ $0.objectID.URIRepresentation().isEqual(courseId) }).last {
-                self.enrolledCourses.append(Course(managedObject: course))
+                let course = Course(managedObject: course)
+                if !self.enrolledCourses.contains(course) {
+                    self.enrolledCourses.append(course)
+                }
             }
         }
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
@@ -144,7 +147,7 @@ struct Schedule : ManagedObjectProxy {
                 case .NewObject:
                     return nil
                 }
-            }.filter { $0 != nil }
+            }
             schedule.enrolledCoursesOrder = courseIdsOrdered.map { $0!.URIRepresentation() as AnyObject }
             schedule.removeEnrolledSections(schedule.enrolledSections)
             for section in self.enrolledSections {

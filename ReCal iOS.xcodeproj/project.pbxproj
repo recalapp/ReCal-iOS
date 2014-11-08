@@ -50,6 +50,7 @@
 		817BF0E21A0D3B52009D5269 /* CDCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 817BF0E11A0D3B52009D5269 /* CDCourse.m */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819193CD19F1652700E3A3B8 /* GridLineView.swift */; };
+		819E7F281A0D93E600D32D5A /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819E7F271A0D93E600D32D5A /* ColorScheme.swift */; };
 		81A094BA1A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094B91A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift */; };
 		81A094C51A067DBB00A0C3CE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A094C11A067DBB00A0C3CE /* LaunchScreen.xib */; };
 		81A094C61A067DBB00A0C3CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A094C31A067DBB00A0C3CE /* Main.storyboard */; };
@@ -227,6 +228,7 @@
 		817BF0E11A0D3B52009D5269 /* CDCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourse.m; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819193CD19F1652700E3A3B8 /* GridLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLineView.swift; sourceTree = "<group>"; };
+		819E7F271A0D93E600D32D5A /* ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorScheme.swift; sourceTree = "<group>"; };
 		81A0949F1A067D6200A0C3CE /* ReCal Course Selection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal Course Selection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A094A21A067D6200A0C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81A094B31A067D6200A0C3CE /* ReCal Course SelectionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal Course SelectionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -502,6 +504,7 @@
 				81A094C11A067DBB00A0C3CE /* LaunchScreen.xib */,
 				81A094C31A067DBB00A0C3CE /* Main.storyboard */,
 				81A094A11A067D6200A0C3CE /* Supporting Files */,
+				819E7F271A0D93E600D32D5A /* ColorScheme.swift */,
 			);
 			path = "ReCal Course Selection";
 			sourceTree = "<group>";
@@ -953,6 +956,7 @@
 				814D4E641A0C573D00C21848 /* CDSection.m in Sources */,
 				814D4E781A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift in Sources */,
 				81130BCE1A0C0D7D00F1F496 /* Day.swift in Sources */,
+				819E7F281A0D93E600D32D5A /* ColorScheme.swift in Sources */,
 				81A094FA1A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift in Sources */,
 				81A094F31A067DFD00A0C3CE /* GridLineView.swift in Sources */,
 				81A094F11A067DFD00A0C3CE /* EventCollectionViewCell.swift in Sources */,

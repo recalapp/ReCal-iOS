@@ -25,21 +25,14 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     lazy private var managedObjectContext: NSManagedObjectContext = {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
         return managedObjectContext
     }()
     
     // MARK: Models
-    var schedule: Schedule! {
-        didSet {
-            if oldValue != schedule {
-                self.reloadScheduleView()
-                self.reloadEnrolledCoursesView()
-                self.reloadSearchViewController()
-            }
-        }
-    }
+    // NOTE: didSet gets called on a struct even if we just assign one of its value, not the struct itself
+    var schedule: Schedule!
     
     // MARK: Views and View Controllers
     private var scheduleView: UICollectionView!
@@ -55,6 +48,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.initializeScheduleView()
         self.initializeEnrolledCoursesView()
         self.initializeSearchViewController()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.reloadScheduleView()
+        self.reloadEnrolledCoursesView()
+        self.reloadSearchViewController()
     }
     
     private func saveSchedule() {
@@ -91,12 +90,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func initializeEnrolledCoursesView() {
-        self.rightSidebarBackgroundColor = UIColor.lightBlackGrayColor()
+        self.rightSidebarBackgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
         
         let enrolledLabel: UILabel = {
             let enrolledLabel = UILabel()
             enrolledLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-            enrolledLabel.textColor = UIColor.lightTextColor()
+            enrolledLabel.textColor = ColorScheme.currentColorScheme.textColor
             enrolledLabel.text = "Enrolled"
             self.rightSidebarContentView.addSubview(enrolledLabel)
             let topLabelConstraint = NSLayoutConstraint(item: self.rightSidebarContentView, attribute: .TopMargin, relatedBy: .Equal, toItem: enrolledLabel, attribute: .Top, multiplier: 1, constant: 0)
@@ -107,7 +106,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         
         let line: UIView = {
             let line = UIView()
-            line.backgroundColor = UIColor.lightTextColor()
+            line.backgroundColor = ColorScheme.currentColorScheme.selectedContentBackgroundColor
             line.setTranslatesAutoresizingMaskIntoConstraints(false)
             line.addConstraint(NSLayoutConstraint(item: line, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 0, constant: 1))
             self.rightSidebarContentView.addSubview(line)
@@ -140,7 +139,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func initializeSearchViewController() {
-        self.leftSidebarBackgroundColor = UIColor.lightBlackGrayColor()
+        self.leftSidebarBackgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
         
         self.searchViewController = {
             let searchViewController = self.storyboard?.instantiateViewControllerWithIdentifier(searchViewControllerStoryboardId) as CourseSearchTableViewController
@@ -226,7 +225,6 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
         self.schedule.courseSectionTypeEnrollments = dataSource.enrollments
         self.reloadScheduleView()
-        self.saveSchedule()
     }
     
     // MARK: - Schedule Collection View Data Source Delegate
@@ -234,6 +232,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         assert(dataSource == self.scheduleCollectionViewDataSource, "Wrong data source object for schedule view")
         self.schedule.courseSectionTypeEnrollments = dataSource.enrollments
         self.reloadEnrolledCoursesView()
+    }
+    func enrollmentsDidStopChangingForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource) {
+        assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for schedule view")
         self.saveSchedule()
     }
     

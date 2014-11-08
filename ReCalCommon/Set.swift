@@ -21,11 +21,6 @@ public struct Set<T: Hashable>: Equatable, SequenceType {
         return dict.count
     }
     
-    public var didAdd: CallBack?
-    public var didRemove: CallBack?
-    public var willAdd: CallBack?
-    public var willRemove: CallBack?
-    
     public init(initialItems: [T] = []) {
         for items in initialItems {
             self.add(items)
@@ -34,9 +29,7 @@ public struct Set<T: Hashable>: Equatable, SequenceType {
     
     public mutating func add(item: T) {
         assert(!self.contains(item), "Cannot add an item that already belong to the set")
-        self.willAdd?(self)
         dict[item] = true
-        self.didAdd?(self)
     }
     
     public func contains(item: T) -> Bool {
@@ -45,9 +38,7 @@ public struct Set<T: Hashable>: Equatable, SequenceType {
     
     public mutating func remove(item: T) {
         assert(self.contains(item), "Cannot remove an item that does not belong to the set to begin with")
-        self.willRemove?(self)
         dict.removeValueForKey(item)
-        self.didRemove?(self)
     }
     
     public func map<U: Hashable>(transform: (T)->U)->Set<U> {

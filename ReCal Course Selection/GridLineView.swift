@@ -20,6 +20,6 @@ class GridLineView: UICollectionReusableView {
     }
     
     private func initialize() {
-        self.backgroundColor = UIColor.grayColor()
+        self.backgroundColor = ColorScheme.currentColorScheme.secondaryContentBackgroundColor
     }
 }

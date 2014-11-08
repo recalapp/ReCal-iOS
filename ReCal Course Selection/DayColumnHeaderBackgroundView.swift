@@ -20,6 +20,6 @@ class DayColumnHeaderBackgroundView: UICollectionReusableView {
     }
     
     private func initialize() {
-        self.backgroundColor = UIColor.darkGrayColor()
+        self.backgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
     }
 }

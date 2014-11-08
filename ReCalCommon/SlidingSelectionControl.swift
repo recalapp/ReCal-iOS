@@ -84,6 +84,7 @@ public class SlidingSelectionControl: UIControl {
             
             // actions
             slidingSelectionControlItem.addTarget(self, action: "updateSelection:forEvent:", forControlEvents: UIControlEvents.AllTouchEvents)
+            slidingSelectionControlItem.addTarget(self, action: "touchUp:forEvent:", forControlEvents: UIControlEvents.TouchUpOutside | UIControlEvents.TouchUpInside)
             
             // add to array
             self.slidingSelectionControlItems.append(slidingSelectionControlItem)
@@ -95,6 +96,9 @@ public class SlidingSelectionControl: UIControl {
     }
     
     /// MARK: Methods
+    func touchUp(sender: SlidingSelectionControlItem?, forEvent eventOpt: UIEvent?) {
+        self.sendActionsForControlEvents(UIControlEvents.TouchUpInside | UIControlEvents.TouchUpOutside)
+    }
     /// Update selection based on event
     func updateSelection(sender: SlidingSelectionControlItem?, forEvent eventOpt: UIEvent?) {
         if let event = eventOpt {

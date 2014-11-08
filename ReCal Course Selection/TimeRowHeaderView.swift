@@ -13,6 +13,7 @@ class TimeRowHeaderView: UICollectionReusableView {
     @IBOutlet weak var timeLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.timeLabel.textColor = ColorScheme.currentColorScheme.textColor
         // Initialization code
     }
     

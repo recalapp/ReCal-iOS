@@ -33,6 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSOperationQueue().addOperationWithBlock {
             CoreDataImporter.defaultImporter.importPendingItems()
         }
+        
+        ColorScheme.currentColorScheme = DarkColorScheme()
         return true
     }
 

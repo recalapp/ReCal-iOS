@@ -20,7 +20,7 @@ class CourseDetailsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.darkBlackGrayColor()
+        self.view.backgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
     }
     
     // MARK: - Table view data source

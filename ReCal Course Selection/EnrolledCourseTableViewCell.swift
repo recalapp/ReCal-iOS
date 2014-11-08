@@ -62,12 +62,14 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     }
     
     private func initialize() {
+        
     }
     
     @IBOutlet weak var colorTagView: UIView!
     @IBOutlet weak var courseLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.courseLabel.textColor = ColorScheme.currentColorScheme.textColor
         // Initialization code
     }
     
@@ -94,7 +96,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         }
         self.sectionPickerControls.removeAll(keepCapacity: true)
         self.colorTagView.backgroundColor = self.colorTag
-        self.backgroundColor = self.expanded ? UIColor.darkBlackGrayColor() : UIColor.lightBlackGrayColor()
+        self.backgroundColor = self.expanded ? ColorScheme.currentColorScheme.selectedContentBackgroundColor : ColorScheme.currentColorScheme.contentBackgroundColor
         if self.expanded {
             let sectionTypes = self.sectionTypes
             var prev: UIView = self.courseLabel
@@ -118,7 +120,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 }
                 let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: initialSelection)
                 slidingSelectionControl.preferredMaxLayoutWidth = self.contentView.bounds.size.width
-                slidingSelectionControl.defaultBackgroundColor = UIColor.darkBlackGrayColor()
+                slidingSelectionControl.defaultBackgroundColor = self.backgroundColor ?? ColorScheme.currentColorScheme.selectedContentBackgroundColor
                 slidingSelectionControl.tintColor = self.color?
                 slidingSelectionControl.layoutMargins = UIEdgeInsetsZero
                 self.contentView.addSubview(slidingSelectionControl)
@@ -129,6 +131,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 prev = slidingSelectionControl
                 self.sectionPickerControls[sectionType] = slidingSelectionControl
                 slidingSelectionControl.addTarget(self, action: "handleEnrollmentSelectionChanged:", forControlEvents: UIControlEvents.ValueChanged)
+                slidingSelectionControl.addTarget(self, action: "handleTouchUp:", forControlEvents: UIControlEvents.TouchUpInside | UIControlEvents.TouchUpOutside)
             }
             
             // add bottom constraint if needed. courseLabel's constraint is set in the storyboard
@@ -157,8 +160,14 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         }
         self.colorTagView.backgroundColor = self.colorTag
     }
+    
+    func handleTouchUp(sender: SlidingSelectionControl) {
+        println("touch up")
+        self.delegate?.touchUpForEnrolledCourseTableViewCell(self)
+    }
 }
 
 protocol EnrolledCourseTableViewCellDelegate: class {
     func enrollmentsDidChangeForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell)
+    func touchUpForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell)
 }

@@ -66,8 +66,14 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
         self.enrollments[cell.course!] = cell.enrollmentsBySectionType
         self.delegate?.enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(self)
     }
+    func touchUpForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell) {
+        assert(cell.course != nil, "Course is nil in cell")
+        assert(self.enrollments[cell.course!] != nil, "Invalid course found in cell")
+        self.delegate?.enrollmentsDidStopChangingForEnrolledCoursesTableViewDataSource(self)
+    }
 }
 
 protocol EnrolledCoursesTableViewDataSourceDelegate: class {
     func enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource)
+    func enrollmentsDidStopChangingForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource)
 }

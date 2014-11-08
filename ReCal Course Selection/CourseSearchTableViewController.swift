@@ -30,16 +30,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             return self.enrolledCoursesSet.toArray()
         }
     }
-    private var enrolledCoursesSet: Set<Course> = Set<Course>() {
-        didSet {
-            enrolledCoursesSet.didAdd = { (_) in
-                self.clearVisibleCoursesStorageCache()
-            }
-            enrolledCoursesSet.didRemove = { (_) in
-                self.clearVisibleCoursesStorageCache()
-            }
-        }
-    }
+    private var enrolledCoursesSet: Set<Course> = Set<Course>()
+    
     private var filteredCourses: [Course] = [] {
         didSet {
             self.clearVisibleCoursesStorageCache()
@@ -53,23 +45,9 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         return self.filteredCourses
     }
     
-    private var visibleEnrolledCoursesStorage: [Course]?
+    private var visibleEnrolledCourses: [Course] = []
     
-    private var visibleEnrolledCourses: [Course] {
-        if visibleEnrolledCoursesStorage == nil {
-            visibleEnrolledCoursesStorage = self.visibleCourses.filter { self.enrolledCoursesSet.contains($0) }
-        }
-        return visibleEnrolledCoursesStorage!
-    }
-    
-    private var visibleUnenrolledCoursesStorage: [Course]?
-    
-    private var visibleUnenrolledCourses: [Course] {
-        if visibleUnenrolledCoursesStorage == nil {
-            visibleUnenrolledCoursesStorage = self.visibleCourses.filter { !self.enrolledCoursesSet.contains($0) }
-        }
-        return visibleUnenrolledCoursesStorage!
-    }
+    private var visibleUnenrolledCourses: [Course] = []
     
     lazy private var courseDetailsViewController: CourseDetailsViewController = {
         return self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
@@ -94,8 +72,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     private var notificationObservers: [NSObjectProtocol] = []
     
     private func clearVisibleCoursesStorageCache() {
-        self.visibleEnrolledCoursesStorage = nil
-        self.visibleUnenrolledCoursesStorage = nil
+        self.visibleEnrolledCourses = self.visibleCourses.filter { self.enrolledCoursesSet.contains($0) }
+        self.visibleUnenrolledCourses = self.visibleCourses.filter { !self.enrolledCoursesSet.contains($0) }
     }
     
     override func viewDidLoad() {
@@ -139,11 +117,11 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     private func courseAtIndexPath(indexPath: NSIndexPath) -> Course {
         switch (indexPath.section, indexPath.row) {
         case (0, let row):
-            assert(row/2 < self.visibleUnenrolledCourses.count, "Invalid index path")
-            return self.visibleUnenrolledCourses[row/2]
+            assert(row < self.visibleUnenrolledCourses.count, "Invalid index path")
+            return self.visibleUnenrolledCourses[row]
         case (1, let row):
-            assert(row/2 < self.visibleEnrolledCourses.count, "Invalid index path")
-            return self.visibleEnrolledCourses[row/2]
+            assert(row < self.visibleEnrolledCourses.count, "Invalid index path")
+            return self.visibleEnrolledCourses[row]
         default:
             assertionFailure("not implemented")
         }
@@ -157,7 +135,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         }
         assert(indexes.count <= 1, "Duplicate courses")
         let section = self.enrolledCoursesSet.contains(course) ? 1 : 0
-        return NSIndexPath(forRow: indexes.last! * 2  + 1, inSection: section)
+        return NSIndexPath(forRow: indexes.last!, inSection: section)
     }
     
     // MARK: - Table view data source
@@ -171,29 +149,21 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         // Return the number of rows in the section.
         switch section {
         case 0:
-            return self.visibleUnenrolledCourses.count * 2
+            return self.visibleUnenrolledCourses.count
         case 1:
-            return self.visibleEnrolledCourses.count * 2
+            return self.visibleEnrolledCourses.count
         default:
             assertionFailure("not implemented")
         }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row % 2 == 1 {
-            return 66
-        } else {
-            return 8 // padding
-        }
-    }
-    
-    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return indexPath.row % 2 == 1
+        return 66
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        headerView.backgroundColor = UIColor.darkBlackGrayColor()
+        headerView.backgroundColor = ColorScheme.currentColorScheme.secondaryContentBackgroundColor
         let label = UILabel()
         label.setTranslatesAutoresizingMaskIntoConstraints(false)
         headerView.addSubview(label)
@@ -206,26 +176,22 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         default:
             assertionFailure("not implemented")
         }
-        label.textColor = UIColor.lightTextColor()
+        label.textColor = ColorScheme.currentColorScheme.textColor
         return headerView
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row % 2 == 1 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as CourseSearchResultTableViewCell
-            
-            let course = self.courseAtIndexPath(indexPath)
-            
-            cell.course = course
-            if self.enrolledCoursesSet.contains(course) {
-                tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
-            }
-            
-            return cell
+      
+        let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as CourseSearchResultTableViewCell
+        
+        let course = self.courseAtIndexPath(indexPath)
+        
+        cell.course = course
+        if self.enrolledCoursesSet.contains(course) {
+            tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
         }
-        else {
-            return tableView.dequeueReusableCellWithIdentifier(paddingCellIdentifier, forIndexPath: indexPath) as UITableViewCell
-        }
+        
+        return cell
     }
 
     /*
@@ -295,35 +261,28 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let course = self.courseAtIndexPath(indexPath)
         assert(self.enrolledCoursesSet.contains(course), "Deselecting an unselected cell")
+        
         self.enrolledCoursesSet.remove(course)
-        self.delegate?.enrollmentsDidChangeForCourseSearchTableViewController(self)
+        self.clearVisibleCoursesStorageCache()
         if let newIndexPath = self.indexPathForCourse(course) {
-            tableView.beginUpdates()
-            tableView.moveRowAtIndexPath(NSIndexPath(forRow: indexPath.row - 1, inSection: indexPath.section), toIndexPath: NSIndexPath(forRow: newIndexPath.row - 1, inSection: newIndexPath.section))
             tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
-            tableView.endUpdates()
         } else {
-            tableView.beginUpdates()
-            tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath.row - 1, inSection: indexPath.section), indexPath], withRowAnimation: .Automatic)
-            tableView.endUpdates()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
+        self.delegate?.enrollmentsDidChangeForCourseSearchTableViewController(self)
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let course = self.courseAtIndexPath(indexPath)
         assert(!self.enrolledCoursesSet.contains(course), "Selecting an selected cell")
+        
         self.enrolledCoursesSet.add(course)
-        self.delegate?.enrollmentsDidChangeForCourseSearchTableViewController(self)
-        let newIndexPath = self.indexPathForCourse(course)
+        self.clearVisibleCoursesStorageCache()
         if let newIndexPath = self.indexPathForCourse(course) {
-            tableView.beginUpdates()
-            tableView.moveRowAtIndexPath(NSIndexPath(forRow: indexPath.row - 1, inSection: indexPath.section), toIndexPath: NSIndexPath(forRow: newIndexPath.row - 1, inSection: newIndexPath.section))
             tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
-            tableView.endUpdates()
         } else {
-            tableView.beginUpdates()
-            tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: indexPath.row - 1, inSection: indexPath.section), indexPath], withRowAnimation: .Automatic)
-            tableView.endUpdates()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
+        self.delegate?.enrollmentsDidChangeForCourseSearchTableViewController(self)
     }
     
     // MARK: - Search Results Updating
