@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="Lya-XK-BDm">
+            <objects>
+                <navigationController storyboardIdentifier="Authentication" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fx1-Qy-z3H" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f38-CM-fT4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="mLm-bf-BUC" kind="relationship" relationship="rootViewController" id="wVM-ur-VtO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jf7-aw-zZ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-754" y="-53"/>
+        </scene>
+        <!--Log In-->
+        <scene sceneID="M9T-Dz-h5c">
+            <objects>
+                <viewController id="mLm-bf-BUC" customClass="AuthenticationViewController" customModule="ReCalCommon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="E3J-BM-wrp"/>
+                        <viewControllerLayoutGuide type="bottom" id="PBD-ma-gpo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xsm-po-fMk">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2to-Ic-fC6">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="mLm-bf-BUC" id="Xh1-zd-LjB"/>
+                                </connections>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="PBD-ma-gpo" firstAttribute="top" secondItem="2to-Ic-fC6" secondAttribute="bottom" id="QH3-Vf-CHu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2to-Ic-fC6" secondAttribute="trailing" constant="-16" id="V4z-UW-uOC"/>
+                            <constraint firstItem="2to-Ic-fC6" firstAttribute="leading" secondItem="xsm-po-fMk" secondAttribute="leadingMargin" constant="-16" id="hjj-N1-Iaq"/>
+                            <constraint firstItem="2to-Ic-fC6" firstAttribute="top" secondItem="xsm-po-fMk" secondAttribute="topMargin" id="oGq-X1-FzJ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Log In" id="FrF-Wl-NEi">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="bRd-F9-8Y8">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="mLm-bf-BUC" id="rl1-fa-dQC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="webView" destination="2to-Ic-fC6" id="lFy-Y4-F5u"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="inv-ma-nuk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="12" y="308"/>
+        </scene>
+    </scenes>
+</document>

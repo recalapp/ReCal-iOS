@@ -25,6 +25,8 @@ public class Settings {
     public var theme: Theme = .Dark
     
     public var colorScheme: ColorScheme = DarkColorScheme()
+    
+    public var authenticator: Authenticator = Authenticator(rootViewController: UIViewController(), forAuthenticationUrlString: "recal.io/mobile_logged_in")
 }
 
 public enum Theme {

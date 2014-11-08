@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        Settings.currentSettings.theme = .Dark
+        Settings.currentSettings.theme = .Light
         switch Settings.currentSettings.theme {
         case .Light:
             Settings.currentSettings.colorScheme = LightColorScheme()
