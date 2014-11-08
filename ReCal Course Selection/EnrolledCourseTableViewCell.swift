@@ -69,7 +69,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     @IBOutlet weak var courseLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.courseLabel.textColor = ColorScheme.currentColorScheme.textColor
+        self.courseLabel.textColor = Settings.currentSettings.colorScheme.textColor
         // Initialization code
     }
     
@@ -96,7 +96,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         }
         self.sectionPickerControls.removeAll(keepCapacity: true)
         self.colorTagView.backgroundColor = self.colorTag
-        self.backgroundColor = self.expanded ? ColorScheme.currentColorScheme.selectedContentBackgroundColor : ColorScheme.currentColorScheme.contentBackgroundColor
+        self.backgroundColor = self.expanded ? Settings.currentSettings.colorScheme.selectedContentBackgroundColor : Settings.currentSettings.colorScheme.contentBackgroundColor
         if self.expanded {
             let sectionTypes = self.sectionTypes
             var prev: UIView = self.courseLabel
@@ -120,7 +120,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 }
                 let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: initialSelection)
                 slidingSelectionControl.preferredMaxLayoutWidth = self.contentView.bounds.size.width
-                slidingSelectionControl.defaultBackgroundColor = ColorScheme.currentColorScheme.selectedContentBackgroundColor
+                slidingSelectionControl.defaultBackgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
                 slidingSelectionControl.tintColor = self.color?
                 slidingSelectionControl.layoutMargins = UIEdgeInsetsZero
                 self.contentView.addSubview(slidingSelectionControl)

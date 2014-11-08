@@ -20,18 +20,18 @@ class CourseSearchResultTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
-        self.textLabel.textColor = ColorScheme.currentColorScheme.textColor
-        self.detailTextLabel?.textColor = ColorScheme.currentColorScheme.textColor
+        self.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
+        self.textLabel.textColor = Settings.currentSettings.colorScheme.textColor
+        self.detailTextLabel?.textColor = Settings.currentSettings.colorScheme.textColor
         //self.tintColor = ColorScheme.currentColorScheme.textColor
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         if selected {
-            self.backgroundColor = ColorScheme.currentColorScheme.selectedContentBackgroundColor
+            self.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
         } else {
-            self.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
+            self.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
         }
     }
     

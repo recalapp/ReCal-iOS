@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import ReCalCommon
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        Settings.currentSettings.theme = .Dark
+        switch Settings.currentSettings.theme {
+        case .Light:
+            Settings.currentSettings.colorScheme = LightColorScheme()
+        case .Dark:
+            Settings.currentSettings.colorScheme = DarkColorScheme()
+        }
+        
         return true
     }
 

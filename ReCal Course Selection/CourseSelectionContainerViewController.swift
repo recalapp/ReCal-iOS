@@ -32,7 +32,7 @@ class CourseSelectionContainerViewController: UIViewController, ScheduleSelectio
     @IBOutlet weak var contentView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.tintColor = ColorScheme.currentColorScheme.actionableTextColor
+        self.view.tintColor = Settings.currentSettings.colorScheme.actionableTextColor
         switch Settings.currentSettings.theme {
         case .Light:
             self.navigationBar.barStyle = .Default

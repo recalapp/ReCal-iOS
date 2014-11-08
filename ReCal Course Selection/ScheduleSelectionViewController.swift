@@ -55,7 +55,7 @@ class ScheduleSelectionViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.backgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
+        self.tableView.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
         
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
             self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
@@ -106,8 +106,8 @@ class ScheduleSelectionViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(scheduleCellIdentifier, forIndexPath: indexPath) as UITableViewCell
 
-        cell.textLabel.textColor = ColorScheme.currentColorScheme.textColor
-        cell.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
+        cell.textLabel.textColor = Settings.currentSettings.colorScheme.textColor
+        cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
         if let schedule = self.scheduleAtIndexPath(indexPath) {
             cell.textLabel.text = schedule.name
         } else {

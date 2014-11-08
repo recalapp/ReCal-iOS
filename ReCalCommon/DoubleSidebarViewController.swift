@@ -227,8 +227,8 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarContentView, inParentView: self.rightSidebarView, withInsets: UIEdgeInsets(top: 0, left: self.sidebarInnerPadding, bottom: 0, right: self.sidebarOuterPadding)))
         
         // add the covers
-        let leftBlurEffect = ColorScheme.currentColorScheme.blurEffect
-        let rightBlurEffect = ColorScheme.currentColorScheme.blurEffect
+        let leftBlurEffect = Settings.currentSettings.colorScheme.blurEffect
+        let rightBlurEffect = Settings.currentSettings.colorScheme.blurEffect
         self.leftSidebarCoverView = UIVisualEffectView(effect: leftBlurEffect)
         self.leftSidebarCoverView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.leftSidebarCoverView.userInteractionEnabled = false

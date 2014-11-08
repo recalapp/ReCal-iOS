@@ -90,12 +90,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func initializeEnrolledCoursesView() {
-        self.rightSidebarBackgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
+        self.rightSidebarBackgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
         
         let enrolledLabel: UILabel = {
             let enrolledLabel = UILabel()
             enrolledLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-            enrolledLabel.textColor = ColorScheme.currentColorScheme.textColor
+            enrolledLabel.textColor = Settings.currentSettings.colorScheme.textColor
             enrolledLabel.text = "Enrolled"
             self.rightSidebarContentView.addSubview(enrolledLabel)
             let topLabelConstraint = NSLayoutConstraint(item: self.rightSidebarContentView, attribute: .TopMargin, relatedBy: .Equal, toItem: enrolledLabel, attribute: .Top, multiplier: 1, constant: 0)
@@ -106,7 +106,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         
         let line: UIView = {
             let line = UIView()
-            line.backgroundColor = ColorScheme.currentColorScheme.selectedContentBackgroundColor
+            line.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
             line.setTranslatesAutoresizingMaskIntoConstraints(false)
             line.addConstraint(NSLayoutConstraint(item: line, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 0, constant: 1))
             self.rightSidebarContentView.addSubview(line)
@@ -139,7 +139,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func initializeSearchViewController() {
-        self.leftSidebarBackgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
+        self.leftSidebarBackgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
         
         self.searchViewController = {
             let searchViewController = self.storyboard?.instantiateViewControllerWithIdentifier(searchViewControllerStoryboardId) as CourseSearchTableViewController

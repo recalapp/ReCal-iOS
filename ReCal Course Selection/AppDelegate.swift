@@ -19,11 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        Settings.currentSettings.theme = .Dark
         switch Settings.currentSettings.theme {
         case .Light:
-            ColorScheme.currentColorScheme = LightColorScheme()
+            Settings.currentSettings.colorScheme = LightColorScheme()
         case .Dark:
-            ColorScheme.currentColorScheme = DarkColorScheme()
+            Settings.currentSettings.colorScheme = DarkColorScheme()
         }
         
         CoreDataImporter.defaultImporter.persistentStoreCoordinator = self.persistentStoreCoordinator

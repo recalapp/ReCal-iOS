@@ -22,7 +22,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.backgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
+        self.tableView.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -94,11 +94,11 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(nameCellIdentifier, forIndexPath: indexPath) as UITableViewCell
 
-        cell.textLabel.textColor = ColorScheme.currentColorScheme.textColor
-        cell.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
+        cell.textLabel.textColor = Settings.currentSettings.colorScheme.textColor
+        cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
         if let nameTextField = cell.viewWithTag(1) as? UITextField {
-            nameTextField.textColor = ColorScheme.currentColorScheme.textColor
-            nameTextField.backgroundColor = ColorScheme.currentColorScheme.contentBackgroundColor
+            nameTextField.textColor = Settings.currentSettings.colorScheme.textColor
+            nameTextField.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
             switch Settings.currentSettings.theme {
             case .Light:
                 nameTextField.keyboardAppearance = .Light

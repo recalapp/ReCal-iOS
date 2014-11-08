@@ -52,7 +52,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     /// Register the collection view and layout with the appropriate view classes
     func registerReusableViewsWithCollectionView(collectionView: UICollectionView, forLayout layout: UICollectionViewLayout) {
-        collectionView.backgroundColor = ColorScheme.currentColorScheme.selectedContentBackgroundColor
+        collectionView.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
         collectionView.registerNib(UINib(nibName: "EventCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: eventCellIdentifier)
         collectionView.registerNib(UINib(nibName: "TimeRowHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.TimeRowHeader.rawValue, withReuseIdentifier: timeRowHeaderViewIdentifier)
         collectionView.registerNib(UINib(nibName: "DayColumnHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.rawValue, withReuseIdentifier: dayColumnHeaderViewIdentifier)

@@ -23,6 +23,8 @@ public class Settings {
     }
     
     public var theme: Theme = .Dark
+    
+    public var colorScheme: ColorScheme = DarkColorScheme()
 }
 
 public enum Theme {

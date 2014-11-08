@@ -21,6 +21,6 @@ class TimeRowHeaderBackgroundView: UICollectionReusableView {
     }
     
     private func initialize() {
-        self.backgroundColor = ColorScheme.currentColorScheme.accessoryBackgroundColor
+        self.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
     }
 }

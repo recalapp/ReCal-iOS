@@ -13,7 +13,7 @@ class DayColumnHeaderView: UICollectionReusableView {
     @IBOutlet weak var weekDayLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.weekDayLabel.textColor = ColorScheme.currentColorScheme.textColor
+        self.weekDayLabel.textColor = Settings.currentSettings.colorScheme.textColor
         // Initialization code
     }
     

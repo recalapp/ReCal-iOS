@@ -168,7 +168,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        headerView.backgroundColor = ColorScheme.currentColorScheme.secondaryContentBackgroundColor
+        headerView.backgroundColor = Settings.currentSettings.colorScheme.secondaryContentBackgroundColor
         let label = UILabel()
         label.setTranslatesAutoresizingMaskIntoConstraints(false)
         headerView.addSubview(label)
@@ -181,7 +181,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         default:
             assertionFailure("not implemented")
         }
-        label.textColor = ColorScheme.currentColorScheme.textColor
+        label.textColor = Settings.currentSettings.colorScheme.textColor
         return headerView
     }
     
