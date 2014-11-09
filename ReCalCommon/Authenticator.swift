@@ -10,6 +10,9 @@ import UIKit
 
 private let authenticationNavigationControllerStoryboardId = "Authentication"
 
+public let authenticatorStateDidChangeNofication = "AuthenticatorStateDidChangeNofication"
+public let authenticatorUserInfoKeyOldValue = "authenticatorUserInfoKeyOldValue"
+
 public class Authenticator: AuthenticationViewControllerDelegate {
     public let rootViewController: UIViewController
     public let authenticationUrl: NSURL
@@ -18,7 +21,13 @@ public class Authenticator: AuthenticationViewControllerDelegate {
         self.authenticationUrl = NSURL(string: urlString)!
     }
     
-    private(set) public var state: AuthenticationStatus = .Unauthenticated
+    private(set) public var state: AuthenticationStatus = .Unauthenticated {
+        didSet {
+            if oldValue != state {
+                NSNotificationCenter.defaultCenter().postNotificationName(authenticatorStateDidChangeNofication, object: self)
+            }
+        }
+    }
     
     lazy private var authenticationNavigationController: UINavigationController = {
         let vc = UIStoryboard(name: "ReCalCommon", bundle: NSBundle(identifier: "io.recal.ReCalCommon")).instantiateViewControllerWithIdentifier(authenticationNavigationControllerStoryboardId) as UINavigationController
@@ -86,16 +95,19 @@ public class Authenticator: AuthenticationViewControllerDelegate {
     
     // MARK: - Authentication View Controller Delegate
     func authenticationDidCancel(authenticationViewController: AuthenticationViewController) {
-        self.advanceStateWithAuthenticationResult(.Failure)
-        self.rootViewController.dismissViewControllerAnimated(true, completion: nil)
+        self.rootViewController.dismissViewControllerAnimated(true, completion: {
+            self.advanceStateWithAuthenticationResult(.Failure)
+        })
     }
     func authentication(authenticationViewController: AuthenticationViewController, didAuthenticateWithUsername username: String) {
-        self.advanceStateWithAuthenticationResult(.Success(username))
-        self.rootViewController.dismissViewControllerAnimated(true, completion: nil)
+        self.rootViewController.dismissViewControllerAnimated(true, completion: {
+            self.advanceStateWithAuthenticationResult(.Success(username))
+        })
     }
     func authenticationDidFail(authenticationViewController: AuthenticationViewController) {
-        self.advanceStateWithAuthenticationResult(.Failure)
-        self.rootViewController.dismissViewControllerAnimated(true, completion: nil)
+        self.rootViewController.dismissViewControllerAnimated(true, completion: {
+            self.advanceStateWithAuthenticationResult(.Failure)
+        })
     }
 }
 
@@ -105,12 +117,32 @@ private enum AuthenticationResult {
     case Failure
 }
 
-public enum AuthenticationStatus {
+public enum AuthenticationStatus: Equatable {
     case Authenticated(User)
     case PreviouslyAuthenticated(User)
     case Unauthenticated
 }
 
-public struct User {
+public func == (lhs: AuthenticationStatus, rhs: AuthenticationStatus) -> Bool {
+    switch (lhs, rhs) {
+    case (.Authenticated(let userLhs), .Authenticated(let userRhs)):
+        return userLhs == userRhs
+    case (.PreviouslyAuthenticated(let userLhs), .PreviouslyAuthenticated(let userRhs)):
+        return userLhs == userRhs
+    case (.Unauthenticated, .Unauthenticated):
+        return true
+    default:
+        return false
+    }
+}
+
+public struct User: Equatable {
     let username: String
+}
+
+public func == (lhs: User, rhs: User) -> Bool {
+    if lhs.username != rhs.username {
+        return false
+    }
+    return true
 }

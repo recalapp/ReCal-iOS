@@ -191,7 +191,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         case .RightSidebarShown:
             x = self.sidebarWidth
         }
-        return CGPoint(x: x, y: 0)
+        return CGPoint(x: x, y: self.sidebarContainerScrollView.contentOffset.y)
     }
     
     override public func viewDidLoad() {

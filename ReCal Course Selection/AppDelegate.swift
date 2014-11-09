@@ -43,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             CoreDataImporter.defaultImporter.importPendingItems()
         }
         
-        
         return true
     }
 

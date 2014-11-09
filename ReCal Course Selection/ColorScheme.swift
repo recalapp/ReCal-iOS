@@ -62,6 +62,16 @@ public class ColorScheme {
     public var blurEffect: UIVisualEffect {
         return UIBlurEffect(style: .Light)
     }
+    
+    /// The color to indicate an alert.
+    public var alertBackgroundColor: UIColor {
+        return UIColor.redColor()
+    }
+    
+    /// The text color for alert views.
+    public var alertTextColor: UIColor {
+        return UIColor.whiteColor()
+    }
 }
 
 public class LightColorScheme: ColorScheme {
@@ -99,6 +109,16 @@ public class LightColorScheme: ColorScheme {
     public override var blurEffect: UIVisualEffect {
         return UIBlurEffect(style: .Light)
     }
+    
+    /// The color to indicate an alert.
+    public override var alertBackgroundColor: UIColor {
+        return UIColor(red: 231.0/255.0, green: 76.0/255.0, blue: 60.0/255.0, alpha: 1.0)
+    }
+    
+    /// The text color for alert views.
+    public override var alertTextColor: UIColor {
+        return UIColor.lightTextColor()
+    }
 }
 
 public class DarkColorScheme: ColorScheme {
@@ -135,5 +155,15 @@ public class DarkColorScheme: ColorScheme {
     /// The blur effect to be used throughout the app
     public override var blurEffect: UIVisualEffect {
         return UIBlurEffect(style: .Dark)
+    }
+    
+    /// The color to indicate an alert.
+    public override var alertBackgroundColor: UIColor {
+        return UIColor(red: 204.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)
+    }
+    
+    /// The text color for alert views.
+    public override var alertTextColor: UIColor {
+        return UIColor.lightTextColor()
     }
 }

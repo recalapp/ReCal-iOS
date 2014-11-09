@@ -26,7 +26,7 @@ class ScheduleSelectionViewController: UITableViewController {
         }
     }
     
-    private var notificationObservers: [NSObjectProtocol] = []
+    private var notificationObservers: [AnyObject] = []
 
     private func fetchSchedules() {
         let fetchRequest = NSFetchRequest(entityName: "CDSemester")

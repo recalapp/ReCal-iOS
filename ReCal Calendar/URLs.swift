@@ -7,6 +7,3 @@
 //
 
 import Foundation
-
-let baseUrl = "http://recal.io"
-let mobileLoggedInUrl = "\(baseUrl)/mobile_logged_in"

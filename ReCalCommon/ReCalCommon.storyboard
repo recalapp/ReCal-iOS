@@ -64,5 +64,75 @@
             </objects>
             <point key="canvasLocation" x="12" y="308"/>
         </scene>
+        <!--Root View Controller-->
+        <scene sceneID="xcg-S4-SfN">
+            <objects>
+                <tableViewController id="Qge-LI-5EC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="LB2-YG-xZQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="oFO-Ue-VRY">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oFO-Ue-VRY" id="ICV-94-Qej">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Qge-LI-5EC" id="Ha7-74-Sw5"/>
+                            <outlet property="delegate" destination="Qge-LI-5EC" id="cbk-74-rZm"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="y11-cH-L1E"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="etG-L7-9z3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-829" y="717"/>
+        </scene>
+        <!--Authentication Prompt View Controller-->
+        <scene sceneID="eqE-BT-add">
+            <objects>
+                <viewController storyboardIdentifier="AuthenticationPrompt" useStoryboardIdentifierAsRestorationIdentifier="YES" id="n4E-kG-3LI" customClass="AuthenticationPromptViewController" customModule="ReCalCommon" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wTL-qY-jnY"/>
+                        <viewControllerLayoutGuide type="bottom" id="je1-ba-oAM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Mof-pC-rwg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to ReCal" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sax-5e-P0h">
+                                <rect key="frame" x="231" y="40" width="137.5" height="19.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="be0-rf-0Ne">
+                                <rect key="frame" x="253" y="300" width="93" height="30"/>
+                                <state key="normal" title="Please Log In"/>
+                                <connections>
+                                    <action selector="authenticateButtonTapped:" destination="n4E-kG-3LI" eventType="touchUpInside" id="lcN-0F-VAx"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="be0-rf-0Ne" secondAttribute="centerY" constant="-15" id="Gih-6X-j6j"/>
+                            <constraint firstAttribute="centerX" secondItem="Sax-5e-P0h" secondAttribute="centerX" id="H4K-It-VVP"/>
+                            <constraint firstItem="Sax-5e-P0h" firstAttribute="top" secondItem="wTL-qY-jnY" secondAttribute="bottom" constant="20" id="Trn-xo-9Xr"/>
+                            <constraint firstAttribute="centerX" secondItem="be0-rf-0Ne" secondAttribute="centerX" id="bYU-Mt-8RP"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="authenticateButton" destination="be0-rf-0Ne" id="ZJQ-0N-EOg"/>
+                        <outlet property="titleLabel" destination="Sax-5e-P0h" id="IP4-JT-HaZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5qA-Jf-ftG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-408" y="735"/>
+        </scene>
     </scenes>
 </document>

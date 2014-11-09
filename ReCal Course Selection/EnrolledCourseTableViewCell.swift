@@ -162,7 +162,6 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     }
     
     func handleTouchUp(sender: SlidingSelectionControl) {
-        println("touch up")
         self.delegate?.touchUpForEnrolledCourseTableViewCell(self)
     }
 }

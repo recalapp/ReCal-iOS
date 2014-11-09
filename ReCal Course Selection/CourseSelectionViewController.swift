@@ -9,10 +9,12 @@
 import UIKit
 import ReCalCommon
 
+private let changeScheduleSegueId = "ChangeSchedule"
 private let courseCellIdentifier = "CourseCell"
 private let searchViewControllerStoryboardId = "CourseSearch"
 
-class CourseSelectionViewController: DoubleSidebarViewController, UICollectionViewDelegate, UITableViewDelegate, ScheduleCollectionViewDataSourceDelegate, EnrolledCoursesTableViewDataSourceDelegate, CourseSearchTableViewControllerDelegate {
+class CourseSelectionViewController: DoubleSidebarViewController, UICollectionViewDelegate, UITableViewDelegate, ScheduleCollectionViewDataSourceDelegate, EnrolledCoursesTableViewDataSourceDelegate, CourseSearchTableViewControllerDelegate,
+    ScheduleSelectionDelegate {
     
     // MARK: - Variables
     private let enrolledCoursesTableViewDataSource = EnrolledCoursesTableViewDataSource()
@@ -32,7 +34,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     
     // MARK: Models
     // NOTE: didSet gets called on a struct even if we just assign one of its value, not the struct itself
-    var schedule: Schedule!
+    var schedule: Schedule! {
+        didSet {
+            assert(schedule != nil, "Invariant: Schedule cannot be nil, except for initial value.")
+            self.navigationItem.title = schedule.name
+        }
+    }
     
     // MARK: Views and View Controllers
     private var scheduleView: UICollectionView!
@@ -54,6 +61,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.reloadScheduleView()
         self.reloadEnrolledCoursesView()
         self.reloadSearchViewController()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if self.schedule == nil {
+            self.performSegueWithIdentifier(changeScheduleSegueId, sender: self)
+        }
     }
     
     private func saveSchedule() {
@@ -247,5 +260,38 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.reloadScheduleView()
         self.reloadEnrolledCoursesView()
         self.saveSchedule()
+    }
+    
+    // MARK: - Schedule Selection Delegate
+    func didSelectSchedule(schedule: Schedule) {
+        self.schedule = schedule
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        switch segue {
+        case let _ where segue.identifier == changeScheduleSegueId:
+            let navigationController = segue.destinationViewController as UINavigationController
+            switch Settings.currentSettings.theme {
+            case .Light:
+                navigationController.navigationBar.barStyle = .Default
+            case .Dark:
+                navigationController.navigationBar.barStyle = .Black
+            }
+            
+            let scheduleSelectionViewController = navigationController.topViewController as ScheduleSelectionViewController
+            scheduleSelectionViewController.delegate = self
+        default:
+            break
+        }
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return false
     }
 }

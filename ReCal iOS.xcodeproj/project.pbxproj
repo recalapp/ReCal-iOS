@@ -80,8 +80,13 @@
 		81A094FD1A067E2100A0C3CE /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
 		81A094FE1A067E2100A0C3CE /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		81B6D3111A0DA65900B883A6 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819E7F271A0D93E600D32D5A /* ColorScheme.swift */; };
+		81BCA5461A0FE87600391608 /* AuthenticationNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA5451A0FE87600391608 /* AuthenticationNavigationController.swift */; };
+		81BCA5481A0FE94300391608 /* CourseSelectionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */; };
+		81BCA54A1A0FEB9500391608 /* AuthenticationPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA5491A0FEB9500391608 /* AuthenticationPromptViewController.swift */; };
+		81BCA54C1A0FF69000391608 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA54B1A0FF69000391608 /* URLs.swift */; };
 		81C1F5D919F05C010042AB61 /* SampleCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */; };
 		81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */; };
+		81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D016951A1003880020C9CC /* AuthenticationContainerViewController.swift */; };
 		81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D270D419F090E700DED75D /* HeaderBackgroundView.swift */; };
 		81D270D819F0946100DED75D /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D270D619F0946100DED75D /* HeaderView.swift */; };
 		81D270D919F0946100DED75D /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81D270D719F0946100DED75D /* HeaderView.xib */; };
@@ -298,8 +303,13 @@
 		81A094E31A067DFD00A0C3CE /* TimeRowHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderView.swift; sourceTree = "<group>"; };
 		81A094E41A067DFD00A0C3CE /* TimeRowHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeRowHeaderView.xib; sourceTree = "<group>"; };
 		81B6D3121A0DA81D00B883A6 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = "../ReCal Course Selection/Settings.swift"; sourceTree = "<group>"; };
+		81BCA5451A0FE87600391608 /* AuthenticationNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationNavigationController.swift; sourceTree = "<group>"; };
+		81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionNavigationController.swift; sourceTree = "<group>"; };
+		81BCA5491A0FEB9500391608 /* AuthenticationPromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPromptViewController.swift; sourceTree = "<group>"; };
+		81BCA54B1A0FF69000391608 /* URLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarViewController.swift; sourceTree = "<group>"; };
 		81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		81D016951A1003880020C9CC /* AuthenticationContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationContainerViewController.swift; sourceTree = "<group>"; };
 		81D270D419F090E700DED75D /* HeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderBackgroundView.swift; sourceTree = "<group>"; };
 		81D270D619F0946100DED75D /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		81D270D719F0946100DED75D /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
@@ -403,6 +413,9 @@
 			children = (
 				81000B1B1A0E56B800246BD3 /* Authenticator.swift */,
 				81000B1D1A0EA1E100246BD3 /* AuthenticationViewController.swift */,
+				81BCA5451A0FE87600391608 /* AuthenticationNavigationController.swift */,
+				81BCA5491A0FEB9500391608 /* AuthenticationPromptViewController.swift */,
+				81D016951A1003880020C9CC /* AuthenticationContainerViewController.swift */,
 			);
 			name = Authenticator;
 			sourceTree = "<group>";
@@ -579,6 +592,7 @@
 				814D4E711A0C80E300C21848 /* Schedules Management */,
 				814D4E721A0C80F700C21848 /* Course Selection */,
 				815E81BA1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift */,
+				81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */,
 				81A094DB1A067DFD00A0C3CE /* Images.xcassets */,
 				81A094DC1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld */,
 				81A094C71A067DC200A0C3CE /* AppDelegate.swift */,
@@ -692,6 +706,7 @@
 				81B6D3121A0DA81D00B883A6 /* Settings.swift */,
 				81D9F25D19EF4D9600F987B9 /* Supporting Files */,
 				81000B211A0EA6C200246BD3 /* ReCalCommon.storyboard */,
+				81BCA54B1A0FF69000391608 /* URLs.swift */,
 			);
 			path = ReCalCommon;
 			sourceTree = "<group>";
@@ -1164,6 +1179,7 @@
 				814D4E5E1A0C573D00C21848 /* CDServerObject.m in Sources */,
 				81A094EF1A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift in Sources */,
 				814D4E761A0C880500C21848 /* ScheduleCreationViewController.swift in Sources */,
+				81BCA5481A0FE94300391608 /* CourseSelectionNavigationController.swift in Sources */,
 				81F9A40E1A070B1600083E55 /* CourseDetailsViewController.swift in Sources */,
 				8146ECB21A0ADB68005FF4C2 /* ManagedObjectProxy.swift in Sources */,
 				81A094E91A067DFD00A0C3CE /* CourseSearchTableViewController.swift in Sources */,
@@ -1188,12 +1204,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				8146ECB31A0AF132005FF4C2 /* ManagedObjectProxy.swift in Sources */,
+				81BCA54C1A0FF69000391608 /* URLs.swift in Sources */,
 				81000B1F1A0EA1E100246BD3 /* AuthenticationViewController.swift in Sources */,
 				81000B1C1A0E56B800246BD3 /* Authenticator.swift in Sources */,
+				81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */,
 				81E6406D19FACDCA003A49F8 /* Set.swift in Sources */,
 				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,
 				81F9A4061A06BE3300083E55 /* ClosureSearchPredicate.swift in Sources */,
 				8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */,
+				81BCA5461A0FE87600391608 /* AuthenticationNavigationController.swift in Sources */,
 				81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */,
 				8172B96E19F562590070E7DF /* Stack.swift in Sources */,
 				818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */,
@@ -1207,6 +1226,7 @@
 				81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */,
 				8111F63319F4947700A331E3 /* Util.swift in Sources */,
 				81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */,
+				81BCA54A1A0FEB9500391608 /* AuthenticationPromptViewController.swift in Sources */,
 				81B6D3111A0DA65900B883A6 /* ColorScheme.swift in Sources */,
 				81130C011A0C168F00F1F496 /* OrderedSet.swift in Sources */,
 				81E50D681A0E52290074F381 /* Settings.swift in Sources */,

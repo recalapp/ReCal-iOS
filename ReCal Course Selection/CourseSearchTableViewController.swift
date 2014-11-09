@@ -67,7 +67,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         return managedObjectContext
     }()
     
-    private var notificationObservers: [NSObjectProtocol] = []
+    private var notificationObservers: [AnyObject] = []
     
     private func clearVisibleCoursesStorageCache() {
         self.visibleEnrolledCourses = self.visibleCourses.filter { self.enrolledCoursesSet.contains($0) }
@@ -93,6 +93,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             
             searchController.delegate = self
             searchController.dimsBackgroundDuringPresentation = false
+            searchController.hidesNavigationBarDuringPresentation = false
             self.tableView.tableHeaderView = searchController.searchBar
             return searchController
         }()

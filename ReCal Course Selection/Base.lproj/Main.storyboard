@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ahz-Vy-Pmh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KCU-oo-xeN">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -24,11 +24,7 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Title" id="kdd-XO-5c7">
-                                        <barButtonItem key="rightBarButtonItem" title="Change Schedule" id="aw2-hz-Iox">
-                                            <connections>
-                                                <segue destination="e69-Ty-YPE" kind="presentation" identifier="ChangeSchedule" id="Jcb-FJ-NcS"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Change Schedule" id="aw2-hz-Iox"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -59,6 +55,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SK3-vO-Bkw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="9" y="-151"/>
+        </scene>
+        <!--Course Selection Navigation Controller-->
+        <scene sceneID="eyP-JF-6V0">
+            <objects>
+                <navigationController id="Gda-dx-YLE" customClass="CourseSelectionNavigationController" customModule="ReCal_Course_Selection" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="o3c-bG-Md8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="N44-FR-mol"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O1P-af-1kr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-737" y="529"/>
         </scene>
         <!--Schedules-->
         <scene sceneID="PDo-mA-dSC">
@@ -178,11 +190,17 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="sMn-nn-9V2"/>
+                    <navigationItem key="navigationItem" id="sMn-nn-9V2">
+                        <barButtonItem key="rightBarButtonItem" title="Change Schedule" id="sAT-3q-HMP">
+                            <connections>
+                                <segue destination="e69-Ty-YPE" kind="presentation" identifier="ChangeSchedule" id="6tw-2U-rN1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -281,5 +299,71 @@
             </objects>
             <point key="canvasLocation" x="1489" y="1142"/>
         </scene>
+        <!--Authentication Container View Controller-->
+        <scene sceneID="Jx7-OC-fz1">
+            <objects>
+                <viewController id="KCU-oo-xeN" customClass="AuthenticationContainerViewController" customModule="ReCalCommon" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MvN-0b-dMm"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZbK-Xr-IRv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XRR-q0-5GV">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pgu-4I-Vfx">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <connections>
+                                    <segue destination="Gda-dx-YLE" kind="embed" identifier="AuthenticationContainerEmbed" id="SS8-jN-7LS"/>
+                                </connections>
+                            </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uP1-1e-geO">
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xyD-Nr-hER">
+                                        <rect key="frame" x="279" y="0.0" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="xyD-Nr-hER" secondAttribute="centerY" id="PmC-uZ-Fv7"/>
+                                    <constraint firstAttribute="height" id="Vwi-c1-Bxz"/>
+                                    <constraint firstItem="xyD-Nr-hER" firstAttribute="top" secondItem="uP1-1e-geO" secondAttribute="top" id="f0e-O7-Rrp"/>
+                                    <constraint firstAttribute="centerX" secondItem="xyD-Nr-hER" secondAttribute="centerX" id="nT1-sn-jIm"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="uP1-1e-geO" firstAttribute="leading" secondItem="XRR-q0-5GV" secondAttribute="leading" id="S3D-jz-1he"/>
+                            <constraint firstAttribute="trailing" secondItem="pgu-4I-Vfx" secondAttribute="trailing" id="WoL-on-T58"/>
+                            <constraint firstItem="pgu-4I-Vfx" firstAttribute="top" secondItem="XRR-q0-5GV" secondAttribute="top" id="bBp-RM-a7S"/>
+                            <constraint firstItem="uP1-1e-geO" firstAttribute="top" secondItem="XRR-q0-5GV" secondAttribute="top" id="fas-rH-oxg"/>
+                            <constraint firstItem="pgu-4I-Vfx" firstAttribute="top" secondItem="uP1-1e-geO" secondAttribute="bottom" id="iZj-UA-6s8"/>
+                            <constraint firstItem="ZbK-Xr-IRv" firstAttribute="top" secondItem="pgu-4I-Vfx" secondAttribute="bottom" id="lvN-aA-fkD"/>
+                            <constraint firstAttribute="trailing" secondItem="uP1-1e-geO" secondAttribute="trailing" id="n1I-Gp-lrV"/>
+                            <constraint firstItem="pgu-4I-Vfx" firstAttribute="leading" secondItem="XRR-q0-5GV" secondAttribute="leading" id="rw8-7R-MmO"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="bBp-RM-a7S"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="statusLabel" destination="xyD-Nr-hER" id="Iyg-Ho-EoZ"/>
+                        <outlet property="statusView" destination="uP1-1e-geO" id="2k1-4e-Mtd"/>
+                        <outlet property="statusViewHeightConstraint" destination="Vwi-c1-Bxz" id="aSF-9Q-X4N"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MMR-On-TZ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1375" y="1010"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="N44-FR-mol"/>
+    </inferredMetricsTieBreakers>
 </document>

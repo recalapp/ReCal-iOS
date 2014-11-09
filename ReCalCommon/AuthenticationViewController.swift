@@ -17,6 +17,13 @@ class AuthenticationViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        switch Settings.currentSettings.theme {
+        case .Light:
+            self.navigationController?.navigationBar.barStyle = .Default
+        case .Dark:
+            self.navigationController?.navigationBar.barStyle = .Black
+        }
+        self.navigationController?.navigationBar.tintColor = Settings.currentSettings.colorScheme.actionableTextColor
     }
     
     override func viewDidAppear(animated: Bool) {
