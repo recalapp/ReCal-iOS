@@ -45,14 +45,15 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
             // TODO remove hard coded term code
             var createdSchedule = Schedule(name: name, termCode: "1152")
             switch createdSchedule.commitToManagedObjectContext(self.managedObjectContext) {
-            case .Success(_):
+            case .Success(let tempObjectId):
                 var success = false
                 var error: NSError?
+                var schedule = self.managedObjectContext.objectWithID(tempObjectId) as CDSchedule
                 self.managedObjectContext.performBlockAndWait {
                     success = self.managedObjectContext.save(&error)
                 }
                 if success {
-                    self.delegate?.didSelectSchedule(createdSchedule)
+                    self.delegate?.didSelectScheduleWithObjectId(schedule.objectID) // object id changes on save!
                 } else {
                     println("error saving. error: \(error)")
                     assertionFailure("Failed to save schedule")

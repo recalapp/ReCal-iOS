@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ScheduleSelectionDelegate: class {
-    func didSelectSchedule(schedule: Schedule)
+    func didSelectScheduleWithObjectId(objectId: NSManagedObjectID)
 }

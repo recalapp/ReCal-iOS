@@ -12,6 +12,13 @@
 		81000B1F1A0EA1E100246BD3 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81000B1D1A0EA1E100246BD3 /* AuthenticationViewController.swift */; };
 		81000B221A0EA6C200246BD3 /* ReCalCommon.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81000B211A0EA6C200246BD3 /* ReCalCommon.storyboard */; };
 		8105F39E1A066AE800B2F20A /* SampleSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F39D1A066AE800B2F20A /* SampleSearchTableViewController.swift */; };
+		8107FD791A11781100296BBB /* CDSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD781A11781100296BBB /* CDSection.m */; };
+		8107FD7C1A11781200296BBB /* CDServerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD7B1A11781200296BBB /* CDServerObject.m */; };
+		8107FD7F1A11781200296BBB /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD7E1A11781200296BBB /* CDSemester.m */; };
+		8107FD821A11781200296BBB /* CDCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD811A11781200296BBB /* CDCourse.m */; };
+		8107FD851A11781200296BBB /* CDCourseListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD841A11781200296BBB /* CDCourseListing.m */; };
+		8107FD881A11781200296BBB /* CDSectionMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD871A11781200296BBB /* CDSectionMeeting.m */; };
+		8107FD8B1A11781200296BBB /* CDSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD8A1A11781200296BBB /* CDSchedule.m */; };
 		8111F63319F4947700A331E3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62B19F4947700A331E3 /* Util.swift */; };
 		8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */; };
 		81130BCE1A0C0D7D00F1F496 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81130BCD1A0C0D7D00F1F496 /* Day.swift */; };
@@ -24,23 +31,18 @@
 		811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811D482319ED7EB000E3F360 /* LaunchScreen.xib */; };
 		811D483119ED7EB100E3F360 /* ReCal_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */; };
 		811E64CA19F56681007B0148 /* SampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E64C919F56681007B0148 /* SampleTableViewController.swift */; };
+		811E81751A1114A400407991 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E81741A1114A400407991 /* Event.swift */; };
 		8124969019F17F440081AFB2 /* TimeHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */; };
 		8124969319F18A620081AFB2 /* TimeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124969119F18A620081AFB2 /* TimeHeaderView.swift */; };
 		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
 		8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */; };
 		8146ECB21A0ADB68005FF4C2 /* ManagedObjectProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */; };
 		8146ECB31A0AF132005FF4C2 /* ManagedObjectProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */; };
-		814D4E5E1A0C573D00C21848 /* CDServerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E5D1A0C573D00C21848 /* CDServerObject.m */; };
-		814D4E641A0C573D00C21848 /* CDSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E631A0C573D00C21848 /* CDSection.m */; };
-		814D4E671A0C573D00C21848 /* CDCourseListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E661A0C573D00C21848 /* CDCourseListing.m */; };
-		814D4E6D1A0C573D00C21848 /* CDSectionMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E6C1A0C573D00C21848 /* CDSectionMeeting.m */; };
-		814D4E701A0C573D00C21848 /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E6F1A0C573D00C21848 /* CDSemester.m */; };
 		814D4E741A0C815100C21848 /* ScheduleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E731A0C815100C21848 /* ScheduleSelectionViewController.swift */; };
 		814D4E761A0C880500C21848 /* ScheduleCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E751A0C880500C21848 /* ScheduleCreationViewController.swift */; };
 		814D4E781A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E771A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift */; };
 		8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */; };
 		8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */; };
-		815E81BB1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E81BA1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift */; };
 		816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB511A092144002C610A /* CoreDataExtensions.swift */; };
 		816CBB541A0926F9002C610A /* courses.json in Resources */ = {isa = PBXBuildFile; fileRef = 816CBB531A0926F9002C610A /* courses.json */; };
 		816CBB561A092909002C610A /* CoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB551A092909002C610A /* CoreDataImporter.swift */; };
@@ -49,8 +51,6 @@
 		8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */; };
 		8172B96D19F562590070E7DF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96519F562590070E7DF /* Queue.swift */; };
 		8172B96E19F562590070E7DF /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96619F562590070E7DF /* Stack.swift */; };
-		817BF0DF1A0D3B51009D5269 /* CDSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 817BF0DE1A0D3B51009D5269 /* CDSchedule.m */; };
-		817BF0E21A0D3B52009D5269 /* CDCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 817BF0E11A0D3B52009D5269 /* CDCourse.m */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819193CD19F1652700E3A3B8 /* GridLineView.swift */; };
@@ -219,6 +219,20 @@
 		81000B1D1A0EA1E100246BD3 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		81000B211A0EA6C200246BD3 /* ReCalCommon.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReCalCommon.storyboard; sourceTree = "<group>"; };
 		8105F39D1A066AE800B2F20A /* SampleSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleSearchTableViewController.swift; sourceTree = "<group>"; };
+		8107FD771A11781100296BBB /* CDSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSection.h; sourceTree = "<group>"; };
+		8107FD781A11781100296BBB /* CDSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSection.m; sourceTree = "<group>"; };
+		8107FD7A1A11781200296BBB /* CDServerObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDServerObject.h; sourceTree = "<group>"; };
+		8107FD7B1A11781200296BBB /* CDServerObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDServerObject.m; sourceTree = "<group>"; };
+		8107FD7D1A11781200296BBB /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
+		8107FD7E1A11781200296BBB /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
+		8107FD801A11781200296BBB /* CDCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourse.h; sourceTree = "<group>"; };
+		8107FD811A11781200296BBB /* CDCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourse.m; sourceTree = "<group>"; };
+		8107FD831A11781200296BBB /* CDCourseListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourseListing.h; sourceTree = "<group>"; };
+		8107FD841A11781200296BBB /* CDCourseListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourseListing.m; sourceTree = "<group>"; };
+		8107FD861A11781200296BBB /* CDSectionMeeting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSectionMeeting.h; sourceTree = "<group>"; };
+		8107FD871A11781200296BBB /* CDSectionMeeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSectionMeeting.m; sourceTree = "<group>"; };
+		8107FD891A11781200296BBB /* CDSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSchedule.h; sourceTree = "<group>"; };
+		8107FD8A1A11781200296BBB /* CDSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSchedule.m; sourceTree = "<group>"; };
 		8111F62B19F4947700A331E3 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSelectionControl.swift; sourceTree = "<group>"; };
 		81130BCD1A0C0D7D00F1F496 /* Day.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
@@ -235,27 +249,17 @@
 		811D482F19ED7EB100E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_iOSTests.swift; sourceTree = "<group>"; };
 		811E64C919F56681007B0148 /* SampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewController.swift; sourceTree = "<group>"; };
+		811E81741A1114A400407991 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderBackgroundView.swift; sourceTree = "<group>"; };
 		8124969119F18A620081AFB2 /* TimeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderView.swift; sourceTree = "<group>"; };
 		8124969219F18A620081AFB2 /* TimeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeHeaderView.xib; sourceTree = "<group>"; };
 		8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedObjectProxy.swift; path = "../ReCal Course Selection/ManagedObjectProxy.swift"; sourceTree = "<group>"; };
-		814D4E5C1A0C573D00C21848 /* CDServerObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDServerObject.h; sourceTree = "<group>"; };
-		814D4E5D1A0C573D00C21848 /* CDServerObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDServerObject.m; sourceTree = "<group>"; };
-		814D4E621A0C573D00C21848 /* CDSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSection.h; sourceTree = "<group>"; };
-		814D4E631A0C573D00C21848 /* CDSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSection.m; sourceTree = "<group>"; };
-		814D4E651A0C573D00C21848 /* CDCourseListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourseListing.h; sourceTree = "<group>"; };
-		814D4E661A0C573D00C21848 /* CDCourseListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourseListing.m; sourceTree = "<group>"; };
-		814D4E6B1A0C573D00C21848 /* CDSectionMeeting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSectionMeeting.h; sourceTree = "<group>"; };
-		814D4E6C1A0C573D00C21848 /* CDSectionMeeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSectionMeeting.m; sourceTree = "<group>"; };
-		814D4E6E1A0C573D00C21848 /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
-		814D4E6F1A0C573D00C21848 /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
 		814D4E731A0C815100C21848 /* ScheduleSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleSelectionViewController.swift; sourceTree = "<group>"; };
 		814D4E751A0C880500C21848 /* ScheduleCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCreationViewController.swift; sourceTree = "<group>"; };
 		814D4E771A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleSelectionDelegate.swift; sourceTree = "<group>"; };
 		8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewCell.swift; sourceTree = "<group>"; };
 		8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsCollectionViewCell.xib; sourceTree = "<group>"; };
-		815E81BA1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionContainerViewController.swift; sourceTree = "<group>"; };
 		816CBB1D1A091D16002C610A /* ReCal Course Selection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReCal Course Selection-Bridging-Header.h"; sourceTree = "<group>"; };
 		816CBB511A092144002C610A /* CoreDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtensions.swift; sourceTree = "<group>"; };
 		816CBB531A0926F9002C610A /* courses.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = courses.json; sourceTree = "<group>"; };
@@ -268,10 +272,6 @@
 		8172B96519F562590070E7DF /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		8172B96619F562590070E7DF /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		8172B96719F562590070E7DF /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
-		817BF0DD1A0D3B51009D5269 /* CDSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSchedule.h; sourceTree = "<group>"; };
-		817BF0DE1A0D3B51009D5269 /* CDSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSchedule.m; sourceTree = "<group>"; };
-		817BF0E01A0D3B52009D5269 /* CDCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourse.h; sourceTree = "<group>"; };
-		817BF0E11A0D3B52009D5269 /* CDCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourse.m; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819193CD19F1652700E3A3B8 /* GridLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLineView.swift; sourceTree = "<group>"; };
@@ -512,6 +512,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		811E81731A11148D00407991 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				811E81741A1114A400407991 /* Event.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		814D4E711A0C80E300C21848 /* Schedules Management */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,20 +544,20 @@
 		816CBB1C1A091CFB002C610A /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				814D4E6E1A0C573D00C21848 /* CDSemester.h */,
-				814D4E6F1A0C573D00C21848 /* CDSemester.m */,
-				814D4E6B1A0C573D00C21848 /* CDSectionMeeting.h */,
-				814D4E6C1A0C573D00C21848 /* CDSectionMeeting.m */,
-				814D4E651A0C573D00C21848 /* CDCourseListing.h */,
-				814D4E661A0C573D00C21848 /* CDCourseListing.m */,
-				814D4E621A0C573D00C21848 /* CDSection.h */,
-				814D4E631A0C573D00C21848 /* CDSection.m */,
-				814D4E5C1A0C573D00C21848 /* CDServerObject.h */,
-				814D4E5D1A0C573D00C21848 /* CDServerObject.m */,
-				817BF0E01A0D3B52009D5269 /* CDCourse.h */,
-				817BF0E11A0D3B52009D5269 /* CDCourse.m */,
-				817BF0DD1A0D3B51009D5269 /* CDSchedule.h */,
-				817BF0DE1A0D3B51009D5269 /* CDSchedule.m */,
+				8107FD891A11781200296BBB /* CDSchedule.h */,
+				8107FD8A1A11781200296BBB /* CDSchedule.m */,
+				8107FD861A11781200296BBB /* CDSectionMeeting.h */,
+				8107FD871A11781200296BBB /* CDSectionMeeting.m */,
+				8107FD831A11781200296BBB /* CDCourseListing.h */,
+				8107FD841A11781200296BBB /* CDCourseListing.m */,
+				8107FD801A11781200296BBB /* CDCourse.h */,
+				8107FD811A11781200296BBB /* CDCourse.m */,
+				8107FD7D1A11781200296BBB /* CDSemester.h */,
+				8107FD7E1A11781200296BBB /* CDSemester.m */,
+				8107FD7A1A11781200296BBB /* CDServerObject.h */,
+				8107FD7B1A11781200296BBB /* CDServerObject.m */,
+				8107FD771A11781100296BBB /* CDSection.h */,
+				8107FD781A11781100296BBB /* CDSection.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -593,7 +601,6 @@
 				81A095021A067E7E00A0C3CE /* Models */,
 				814D4E711A0C80E300C21848 /* Schedules Management */,
 				814D4E721A0C80F700C21848 /* Course Selection */,
-				815E81BA1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift */,
 				81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */,
 				81A094DB1A067DFD00A0C3CE /* Images.xcassets */,
 				81A094DC1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld */,
@@ -742,6 +749,7 @@
 		81E50D401A0DB5420074F381 /* ReCal Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				811E81731A11148D00407991 /* Models */,
 				81E50D431A0DB5420074F381 /* AppDelegate.swift */,
 				81E50D641A0E503B0074F381 /* URLs.swift */,
 				81E50D661A0E50C30074F381 /* CalendarViewController.swift */,
@@ -1155,31 +1163,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				814D4E671A0C573D00C21848 /* CDCourseListing.m in Sources */,
+				8107FD881A11781200296BBB /* CDSectionMeeting.m in Sources */,
+				8107FD7C1A11781200296BBB /* CDServerObject.m in Sources */,
 				81A094EB1A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift in Sources */,
-				814D4E641A0C573D00C21848 /* CDSection.m in Sources */,
 				814D4E781A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift in Sources */,
+				8107FD791A11781100296BBB /* CDSection.m in Sources */,
 				81130BCE1A0C0D7D00F1F496 /* Day.swift in Sources */,
 				81A094FA1A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift in Sources */,
 				81A094F31A067DFD00A0C3CE /* GridLineView.swift in Sources */,
 				81A094F11A067DFD00A0C3CE /* EventCollectionViewCell.swift in Sources */,
 				81A094F71A067DFD00A0C3CE /* Section.swift in Sources */,
+				8107FD851A11781200296BBB /* CDCourseListing.m in Sources */,
 				81A094EC1A067DFD00A0C3CE /* DayColumnHeaderView.swift in Sources */,
 				81A094FB1A067DFD00A0C3CE /* TimeRowHeaderView.swift in Sources */,
 				81A094EE1A067DFD00A0C3CE /* EnrolledCoursesTableViewDataSource.swift in Sources */,
-				814D4E701A0C573D00C21848 /* CDSemester.m in Sources */,
 				81A094EA1A067DFD00A0C3CE /* CourseSelectionViewController.swift in Sources */,
 				816CBB561A092909002C610A /* CoreDataImporter.swift in Sources */,
 				81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */,
-				815E81BB1A0A71310086C8D3 /* CourseSelectionContainerViewController.swift in Sources */,
 				8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */,
-				814D4E6D1A0C573D00C21848 /* CDSectionMeeting.m in Sources */,
 				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
-				817BF0E21A0D3B52009D5269 /* CDCourse.m in Sources */,
+				8107FD7F1A11781200296BBB /* CDSemester.m in Sources */,
 				816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */,
-				817BF0DF1A0D3B51009D5269 /* CDSchedule.m in Sources */,
 				81A094E71A067DFD00A0C3CE /* Course.swift in Sources */,
-				814D4E5E1A0C573D00C21848 /* CDServerObject.m in Sources */,
+				8107FD8B1A11781200296BBB /* CDSchedule.m in Sources */,
 				81A094EF1A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift in Sources */,
 				814D4E761A0C880500C21848 /* ScheduleCreationViewController.swift in Sources */,
 				81BCA5481A0FE94300391608 /* CourseSelectionNavigationController.swift in Sources */,
@@ -1189,6 +1195,7 @@
 				81F9A40C1A06F7B000083E55 /* CourseSearchResultTableViewCell.swift in Sources */,
 				81A094F91A067DFD00A0C3CE /* SectionTypeEnrollment.swift in Sources */,
 				814D4E741A0C815100C21848 /* ScheduleSelectionViewController.swift in Sources */,
+				8107FD821A11781200296BBB /* CDCourse.m in Sources */,
 				81A094C81A067DC200A0C3CE /* AppDelegate.swift in Sources */,
 				81A094F51A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld in Sources */,
 			);
@@ -1253,6 +1260,7 @@
 				81E50D441A0DB5420074F381 /* AppDelegate.swift in Sources */,
 				81E50D651A0E503B0074F381 /* URLs.swift in Sources */,
 				81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */,
+				811E81751A1114A400407991 /* Event.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

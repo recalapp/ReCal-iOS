@@ -156,7 +156,7 @@ class ScheduleSelectionViewController: UITableViewController {
     // MARK: - Table View Delegate
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let schedule = self.scheduleAtIndexPath(indexPath) {
-            self.delegate?.didSelectSchedule(Schedule(managedObject: schedule))
+            self.delegate?.didSelectScheduleWithObjectId(schedule.objectID)
         }
     }
     

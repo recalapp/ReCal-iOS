@@ -31,6 +31,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
         return managedObjectContext
     }()
+    private var notificationObservers: [AnyObject] = []
     
     // MARK: Models
     // NOTE: didSet gets called on a struct even if we just assign one of its value, not the struct itself
@@ -49,12 +50,25 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+            self.managedObjectContext.performBlockAndWait {
+                self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+            }
+        }
+        self.notificationObservers.append(observer)
+        
         self.definesPresentationContext = true
         self.leftSidebarCoverText = "SEARCH"
         self.rightSidebarCoverText = "ENROLLED"
         self.initializeScheduleView()
         self.initializeEnrolledCoursesView()
         self.initializeSearchViewController()
+    }
+    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -73,9 +87,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             var errorOpt: NSError?
             self.managedObjectContext.performBlock {
                 let _ = self.managedObjectContext.save(&errorOpt)
-            }
-            if let error = errorOpt {
-                println("Error saving. Error: \(error)")
+                if let error = errorOpt {
+                    println("Error saving. Error: \(error)")
+                }
             }
         }
     }
@@ -264,8 +278,16 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     // MARK: - Schedule Selection Delegate
-    func didSelectSchedule(schedule: Schedule) {
-        self.schedule = schedule
+    func didSelectScheduleWithObjectId(objectId: NSManagedObjectID) {
+        var schedule: CDSchedule?
+        self.managedObjectContext.performBlockAndWait {
+            schedule = self.managedObjectContext.objectWithID(objectId) as? CDSchedule
+        }
+        if schedule != nil {
+            self.schedule = Schedule(managedObject: schedule!)
+        } else {
+            assertionFailure("Failed to get schedule")
+        }
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
