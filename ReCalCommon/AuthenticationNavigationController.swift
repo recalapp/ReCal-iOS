@@ -42,17 +42,13 @@ public class AuthenticationNavigationController: UINavigationController {
         switch Settings.currentSettings.authenticator.state {
         case .Unauthenticated:
             break
-        case .Authenticated(_), .PreviouslyAuthenticated(_):
+        case .Authenticated(_), .PreviouslyAuthenticated(_), .Cached(_):
             self.setViewControllers([self.logicalRootViewController], animated: false)
         }
         
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(authenticatorStateDidChangeNofication, object: nil, queue: nil) { (_) -> Void in
             switch Settings.currentSettings.authenticator.state {
-            case .Authenticated(_):
-                if self.topViewController == self.authenticationPromptViewController {
-                    self.setViewControllers([self.logicalRootViewController], animated: true)
-                }
-            case .PreviouslyAuthenticated(_):
+            case .Authenticated(_), .PreviouslyAuthenticated(_), .Cached(_):
                 if self.topViewController == self.authenticationPromptViewController {
                     self.setViewControllers([self.logicalRootViewController], animated: true)
                 }

@@ -20,7 +20,7 @@ public class AuthenticationContainerViewController: UIViewController {
 
     private var statusViewShown: Bool {
         switch Settings.currentSettings.authenticator.state {
-        case .Authenticated(_), .Unauthenticated:
+        case .Authenticated(_), .Cached(_), .Unauthenticated:
             return false
         case .PreviouslyAuthenticated(_):
             return true

@@ -58,14 +58,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.reloadScheduleView()
-        self.reloadEnrolledCoursesView()
-        self.reloadSearchViewController()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
         if self.schedule == nil {
             self.performSegueWithIdentifier(changeScheduleSegueId, sender: self)
+        } else {
+            self.reloadScheduleView()
+            self.reloadEnrolledCoursesView()
+            self.reloadSearchViewController()
         }
     }
     

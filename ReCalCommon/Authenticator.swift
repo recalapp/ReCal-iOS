@@ -9,6 +9,7 @@
 import UIKit
 
 private let authenticationNavigationControllerStoryboardId = "Authentication"
+private let authenticationUserDefaultsKey = "authenticationUserDefaultsKey"
 
 public let authenticatorStateDidChangeNofication = "AuthenticatorStateDidChangeNofication"
 public let authenticatorUserInfoKeyOldValue = "authenticatorUserInfoKeyOldValue"
@@ -19,12 +20,29 @@ public class Authenticator: AuthenticationViewControllerDelegate {
     public init(rootViewController: UIViewController, forAuthenticationUrlString urlString: String) {
         self.rootViewController = rootViewController
         self.authenticationUrl = NSURL(string: urlString)!
+        if let userSerialized = NSUserDefaults.standardUserDefaults().objectForKey(authenticationUserDefaultsKey) as? SerializedDictionary {
+            self.state = .Cached(User(serializedDictionary: userSerialized))
+        } else {
+            self.state = .Unauthenticated
+        }
     }
     
     private(set) public var state: AuthenticationStatus = .Unauthenticated {
         didSet {
             if oldValue != state {
                 NSNotificationCenter.defaultCenter().postNotificationName(authenticatorStateDidChangeNofication, object: self)
+                switch state {
+                case .Authenticated(let user):
+                    NSUserDefaults.standardUserDefaults().setObject(user.serialize(), forKey: authenticationUserDefaultsKey)
+                case .Cached(let user):
+                    assertionFailure("Should not get here. We never transition a state to cache, but we may start the state off as cached in the initializer")
+                    NSUserDefaults.standardUserDefaults().setObject(user.serialize(), forKey: authenticationUserDefaultsKey)
+                case .PreviouslyAuthenticated(let user):
+                    NSUserDefaults.standardUserDefaults().setObject(user.serialize(), forKey: authenticationUserDefaultsKey)
+                case .Unauthenticated:
+                    NSUserDefaults.standardUserDefaults().removeObjectForKey(authenticationUserDefaultsKey)
+                }
+                
             }
         }
     }
@@ -76,6 +94,13 @@ public class Authenticator: AuthenticationViewControllerDelegate {
             case .Failure:
                 self.state = .PreviouslyAuthenticated(user)
             }
+        case .Cached(let user):
+            switch result {
+            case .Success(let username):
+                self.state = .Authenticated(User(username: username))
+            case .Failure:
+                self.state = .PreviouslyAuthenticated(user)
+            }
         case .PreviouslyAuthenticated(_):
             switch result {
             case .Success(let username):
@@ -120,6 +145,7 @@ private enum AuthenticationResult {
 public enum AuthenticationStatus: Equatable {
     case Authenticated(User)
     case PreviouslyAuthenticated(User)
+    case Cached(User) // starting state if we cached a user
     case Unauthenticated
 }
 
@@ -129,15 +155,28 @@ public func == (lhs: AuthenticationStatus, rhs: AuthenticationStatus) -> Bool {
         return userLhs == userRhs
     case (.PreviouslyAuthenticated(let userLhs), .PreviouslyAuthenticated(let userRhs)):
         return userLhs == userRhs
+    case (.Cached(let userLhs), .Cached(let userRhs)):
+        return userLhs == userRhs
     case (.Unauthenticated, .Unauthenticated):
         return true
-    default:
+    case (.Authenticated(_), _), (.PreviouslyAuthenticated(_), _), (.Cached(_), _), (.Unauthenticated, _):
+        // avoids a default clause
         return false
     }
 }
 
-public struct User: Equatable {
+public struct User: Equatable, Serializable {
     let username: String
+    private let serializedDictionaryKeyUser = "user"
+    public init(username: String) {
+        self.username = username
+    }
+    public init(serializedDictionary: SerializedDictionary) {
+        self.username = serializedDictionary[serializedDictionaryKeyUser]! as String
+    }
+    public func serialize() -> SerializedDictionary {
+        return [serializedDictionaryKeyUser: self.username]
+    }
 }
 
 public func == (lhs: User, rhs: User) -> Bool {
