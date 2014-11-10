@@ -25,7 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .Dark:
             Settings.currentSettings.colorScheme = DarkColorScheme()
         }
-        
+        let rootViewController = self.window?.rootViewController
+        Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
         return true
     }
 

@@ -13,7 +13,6 @@ class CalendarViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        Settings.currentSettings.authenticator = Authenticator(rootViewController: self.view.window?.rootViewController ?? self, forAuthenticationUrlString: mobileLoggedInUrl)
         Settings.currentSettings.authenticator.authenticate()
         switch Settings.currentSettings.theme {
         case .Light:
