@@ -26,7 +26,7 @@ public class Settings {
     
     public var colorScheme: ColorScheme = DarkColorScheme()
     
-    public var authenticator: Authenticator = Authenticator(rootViewController: UIViewController(), forAuthenticationUrlString: "recal.io/mobile_logged_in")
+    public var authenticator: Authenticator = Authenticator(rootViewController: UIViewController(), forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
 }
 
 public enum Theme {

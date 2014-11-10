@@ -17,9 +17,11 @@ public let authenticatorUserInfoKeyOldValue = "authenticatorUserInfoKeyOldValue"
 public class Authenticator: AuthenticationViewControllerDelegate {
     public let rootViewController: UIViewController
     public let authenticationUrl: NSURL
-    public init(rootViewController: UIViewController, forAuthenticationUrlString urlString: String) {
+    public let logOutUrl: NSURL
+    public init(rootViewController: UIViewController, forAuthenticationUrlString urlString: String, withLogOutUrlString logOutUrlString: String) {
         self.rootViewController = rootViewController
         self.authenticationUrl = NSURL(string: urlString)!
+        self.logOutUrl = NSURL(string: logOutUrlString)!
         if let userSerialized = NSUserDefaults.standardUserDefaults().objectForKey(authenticationUserDefaultsKey) as? SerializedDictionary {
             self.state = .Cached(User(serializedDictionary: userSerialized))
         } else {
@@ -85,12 +87,23 @@ public class Authenticator: AuthenticationViewControllerDelegate {
         }
     }
     
+    /// Logs the user out. Sends an asynchronous web request to log off on the server. Therefore, on return, the logout may not actually have happened on the server yet.
+    public func logOut() {
+        let request = NSURLRequest(URL: self.logOutUrl)
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.currentQueue()) { (_, _, _) in
+            
+        }
+        self.advanceStateWithAuthenticationResult(.LogOut)
+    }
+    
     private func advanceStateWithAuthenticationResult(result: AuthenticationResult) {
         switch self.state {
         case .Authenticated(let user):
             switch result {
             case .Success(let username):
                 self.state = .Authenticated(User(username: username))
+            case .LogOut:
+                self.state = .Unauthenticated
             case .Failure:
                 self.state = .PreviouslyAuthenticated(user)
             }
@@ -98,6 +111,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
             switch result {
             case .Success(let username):
                 self.state = .Authenticated(User(username: username))
+            case .LogOut:
+                self.state = .Unauthenticated
             case .Failure:
                 self.state = .PreviouslyAuthenticated(user)
             }
@@ -105,6 +120,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
             switch result {
             case .Success(let username):
                 self.state = .Authenticated(User(username: username))
+            case .LogOut:
+                self.state = .Unauthenticated
             case .Failure:
                 break
             }
@@ -112,7 +129,7 @@ public class Authenticator: AuthenticationViewControllerDelegate {
             switch result {
             case .Success(let username):
                 self.state = .Authenticated(User(username: username))
-            case .Failure:
+            case .Failure, .LogOut:
                 break
             }
         }
@@ -140,6 +157,7 @@ public class Authenticator: AuthenticationViewControllerDelegate {
 private enum AuthenticationResult {
     case Success(String)
     case Failure
+    case LogOut
 }
 
 public enum AuthenticationStatus: Equatable {

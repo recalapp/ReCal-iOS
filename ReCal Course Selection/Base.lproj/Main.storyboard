@@ -195,6 +195,11 @@
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="sMn-nn-9V2">
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="3Sc-Bh-DN0">
+                            <connections>
+                                <action selector="logOutButtonTapped:" destination="BYZ-38-t0r" id="OgV-zm-8qk"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Change Schedule" id="sAT-3q-HMP">
                             <connections>
                                 <segue destination="e69-Ty-YPE" kind="presentation" identifier="ChangeSchedule" id="6tw-2U-rN1"/>
@@ -317,7 +322,7 @@
                                     <segue destination="Gda-dx-YLE" kind="embed" identifier="AuthenticationContainerEmbed" id="SS8-jN-7LS"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uP1-1e-geO">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uP1-1e-geO">
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xyD-Nr-hER">
                                         <rect key="frame" x="279" y="0.0" width="42" height="21"/>

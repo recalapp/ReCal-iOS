@@ -12,7 +12,6 @@ import ReCalCommon
 class CourseSelectionNavigationController: AuthenticationNavigationController {
 
     override func viewDidLoad() {
-        Settings.currentSettings.authenticator = Authenticator(rootViewController: self, forAuthenticationUrlString: authenticationUrl)
         super.viewDidLoad()
         self.hidesBarsWhenKeyboardAppears = false
     }

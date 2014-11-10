@@ -211,6 +211,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         alertController.addAction(cancelAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
+    @IBAction func logOutButtonTapped(sender: UIBarButtonItem) {
+        Settings.currentSettings.authenticator.logOut()
+    }
     
     // MARK: - Table View Delegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
