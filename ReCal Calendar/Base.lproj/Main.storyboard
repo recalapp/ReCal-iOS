@@ -31,7 +31,21 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mm3-Un-elg">
+                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <connections>
+                                    <segue destination="xGl-yB-3OG" kind="embed" identifier="CalendarEmbed" id="cfv-bK-dEH"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="mm3-Un-elg" secondAttribute="trailing" id="9Ch-42-cil"/>
+                            <constraint firstAttribute="bottom" secondItem="mm3-Un-elg" secondAttribute="bottom" id="gMf-Df-6el"/>
+                            <constraint firstItem="mm3-Un-elg" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="hoB-3V-zij"/>
+                            <constraint firstItem="mm3-Un-elg" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="uKx-yN-zAi"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zJ4-re-g8W">
                         <nil key="title"/>
@@ -42,11 +56,52 @@
                                 <segment title="Agenda"/>
                                 <segment title="Day"/>
                             </segments>
+                            <connections>
+                                <action selector="viewControllerSegmentedControlValueChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="fCp-cl-xG5"/>
+                            </connections>
                         </segmentedControl>
                     </navigationItem>
+                    <connections>
+                        <outlet property="contentView" destination="mm3-Un-elg" id="lVO-Mh-bVr"/>
+                        <outlet property="viewControllerSegmentedControl" destination="irs-6V-KPw" id="q4U-I7-HLa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="w1x-y5-RcH">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="xGl-yB-3OG" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8b3-tq-09Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1189" y="457"/>
+        </scene>
+        <!--Agenda View Controller-->
+        <scene sceneID="Net-sU-HtG">
+            <objects>
+                <tableViewController storyboardIdentifier="AgendaViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bMA-aa-CJP" customClass="AgendaViewController" customModule="ReCal_Calendar" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EYP-DX-gCk">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="FOF-QF-tMk">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FOF-QF-tMk" id="g13-pq-dUd">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bMA-aa-CJP" id="PEZ-k9-hQB"/>
+                            <outlet property="delegate" destination="bMA-aa-CJP" id="jlx-VE-Qaf"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uFX-cd-3VI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1794" y="540"/>
         </scene>
         <!--Authentication Container View Controller-->
         <scene sceneID="lag-Cx-tm8">
@@ -66,9 +121,9 @@
                                     <segue destination="HU8-Ze-EBH" kind="embed" id="h5j-Ji-4ks"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ToW-L2-GBI">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ToW-L2-GBI">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVJ-i7-uaK">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVJ-i7-uaK">
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>

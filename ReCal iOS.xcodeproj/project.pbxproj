@@ -19,6 +19,7 @@
 		8107FD851A11781200296BBB /* CDCourseListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD841A11781200296BBB /* CDCourseListing.m */; };
 		8107FD881A11781200296BBB /* CDSectionMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD871A11781200296BBB /* CDSectionMeeting.m */; };
 		8107FD8B1A11781200296BBB /* CDSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD8A1A11781200296BBB /* CDSchedule.m */; };
+		8107FD8F1A11A56500296BBB /* AgendaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD8E1A11A56500296BBB /* AgendaViewController.swift */; };
 		8111F63319F4947700A331E3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62B19F4947700A331E3 /* Util.swift */; };
 		8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */; };
 		81130BCE1A0C0D7D00F1F496 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81130BCD1A0C0D7D00F1F496 /* Day.swift */; };
@@ -233,6 +234,7 @@
 		8107FD871A11781200296BBB /* CDSectionMeeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSectionMeeting.m; sourceTree = "<group>"; };
 		8107FD891A11781200296BBB /* CDSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSchedule.h; sourceTree = "<group>"; };
 		8107FD8A1A11781200296BBB /* CDSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSchedule.m; sourceTree = "<group>"; };
+		8107FD8E1A11A56500296BBB /* AgendaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgendaViewController.swift; sourceTree = "<group>"; };
 		8111F62B19F4947700A331E3 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSelectionControl.swift; sourceTree = "<group>"; };
 		81130BCD1A0C0D7D00F1F496 /* Day.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
@@ -420,6 +422,15 @@
 				81D016951A1003880020C9CC /* AuthenticationContainerViewController.swift */,
 			);
 			name = Authenticator;
+			sourceTree = "<group>";
+		};
+		8107FD8D1A119C6C00296BBB /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				81E50D661A0E50C30074F381 /* CalendarViewController.swift */,
+				8107FD8E1A11A56500296BBB /* AgendaViewController.swift */,
+			);
+			name = Calendar;
 			sourceTree = "<group>";
 		};
 		8111F62219F493A500A331E3 /* Controls */ = {
@@ -749,10 +760,10 @@
 		81E50D401A0DB5420074F381 /* ReCal Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				8107FD8D1A119C6C00296BBB /* Calendar */,
 				811E81731A11148D00407991 /* Models */,
 				81E50D431A0DB5420074F381 /* AppDelegate.swift */,
 				81E50D641A0E503B0074F381 /* URLs.swift */,
-				81E50D661A0E50C30074F381 /* CalendarViewController.swift */,
 				81E50D4A1A0DB5420074F381 /* Main.storyboard */,
 				81E50D4D1A0DB5420074F381 /* Images.xcassets */,
 				81E50D4F1A0DB5420074F381 /* LaunchScreen.xib */,
@@ -1258,6 +1269,7 @@
 			files = (
 				81E50D671A0E50C30074F381 /* CalendarViewController.swift in Sources */,
 				81E50D441A0DB5420074F381 /* AppDelegate.swift in Sources */,
+				8107FD8F1A11A56500296BBB /* AgendaViewController.swift in Sources */,
 				81E50D651A0E503B0074F381 /* URLs.swift in Sources */,
 				81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */,
 				811E81751A1114A400407991 /* Event.swift in Sources */,
