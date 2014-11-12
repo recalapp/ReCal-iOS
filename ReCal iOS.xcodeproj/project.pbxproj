@@ -45,6 +45,7 @@
 		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
 		813C00ED1A13AE8D00A3B769 /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = 813C00EB1A13AE8D00A3B769 /* events.json */; };
 		813C00EE1A13AE8D00A3B769 /* user_profile_info.json in Resources */ = {isa = PBXBuildFile; fileRef = 813C00EC1A13AE8D00A3B769 /* user_profile_info.json */; };
+		813C00F01A13AEF900A3B769 /* CalendarCoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */; };
 		8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */; };
 		8146ECB21A0ADB68005FF4C2 /* ManagedObjectProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */; };
 		8146ECB31A0AF132005FF4C2 /* ManagedObjectProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */; };
@@ -280,6 +281,7 @@
 		8124969219F18A620081AFB2 /* TimeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeHeaderView.xib; sourceTree = "<group>"; };
 		813C00EB1A13AE8D00A3B769 /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
 		813C00EC1A13AE8D00A3B769 /* user_profile_info.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user_profile_info.json; sourceTree = "<group>"; };
+		813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCoreDataImporter.swift; sourceTree = "<group>"; };
 		8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedObjectProxy.swift; path = "../ReCal Course Selection/ManagedObjectProxy.swift"; sourceTree = "<group>"; };
 		814D4E731A0C815100C21848 /* ScheduleSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleSelectionViewController.swift; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 				811A0F521A125A8E0012030E /* Core Data */,
 				811A0F741A1299460012030E /* SectionType.swift */,
 				81AA2C631A12F48800A31F61 /* EventType.swift */,
+				813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1340,6 +1343,7 @@
 				81AA2C671A12F4F800A31F61 /* CDSection.m in Sources */,
 				81E50D651A0E503B0074F381 /* URLs.swift in Sources */,
 				81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */,
+				813C00F01A13AEF900A3B769 /* CalendarCoreDataImporter.swift in Sources */,
 				81AA2C641A12F48800A31F61 /* EventType.swift in Sources */,
 				811A0F6B1A125ACF0012030E /* CDEvent.m in Sources */,
 				8107FD921A11B11C00296BBB /* AgendaTableViewCell.swift in Sources */,

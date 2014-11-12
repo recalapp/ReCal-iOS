@@ -22,6 +22,10 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
         return NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
     }()
     
+    override var temporaryFileNames: [String] {
+        return [TemporaryFileNames.courses]
+    }
+    
     private func fetchOrCreateEntityWithServerId(serverId: String, entityName: String) -> CDServerObject {
         var errorOpt: NSError?
         let fetchRequest = NSFetchRequest(entityName: entityName)
@@ -54,7 +58,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
         return managedObject!
     }
     
-    override func processData(data: NSData) -> ImportResult {
+    private func processCoursesData(data: NSData) -> ImportResult {
         let processSemesterDictionary: (Dictionary<String, AnyObject>)->CDSemester = {(semesterDict) in
             let semesterServerIdObject: AnyObject = semesterDict["id"]!
             let semesterServerId = "\(semesterServerIdObject)"
@@ -146,8 +150,9 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 processCourseDictionary(courseDict)
                 // TODO remove courses not found here
             }
+            var errorOpt: NSError?
             self.backgroundManagedObjectContext.performBlockAndWait {
-                self.backgroundManagedObjectContext.save(&errorOpt)
+                let _ = self.backgroundManagedObjectContext.save(&errorOpt)
             }
             if let error = errorOpt {
                 println("Error saving. Aborting. Error: \(error)")
@@ -158,5 +163,18 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
         } else {
             return .Failure
         }
+    }
+    
+    override func processData(data: NSData, fromTemporaryFileName fileName: String) -> ImportResult {
+        switch fileName {
+        case TemporaryFileNames.courses:
+            return self.processCoursesData(data)
+        default:
+            assertionFailure("Unsupported file")
+            return .Failure
+        }
+    }
+    struct TemporaryFileNames {
+        static let courses = "courses"
     }
 }

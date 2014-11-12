@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let filePath = filePathOpt {
                 let initialDataOpt = NSData(contentsOfFile: filePath)
                 if let initialData = initialDataOpt {
-                    Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData)
+                    Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
                 }
             }
         }

@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let rootViewController = self.window?.rootViewController
         Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
+        Settings.currentSettings.coreDataImporter = CalendarCoreDataImporter()
         return true
     }
 

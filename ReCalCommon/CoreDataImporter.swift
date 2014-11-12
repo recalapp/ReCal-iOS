@@ -10,11 +10,14 @@ import Foundation
 import CoreData
 
 public class CoreDataImporter {
-    private let temporaryFileName = "temp"
     private let temporaryDirectory = "core_data_importer_temp"
     
     private var temporaryDirectoryPath: String? {
         return NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last?.stringByAppendingPathComponent(temporaryDirectory)
+    }
+    
+    public var temporaryFileNames: [String] {
+        return []
     }
     
     public init() {
@@ -30,7 +33,7 @@ public class CoreDataImporter {
         return managedObjectContext
         }()
     
-    public final func writeJSONDataToPendingItemsDirectory(data: NSData) -> Bool {
+    public final func writeJSONDataToPendingItemsDirectory(data: NSData, withTemporaryFileName fileName: String) -> Bool {
         var errorOpt: NSError?
         let parsed: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &errorOpt)
         if let error = errorOpt {
@@ -47,7 +50,7 @@ public class CoreDataImporter {
                     return false
                 }
             }
-            let temporaryFilePath = temporaryDirectoryPath.stringByAppendingPathComponent(temporaryFileName)
+            let temporaryFilePath = temporaryDirectoryPath.stringByAppendingPathComponent(fileName)
             if fileManager.fileExistsAtPath(temporaryFilePath) {
                 fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
                 if let error = errorOpt {
@@ -62,25 +65,27 @@ public class CoreDataImporter {
         }
     }
     public final func importPendingItems() {
-        if let temporaryFilePath = self.temporaryDirectoryPath?.stringByAppendingPathComponent(temporaryFileName) {
-            let fileManager = NSFileManager.defaultManager()
-            if fileManager.fileExistsAtPath(temporaryFilePath) {
-                let dataOpt = NSData(contentsOfFile: temporaryFilePath)
-                var errorOpt: NSError?
-                
-                if let data = dataOpt {
-                    switch self.processData(data) {
-                    case .Success:
-                        fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
-                        if let error = errorOpt {
-                            println("Error deleting old temporary file. Aborting save. Error: \(error)")
-                        }
-                    case .ShouldRetry:
-                        break // don't delete temp file. TODO change break to continue if this becomes a loop
-                    case .Failure:
-                        fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
-                        if let error = errorOpt {
-                            println("Error deleting old temporary file. Aborting save. Error: \(error)")
+        for fileName in self.temporaryFileNames {
+            if let temporaryFilePath = self.temporaryDirectoryPath?.stringByAppendingPathComponent(fileName) {
+                let fileManager = NSFileManager.defaultManager()
+                if fileManager.fileExistsAtPath(temporaryFilePath) {
+                    let dataOpt = NSData(contentsOfFile: temporaryFilePath)
+                    var errorOpt: NSError?
+                    
+                    if let data = dataOpt {
+                        switch self.processData(data, fromTemporaryFileName: fileName) {
+                        case .Success:
+                            fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
+                            if let error = errorOpt {
+                                println("Error deleting old temporary file. Aborting save. Error: \(error)")
+                            }
+                        case .ShouldRetry:
+                            break // don't delete temp file. TODO change break to continue if this becomes a loop
+                        case .Failure:
+                            fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
+                            if let error = errorOpt {
+                                println("Error deleting old temporary file. Aborting save. Error: \(error)")
+                            }
                         }
                     }
                 }
@@ -88,7 +93,7 @@ public class CoreDataImporter {
         }
     }
     
-    public func processData(data: NSData) -> ImportResult {
+    public func processData(data: NSData, fromTemporaryFileName fileName: String) -> ImportResult {
         return .Success
     }
     public enum ImportResult {
