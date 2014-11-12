@@ -100,7 +100,6 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
             pageViewController.setViewControllers([self.viewControllers.first!], direction: .Forward, animated: false, completion: { (_) -> Void in
                 
             })
-            
             self.pageViewController = pageViewController
         default:
             break

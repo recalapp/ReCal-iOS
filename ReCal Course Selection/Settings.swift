@@ -27,6 +27,8 @@ public class Settings {
     public var colorScheme: ColorScheme = DarkColorScheme()
     
     public var authenticator: Authenticator = Authenticator(rootViewController: UIViewController(), forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
+    
+    public var coreDataImporter: CoreDataImporter = CoreDataImporter()
 }
 
 public enum Theme {

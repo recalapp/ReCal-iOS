@@ -20,10 +20,18 @@
 		8107FD881A11781200296BBB /* CDSectionMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD871A11781200296BBB /* CDSectionMeeting.m */; };
 		8107FD8B1A11781200296BBB /* CDSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD8A1A11781200296BBB /* CDSchedule.m */; };
 		8107FD8F1A11A56500296BBB /* AgendaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD8E1A11A56500296BBB /* AgendaViewController.swift */; };
+		8107FD921A11B11C00296BBB /* AgendaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD911A11B11C00296BBB /* AgendaTableViewCell.swift */; };
 		8111F63319F4947700A331E3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F62B19F4947700A331E3 /* Util.swift */; };
 		8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */; };
 		81130BCE1A0C0D7D00F1F496 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81130BCD1A0C0D7D00F1F496 /* Day.swift */; };
 		81130C011A0C168F00F1F496 /* OrderedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81130C001A0C168F00F1F496 /* OrderedSet.swift */; };
+		811A0F651A125ACF0012030E /* CDCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F641A125ACF0012030E /* CDCourse.m */; };
+		811A0F6B1A125ACF0012030E /* CDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F6A1A125ACF0012030E /* CDEvent.m */; };
+		811A0F6E1A125ACF0012030E /* CDServerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F6D1A125ACF0012030E /* CDServerObject.m */; };
+		811A0F711A125ACF0012030E /* CDCourseListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F701A125ACF0012030E /* CDCourseListing.m */; };
+		811A0F731A125B0B0012030E /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F721A125B0B0012030E /* CoreDataExtensions.swift */; };
+		811A0F751A1299460012030E /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F741A1299460012030E /* SectionType.swift */; };
+		811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F761A12F1240012030E /* CoreDataImporter.swift */; };
 		811D481819ED7EB000E3F360 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D481719ED7EB000E3F360 /* AppDelegate.swift */; };
 		811D481B19ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 811D481919ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld */; };
 		811D481D19ED7EB000E3F360 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D481C19ED7EB000E3F360 /* ViewController.swift */; };
@@ -32,7 +40,6 @@
 		811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811D482319ED7EB000E3F360 /* LaunchScreen.xib */; };
 		811D483119ED7EB100E3F360 /* ReCal_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */; };
 		811E64CA19F56681007B0148 /* SampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E64C919F56681007B0148 /* SampleTableViewController.swift */; };
-		811E81751A1114A400407991 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E81741A1114A400407991 /* Event.swift */; };
 		8124969019F17F440081AFB2 /* TimeHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */; };
 		8124969319F18A620081AFB2 /* TimeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124969119F18A620081AFB2 /* TimeHeaderView.swift */; };
 		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
@@ -81,6 +88,8 @@
 		81A094FC1A067DFD00A0C3CE /* TimeRowHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A094E41A067DFD00A0C3CE /* TimeRowHeaderView.xib */; };
 		81A094FD1A067E2100A0C3CE /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
 		81A094FE1A067E2100A0C3CE /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		81AA2C641A12F48800A31F61 /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AA2C631A12F48800A31F61 /* EventType.swift */; };
+		81AA2C671A12F4F800A31F61 /* CDSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 81AA2C661A12F4F800A31F61 /* CDSection.m */; };
 		81B6D3111A0DA65900B883A6 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819E7F271A0D93E600D32D5A /* ColorScheme.swift */; };
 		81BCA5461A0FE87600391608 /* AuthenticationNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA5451A0FE87600391608 /* AuthenticationNavigationController.swift */; };
 		81BCA5481A0FE94300391608 /* CourseSelectionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */; };
@@ -235,10 +244,23 @@
 		8107FD891A11781200296BBB /* CDSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSchedule.h; sourceTree = "<group>"; };
 		8107FD8A1A11781200296BBB /* CDSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSchedule.m; sourceTree = "<group>"; };
 		8107FD8E1A11A56500296BBB /* AgendaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgendaViewController.swift; sourceTree = "<group>"; };
+		8107FD911A11B11C00296BBB /* AgendaTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgendaTableViewCell.swift; sourceTree = "<group>"; };
 		8111F62B19F4947700A331E3 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSelectionControl.swift; sourceTree = "<group>"; };
 		81130BCD1A0C0D7D00F1F496 /* Day.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		81130C001A0C168F00F1F496 /* OrderedSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedSet.swift; sourceTree = "<group>"; };
+		811A0F531A125AA30012030E /* ReCal Calendar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReCal Calendar-Bridging-Header.h"; sourceTree = "<group>"; };
+		811A0F631A125ACF0012030E /* CDCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourse.h; sourceTree = "<group>"; };
+		811A0F641A125ACF0012030E /* CDCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourse.m; sourceTree = "<group>"; };
+		811A0F691A125ACF0012030E /* CDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEvent.h; sourceTree = "<group>"; };
+		811A0F6A1A125ACF0012030E /* CDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEvent.m; sourceTree = "<group>"; };
+		811A0F6C1A125ACF0012030E /* CDServerObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDServerObject.h; sourceTree = "<group>"; };
+		811A0F6D1A125ACF0012030E /* CDServerObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDServerObject.m; sourceTree = "<group>"; };
+		811A0F6F1A125ACF0012030E /* CDCourseListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourseListing.h; sourceTree = "<group>"; };
+		811A0F701A125ACF0012030E /* CDCourseListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourseListing.m; sourceTree = "<group>"; };
+		811A0F721A125B0B0012030E /* CoreDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtensions.swift; sourceTree = "<group>"; };
+		811A0F741A1299460012030E /* SectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionType.swift; sourceTree = "<group>"; };
+		811A0F761A12F1240012030E /* CoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataImporter.swift; sourceTree = "<group>"; };
 		811D481219ED7EB000E3F360 /* ReCal iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		811D481619ED7EB000E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		811D481719ED7EB000E3F360 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -251,7 +273,6 @@
 		811D482F19ED7EB100E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_iOSTests.swift; sourceTree = "<group>"; };
 		811E64C919F56681007B0148 /* SampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewController.swift; sourceTree = "<group>"; };
-		811E81741A1114A400407991 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderBackgroundView.swift; sourceTree = "<group>"; };
 		8124969119F18A620081AFB2 /* TimeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderView.swift; sourceTree = "<group>"; };
 		8124969219F18A620081AFB2 /* TimeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeHeaderView.xib; sourceTree = "<group>"; };
@@ -306,6 +327,9 @@
 		81A094E21A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderBackgroundView.swift; sourceTree = "<group>"; };
 		81A094E31A067DFD00A0C3CE /* TimeRowHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderView.swift; sourceTree = "<group>"; };
 		81A094E41A067DFD00A0C3CE /* TimeRowHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeRowHeaderView.xib; sourceTree = "<group>"; };
+		81AA2C631A12F48800A31F61 /* EventType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
+		81AA2C651A12F4F800A31F61 /* CDSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSection.h; sourceTree = "<group>"; };
+		81AA2C661A12F4F800A31F61 /* CDSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSection.m; sourceTree = "<group>"; };
 		81B6D3121A0DA81D00B883A6 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = "../ReCal Course Selection/Settings.swift"; sourceTree = "<group>"; };
 		81BCA5451A0FE87600391608 /* AuthenticationNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationNavigationController.swift; sourceTree = "<group>"; };
 		81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionNavigationController.swift; sourceTree = "<group>"; };
@@ -428,9 +452,18 @@
 			isa = PBXGroup;
 			children = (
 				81E50D661A0E50C30074F381 /* CalendarViewController.swift */,
-				8107FD8E1A11A56500296BBB /* AgendaViewController.swift */,
+				8107FD901A11B10800296BBB /* Agenda */,
 			);
 			name = Calendar;
+			sourceTree = "<group>";
+		};
+		8107FD901A11B10800296BBB /* Agenda */ = {
+			isa = PBXGroup;
+			children = (
+				8107FD8E1A11A56500296BBB /* AgendaViewController.swift */,
+				8107FD911A11B11C00296BBB /* AgendaTableViewCell.swift */,
+			);
+			name = Agenda;
 			sourceTree = "<group>";
 		};
 		8111F62219F493A500A331E3 /* Controls */ = {
@@ -439,6 +472,23 @@
 				8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */,
 			);
 			name = Controls;
+			sourceTree = "<group>";
+		};
+		811A0F521A125A8E0012030E /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				811A0F6F1A125ACF0012030E /* CDCourseListing.h */,
+				811A0F701A125ACF0012030E /* CDCourseListing.m */,
+				811A0F6C1A125ACF0012030E /* CDServerObject.h */,
+				811A0F6D1A125ACF0012030E /* CDServerObject.m */,
+				811A0F691A125ACF0012030E /* CDEvent.h */,
+				811A0F6A1A125ACF0012030E /* CDEvent.m */,
+				811A0F631A125ACF0012030E /* CDCourse.h */,
+				811A0F641A125ACF0012030E /* CDCourse.m */,
+				81AA2C651A12F4F800A31F61 /* CDSection.h */,
+				81AA2C661A12F4F800A31F61 /* CDSection.m */,
+			);
+			name = "Core Data";
 			sourceTree = "<group>";
 		};
 		811D480919ED7EB000E3F360 = {
@@ -526,7 +576,10 @@
 		811E81731A11148D00407991 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				811E81741A1114A400407991 /* Event.swift */,
+				811A0F721A125B0B0012030E /* CoreDataExtensions.swift */,
+				811A0F521A125A8E0012030E /* Core Data */,
+				811A0F741A1299460012030E /* SectionType.swift */,
+				81AA2C631A12F48800A31F61 /* EventType.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -728,6 +781,7 @@
 				81000B211A0EA6C200246BD3 /* ReCalCommon.storyboard */,
 				81BCA54B1A0FF69000391608 /* URLs.swift */,
 				81853EE81A102D28002E9B1A /* Serializable.swift */,
+				811A0F761A12F1240012030E /* CoreDataImporter.swift */,
 			);
 			path = ReCalCommon;
 			sourceTree = "<group>";
@@ -760,6 +814,7 @@
 		81E50D401A0DB5420074F381 /* ReCal Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				811A0F531A125AA30012030E /* ReCal Calendar-Bridging-Header.h */,
 				8107FD8D1A119C6C00296BBB /* Calendar */,
 				811E81731A11148D00407991 /* Models */,
 				81E50D431A0DB5420074F381 /* AppDelegate.swift */,
@@ -1229,6 +1284,7 @@
 				81BCA54C1A0FF69000391608 /* URLs.swift in Sources */,
 				81000B1F1A0EA1E100246BD3 /* AuthenticationViewController.swift in Sources */,
 				81000B1C1A0E56B800246BD3 /* Authenticator.swift in Sources */,
+				811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */,
 				81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */,
 				81E6406D19FACDCA003A49F8 /* Set.swift in Sources */,
 				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,
@@ -1267,12 +1323,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				811A0F6E1A125ACF0012030E /* CDServerObject.m in Sources */,
+				811A0F751A1299460012030E /* SectionType.swift in Sources */,
 				81E50D671A0E50C30074F381 /* CalendarViewController.swift in Sources */,
 				81E50D441A0DB5420074F381 /* AppDelegate.swift in Sources */,
+				811A0F731A125B0B0012030E /* CoreDataExtensions.swift in Sources */,
 				8107FD8F1A11A56500296BBB /* AgendaViewController.swift in Sources */,
+				81AA2C671A12F4F800A31F61 /* CDSection.m in Sources */,
 				81E50D651A0E503B0074F381 /* URLs.swift in Sources */,
 				81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */,
-				811E81751A1114A400407991 /* Event.swift in Sources */,
+				81AA2C641A12F48800A31F61 /* EventType.swift in Sources */,
+				811A0F6B1A125ACF0012030E /* CDEvent.m in Sources */,
+				8107FD921A11B11C00296BBB /* AgendaTableViewCell.swift in Sources */,
+				811A0F711A125ACF0012030E /* CDCourseListing.m in Sources */,
+				811A0F651A125ACF0012030E /* CDCourse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1666,6 +1730,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1676,6 +1741,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ReCal Calendar/ReCal Calendar-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -1683,12 +1750,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "ReCal Calendar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ReCal Calendar/ReCal Calendar-Bridging-Header.h";
 			};
 			name = Release;
 		};

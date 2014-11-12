@@ -77,7 +77,7 @@ public class ColorScheme {
 public class LightColorScheme: ColorScheme {
     /// The background color for views that do not display actual content
     public override var accessoryBackgroundColor: UIColor {
-        return UIColor(red: 201.0/255.0, green: 201.0/255.0, blue: 206.0/255.0, alpha: 1)
+        return UIColor(red: 201.0/255.0, green: 201.0/255.0, blue: 206.0/255.0, alpha: 1).lighterColor()
     }
     
     /// Color used when one content is portrayed to be less important than the main content, such as a table view header

@@ -28,8 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let rootViewController = self.window?.rootViewController
         Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
+        Settings.currentSettings.coreDataImporter = CourseSelectionCoreDataImporter()
         
-        CoreDataImporter.defaultImporter.persistentStoreCoordinator = self.persistentStoreCoordinator
+        Settings.currentSettings.coreDataImporter.persistentStoreCoordinator = self.persistentStoreCoordinator
         if !NSUserDefaults.standardUserDefaults().boolForKey(userDefaultsKeyNotFirstLaunch) {
             println("saving")
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: userDefaultsKeyNotFirstLaunch)
@@ -37,12 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let filePath = filePathOpt {
                 let initialDataOpt = NSData(contentsOfFile: filePath)
                 if let initialData = initialDataOpt {
-                    CoreDataImporter.defaultImporter.writeJSONDataToPendingItemsDirectory(initialData)
+                    Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData)
                 }
             }
         }
         NSOperationQueue().addOperationWithBlock {
-            CoreDataImporter.defaultImporter.importPendingItems()
+            Settings.currentSettings.coreDataImporter.importPendingItems()
         }
         
         return true

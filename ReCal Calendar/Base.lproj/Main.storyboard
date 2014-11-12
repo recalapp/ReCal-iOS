@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yfR-Xm-BTQ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Authentication Navigation Controller-->
@@ -81,16 +83,69 @@
         <scene sceneID="Net-sU-HtG">
             <objects>
                 <tableViewController storyboardIdentifier="AgendaViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bMA-aa-CJP" customClass="AgendaViewController" customModule="ReCal_Calendar" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EYP-DX-gCk">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="88" sectionHeaderHeight="22" sectionFooterHeight="22" id="EYP-DX-gCk">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="FOF-QF-tMk">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AgendaCell" id="FOF-QF-tMk" customClass="AgendaTableViewCell" customModule="ReCal_Calendar" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FOF-QF-tMk" id="g13-pq-dUd">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cj0-Jb-0Ze">
+                                            <rect key="frame" x="580" y="0.0" width="20" height="87.5"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="20" id="84K-IZ-f8X"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lecture" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axh-gt-PJF">
+                                            <rect key="frame" x="8" y="27" width="57.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MkG-B9-6e0">
+                                            <rect key="frame" x="536.5" y="33" width="35.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COS 333" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7LZ-Bd-PBA">
+                                            <rect key="frame" x="8" y="48" width="58.5" height="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="cj0-Jb-0Ze" secondAttribute="trailing" id="8HK-w1-oYs"/>
+                                        <constraint firstItem="cj0-Jb-0Ze" firstAttribute="top" secondItem="g13-pq-dUd" secondAttribute="top" id="9xR-P6-9Id"/>
+                                        <constraint firstAttribute="bottom" secondItem="cj0-Jb-0Ze" secondAttribute="bottom" id="Df7-4W-WqX"/>
+                                        <constraint firstItem="7LZ-Bd-PBA" firstAttribute="leading" secondItem="g13-pq-dUd" secondAttribute="leadingMargin" id="Ej2-nt-D4X"/>
+                                        <constraint firstItem="7LZ-Bd-PBA" firstAttribute="top" secondItem="axh-gt-PJF" secondAttribute="bottom" id="Gep-c8-nLH"/>
+                                        <constraint firstItem="axh-gt-PJF" firstAttribute="baseline" secondItem="MkG-B9-6e0" secondAttribute="centerY" id="LLe-dg-cs6"/>
+                                        <constraint firstItem="cj0-Jb-0Ze" firstAttribute="leading" secondItem="MkG-B9-6e0" secondAttribute="trailing" constant="8" id="rLt-oS-mX9"/>
+                                        <constraint firstItem="axh-gt-PJF" firstAttribute="leading" secondItem="g13-pq-dUd" secondAttribute="leadingMargin" id="wDy-ek-6UD"/>
+                                        <constraint firstAttribute="centerY" secondItem="MkG-B9-6e0" secondAttribute="centerY" constant="0.25" id="zZG-E5-ZxW"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="colorTagView" destination="cj0-Jb-0Ze" id="enk-sQ-Uz1"/>
+                                    <outlet property="courseLabel" destination="7LZ-Bd-PBA" id="fsI-q6-ykS"/>
+                                    <outlet property="timeLabel" destination="MkG-B9-6e0" id="rEJ-WW-lA1"/>
+                                    <outlet property="titleLabel" destination="axh-gt-PJF" id="KVN-L6-uMm"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Padding" id="SeE-xt-6lx">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SeE-xt-6lx" id="iyu-0i-Emc">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>

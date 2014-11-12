@@ -48,8 +48,6 @@ struct Course: Printable, ManagedObjectProxy {
         return self.courseListings.filter { $0.isPrimary }.last!
     }
     
-    
-    
     var displayText: String {
         return "\(self.primaryListing)"
     }
