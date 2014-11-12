@@ -17,7 +17,7 @@
         <attribute name="eventEnd" attributeType="Date" syncable="YES"/>
         <attribute name="eventStart" attributeType="Date" syncable="YES"/>
         <attribute name="eventTitle" attributeType="String" syncable="YES"/>
-        <attribute name="eventType" attributeType="String" regularExpressionString="(as|ex|la|le|oh|pr|st)" syncable="YES"/>
+        <attribute name="eventTypeCode" attributeType="String" regularExpressionString="(as|ex|la|le|oh|pr|st)" syncable="YES"/>
         <relationship name="section" maxCount="1" deletionRule="Nullify" destinationEntity="CDSection" inverseName="events" inverseEntity="CDSection" syncable="YES"/>
     </entity>
     <entity name="CDSection" representedClassName="CDSection" parentEntity="CDServerObject" syncable="YES">
@@ -30,10 +30,10 @@
         <attribute name="serverId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="CDServerObject" positionX="-2304" positionY="-6462" width="128" height="58"/>
-        <element name="CDEvent" positionX="-2180" positionY="-6253" width="128" height="133"/>
         <element name="CDCourse" positionX="-2655" positionY="-6372" width="128" height="103"/>
         <element name="CDCourseListing" positionX="-2583" positionY="-6111" width="128" height="103"/>
+        <element name="CDEvent" positionX="-2180" positionY="-6253" width="128" height="133"/>
         <element name="CDSection" positionX="-2376" positionY="-6255" width="128" height="103"/>
+        <element name="CDServerObject" positionX="-2304" positionY="-6462" width="128" height="58"/>
     </elements>
 </model>

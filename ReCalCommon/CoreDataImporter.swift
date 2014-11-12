@@ -67,17 +67,20 @@ public class CoreDataImporter {
             if fileManager.fileExistsAtPath(temporaryFilePath) {
                 let dataOpt = NSData(contentsOfFile: temporaryFilePath)
                 var errorOpt: NSError?
-                fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
-                if let error = errorOpt {
-                    println("Error deleting old temporary file. Aborting save. Error: \(error)")
-                    return
-                }
+                
                 if let data = dataOpt {
-                    self.processData(data)
-                    self.backgroundManagedObjectContext.performBlockAndWait {
-                        self.backgroundManagedObjectContext.save(&errorOpt)
+                    switch self.processData(data) {
+                    case .Success:
+                        fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
                         if let error = errorOpt {
-                            println("Error saving. Aborting. Error: \(error)")
+                            println("Error deleting old temporary file. Aborting save. Error: \(error)")
+                        }
+                    case .ShouldRetry:
+                        break // don't delete temp file. TODO change break to continue if this becomes a loop
+                    case .Failure:
+                        fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
+                        if let error = errorOpt {
+                            println("Error deleting old temporary file. Aborting save. Error: \(error)")
                         }
                     }
                 }
@@ -85,7 +88,17 @@ public class CoreDataImporter {
         }
     }
     
-    public func processData(data: NSData) {
+    public func processData(data: NSData) -> ImportResult {
+        return .Success
+    }
+    public enum ImportResult {
+        /// Import successful. Delete temporary file
+        case Success
         
+        /// Recoverable error. Do not delete temporary file, so it will get imported on next import
+        case ShouldRetry
+        
+        /// Unrecoverable error. Delete temporary file
+        case Failure
     }
 }

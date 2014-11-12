@@ -54,7 +54,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
         return managedObject!
     }
     
-    override func processData(data: NSData) {
+    override func processData(data: NSData) -> ImportResult {
         let processSemesterDictionary: (Dictionary<String, AnyObject>)->CDSemester = {(semesterDict) in
             let semesterServerIdObject: AnyObject = semesterDict["id"]!
             let semesterServerId = "\(semesterServerIdObject)"
@@ -146,6 +146,17 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 processCourseDictionary(courseDict)
                 // TODO remove courses not found here
             }
+            self.backgroundManagedObjectContext.performBlockAndWait {
+                self.backgroundManagedObjectContext.save(&errorOpt)
+            }
+            if let error = errorOpt {
+                println("Error saving. Aborting. Error: \(error)")
+                return .ShouldRetry
+            } else {
+                return .Success
+            }
+        } else {
+            return .Failure
         }
     }
 }

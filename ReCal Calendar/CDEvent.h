@@ -18,7 +18,7 @@
 @property (nonatomic, retain) NSString * eventDescription;
 @property (nonatomic, retain) NSDate * eventStart;
 @property (nonatomic, retain) NSDate * eventEnd;
-@property (nonatomic, retain) NSString * eventType;
+@property (nonatomic, retain) NSString * eventTypeCode;
 @property (nonatomic, retain) CDSection *section;
 
 @end

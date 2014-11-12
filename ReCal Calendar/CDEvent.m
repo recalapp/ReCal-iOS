@@ -16,7 +16,7 @@
 @dynamic eventDescription;
 @dynamic eventStart;
 @dynamic eventEnd;
-@dynamic eventType;
+@dynamic eventTypeCode;
 @dynamic section;
 
 @end

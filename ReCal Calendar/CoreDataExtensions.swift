@@ -34,3 +34,9 @@ extension CDSection {
         return SectionType(rawValue: self.sectionTypeCode)!
     }
 }
+
+extension CDEvent {
+    var eventType: EventType {
+        return EventType(rawValue: self.eventTypeCode)!
+    }
+}
