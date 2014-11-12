@@ -55,6 +55,33 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }
         }
+        let observer2 = NSNotificationCenter.defaultCenter().addObserverForName(authenticatorStateDidChangeNofication, object: nil, queue: nil) { (_) -> Void in
+            let fetchRequest = NSFetchRequest(entityName: "CDSchedule")
+            fetchRequest.includesPropertyValues = false
+            var errorOpt: NSError?
+            var fetched: [CDSchedule]?
+            self.managedObjectContext.performBlockAndWait {
+                fetched = self.managedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt) as? [CDSchedule]
+            }
+            if let error = errorOpt {
+                println("Error fetching schedules. Error: \(error)")
+                return
+            }
+            if let schedules = fetched {
+                for schedule in schedules {
+                    self.managedObjectContext.performBlockAndWait {
+                        self.managedObjectContext.deleteObject(schedule)
+                    }
+                }
+                self.managedObjectContext.performBlockAndWait {
+                    let _ = self.managedObjectContext.save(&errorOpt)
+                }
+                if let error = errorOpt {
+                    println("Error deleting schedule. Error: \(error)")
+                    return
+                }
+            }
+        }
         self.notificationObservers.append(observer)
         
         self.definesPresentationContext = true

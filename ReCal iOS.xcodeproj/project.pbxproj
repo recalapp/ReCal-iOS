@@ -11,7 +11,6 @@
 		81000B1C1A0E56B800246BD3 /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81000B1B1A0E56B800246BD3 /* Authenticator.swift */; };
 		81000B1F1A0EA1E100246BD3 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81000B1D1A0EA1E100246BD3 /* AuthenticationViewController.swift */; };
 		81000B221A0EA6C200246BD3 /* ReCalCommon.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81000B211A0EA6C200246BD3 /* ReCalCommon.storyboard */; };
-		8105F39E1A066AE800B2F20A /* SampleSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8105F39D1A066AE800B2F20A /* SampleSearchTableViewController.swift */; };
 		8107FD791A11781100296BBB /* CDSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD781A11781100296BBB /* CDSection.m */; };
 		8107FD7C1A11781200296BBB /* CDServerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD7B1A11781200296BBB /* CDServerObject.m */; };
 		8107FD7F1A11781200296BBB /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD7E1A11781200296BBB /* CDSemester.m */; };
@@ -32,17 +31,6 @@
 		811A0F731A125B0B0012030E /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F721A125B0B0012030E /* CoreDataExtensions.swift */; };
 		811A0F751A1299460012030E /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F741A1299460012030E /* SectionType.swift */; };
 		811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F761A12F1240012030E /* CoreDataImporter.swift */; };
-		811D481819ED7EB000E3F360 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D481719ED7EB000E3F360 /* AppDelegate.swift */; };
-		811D481B19ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 811D481919ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld */; };
-		811D481D19ED7EB000E3F360 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D481C19ED7EB000E3F360 /* ViewController.swift */; };
-		811D482019ED7EB000E3F360 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 811D481E19ED7EB000E3F360 /* Main.storyboard */; };
-		811D482219ED7EB000E3F360 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 811D482119ED7EB000E3F360 /* Images.xcassets */; };
-		811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811D482319ED7EB000E3F360 /* LaunchScreen.xib */; };
-		811D483119ED7EB100E3F360 /* ReCal_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */; };
-		811E64CA19F56681007B0148 /* SampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E64C919F56681007B0148 /* SampleTableViewController.swift */; };
-		8124969019F17F440081AFB2 /* TimeHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */; };
-		8124969319F18A620081AFB2 /* TimeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8124969119F18A620081AFB2 /* TimeHeaderView.swift */; };
-		8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8124969219F18A620081AFB2 /* TimeHeaderView.xib */; };
 		813C00ED1A13AE8D00A3B769 /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = 813C00EB1A13AE8D00A3B769 /* events.json */; };
 		813C00EE1A13AE8D00A3B769 /* user_profile_info.json in Resources */ = {isa = PBXBuildFile; fileRef = 813C00EC1A13AE8D00A3B769 /* user_profile_info.json */; };
 		813C00F01A13AEF900A3B769 /* CalendarCoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */; };
@@ -52,8 +40,6 @@
 		814D4E741A0C815100C21848 /* ScheduleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E731A0C815100C21848 /* ScheduleSelectionViewController.swift */; };
 		814D4E761A0C880500C21848 /* ScheduleCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E751A0C880500C21848 /* ScheduleCreationViewController.swift */; };
 		814D4E781A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E771A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift */; };
-		8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */; };
-		8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */; };
 		816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB511A092144002C610A /* CoreDataExtensions.swift */; };
 		816CBB541A0926F9002C610A /* courses.json in Resources */ = {isa = PBXBuildFile; fileRef = 816CBB531A0926F9002C610A /* courses.json */; };
 		816CBB561A092909002C610A /* CourseSelectionCoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB551A092909002C610A /* CourseSelectionCoreDataImporter.swift */; };
@@ -64,7 +50,6 @@
 		8172B96E19F562590070E7DF /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96619F562590070E7DF /* Stack.swift */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
-		819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819193CD19F1652700E3A3B8 /* GridLineView.swift */; };
 		81A094BA1A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094B91A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift */; };
 		81A094C51A067DBB00A0C3CE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A094C11A067DBB00A0C3CE /* LaunchScreen.xib */; };
 		81A094C61A067DBB00A0C3CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A094C31A067DBB00A0C3CE /* Main.storyboard */; };
@@ -98,17 +83,10 @@
 		81BCA5481A0FE94300391608 /* CourseSelectionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */; };
 		81BCA54A1A0FEB9500391608 /* AuthenticationPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA5491A0FEB9500391608 /* AuthenticationPromptViewController.swift */; };
 		81BCA54C1A0FF69000391608 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA54B1A0FF69000391608 /* URLs.swift */; };
-		81C1F5D919F05C010042AB61 /* SampleCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */; };
-		81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */; };
 		81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D016951A1003880020C9CC /* AuthenticationContainerViewController.swift */; };
-		81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D270D419F090E700DED75D /* HeaderBackgroundView.swift */; };
-		81D270D819F0946100DED75D /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D270D619F0946100DED75D /* HeaderView.swift */; };
-		81D270D919F0946100DED75D /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81D270D719F0946100DED75D /* HeaderView.xib */; };
 		81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D93B7F1A09A7E900914FB3 /* CourseSearchOperation.swift */; };
 		81D9F26019EF4D9600F987B9 /* ReCalCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81D9F26C19EF4D9600F987B9 /* ReCalCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */; };
-		81D9F26F19EF4D9600F987B9 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
-		81D9F27019EF4D9600F987B9 /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		81E50D441A0DB5420074F381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E50D431A0DB5420074F381 /* AppDelegate.swift */; };
 		81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81E50D451A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld */; };
 		81E50D4C1A0DB5420074F381 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81E50D4A1A0DB5420074F381 /* Main.storyboard */; };
@@ -140,13 +118,6 @@
 			remoteGlobalIDString = 81D9F25A19EF4D9600F987B9;
 			remoteInfo = ReCalCommon;
 		};
-		811D482B19ED7EB100E3F360 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 811D481119ED7EB000E3F360;
-			remoteInfo = "ReCal iOS";
-		};
 		81A094B41A067D6200A0C3CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
@@ -155,27 +126,6 @@
 			remoteInfo = "ReCal Course Selection";
 		};
 		81A094FF1A067E2100A0C3CE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 81D9F25A19EF4D9600F987B9;
-			remoteInfo = ReCalCommon;
-		};
-		81D9F26619EF4D9600F987B9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 811D481119ED7EB000E3F360;
-			remoteInfo = "ReCal iOS";
-		};
-		81D9F26D19EF4D9600F987B9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 81D9F25A19EF4D9600F987B9;
-			remoteInfo = ReCalCommon;
-		};
-		81D9F27119EF4D9600F987B9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 811D480A19ED7EB000E3F360 /* Project object */;
 			proxyType = 1;
@@ -203,17 +153,6 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8144D89119EEB86B00C9EF24 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				81D9F27019EF4D9600F987B9 /* ReCalCommon.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		81A095011A067E2100A0C3CE /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -231,7 +170,6 @@
 		81000B1B1A0E56B800246BD3 /* Authenticator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
 		81000B1D1A0EA1E100246BD3 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		81000B211A0EA6C200246BD3 /* ReCalCommon.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReCalCommon.storyboard; sourceTree = "<group>"; };
-		8105F39D1A066AE800B2F20A /* SampleSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleSearchTableViewController.swift; sourceTree = "<group>"; };
 		8107FD771A11781100296BBB /* CDSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSection.h; sourceTree = "<group>"; };
 		8107FD781A11781100296BBB /* CDSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSection.m; sourceTree = "<group>"; };
 		8107FD7A1A11781200296BBB /* CDServerObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDServerObject.h; sourceTree = "<group>"; };
@@ -264,21 +202,6 @@
 		811A0F721A125B0B0012030E /* CoreDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtensions.swift; sourceTree = "<group>"; };
 		811A0F741A1299460012030E /* SectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionType.swift; sourceTree = "<group>"; };
 		811A0F761A12F1240012030E /* CoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataImporter.swift; sourceTree = "<group>"; };
-		811D481219ED7EB000E3F360 /* ReCal iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		811D481619ED7EB000E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		811D481719ED7EB000E3F360 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		811D481A19ED7EB000E3F360 /* ReCal_iOS.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReCal_iOS.xcdatamodel; sourceTree = "<group>"; };
-		811D481C19ED7EB000E3F360 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		811D481F19ED7EB000E3F360 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		811D482119ED7EB000E3F360 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		811D482419ED7EB000E3F360 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReCal iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		811D482F19ED7EB100E3F360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_iOSTests.swift; sourceTree = "<group>"; };
-		811E64C919F56681007B0148 /* SampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTableViewController.swift; sourceTree = "<group>"; };
-		8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderBackgroundView.swift; sourceTree = "<group>"; };
-		8124969119F18A620081AFB2 /* TimeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeHeaderView.swift; sourceTree = "<group>"; };
-		8124969219F18A620081AFB2 /* TimeHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeHeaderView.xib; sourceTree = "<group>"; };
 		813C00EB1A13AE8D00A3B769 /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
 		813C00EC1A13AE8D00A3B769 /* user_profile_info.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user_profile_info.json; sourceTree = "<group>"; };
 		813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCoreDataImporter.swift; sourceTree = "<group>"; };
@@ -287,8 +210,6 @@
 		814D4E731A0C815100C21848 /* ScheduleSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleSelectionViewController.swift; sourceTree = "<group>"; };
 		814D4E751A0C880500C21848 /* ScheduleCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCreationViewController.swift; sourceTree = "<group>"; };
 		814D4E771A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleSelectionDelegate.swift; sourceTree = "<group>"; };
-		8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsCollectionViewCell.swift; sourceTree = "<group>"; };
-		8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventsCollectionViewCell.xib; sourceTree = "<group>"; };
 		816CBB1D1A091D16002C610A /* ReCal Course Selection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReCal Course Selection-Bridging-Header.h"; sourceTree = "<group>"; };
 		816CBB511A092144002C610A /* CoreDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtensions.swift; sourceTree = "<group>"; };
 		816CBB531A0926F9002C610A /* courses.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = courses.json; sourceTree = "<group>"; };
@@ -303,7 +224,6 @@
 		8172B96719F562590070E7DF /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
-		819193CD19F1652700E3A3B8 /* GridLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLineView.swift; sourceTree = "<group>"; };
 		819E7F271A0D93E600D32D5A /* ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorScheme.swift; path = "../ReCal Course Selection/ColorScheme.swift"; sourceTree = "<group>"; };
 		81A0949F1A067D6200A0C3CE /* ReCal Course Selection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal Course Selection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A094A21A067D6200A0C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -341,12 +261,7 @@
 		81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionNavigationController.swift; sourceTree = "<group>"; };
 		81BCA5491A0FEB9500391608 /* AuthenticationPromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPromptViewController.swift; sourceTree = "<group>"; };
 		81BCA54B1A0FF69000391608 /* URLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
-		81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarViewController.swift; sourceTree = "<group>"; };
-		81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleCalendarCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		81D016951A1003880020C9CC /* AuthenticationContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationContainerViewController.swift; sourceTree = "<group>"; };
-		81D270D419F090E700DED75D /* HeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderBackgroundView.swift; sourceTree = "<group>"; };
-		81D270D619F0946100DED75D /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		81D270D719F0946100DED75D /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		81D93B7F1A09A7E900914FB3 /* CourseSearchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSearchOperation.swift; sourceTree = "<group>"; };
 		81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReCalCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D9F25E19EF4D9600F987B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -380,21 +295,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		811D480F19ED7EB000E3F360 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				81D9F26F19EF4D9600F987B9 /* ReCalCommon.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		811D482719ED7EB100E3F360 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		81A0949C1A067D6200A0C3CE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -500,8 +400,6 @@
 		811D480919ED7EB000E3F360 = {
 			isa = PBXGroup;
 			children = (
-				811D481419ED7EB000E3F360 /* ReCal iOS */,
-				811D482D19ED7EB100E3F360 /* ReCal iOSTests */,
 				81D9F25C19EF4D9600F987B9 /* ReCalCommon */,
 				81D9F26819EF4D9600F987B9 /* ReCalCommonTests */,
 				81A094A01A067D6200A0C3CE /* ReCal Course Selection */,
@@ -515,8 +413,6 @@
 		811D481319ED7EB000E3F360 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				811D481219ED7EB000E3F360 /* ReCal iOS.app */,
-				811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */,
 				81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */,
 				81D9F26519EF4D9600F987B9 /* ReCalCommonTests.xctest */,
 				81A0949F1A067D6200A0C3CE /* ReCal Course Selection.app */,
@@ -525,58 +421,6 @@
 				81E50D561A0DB5420074F381 /* ReCal CalendarTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		811D481419ED7EB000E3F360 /* ReCal iOS */ = {
-			isa = PBXGroup;
-			children = (
-				811D481719ED7EB000E3F360 /* AppDelegate.swift */,
-				811E64C919F56681007B0148 /* SampleTableViewController.swift */,
-				811D481C19ED7EB000E3F360 /* ViewController.swift */,
-				811D481E19ED7EB000E3F360 /* Main.storyboard */,
-				8105F39D1A066AE800B2F20A /* SampleSearchTableViewController.swift */,
-				811D482119ED7EB000E3F360 /* Images.xcassets */,
-				811D482319ED7EB000E3F360 /* LaunchScreen.xib */,
-				811D481919ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld */,
-				811D481519ED7EB000E3F360 /* Supporting Files */,
-				81C1F5D819F05C010042AB61 /* SampleCalendarViewController.swift */,
-				819193CD19F1652700E3A3B8 /* GridLineView.swift */,
-				81C1F5DA19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift */,
-				81D270D419F090E700DED75D /* HeaderBackgroundView.swift */,
-				8124968F19F17F440081AFB2 /* TimeHeaderBackgroundView.swift */,
-				81D270D619F0946100DED75D /* HeaderView.swift */,
-				81D270D719F0946100DED75D /* HeaderView.xib */,
-				8124969119F18A620081AFB2 /* TimeHeaderView.swift */,
-				8124969219F18A620081AFB2 /* TimeHeaderView.xib */,
-				8150582719F2F5D300EC8912 /* EventsCollectionViewCell.swift */,
-				8150582819F2F5D300EC8912 /* EventsCollectionViewCell.xib */,
-			);
-			path = "ReCal iOS";
-			sourceTree = "<group>";
-		};
-		811D481519ED7EB000E3F360 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				811D481619ED7EB000E3F360 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		811D482D19ED7EB100E3F360 /* ReCal iOSTests */ = {
-			isa = PBXGroup;
-			children = (
-				811D483019ED7EB100E3F360 /* ReCal_iOSTests.swift */,
-				811D482E19ED7EB100E3F360 /* Supporting Files */,
-			);
-			path = "ReCal iOSTests";
-			sourceTree = "<group>";
-		};
-		811D482E19ED7EB100E3F360 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				811D482F19ED7EB100E3F360 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		811E81731A11148D00407991 /* Models */ = {
@@ -915,44 +759,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		811D481119ED7EB000E3F360 /* ReCal iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 811D483419ED7EB100E3F360 /* Build configuration list for PBXNativeTarget "ReCal iOS" */;
-			buildPhases = (
-				811D480E19ED7EB000E3F360 /* Sources */,
-				811D480F19ED7EB000E3F360 /* Frameworks */,
-				811D481019ED7EB000E3F360 /* Resources */,
-				8144D89119EEB86B00C9EF24 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				81D9F26E19EF4D9600F987B9 /* PBXTargetDependency */,
-				81D9F27219EF4D9600F987B9 /* PBXTargetDependency */,
-			);
-			name = "ReCal iOS";
-			productName = "ReCal iOS";
-			productReference = 811D481219ED7EB000E3F360 /* ReCal iOS.app */;
-			productType = "com.apple.product-type.application";
-		};
-		811D482919ED7EB100E3F360 /* ReCal iOSTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 811D483719ED7EB100E3F360 /* Build configuration list for PBXNativeTarget "ReCal iOSTests" */;
-			buildPhases = (
-				811D482619ED7EB100E3F360 /* Sources */,
-				811D482719ED7EB100E3F360 /* Frameworks */,
-				811D482819ED7EB100E3F360 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				811D482C19ED7EB100E3F360 /* PBXTargetDependency */,
-			);
-			name = "ReCal iOSTests";
-			productName = "ReCal iOSTests";
-			productReference = 811D482A19ED7EB100E3F360 /* ReCal iOSTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		81A0949E1A067D6200A0C3CE /* ReCal Course Selection */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81A094BB1A067D6200A0C3CE /* Build configuration list for PBXNativeTarget "ReCal Course Selection" */;
@@ -1019,7 +825,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				81D9F26719EF4D9600F987B9 /* PBXTargetDependency */,
 			);
 			name = ReCalCommonTests;
 			productName = ReCalCommonTests;
@@ -1072,14 +877,6 @@
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = ReCal;
 				TargetAttributes = {
-					811D481119ED7EB000E3F360 = {
-						CreatedOnToolsVersion = 6.0.1;
-						DevelopmentTeam = JKWEABKQ7A;
-					};
-					811D482919ED7EB100E3F360 = {
-						CreatedOnToolsVersion = 6.0.1;
-						TestTargetID = 811D481119ED7EB000E3F360;
-					};
 					81A0949E1A067D6200A0C3CE = {
 						CreatedOnToolsVersion = 6.1;
 					};
@@ -1116,8 +913,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				811D481119ED7EB000E3F360 /* ReCal iOS */,
-				811D482919ED7EB100E3F360 /* ReCal iOSTests */,
 				81D9F25A19EF4D9600F987B9 /* ReCalCommon */,
 				81D9F26419EF4D9600F987B9 /* ReCalCommonTests */,
 				81A0949E1A067D6200A0C3CE /* ReCal Course Selection */,
@@ -1129,26 +924,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		811D481019ED7EB000E3F360 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				811D482019ED7EB000E3F360 /* Main.storyboard in Resources */,
-				8150582A19F2F5D300EC8912 /* EventsCollectionViewCell.xib in Resources */,
-				811D482519ED7EB000E3F360 /* LaunchScreen.xib in Resources */,
-				8124969419F18A620081AFB2 /* TimeHeaderView.xib in Resources */,
-				811D482219ED7EB000E3F360 /* Images.xcassets in Resources */,
-				81D270D919F0946100DED75D /* HeaderView.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		811D482819ED7EB100E3F360 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		81A0949D1A067D6200A0C3CE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1208,34 +983,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		811D480E19ED7EB000E3F360 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				81C1F5D919F05C010042AB61 /* SampleCalendarViewController.swift in Sources */,
-				811D481D19ED7EB000E3F360 /* ViewController.swift in Sources */,
-				8124969319F18A620081AFB2 /* TimeHeaderView.swift in Sources */,
-				811D481819ED7EB000E3F360 /* AppDelegate.swift in Sources */,
-				811D481B19ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld in Sources */,
-				81C1F5DB19F05CF30042AB61 /* SampleCalendarCollectionViewDataSource.swift in Sources */,
-				81D270D519F090E700DED75D /* HeaderBackgroundView.swift in Sources */,
-				8124969019F17F440081AFB2 /* TimeHeaderBackgroundView.swift in Sources */,
-				8150582919F2F5D300EC8912 /* EventsCollectionViewCell.swift in Sources */,
-				819193CE19F1652700E3A3B8 /* GridLineView.swift in Sources */,
-				81D270D819F0946100DED75D /* HeaderView.swift in Sources */,
-				8105F39E1A066AE800B2F20A /* SampleSearchTableViewController.swift in Sources */,
-				811E64CA19F56681007B0148 /* SampleTableViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		811D482619ED7EB100E3F360 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				811D483119ED7EB100E3F360 /* ReCal_iOSTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		81A0949B1A067D6200A0C3CE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1368,11 +1115,6 @@
 			target = 81D9F25A19EF4D9600F987B9 /* ReCalCommon */;
 			targetProxy = 81000B161A0E559600246BD3 /* PBXContainerItemProxy */;
 		};
-		811D482C19ED7EB100E3F360 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 811D481119ED7EB000E3F360 /* ReCal iOS */;
-			targetProxy = 811D482B19ED7EB100E3F360 /* PBXContainerItemProxy */;
-		};
 		81A094B51A067D6200A0C3CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 81A0949E1A067D6200A0C3CE /* ReCal Course Selection */;
@@ -1383,21 +1125,6 @@
 			target = 81D9F25A19EF4D9600F987B9 /* ReCalCommon */;
 			targetProxy = 81A094FF1A067E2100A0C3CE /* PBXContainerItemProxy */;
 		};
-		81D9F26719EF4D9600F987B9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 811D481119ED7EB000E3F360 /* ReCal iOS */;
-			targetProxy = 81D9F26619EF4D9600F987B9 /* PBXContainerItemProxy */;
-		};
-		81D9F26E19EF4D9600F987B9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 81D9F25A19EF4D9600F987B9 /* ReCalCommon */;
-			targetProxy = 81D9F26D19EF4D9600F987B9 /* PBXContainerItemProxy */;
-		};
-		81D9F27219EF4D9600F987B9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 81D9F25A19EF4D9600F987B9 /* ReCalCommon */;
-			targetProxy = 81D9F27119EF4D9600F987B9 /* PBXContainerItemProxy */;
-		};
 		81E50D581A0DB5420074F381 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 81E50D3E1A0DB5420074F381 /* ReCal Calendar */;
@@ -1406,22 +1133,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		811D481E19ED7EB000E3F360 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				811D481F19ED7EB000E3F360 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		811D482319ED7EB000E3F360 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				811D482419ED7EB000E3F360 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
 		81A094C11A067DBB00A0C3CE /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1531,63 +1242,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		811D483519ED7EB100E3F360 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = "ReCal iOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		811D483619ED7EB100E3F360 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				INFOPLIST_FILE = "ReCal iOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		811D483819ED7EB100E3F360 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ReCal iOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal iOS.app/ReCal iOS";
-			};
-			name = Debug;
-		};
-		811D483919ED7EB100E3F360 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ReCal iOSTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReCal iOS.app/ReCal iOS";
 			};
 			name = Release;
 		};
@@ -1821,24 +1475,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		811D483419ED7EB100E3F360 /* Build configuration list for PBXNativeTarget "ReCal iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				811D483519ED7EB100E3F360 /* Debug */,
-				811D483619ED7EB100E3F360 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		811D483719ED7EB100E3F360 /* Build configuration list for PBXNativeTarget "ReCal iOSTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				811D483819ED7EB100E3F360 /* Debug */,
-				811D483919ED7EB100E3F360 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		81A094BB1A067D6200A0C3CE /* Build configuration list for PBXNativeTarget "ReCal Course Selection" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1896,16 +1532,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		811D481919ED7EB000E3F360 /* ReCal_iOS.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				811D481A19ED7EB000E3F360 /* ReCal_iOS.xcdatamodel */,
-			);
-			currentVersion = 811D481A19ED7EB000E3F360 /* ReCal_iOS.xcdatamodel */;
-			path = ReCal_iOS.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		81A094DC1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
