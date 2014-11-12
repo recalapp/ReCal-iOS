@@ -6,3 +6,5 @@
 #import "CDCourse.h"
 #import "CDSection.h"
 #import "CDEvent.h"
+#import "CDUser.h"
+#import "CDSectionEnrollment.h"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A388a" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14B23" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CDCourse" representedClassName="CDCourse" parentEntity="CDServerObject" syncable="YES">
         <attribute name="courseDescription" attributeType="String" syncable="YES"/>
         <attribute name="courseTitle" attributeType="String" syncable="YES"/>
@@ -24,16 +24,28 @@
         <attribute name="sectionTitle" attributeType="String" syncable="YES"/>
         <attribute name="sectionTypeCode" attributeType="String" regularExpressionString="(lab|cla|dri|lec|pre|sem|stu|ear|fil|all)" syncable="YES"/>
         <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="sections" inverseEntity="CDCourse" syncable="YES"/>
+        <relationship name="enrolments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSectionEnrollment" inverseName="section" inverseEntity="CDSectionEnrollment" syncable="YES"/>
         <relationship name="events" toMany="YES" deletionRule="Cascade" destinationEntity="CDEvent" inverseName="section" inverseEntity="CDEvent" syncable="YES"/>
+    </entity>
+    <entity name="CDSectionEnrollment" representedClassName="CDSectionEnrollment" syncable="YES">
+        <attribute name="color" attributeType="Transformable" syncable="YES"/>
+        <relationship name="section" maxCount="1" deletionRule="Nullify" destinationEntity="CDSection" inverseName="enrolments" inverseEntity="CDSection" syncable="YES"/>
+        <relationship name="user" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="enrollments" inverseEntity="CDUser" syncable="YES"/>
     </entity>
     <entity name="CDServerObject" representedClassName="CDServerObject" isAbstract="YES" syncable="YES">
         <attribute name="serverId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="CDUser" representedClassName="CDUser" parentEntity="CDServerObject" syncable="YES">
+        <attribute name="displayName" attributeType="String" syncable="YES"/>
+        <relationship name="enrollments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSectionEnrollment" inverseName="user" inverseEntity="CDSectionEnrollment" syncable="YES"/>
     </entity>
     <elements>
         <element name="CDCourse" positionX="-2655" positionY="-6372" width="128" height="103"/>
         <element name="CDCourseListing" positionX="-2583" positionY="-6111" width="128" height="103"/>
         <element name="CDEvent" positionX="-2180" positionY="-6253" width="128" height="133"/>
-        <element name="CDSection" positionX="-2376" positionY="-6255" width="128" height="103"/>
+        <element name="CDSection" positionX="-2376" positionY="-6255" width="128" height="118"/>
         <element name="CDServerObject" positionX="-2304" positionY="-6462" width="128" height="58"/>
+        <element name="CDUser" positionX="-2432" positionY="-5923" width="128" height="73"/>
+        <element name="CDSectionEnrollment" positionX="-2180" positionY="-5965" width="128" height="88"/>
     </elements>
 </model>
