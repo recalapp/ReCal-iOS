@@ -15,6 +15,7 @@
 @interface CDUser : CDServerObject
 
 @property (nonatomic, retain) NSString * displayName;
+@property (nonatomic, retain) NSString * username;
 @property (nonatomic, retain) NSSet *enrollments;
 @end
 

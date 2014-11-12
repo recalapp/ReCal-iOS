@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import ReCalCommon
 
 extension CDCourse {
     var primaryListing: CDCourseListing {
@@ -41,19 +42,19 @@ extension CDEvent {
     }
 }
 extension CDUser {
-    var enrolledSections: [CDSection] {
+    var enrolledSections: Set<CDSection> {
         var sections: [CDSection] = []
         for enrollment in self.enrollments {
             sections.append(enrollment.section)
         }
-        return sections
+        return Set(initialItems: sections)
     }
-    var enrolledCourses: [CDCourse] {
-        return Set(initialItems: self.enrolledSections.map { $0.course }).toArray()
+    var enrolledCourses: Set<CDCourse> {
+        return self.enrolledSections.map { $0.course }
     }
     func colorForSection(section: CDSection) -> UIColor {
         for enrollment in self.enrollments {
-            if enrollment.section.isEqual(section) {
+            if section.isEqual(enrollment.section) {
                 return enrollment.color as UIColor
             }
         }

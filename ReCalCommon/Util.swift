@@ -67,6 +67,43 @@ public extension UIColor {
     public class func lightBlackGrayColor() -> UIColor {
         return UIColor(red: 47.0/255.0, green: 47.0/255.0, blue: 42.0/255.0, alpha: 1.0)
     }
+    
+    public class func fromHexString(var hexString: NSString) -> UIColor? {
+        let colorComponentFromString: (NSString, Int, Int) -> CGFloat = { (colorString, start, length) in
+            let subString = colorString.substringWithRange(NSMakeRange(start, length))
+            let fullHex = length == 2 ? subString : "\(subString)\(subString)"
+            var hexComponent: UInt32 = 0
+            NSScanner(string: fullHex).scanHexInt(&hexComponent)
+            return CGFloat(hexComponent) / 255.0
+        }
+        hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
+        var alpha: CGFloat, red: CGFloat, green: CGFloat, blue: CGFloat
+        switch hexString.length {
+        case 3: // #RGB
+            alpha = 1.0
+            red = colorComponentFromString(hexString, 0, 1)
+            green = colorComponentFromString(hexString, 1, 1)
+            blue = colorComponentFromString(hexString, 2, 1)
+        case 4: // #ARGB
+            alpha = colorComponentFromString(hexString, 0, 1)
+            red = colorComponentFromString(hexString, 1, 1)
+            green = colorComponentFromString(hexString, 2, 1)
+            blue = colorComponentFromString(hexString, 3, 1)
+        case 6: // #RRGGBB
+            alpha = 1.0
+            red = colorComponentFromString(hexString, 0, 2)
+            green = colorComponentFromString(hexString, 1, 2)
+            blue = colorComponentFromString(hexString, 2, 2)
+        case 8: // #AARRGGBB
+            alpha = colorComponentFromString(hexString, 0, 2)
+            red = colorComponentFromString(hexString, 1, 2)
+            green = colorComponentFromString(hexString, 2, 2)
+            blue = colorComponentFromString(hexString, 3, 2)
+        default:
+            assertionFailure("Invalid color string")
+        }
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
 }
 
 public func arrayFindIndexesOfElement<T: Equatable>(#array: [T], #element: T) -> [Int] {

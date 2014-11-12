@@ -13,6 +13,7 @@
 @implementation CDUser
 
 @dynamic displayName;
+@dynamic username;
 @dynamic enrollments;
 
 @end

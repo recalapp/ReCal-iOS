@@ -37,6 +37,7 @@
     </entity>
     <entity name="CDUser" representedClassName="CDUser" parentEntity="CDServerObject" syncable="YES">
         <attribute name="displayName" attributeType="String" syncable="YES"/>
+        <attribute name="username" attributeType="String" syncable="YES"/>
         <relationship name="enrollments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSectionEnrollment" inverseName="user" inverseEntity="CDSectionEnrollment" syncable="YES"/>
     </entity>
     <elements>
@@ -45,7 +46,7 @@
         <element name="CDEvent" positionX="-2180" positionY="-6253" width="128" height="133"/>
         <element name="CDSection" positionX="-2376" positionY="-6255" width="128" height="118"/>
         <element name="CDServerObject" positionX="-2304" positionY="-6462" width="128" height="58"/>
-        <element name="CDUser" positionX="-2432" positionY="-5923" width="128" height="73"/>
+        <element name="CDUser" positionX="-2432" positionY="-5923" width="128" height="88"/>
         <element name="CDSectionEnrollment" positionX="-2180" positionY="-5965" width="128" height="88"/>
     </elements>
 </model>

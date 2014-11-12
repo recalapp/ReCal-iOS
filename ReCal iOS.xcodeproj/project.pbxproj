@@ -99,7 +99,7 @@
 		81E6406D19FACDCA003A49F8 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E6406C19FACDCA003A49F8 /* Set.swift */; };
 		81F76B001A13DAF9001B6233 /* CDSectionEnrollment.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76AFF1A13DAF9001B6233 /* CDSectionEnrollment.m */; };
 		81F76B031A13DAF9001B6233 /* CDSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B021A13DAF9001B6233 /* CDSection.m */; };
-		81F76B061A13DAF9001B6233 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B051A13DAF9001B6233 /* CDUser.m */; };
+		81F76B091A13E2AA001B6233 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B081A13E2AA001B6233 /* CDUser.m */; };
 		81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */; };
 		81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */; };
 		81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */; };
@@ -286,8 +286,8 @@
 		81F76AFF1A13DAF9001B6233 /* CDSectionEnrollment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSectionEnrollment.m; sourceTree = "<group>"; };
 		81F76B011A13DAF9001B6233 /* CDSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSection.h; sourceTree = "<group>"; };
 		81F76B021A13DAF9001B6233 /* CDSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSection.m; sourceTree = "<group>"; };
-		81F76B041A13DAF9001B6233 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
-		81F76B051A13DAF9001B6233 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
+		81F76B071A13E2AA001B6233 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
+		81F76B081A13E2AA001B6233 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
 		81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndSearchPredicate.swift; sourceTree = "<group>"; };
@@ -397,12 +397,12 @@
 				811A0F6A1A125ACF0012030E /* CDEvent.m */,
 				811A0F631A125ACF0012030E /* CDCourse.h */,
 				811A0F641A125ACF0012030E /* CDCourse.m */,
-				81F76B041A13DAF9001B6233 /* CDUser.h */,
-				81F76B051A13DAF9001B6233 /* CDUser.m */,
 				81F76B011A13DAF9001B6233 /* CDSection.h */,
 				81F76B021A13DAF9001B6233 /* CDSection.m */,
 				81F76AFE1A13DAF9001B6233 /* CDSectionEnrollment.h */,
 				81F76AFF1A13DAF9001B6233 /* CDSectionEnrollment.m */,
+				81F76B071A13E2AA001B6233 /* CDUser.h */,
+				81F76B081A13E2AA001B6233 /* CDUser.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1106,7 +1106,7 @@
 				811A0F6B1A125ACF0012030E /* CDEvent.m in Sources */,
 				8107FD921A11B11C00296BBB /* AgendaTableViewCell.swift in Sources */,
 				811A0F711A125ACF0012030E /* CDCourseListing.m in Sources */,
-				81F76B061A13DAF9001B6233 /* CDUser.m in Sources */,
+				81F76B091A13E2AA001B6233 /* CDUser.m in Sources */,
 				811A0F651A125ACF0012030E /* CDCourse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
