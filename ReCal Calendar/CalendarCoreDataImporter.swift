@@ -94,6 +94,7 @@ class CalendarCoreDataImporter: CoreDataImporter {
         }
         if let profileDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Dictionary<String, AnyObject> {
             if let username = profileDict["username"] as? String {
+                println("Saving user profiles for username: \(username)")
                 let user = self.fetchOrCreateUserEntityWithUsername(username)
                 let processEnrolledCoursesDict: (Dictionary<String, AnyObject>)->(CDCourse?, ImportResult) = { (courseDict) in
                     let processSectionDict: (Dictionary<String, AnyObject>)->(CDSection?, ImportResult) = { (sectionDict) in
@@ -199,6 +200,9 @@ class CalendarCoreDataImporter: CoreDataImporter {
                 var success = true
                 self.backgroundManagedObjectContext.performBlockAndWait {
                     var errorOpt: NSError?
+                    println("Inserted item count: \(self.backgroundManagedObjectContext.insertedObjects.count)")
+                    println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
+                    println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
                     success = self.backgroundManagedObjectContext.save(&errorOpt)
                     if let error = errorOpt {
                         println("Error saving. Error: \(error)")

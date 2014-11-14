@@ -27,6 +27,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootViewController = self.window?.rootViewController
         Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
         Settings.currentSettings.coreDataImporter = CalendarCoreDataImporter()
+        Settings.currentSettings.coreDataImporter.persistentStoreCoordinator = self.persistentStoreCoordinator
+        
+        // TODO delete, temporary code
+        let userProfileFilePathOpt = NSBundle.mainBundle().pathForResource("user_profile_info", ofType: "json")
+        if let filePath = userProfileFilePathOpt {
+            let initialDataOpt = NSData(contentsOfFile: filePath)
+            if let initialData = initialDataOpt {
+                Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData, withTemporaryFileName: CalendarCoreDataImporter.TemporaryFileNames.userProfile)
+            }
+        }
+        Settings.currentSettings.coreDataImporter.importPendingItems()
         return true
     }
 
