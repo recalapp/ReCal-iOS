@@ -18,7 +18,7 @@
 @property (nonatomic, retain) NSString * sectionTypeCode;
 @property (nonatomic, retain) CDCourse *course;
 @property (nonatomic, retain) NSSet *events;
-@property (nonatomic, retain) NSSet *enrolments;
+@property (nonatomic, retain) NSSet *enrollments;
 @end
 
 @interface CDSection (CoreDataGeneratedAccessors)
@@ -28,9 +28,9 @@
 - (void)addEvents:(NSSet *)values;
 - (void)removeEvents:(NSSet *)values;
 
-- (void)addEnrolmentsObject:(CDSectionEnrollment *)value;
-- (void)removeEnrolmentsObject:(CDSectionEnrollment *)value;
-- (void)addEnrolments:(NSSet *)values;
-- (void)removeEnrolments:(NSSet *)values;
+- (void)addEnrollmentsObject:(CDSectionEnrollment *)value;
+- (void)removeEnrollmentsObject:(CDSectionEnrollment *)value;
+- (void)addEnrollments:(NSSet *)values;
+- (void)removeEnrollments:(NSSet *)values;
 
 @end

@@ -18,6 +18,6 @@
 @dynamic sectionTypeCode;
 @dynamic course;
 @dynamic events;
-@dynamic enrolments;
+@dynamic enrollments;
 
 @end

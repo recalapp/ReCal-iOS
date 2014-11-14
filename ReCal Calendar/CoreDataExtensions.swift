@@ -10,6 +10,27 @@ import Foundation
 import CoreData
 import ReCalCommon
 
+extension CDServerObject {
+    class func findServerObjectWithServerId(serverId: String, withEntityName entityName: String, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> CDServerObject? {
+        var errorOpt: NSError?
+        let fetchRequest = NSFetchRequest(entityName: entityName)
+        let serverIdPredicate = NSPredicate(format: "serverId = %@", argumentArray: [serverId])
+        fetchRequest.predicate = serverIdPredicate
+        fetchRequest.fetchLimit = 1
+        var managedObject: CDServerObject?
+        managedObjectContext.performBlockAndWait {
+            let fetched = managedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt)
+            if let error = errorOpt {
+                println("Error fetching for entity name: \(entityName), with server id: \(serverId). Error: \(error)")
+                abort()
+            }
+            //println("\(entityName) fetched \(fetched) for server id \(serverId)")
+            managedObject = fetched?.last as? CDServerObject
+        }
+        return managedObject
+    }
+}
+
 extension CDCourse {
     var primaryListing: CDCourseListing {
         return self.courseListings.filteredSetUsingPredicate(NSPredicate(block: { (item, _) -> Bool in

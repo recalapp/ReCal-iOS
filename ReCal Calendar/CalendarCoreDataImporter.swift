@@ -123,6 +123,11 @@ class CalendarCoreDataImporter: CoreDataImporter {
                         if name == nil || typeCode == nil || colorCode == nil {
                             return (nil, .Failure)
                         }
+                        for enrollment in section.enrollments {
+                            self.backgroundManagedObjectContext.performBlockAndWait {
+                                self.backgroundManagedObjectContext.deleteObject(enrollment as NSManagedObject)
+                            }
+                        }
                         let enrollment = getOrCreateEnrollment(section)
                         self.backgroundManagedObjectContext.performBlockAndWait {
                             section.sectionTitle = name!
@@ -221,10 +226,78 @@ class CalendarCoreDataImporter: CoreDataImporter {
         }
     }
     private func processEventsData(data: NSData) -> ImportResult {
-        return .Success
+        let revertChanges: ()->Void = {
+            self.backgroundManagedObjectContext.performBlockAndWait {
+                self.backgroundManagedObjectContext.reset()
+            }
+        }
+        if let dict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Dictionary<String, AnyObject> {
+            if let eventsDictArray = dict["events"] as? [Dictionary<String, AnyObject>] {
+                println("Importing events data")
+                let eventImporter = EventAttributeImporter()
+                let processEventDict: (Dictionary<String, AnyObject>)->ImportResult = { (eventDict) in
+                    let serverIdValue = (eventDict["event_id"] as? NSNumber)?.integerValue
+                    if serverIdValue == nil {
+                        return .Failure
+                    }
+                    let event = self.fetchOrCreateEntityWithServerId("\(serverIdValue)", entityName: "CDEvent")
+                    switch eventImporter.importAttributeFromDictionary(eventDict, intoManagedObject: event, inManagedObjectContext: self.backgroundManagedObjectContext) {
+                    case .Success:
+                        return .Success
+                    case .Error(_):
+                        println("failure in event dict: \(eventDict)")
+                        return .Failure
+                    }
+                }
+                
+                let result = eventsDictArray.map(processEventDict).reduce(ImportResult.Success, combine: { (prevResult, result) in
+                    switch prevResult {
+                    case .Success:
+                        return result
+                    case .ShouldRetry:
+                        if result == .Failure {
+                            return .Failure
+                        } else {
+                            return .ShouldRetry
+                        }
+                    case .Failure:
+                        return .Failure
+                    }
+                })
+                switch result {
+                case .Success:
+                    var success = true
+                    self.backgroundManagedObjectContext.performBlockAndWait {
+                        var errorOpt: NSError?
+                        println("Inserted item count: \(self.backgroundManagedObjectContext.insertedObjects.count)")
+                        println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
+                        println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
+                        success = self.backgroundManagedObjectContext.save(&errorOpt)
+                        if let error = errorOpt {
+                            println("Error saving. Error: \(error)")
+                        }
+                    }
+                    if success {
+                        return .Success
+                    } else {
+                        println("failure saving")
+                        return .Failure
+                    }
+                case .Failure, .ShouldRetry:
+                    revertChanges()
+                    println("failure importing")
+                    return result
+                }
+            } else {
+                return .Failure
+            }
+        } else {
+            return .Failure
+        }
     }
     struct TemporaryFileNames {
         static let userProfile = "userProfile"
         static let events = "events"
     }
 }
+

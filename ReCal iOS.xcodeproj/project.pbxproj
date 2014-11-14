@@ -100,6 +100,11 @@
 		81F76B001A13DAF9001B6233 /* CDSectionEnrollment.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76AFF1A13DAF9001B6233 /* CDSectionEnrollment.m */; };
 		81F76B031A13DAF9001B6233 /* CDSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B021A13DAF9001B6233 /* CDSection.m */; };
 		81F76B091A13E2AA001B6233 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B081A13E2AA001B6233 /* CDUser.m */; };
+		81F76B0C1A169812001B6233 /* ManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B0B1A169812001B6233 /* ManagedObjectAttributeImporter.swift */; };
+		81F76B0E1A16B290001B6233 /* CompositeManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B0D1A16B290001B6233 /* CompositeManagedObjectAttributeImporter.swift */; };
+		81F76B101A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B0F1A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift */; };
+		81F76B121A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B111A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift */; };
+		81F76B151A16B9B4001B6233 /* EventAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B141A16B9B4001B6233 /* EventAttributeImporter.swift */; };
 		81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */; };
 		81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */; };
 		81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */; };
@@ -288,6 +293,11 @@
 		81F76B021A13DAF9001B6233 /* CDSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSection.m; sourceTree = "<group>"; };
 		81F76B071A13E2AA001B6233 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
 		81F76B081A13E2AA001B6233 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
+		81F76B0B1A169812001B6233 /* ManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B0D1A16B290001B6233 /* CompositeManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B0F1A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B111A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B141A16B9B4001B6233 /* EventAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAttributeImporter.swift; sourceTree = "<group>"; };
 		81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndSearchPredicate.swift; sourceTree = "<group>"; };
@@ -440,7 +450,7 @@
 				811A0F521A125A8E0012030E /* Core Data */,
 				811A0F741A1299460012030E /* SectionType.swift */,
 				81AA2C631A12F48800A31F61 /* EventType.swift */,
-				813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */,
+				81F76B131A16B9A5001B6233 /* Core Data Import */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -632,6 +642,7 @@
 				8111F62219F493A500A331E3 /* Controls */,
 				8172B97219F562990070E7DF /* Calendar */,
 				8172B97019F5627C0070E7DF /* Data Structures */,
+				81F76B0A1A1697D3001B6233 /* Core Data Import */,
 				8172B97119F562840070E7DF /* DataSource */,
 				8111F62B19F4947700A331E3 /* Util.swift */,
 				8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */,
@@ -642,7 +653,6 @@
 				81000B211A0EA6C200246BD3 /* ReCalCommon.storyboard */,
 				81BCA54B1A0FF69000391608 /* URLs.swift */,
 				81853EE81A102D28002E9B1A /* Serializable.swift */,
-				811A0F761A12F1240012030E /* CoreDataImporter.swift */,
 			);
 			path = ReCalCommon;
 			sourceTree = "<group>";
@@ -714,6 +724,27 @@
 				81E50D5B1A0DB5420074F381 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		81F76B0A1A1697D3001B6233 /* Core Data Import */ = {
+			isa = PBXGroup;
+			children = (
+				811A0F761A12F1240012030E /* CoreDataImporter.swift */,
+				81F76B0B1A169812001B6233 /* ManagedObjectAttributeImporter.swift */,
+				81F76B0D1A16B290001B6233 /* CompositeManagedObjectAttributeImporter.swift */,
+				81F76B0F1A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift */,
+				81F76B111A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift */,
+			);
+			name = "Core Data Import";
+			sourceTree = "<group>";
+		};
+		81F76B131A16B9A5001B6233 /* Core Data Import */ = {
+			isa = PBXGroup;
+			children = (
+				813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */,
+				81F76B141A16B9B4001B6233 /* EventAttributeImporter.swift */,
+			);
+			name = "Core Data Import";
 			sourceTree = "<group>";
 		};
 		81F9A3F91A06B2B400083E55 /* Search Predicates */ = {
@@ -1048,10 +1079,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				81853EE91A102D28002E9B1A /* Serializable.swift in Sources */,
+				81F76B0E1A16B290001B6233 /* CompositeManagedObjectAttributeImporter.swift in Sources */,
 				8146ECB31A0AF132005FF4C2 /* ManagedObjectProxy.swift in Sources */,
 				81BCA54C1A0FF69000391608 /* URLs.swift in Sources */,
 				81000B1F1A0EA1E100246BD3 /* AuthenticationViewController.swift in Sources */,
 				81000B1C1A0E56B800246BD3 /* Authenticator.swift in Sources */,
+				81F76B101A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift in Sources */,
 				811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */,
 				81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */,
 				81E6406D19FACDCA003A49F8 /* Set.swift in Sources */,
@@ -1060,6 +1093,7 @@
 				8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */,
 				81BCA5461A0FE87600391608 /* AuthenticationNavigationController.swift in Sources */,
 				81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */,
+				81F76B0C1A169812001B6233 /* ManagedObjectAttributeImporter.swift in Sources */,
 				8172B96E19F562590070E7DF /* Stack.swift in Sources */,
 				818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */,
 				81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */,
@@ -1074,6 +1108,7 @@
 				81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */,
 				81BCA54A1A0FEB9500391608 /* AuthenticationPromptViewController.swift in Sources */,
 				81B6D3111A0DA65900B883A6 /* ColorScheme.swift in Sources */,
+				81F76B121A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift in Sources */,
 				81130C011A0C168F00F1F496 /* OrderedSet.swift in Sources */,
 				81E50D681A0E52290074F381 /* Settings.swift in Sources */,
 			);
@@ -1108,6 +1143,7 @@
 				811A0F711A125ACF0012030E /* CDCourseListing.m in Sources */,
 				81F76B091A13E2AA001B6233 /* CDUser.m in Sources */,
 				811A0F651A125ACF0012030E /* CDCourse.m in Sources */,
+				81F76B151A16B9B4001B6233 /* EventAttributeImporter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
