@@ -19,6 +19,7 @@ struct Course: Printable, ManagedObjectProxy {
     let sections: [Section]
     let managedObjectProxyId: ManagedObjectProxyId
     let allSectionTypes: [SectionType]
+    let hashValue: Int
     
     init(managedObject: CDCourse) {
         self.title = managedObject.title
@@ -32,6 +33,15 @@ struct Course: Printable, ManagedObjectProxy {
             }
             return set
         }).toArray()
+        var hash = self.title.hashValue
+        hash = hash &* hashPrimeMultipler &+ self.courseDescription.hashValue
+        for listing in self.courseListings {
+            hash = hash &* hashPrimeMultipler &+ listing.hashValue
+        }
+        for section in self.sections {
+            hash = hash &* hashPrimeMultipler &+ section.hashValue
+        }
+        self.hashValue = hash
     }
     
     func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
@@ -55,17 +65,6 @@ struct Course: Printable, ManagedObjectProxy {
         return self.displayText
     }
     
-    var hashValue: Int {
-        var hash = self.title.hashValue
-        hash = hash &* hashPrimeMultipler &+ self.courseDescription.hashValue
-        for listing in self.courseListings {
-            hash = hash &* hashPrimeMultipler &+ listing.hashValue
-        }
-        for section in self.sections {
-            hash = hash &* hashPrimeMultipler &+ section.hashValue
-        }
-        return hash
-    }
 }
 
 struct CourseListing: Printable, ManagedObjectProxy {

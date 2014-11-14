@@ -15,10 +15,6 @@ class CourseSelectionNavigationController: AuthenticationNavigationController {
         super.viewDidLoad()
         self.hidesBarsWhenKeyboardAppears = false
     }
-
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -26,7 +22,7 @@ class CourseSelectionNavigationController: AuthenticationNavigationController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(animated)
         let courseSelectionViewController = self.logicalRootViewController as CourseSelectionViewController
         courseSelectionViewController.viewContentSize = CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.navigationBar.bounds.size.height - UIApplication.sharedApplication().statusBarFrame.size.height)
     }

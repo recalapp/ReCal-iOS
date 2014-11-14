@@ -37,8 +37,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     // NOTE: didSet gets called on a struct even if we just assign one of its value, not the struct itself
     var schedule: Schedule! {
         didSet {
-            assert(schedule != nil, "Invariant: Schedule cannot be nil, except for initial value.")
-            self.navigationItem.title = schedule.name
+            if schedule != nil {
+                self.navigationItem.title = schedule.name
+            }
         }
     }
     
@@ -254,6 +255,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     @IBAction func logOutButtonTapped(sender: UIBarButtonItem) {
         Settings.currentSettings.authenticator.logOut()
+        self.schedule = nil
     }
     
     // MARK: - Table View Delegate
