@@ -27,6 +27,10 @@ public class AuthenticationContainerViewController: UIViewController {
         }
     }
     
+    private var statusViewHeight: CGFloat {
+        return self.statusViewShown ? 20 : 0
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.statusLabel.text = "Error authenticating. Tap to retry."
@@ -57,7 +61,7 @@ public class AuthenticationContainerViewController: UIViewController {
     }
     
     private func setNeedsAuthenticationStatusViewAppearanceUpdate() {
-        self.statusViewHeightConstraint?.constant = self.statusViewShown ? 20.0 : 0.0
+        self.statusViewHeightConstraint?.constant = self.statusViewHeight
         UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.AllowAnimatedContent, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
             self.view.layoutIfNeeded()
@@ -71,6 +75,11 @@ public class AuthenticationContainerViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    public override func sizeForChildContentContainer(container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+        var originalSize = super.sizeForChildContentContainer(container, withParentContainerSize: parentSize)
+        originalSize.height -= self.statusViewHeight
+        return originalSize
+    }
 
     /*
     // MARK: - Navigation

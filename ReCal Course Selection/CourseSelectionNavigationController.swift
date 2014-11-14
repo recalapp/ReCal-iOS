@@ -25,12 +25,19 @@ class CourseSelectionNavigationController: AuthenticationNavigationController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         super.viewDidAppear(animated)
         let courseSelectionViewController = self.logicalRootViewController as CourseSelectionViewController
-        courseSelectionViewController.viewContentSize = CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.navigationBar.bounds.size.height - UIApplication.sharedApplication().statusBarFrame.size.height) // TODO get actual status bar height
+        courseSelectionViewController.viewContentSize = CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.navigationBar.bounds.size.height - UIApplication.sharedApplication().statusBarFrame.size.height)
     }
-
+    
+    override func sizeForChildContentContainer(container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+        if container === self.logicalRootViewController {
+            return CGSize(width: parentSize.width, height: parentSize.height - self.navigationBar.bounds.size.height - UIApplication.sharedApplication().statusBarFrame.size.height)
+        }
+        return super.sizeForChildContentContainer(container, withParentContainerSize: parentSize)
+    }
+    
     /*
     // MARK: - Navigation
 
