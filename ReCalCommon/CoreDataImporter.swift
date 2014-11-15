@@ -20,14 +20,26 @@ public class CoreDataImporter {
         return []
     }
     
-    public init() {
-        
-    }
+    private var notificationObservers = [AnyObject]()
     
-    public var persistentStoreCoordinator: NSPersistentStoreCoordinator?
+    public init(persistentStoreCoordinator: NSPersistentStoreCoordinator) {
+        self.persistentStoreCoordinator = persistentStoreCoordinator
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+            self.backgroundManagedObjectContext.performBlockAndWait {
+                self.backgroundManagedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+            }
+        }
+        self.notificationObservers.append(observer1)
+    }
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
+    }
+    public let persistentStoreCoordinator: NSPersistentStoreCoordinator
     
     lazy public var backgroundManagedObjectContext: NSManagedObjectContext = {
-        assert(self.persistentStoreCoordinator != nil, "Persistent store coordinator must be set before Core Data Importer can be used")
+//        assert(self.persistentStoreCoordinator != nil, "Persistent store coordinator must be set before Core Data Importer can be used")
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
         return managedObjectContext

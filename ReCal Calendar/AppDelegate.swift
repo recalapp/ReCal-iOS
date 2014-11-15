@@ -26,8 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let rootViewController = self.window?.rootViewController
         Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
-        Settings.currentSettings.coreDataImporter = CalendarCoreDataImporter()
-        Settings.currentSettings.coreDataImporter.persistentStoreCoordinator = self.persistentStoreCoordinator
+        Settings.currentSettings.coreDataImporter = CalendarCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
         
         // TODO delete, temporary code
         let userProfileFilePathOpt = NSBundle.mainBundle().pathForResource("user_profile_info", ofType: "json")

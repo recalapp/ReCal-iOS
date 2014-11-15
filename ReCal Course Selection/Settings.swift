@@ -28,7 +28,7 @@ public class Settings {
     
     public var authenticator: Authenticator = Authenticator(rootViewController: UIViewController(), forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
     
-    public var coreDataImporter: CoreDataImporter = CoreDataImporter()
+    public var coreDataImporter: CoreDataImporter!
 }
 
 public enum Theme {

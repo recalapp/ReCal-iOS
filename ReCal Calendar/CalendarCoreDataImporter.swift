@@ -14,6 +14,11 @@ class CalendarCoreDataImporter: CoreDataImporter {
     override var temporaryFileNames: [String] {
         return [TemporaryFileNames.userProfile, TemporaryFileNames.events]
     }
+    
+    override init(persistentStoreCoordinator: NSPersistentStoreCoordinator) {
+        super.init(persistentStoreCoordinator: persistentStoreCoordinator)
+    }
+    
     private func fetchOrCreateEntityWithServerId(serverId: String, entityName: String) -> CDServerObject {
         var errorOpt: NSError?
         let fetchRequest = NSFetchRequest(entityName: entityName)

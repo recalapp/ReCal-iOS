@@ -2,7 +2,7 @@
 //  CDEvent.m
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 11/11/14.
+//  Created by Naphat Sanguansin on 11/15/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
@@ -12,11 +12,12 @@
 
 @implementation CDEvent
 
-@dynamic eventTitle;
 @dynamic eventDescription;
-@dynamic eventStart;
 @dynamic eventEnd;
+@dynamic eventStart;
+@dynamic eventTitle;
 @dynamic eventTypeCode;
+@dynamic agendaSection;
 @dynamic section;
 
 @end

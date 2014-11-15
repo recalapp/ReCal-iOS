@@ -25,7 +25,6 @@
 		81130BCE1A0C0D7D00F1F496 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81130BCD1A0C0D7D00F1F496 /* Day.swift */; };
 		81130C011A0C168F00F1F496 /* OrderedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81130C001A0C168F00F1F496 /* OrderedSet.swift */; };
 		811A0F651A125ACF0012030E /* CDCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F641A125ACF0012030E /* CDCourse.m */; };
-		811A0F6B1A125ACF0012030E /* CDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F6A1A125ACF0012030E /* CDEvent.m */; };
 		811A0F6E1A125ACF0012030E /* CDServerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F6D1A125ACF0012030E /* CDServerObject.m */; };
 		811A0F711A125ACF0012030E /* CDCourseListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F701A125ACF0012030E /* CDCourseListing.m */; };
 		811A0F731A125B0B0012030E /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F721A125B0B0012030E /* CoreDataExtensions.swift */; };
@@ -111,6 +110,7 @@
 		81F76B1D1A16ED66001B6233 /* CourseAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B1C1A16ED66001B6233 /* CourseAttributeImporter.swift */; };
 		81F76B1F1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B1E1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift */; };
 		81F76B211A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B201A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift */; };
+		81F76B261A17A345001B6233 /* CDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B251A17A345001B6233 /* CDEvent.m */; };
 		81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */; };
 		81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */; };
 		81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */; };
@@ -206,8 +206,6 @@
 		811A0F531A125AA30012030E /* ReCal Calendar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReCal Calendar-Bridging-Header.h"; sourceTree = "<group>"; };
 		811A0F631A125ACF0012030E /* CDCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourse.h; sourceTree = "<group>"; };
 		811A0F641A125ACF0012030E /* CDCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourse.m; sourceTree = "<group>"; };
-		811A0F691A125ACF0012030E /* CDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEvent.h; sourceTree = "<group>"; };
-		811A0F6A1A125ACF0012030E /* CDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEvent.m; sourceTree = "<group>"; };
 		811A0F6C1A125ACF0012030E /* CDServerObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDServerObject.h; sourceTree = "<group>"; };
 		811A0F6D1A125ACF0012030E /* CDServerObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDServerObject.m; sourceTree = "<group>"; };
 		811A0F6F1A125ACF0012030E /* CDCourseListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourseListing.h; sourceTree = "<group>"; };
@@ -310,6 +308,8 @@
 		81F76B1C1A16ED66001B6233 /* CourseAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseAttributeImporter.swift; sourceTree = "<group>"; };
 		81F76B1E1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToOneChildManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
 		81F76B201A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B241A17A345001B6233 /* CDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEvent.h; sourceTree = "<group>"; };
+		81F76B251A17A345001B6233 /* CDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEvent.m; sourceTree = "<group>"; };
 		81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndSearchPredicate.swift; sourceTree = "<group>"; };
@@ -415,8 +415,6 @@
 				811A0F701A125ACF0012030E /* CDCourseListing.m */,
 				811A0F6C1A125ACF0012030E /* CDServerObject.h */,
 				811A0F6D1A125ACF0012030E /* CDServerObject.m */,
-				811A0F691A125ACF0012030E /* CDEvent.h */,
-				811A0F6A1A125ACF0012030E /* CDEvent.m */,
 				811A0F631A125ACF0012030E /* CDCourse.h */,
 				811A0F641A125ACF0012030E /* CDCourse.m */,
 				81F76B011A13DAF9001B6233 /* CDSection.h */,
@@ -425,6 +423,8 @@
 				81F76AFF1A13DAF9001B6233 /* CDSectionEnrollment.m */,
 				81F76B071A13E2AA001B6233 /* CDUser.h */,
 				81F76B081A13E2AA001B6233 /* CDUser.m */,
+				81F76B241A17A345001B6233 /* CDEvent.h */,
+				81F76B251A17A345001B6233 /* CDEvent.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1159,9 +1159,9 @@
 				81F76B001A13DAF9001B6233 /* CDSectionEnrollment.m in Sources */,
 				81E50D651A0E503B0074F381 /* URLs.swift in Sources */,
 				81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */,
+				81F76B261A17A345001B6233 /* CDEvent.m in Sources */,
 				813C00F01A13AEF900A3B769 /* CalendarCoreDataImporter.swift in Sources */,
 				81AA2C641A12F48800A31F61 /* EventType.swift in Sources */,
-				811A0F6B1A125ACF0012030E /* CDEvent.m in Sources */,
 				8107FD921A11B11C00296BBB /* AgendaTableViewCell.swift in Sources */,
 				81F76B1D1A16ED66001B6233 /* CourseAttributeImporter.swift in Sources */,
 				811A0F711A125ACF0012030E /* CDCourseListing.m in Sources */,

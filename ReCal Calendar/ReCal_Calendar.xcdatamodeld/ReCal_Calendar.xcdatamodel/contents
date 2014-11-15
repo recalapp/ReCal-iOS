@@ -13,6 +13,7 @@
         <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="courseListings" inverseEntity="CDCourse" syncable="YES"/>
     </entity>
     <entity name="CDEvent" representedClassName="CDEvent" parentEntity="CDServerObject" syncable="YES">
+        <attribute name="agendaSection" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
         <attribute name="eventDescription" attributeType="String" syncable="YES"/>
         <attribute name="eventEnd" attributeType="Date" syncable="YES"/>
         <attribute name="eventStart" attributeType="Date" syncable="YES"/>
@@ -43,7 +44,7 @@
     <elements>
         <element name="CDCourse" positionX="-2655" positionY="-6372" width="128" height="103"/>
         <element name="CDCourseListing" positionX="-2583" positionY="-6111" width="128" height="103"/>
-        <element name="CDEvent" positionX="-2180" positionY="-6253" width="128" height="133"/>
+        <element name="CDEvent" positionX="-2180" positionY="-6253" width="128" height="148"/>
         <element name="CDSection" positionX="-2376" positionY="-6255" width="128" height="118"/>
         <element name="CDSectionEnrollment" positionX="-2180" positionY="-5965" width="128" height="88"/>
         <element name="CDServerObject" positionX="-2304" positionY="-6462" width="128" height="58"/>

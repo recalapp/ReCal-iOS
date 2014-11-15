@@ -61,6 +61,9 @@ extension CDEvent {
     var eventType: EventType {
         return EventType(rawValue: self.eventTypeCode)!
     }
+    var agendaSection: String? {
+        return AgendaViewController.AgendaSection(date: self.eventStart)?.rawValue
+    }
 }
 extension CDUser {
     var enrolledSections: Set<CDSection> {

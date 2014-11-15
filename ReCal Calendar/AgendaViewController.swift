@@ -8,44 +8,113 @@
 
 import UIKit
 
-private let agendaCellIdentifier = "AgendaCell"
-private let paddingCellIdentifier = "Padding"
-
 class AgendaViewController: UITableViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.reloadTableViewData()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    private let agendaCellIdentifier = "AgendaCell"
+    private let paddingCellIdentifier = "Padding"
+    
+    private subscript(indexPath: NSIndexPath)->CDEvent {
+        get {
+            return self.fetchedResultsController.objectAtIndexPath(NSIndexPath(forRow: indexPath.row / 2, inSection: indexPath.section)) as CDEvent
+        }
+    }
+    
+    lazy private var managedObjectContext: NSManagedObjectContext = {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        return managedObjectContext
+    }()
+    
+    lazy private var fetchedResultsController: NSFetchedResultsController = {
+        let fetchRequest = NSFetchRequest(entityName: "CDEvent")
+        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let today = NSDate()
+        
+        let startDate: NSDate = {
+            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear, fromDate: today)
+            components.day -= 1
+            return calendar.dateFromComponents(components)!
+            }()
+        
+        let endDate: NSDate = {
+            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear, fromDate: today)
+            components.day = 0
+            components.month += 1 // TODO what about december
+            return calendar.dateFromComponents(components)!
+            }()
+        let startPredicate = NSPredicate(format: "eventStart > %@", startDate)!
+        let endPredicate = NSPredicate(format: "eventStart < %@", endDate)!
+        fetchRequest.predicate = NSCompoundPredicate.andPredicateWithSubpredicates([startPredicate, endPredicate])
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "eventStart", ascending: true)]
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: "agendaSection", cacheName: "agendaCache")
+        return fetchedResultsController
+    }()
+    
+    var numberOfSections: Int {
+        return self.fetchedResultsController.sections?.count ?? 0
+    }
+    
+    private func numberOfRowsInSection(section: Int) -> Int {
+        return (self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo).numberOfObjects * 2
+    }
+    
+    private func titleForSection(section: Int) -> String {
+        return (self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo).name ?? "No Name"
+    }
+    
+    private func reloadTableViewData() {
+        var errorOpt: NSError?
+        NSFetchedResultsController.deleteCacheWithName("agendaCache")
+        self.managedObjectContext.performBlockAndWait {
+            let _ = self.fetchedResultsController.performFetch(&errorOpt)
+        }
+        if let error = errorOpt {
+            println("Error fetching agenda data. Error: \(error)")
+            return
+        }
+    }
+    
     private func indexPathIsPadding(indexPath: NSIndexPath) -> Bool {
         return indexPath.row % 2 != 0
     }
     
-    // MARK: - Table view data source
-
+    // MARK: - Table View Data Source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 4
+        return self.numberOfSections
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 10
+        return self.numberOfRowsInSection(section)
     }
-
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.titleForSection(section)
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if !self.indexPathIsPadding(indexPath) {
+            let cell = tableView.dequeueReusableCellWithIdentifier(agendaCellIdentifier, forIndexPath: indexPath) as AgendaTableViewCell
+            
+            let event = self[indexPath]
+            // TODO display event
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(paddingCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+            
+            return cell
+        }
+    }
+    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if !self.indexPathIsPadding(indexPath) {
             return 88
@@ -58,55 +127,33 @@ class AgendaViewController: UITableViewController {
         return !self.indexPathIsPadding(indexPath)
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if !self.indexPathIsPadding(indexPath) {
-            let cell = tableView.dequeueReusableCellWithIdentifier(agendaCellIdentifier, forIndexPath: indexPath) as AgendaTableViewCell
-            
-            // Configure the cell...
-            
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(paddingCellIdentifier, forIndexPath: indexPath) as UITableViewCell
-            
-            return cell
+    
+    // MARK: - Declarations
+    enum AgendaSection: String {
+        case Yesterday = "Yesterday", Today = "Today", ThisWeek = "This Week", ThisMonth = "This Month"
+        init?(date: NSDate) {
+            let calendar = NSCalendar.currentCalendar()
+            let today = NSDate()
+            let interval = date.timeIntervalSinceDate(today)
+            let unitFlags = NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth
+            let components = calendar.components(unitFlags, fromDate: today, toDate: date, options: NSCalendarOptions.allZeros)
+            switch (components.day, components.month) {
+            case (let day, _) where day < -1:
+                return nil
+            case (_, let month) where month >= 1:
+                return nil
+            case (let day, _) where day < 0:
+                self = .Yesterday
+            case (let day, _) where day < 1:
+                self = .Today
+            case (let day, _) where day < 7:
+                self = .ThisWeek
+            default:
+                self = .ThisMonth
+            }
         }
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+    
     /*
     // MARK: - Navigation
 
@@ -117,35 +164,4 @@ class AgendaViewController: UITableViewController {
     }
     */
 
-}
-
-extension CDEvent {
-    var agendaSection: AgendaSection? {
-        return AgendaSection(date: self.eventStart)
-    }
-}
-
-enum AgendaSection: String {
-    case Yesterday = "Yesterday", Today = "Today", ThisWeek = "This Week", ThisMonth = "This Month"
-    init?(date: NSDate) {
-        let calendar = NSCalendar.currentCalendar()
-        let today = NSDate()
-        let interval = date.timeIntervalSinceDate(today)
-        let unitFlags = NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth
-        let components = calendar.components(unitFlags, fromDate: today, toDate: date, options: NSCalendarOptions.allZeros)
-        switch (components.day, components.month) {
-        case (let day, _) where day < -1:
-            return nil
-        case (_, let month) where month >= 1:
-            return nil
-        case (let day, _) where day < 0:
-            self = .Yesterday
-        case (let day, _) where day < 1:
-            self = .Today
-        case (let day, _) where day < 7:
-            self = .ThisWeek
-        default:
-            self = .ThisMonth
-        }
-    }
 }
