@@ -47,6 +47,8 @@
 		8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */; };
 		8172B96D19F562590070E7DF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96519F562590070E7DF /* Queue.swift */; };
 		8172B96E19F562590070E7DF /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96619F562590070E7DF /* Stack.swift */; };
+		81792B2E1A17F9F50035D062 /* EventTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B2D1A17F9F50035D062 /* EventTimeTableViewCell.swift */; };
+		81792B301A17FD600035D062 /* EventDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B2F1A17FD600035D062 /* EventDescriptionTableViewCell.swift */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819912F11A17E6DC00756342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819912F01A17E6DC00756342 /* EventViewController.swift */; };
@@ -234,6 +236,8 @@
 		8172B96519F562590070E7DF /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		8172B96619F562590070E7DF /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		8172B96719F562590070E7DF /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
+		81792B2D1A17F9F50035D062 /* EventTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTimeTableViewCell.swift; sourceTree = "<group>"; };
+		81792B2F1A17FD600035D062 /* EventDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819912F01A17E6DC00756342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -772,6 +776,8 @@
 			isa = PBXGroup;
 			children = (
 				819912F01A17E6DC00756342 /* EventViewController.swift */,
+				81792B2D1A17F9F50035D062 /* EventTimeTableViewCell.swift */,
+				81792B2F1A17FD600035D062 /* EventDescriptionTableViewCell.swift */,
 			);
 			name = Event;
 			sourceTree = "<group>";
@@ -1161,7 +1167,9 @@
 			files = (
 				81F76B171A16DE58001B6233 /* SectionAttributeImporter.swift in Sources */,
 				811A0F6E1A125ACF0012030E /* CDServerObject.m in Sources */,
+				81792B301A17FD600035D062 /* EventDescriptionTableViewCell.swift in Sources */,
 				819912F11A17E6DC00756342 /* EventViewController.swift in Sources */,
+				81792B2E1A17F9F50035D062 /* EventTimeTableViewCell.swift in Sources */,
 				811A0F751A1299460012030E /* SectionType.swift in Sources */,
 				81F76B031A13DAF9001B6233 /* CDSection.m in Sources */,
 				81E50D671A0E50C30074F381 /* CalendarViewController.swift in Sources */,
