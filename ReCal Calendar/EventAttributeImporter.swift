@@ -28,7 +28,7 @@ class EventAttributeImporter : CompositeManagedObjectAttributeImporter {
             if serverId == nil {
                 return .Error(.InvalidDictionary)
             }
-            let section = CDServerObject.findServerObjectWithServerId("\(serverId)", withEntityName: "CDSection", inManagedObjectContext: managedObjectContext) as? CDSection
+            let section = CDServerObject.findServerObjectWithServerId("\(serverId!)", withEntityName: "CDSection", inManagedObjectContext: managedObjectContext) as? CDSection
             if section == nil {
                 return .Error(.IncompleteLocalData)
             }

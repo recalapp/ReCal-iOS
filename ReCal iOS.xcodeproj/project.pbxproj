@@ -105,6 +105,12 @@
 		81F76B101A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B0F1A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift */; };
 		81F76B121A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B111A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift */; };
 		81F76B151A16B9B4001B6233 /* EventAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B141A16B9B4001B6233 /* EventAttributeImporter.swift */; };
+		81F76B171A16DE58001B6233 /* SectionAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B161A16DE58001B6233 /* SectionAttributeImporter.swift */; };
+		81F76B191A16DFB0001B6233 /* ColorManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B181A16DFB0001B6233 /* ColorManagedObjectAttributeImporter.swift */; };
+		81F76B1B1A16E385001B6233 /* ToManyChildManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B1A1A16E385001B6233 /* ToManyChildManagedObjectAttributeImporter.swift */; };
+		81F76B1D1A16ED66001B6233 /* CourseAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B1C1A16ED66001B6233 /* CourseAttributeImporter.swift */; };
+		81F76B1F1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B1E1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift */; };
+		81F76B211A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B201A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift */; };
 		81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */; };
 		81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */; };
 		81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */; };
@@ -298,6 +304,12 @@
 		81F76B0F1A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
 		81F76B111A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
 		81F76B141A16B9B4001B6233 /* EventAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B161A16DE58001B6233 /* SectionAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B181A16DFB0001B6233 /* ColorManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B1A1A16E385001B6233 /* ToManyChildManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToManyChildManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B1C1A16ED66001B6233 /* CourseAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B1E1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToOneChildManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
+		81F76B201A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
 		81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndSearchPredicate.swift; sourceTree = "<group>"; };
@@ -734,6 +746,10 @@
 				81F76B0D1A16B290001B6233 /* CompositeManagedObjectAttributeImporter.swift */,
 				81F76B0F1A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift */,
 				81F76B111A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift */,
+				81F76B181A16DFB0001B6233 /* ColorManagedObjectAttributeImporter.swift */,
+				81F76B1A1A16E385001B6233 /* ToManyChildManagedObjectAttributeImporter.swift */,
+				81F76B1E1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift */,
+				81F76B201A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift */,
 			);
 			name = "Core Data Import";
 			sourceTree = "<group>";
@@ -743,6 +759,8 @@
 			children = (
 				813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */,
 				81F76B141A16B9B4001B6233 /* EventAttributeImporter.swift */,
+				81F76B161A16DE58001B6233 /* SectionAttributeImporter.swift */,
+				81F76B1C1A16ED66001B6233 /* CourseAttributeImporter.swift */,
 			);
 			name = "Core Data Import";
 			sourceTree = "<group>";
@@ -1079,7 +1097,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				81853EE91A102D28002E9B1A /* Serializable.swift in Sources */,
+				81F76B1B1A16E385001B6233 /* ToManyChildManagedObjectAttributeImporter.swift in Sources */,
 				81F76B0E1A16B290001B6233 /* CompositeManagedObjectAttributeImporter.swift in Sources */,
+				81F76B211A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift in Sources */,
 				8146ECB31A0AF132005FF4C2 /* ManagedObjectProxy.swift in Sources */,
 				81BCA54C1A0FF69000391608 /* URLs.swift in Sources */,
 				81000B1F1A0EA1E100246BD3 /* AuthenticationViewController.swift in Sources */,
@@ -1089,6 +1109,8 @@
 				81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */,
 				81E6406D19FACDCA003A49F8 /* Set.swift in Sources */,
 				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,
+				81F76B1F1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift in Sources */,
+				81F76B191A16DFB0001B6233 /* ColorManagedObjectAttributeImporter.swift in Sources */,
 				81F9A4061A06BE3300083E55 /* ClosureSearchPredicate.swift in Sources */,
 				8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */,
 				81BCA5461A0FE87600391608 /* AuthenticationNavigationController.swift in Sources */,
@@ -1126,6 +1148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81F76B171A16DE58001B6233 /* SectionAttributeImporter.swift in Sources */,
 				811A0F6E1A125ACF0012030E /* CDServerObject.m in Sources */,
 				811A0F751A1299460012030E /* SectionType.swift in Sources */,
 				81F76B031A13DAF9001B6233 /* CDSection.m in Sources */,
@@ -1140,6 +1163,7 @@
 				81AA2C641A12F48800A31F61 /* EventType.swift in Sources */,
 				811A0F6B1A125ACF0012030E /* CDEvent.m in Sources */,
 				8107FD921A11B11C00296BBB /* AgendaTableViewCell.swift in Sources */,
+				81F76B1D1A16ED66001B6233 /* CourseAttributeImporter.swift in Sources */,
 				811A0F711A125ACF0012030E /* CDCourseListing.m in Sources */,
 				81F76B091A13E2AA001B6233 /* CDUser.m in Sources */,
 				811A0F651A125ACF0012030E /* CDCourse.m in Sources */,
