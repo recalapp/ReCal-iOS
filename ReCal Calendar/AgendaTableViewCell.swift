@@ -22,13 +22,11 @@ class AgendaTableViewCell: UITableViewCell {
         return formatter
     }()
     
-//    var event: Event? {
-//        didSet {
-//            if oldValue != event {
-//                self.refresh()
-//            }
-//        }
-//    }
+    var viewModel: AgendaTableViewCellViewModel? {
+        didSet {
+            self.refresh()
+        }
+    }
     
     @IBOutlet weak var colorTagView: UIView!
     override func awakeFromNib() {
@@ -46,10 +44,18 @@ class AgendaTableViewCell: UITableViewCell {
     }
 
     private func refresh() {
-//        if let event = self.event {
-//            self.titleLabel.text = event.eventTitle
-//            self.courseLabel.text = "(Course Number Here)"
-//            self.timeLabel.text = self.timeFormatter.stringFromDate(event.eventStart)
-//        }
+        if let viewModel = self.viewModel {
+            self.titleLabel.text = viewModel.title
+            self.courseLabel.text = viewModel.subtitle
+            self.timeLabel.text = viewModel.rightTitle
+            self.colorTagView.backgroundColor = viewModel.colorTag
+        }
     }
+}
+
+protocol AgendaTableViewCellViewModel {
+    var title: String { get }
+    var subtitle: String { get }
+    var rightTitle: String { get }
+    var colorTag: UIColor { get }
 }

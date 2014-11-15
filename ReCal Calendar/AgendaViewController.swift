@@ -7,14 +7,28 @@
 //
 
 import UIKit
+import CoreData
+import ReCalCommon
 
 class AgendaViewController: UITableViewController {
     
+    private var notificationObservers: [AnyObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+            self.managedObjectContext.performBlockAndWait {
+                self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+            }
+        }
+        self.notificationObservers.append(observer1)
         self.reloadTableViewData()
     }
-
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -30,7 +44,7 @@ class AgendaViewController: UITableViewController {
     }
     
     lazy private var managedObjectContext: NSManagedObjectContext = {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
         return managedObjectContext
     }()
@@ -97,16 +111,13 @@ class AgendaViewController: UITableViewController {
         return self.numberOfRowsInSection(section)
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.titleForSection(section)
-    }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if !self.indexPathIsPadding(indexPath) {
             let cell = tableView.dequeueReusableCellWithIdentifier(agendaCellIdentifier, forIndexPath: indexPath) as AgendaTableViewCell
             
             let event = self[indexPath]
-            // TODO display event
+            cell.viewModel = EventAgendaViewModelAdapter(event: event)
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(paddingCellIdentifier, forIndexPath: indexPath) as UITableViewCell
@@ -127,6 +138,17 @@ class AgendaViewController: UITableViewController {
         return !self.indexPathIsPadding(indexPath)
     }
     
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = Settings.currentSettings.colorScheme.secondaryContentBackgroundColor
+        let label = UILabel()
+        label.setTranslatesAutoresizingMaskIntoConstraints(false)
+        headerView.addSubview(label)
+        headerView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(label, inParentView: headerView, withInsets: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)))
+        label.text = self.titleForSection(section)
+        label.textColor = Settings.currentSettings.colorScheme.textColor
+        return headerView
+    }
     
     // MARK: - Declarations
     enum AgendaSection: String {
@@ -164,4 +186,35 @@ class AgendaViewController: UITableViewController {
     }
     */
 
+}
+
+struct EventAgendaViewModelAdapter: AgendaTableViewCellViewModel {
+    
+    static var timeFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .ShortStyle
+        formatter.timeStyle = .ShortStyle
+        return formatter
+    }()
+    
+    let event: CDEvent
+    
+    init(event: CDEvent) {
+        self.event = event
+    }
+    
+    var title: String {
+        return self.event.eventTitle
+    }
+    var subtitle: String {
+        return self.event.section.course.primaryListing.displayText
+    }
+    
+    var rightTitle: String {
+        return EventAgendaViewModelAdapter.timeFormatter.stringFromDate(self.event.eventStart)
+    }
+    
+    var colorTag: UIColor {
+        return ((self.event.section.enrollments.anyObject() as? CDSectionEnrollment)?.color as? UIColor) ?? UIColor.redColor()
+    }
 }

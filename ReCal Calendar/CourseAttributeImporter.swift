@@ -10,14 +10,15 @@ import Foundation
 import ReCalCommon
 
 class CourseAttributeImporter : CompositeManagedObjectAttributeImporter {
+    
+    private let listingAttributeImporter: CourseListingAttributeImporter
     init(userObjectId: NSManagedObjectID) {
         let titleAttributeImporter = StringManagedObjectAttributeImporter(dictionaryKey: "course_title", attributeKey: "courseTitle")
         let descriptionAttributeImporter = StringManagedObjectAttributeImporter(dictionaryKey: "course_description", attributeKey: "courseDescription")
         let sectionAttributeImporter = SectionAttributeImporter(userObjectId: userObjectId)
         let sectionChildAttributeImporter = ToManyChildManagedObjectAttributeImporter(dictionaryKey: "sections", attributeKey: "sections", childEntityName: "CDSection", childAttributeImporter: sectionAttributeImporter, childSearchPattern: .SearchStringEqual("section_id", "serverId"))
-        let listingAttributeImporter = CourseListingAttributeImporter()
+        self.listingAttributeImporter = CourseListingAttributeImporter()
         let listingChildAttributeImporter = ToManyChildManagedObjectAttributeImporter(dictionaryKey: "course_listings", attributeKey: "courseListings", childEntityName: "CDCourseListing", childAttributeImporter: listingAttributeImporter, childSearchPattern: .NoSearch, deleteMode: .NoDelete)
-        let primaryListingChildAttributeImporter = ToManyChildManagedObjectAttributeImporter(dictionaryKey: "course_primary_listing", attributeKey: "courseListings", childEntityName: "CDCourseListing", childAttributeImporter: listingAttributeImporter, childSearchPattern: .NoSearch, deleteMode: .NoDelete)
         super.init(attributeImporters: [titleAttributeImporter, descriptionAttributeImporter, sectionChildAttributeImporter, listingChildAttributeImporter])
     }
     override func importAttributeFromDictionary(var dict: Dictionary<String, AnyObject>, intoManagedObject managedObject: NSManagedObject, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> ManagedObjectAttributeImporter.ImportResult {
@@ -44,7 +45,29 @@ class CourseAttributeImporter : CompositeManagedObjectAttributeImporter {
         } else {
             return .Error(.InvalidManagedObject)
         }
-        return super.importAttributeFromDictionary(dict, intoManagedObject: managedObject, inManagedObjectContext: managedObjectContext)
+        let result = super.importAttributeFromDictionary(dict, intoManagedObject: managedObject, inManagedObjectContext: managedObjectContext)
+        switch result {
+        case .Success:
+            var listing: CDCourseListing?
+            managedObjectContext.performBlockAndWait {
+                listing = NSEntityDescription.insertNewObjectForEntityForName("CDCourseListing", inManagedObjectContext: managedObjectContext) as? CDCourseListing
+            }
+            if listing == nil {
+                return .Error(.InvalidManagedObject)
+            }
+            self.listingAttributeImporter.importAttributeFromDictionary(dict["course_primary_listing"] as Dictionary<String, AnyObject>, intoManagedObject: listing!, inManagedObjectContext: managedObjectContext)
+            if let course = managedObject as? CDCourse {
+                managedObjectContext.performBlockAndWait {
+                    course.addCourseListingsObject(listing!)
+                }
+            } else {
+                return .Error(.InvalidManagedObject)
+            }
+            return .Success
+        case .Error(_):
+            return result
+        }
+        
     }
 }
 
