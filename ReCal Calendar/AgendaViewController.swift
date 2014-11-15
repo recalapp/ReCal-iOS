@@ -12,10 +12,47 @@ import ReCalCommon
 
 class AgendaViewController: UITableViewController {
     
+    weak var delegate: AgendaViewControllerDelegate?
     private var notificationObservers: [AnyObject] = []
+    
+    lazy private var managedObjectContext: NSManagedObjectContext = {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        return managedObjectContext
+        }()
+    
+    lazy private var fetchedResultsController: NSFetchedResultsController = {
+        let fetchRequest = NSFetchRequest(entityName: "CDEvent")
+        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let today = NSDate()
+        
+        let startDate: NSDate = {
+            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear, fromDate: today)
+            components.day -= 1
+            return calendar.dateFromComponents(components)!
+            }()
+        
+        let endDate: NSDate = {
+            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear, fromDate: today)
+            components.day = 0
+            components.month += 1 // TODO what about december
+            return calendar.dateFromComponents(components)!
+            }()
+        let startPredicate = NSPredicate(format: "eventStart > %@", startDate)!
+        let endPredicate = NSPredicate(format: "eventStart < %@", endDate)!
+        fetchRequest.predicate = NSCompoundPredicate.andPredicateWithSubpredicates([startPredicate, endPredicate])
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "eventStart", ascending: true)]
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: "agendaSection", cacheName: "agendaCache")
+        return fetchedResultsController
+        }()
+    
+    var numberOfSections: Int {
+        return self.fetchedResultsController.sections?.count ?? 0
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.sectionHeaderHeight += 6
         let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
@@ -43,40 +80,7 @@ class AgendaViewController: UITableViewController {
         }
     }
     
-    lazy private var managedObjectContext: NSManagedObjectContext = {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
-        return managedObjectContext
-    }()
     
-    lazy private var fetchedResultsController: NSFetchedResultsController = {
-        let fetchRequest = NSFetchRequest(entityName: "CDEvent")
-        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let today = NSDate()
-        
-        let startDate: NSDate = {
-            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear, fromDate: today)
-            components.day -= 1
-            return calendar.dateFromComponents(components)!
-            }()
-        
-        let endDate: NSDate = {
-            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear, fromDate: today)
-            components.day = 0
-            components.month += 1 // TODO what about december
-            return calendar.dateFromComponents(components)!
-            }()
-        let startPredicate = NSPredicate(format: "eventStart > %@", startDate)!
-        let endPredicate = NSPredicate(format: "eventStart < %@", endDate)!
-        fetchRequest.predicate = NSCompoundPredicate.andPredicateWithSubpredicates([startPredicate, endPredicate])
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "eventStart", ascending: true)]
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: "agendaSection", cacheName: "agendaCache")
-        return fetchedResultsController
-    }()
-    
-    var numberOfSections: Int {
-        return self.fetchedResultsController.sections?.count ?? 0
-    }
     
     private func numberOfRowsInSection(section: Int) -> Int {
         return (self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo).numberOfObjects * 2
@@ -86,6 +90,7 @@ class AgendaViewController: UITableViewController {
         return (self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo).name ?? "No Name"
     }
     
+    /// Reload the data of table view. Safe to call from any queue.
     private func reloadTableViewData() {
         var errorOpt: NSError?
         NSFetchedResultsController.deleteCacheWithName("agendaCache")
@@ -95,6 +100,9 @@ class AgendaViewController: UITableViewController {
         if let error = errorOpt {
             println("Error fetching agenda data. Error: \(error)")
             return
+        }
+        NSOperationQueue.mainQueue().addOperationWithBlock {
+            self.tableView.reloadData()
         }
     }
     
@@ -126,6 +134,7 @@ class AgendaViewController: UITableViewController {
         }
     }
     
+    // MARK: - Table View Delegate
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if !self.indexPathIsPadding(indexPath) {
             return 88
@@ -144,10 +153,16 @@ class AgendaViewController: UITableViewController {
         let label = UILabel()
         label.setTranslatesAutoresizingMaskIntoConstraints(false)
         headerView.addSubview(label)
-        headerView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(label, inParentView: headerView, withInsets: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)))
+        headerView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(label, inParentView: headerView, withInsets: UIEdgeInsets(top: 4, left: 20, bottom: 2, right: 0)))
         label.text = self.titleForSection(section)
         label.textColor = Settings.currentSettings.colorScheme.textColor
         return headerView
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        assert(!self.indexPathIsPadding(indexPath), "Not an event index path")
+        let event = self[indexPath]
+        self.delegate?.agendaViewController(self, didSelectEventWithManagedObjectId: event.objectID)
     }
     
     // MARK: - Declarations
@@ -175,17 +190,10 @@ class AgendaViewController: UITableViewController {
             }
         }
     }
-    
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+protocol AgendaViewControllerDelegate: class {
+    func agendaViewController(agendaViewController: AgendaViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID)
 }
 
 struct EventAgendaViewModelAdapter: AgendaTableViewCellViewModel {
@@ -215,6 +223,6 @@ struct EventAgendaViewModelAdapter: AgendaTableViewCellViewModel {
     }
     
     var colorTag: UIColor {
-        return ((self.event.section.enrollments.anyObject() as? CDSectionEnrollment)?.color as? UIColor) ?? UIColor.redColor()
+        return self.event.color ?? UIColor.redColor()
     }
 }

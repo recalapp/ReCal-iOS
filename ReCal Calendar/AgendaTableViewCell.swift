@@ -40,7 +40,14 @@ class AgendaTableViewCell: UITableViewCell {
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        let backgroundColor = selected ? Settings.currentSettings.colorScheme.selectedContentBackgroundColor : Settings.currentSettings.colorScheme.contentBackgroundColor
+        if animated {
+            UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+                self.backgroundColor = backgroundColor
+            }, completion: nil)
+        } else {
+            self.backgroundColor = backgroundColor
+        }
     }
 
     private func refresh() {

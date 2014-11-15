@@ -49,6 +49,7 @@
 		8172B96E19F562590070E7DF /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96619F562590070E7DF /* Stack.swift */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
+		819912F11A17E6DC00756342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819912F01A17E6DC00756342 /* EventViewController.swift */; };
 		81A094BA1A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A094B91A067D6200A0C3CE /* ReCal_Course_SelectionTests.swift */; };
 		81A094C51A067DBB00A0C3CE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A094C11A067DBB00A0C3CE /* LaunchScreen.xib */; };
 		81A094C61A067DBB00A0C3CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81A094C31A067DBB00A0C3CE /* Main.storyboard */; };
@@ -235,6 +236,7 @@
 		8172B96719F562590070E7DF /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
+		819912F01A17E6DC00756342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		819E7F271A0D93E600D32D5A /* ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorScheme.swift; path = "../ReCal Course Selection/ColorScheme.swift"; sourceTree = "<group>"; };
 		81A0949F1A067D6200A0C3CE /* ReCal Course Selection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReCal Course Selection.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A094A21A067D6200A0C3CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 			children = (
 				81E50D661A0E50C30074F381 /* CalendarViewController.swift */,
 				8107FD901A11B10800296BBB /* Agenda */,
+				81F76B271A17E274001B6233 /* Event */,
 			);
 			name = Calendar;
 			sourceTree = "<group>";
@@ -763,6 +766,14 @@
 				81F76B1C1A16ED66001B6233 /* CourseAttributeImporter.swift */,
 			);
 			name = "Core Data Import";
+			sourceTree = "<group>";
+		};
+		81F76B271A17E274001B6233 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				819912F01A17E6DC00756342 /* EventViewController.swift */,
+			);
+			name = Event;
 			sourceTree = "<group>";
 		};
 		81F9A3F91A06B2B400083E55 /* Search Predicates */ = {
@@ -1150,6 +1161,7 @@
 			files = (
 				81F76B171A16DE58001B6233 /* SectionAttributeImporter.swift in Sources */,
 				811A0F6E1A125ACF0012030E /* CDServerObject.m in Sources */,
+				819912F11A17E6DC00756342 /* EventViewController.swift in Sources */,
 				811A0F751A1299460012030E /* SectionType.swift in Sources */,
 				81F76B031A13DAF9001B6233 /* CDSection.m in Sources */,
 				81E50D671A0E50C30074F381 /* CalendarViewController.swift in Sources */,

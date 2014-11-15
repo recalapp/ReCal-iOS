@@ -82,7 +82,7 @@ public class LightColorScheme: ColorScheme {
     
     /// Color used when one content is portrayed to be less important than the main content, such as a table view header
     public override var secondaryContentBackgroundColor: UIColor {
-        return self.accessoryBackgroundColor.lighterColor()
+        return self.accessoryBackgroundColor.colorWithBrightness(scale: 0.98)
     }
     
     /// The background color for views that do display content

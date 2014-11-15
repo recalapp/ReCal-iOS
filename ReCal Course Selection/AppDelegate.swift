@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Settings.currentSettings.theme = .Dark
+        Settings.currentSettings.theme = .Light
         switch Settings.currentSettings.theme {
         case .Light:
             Settings.currentSettings.colorScheme = LightColorScheme()
@@ -28,9 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let rootViewController = self.window?.rootViewController
         Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
-        Settings.currentSettings.coreDataImporter = CourseSelectionCoreDataImporter()
-        
-        Settings.currentSettings.coreDataImporter.persistentStoreCoordinator = self.persistentStoreCoordinator
+        Settings.currentSettings.coreDataImporter = CourseSelectionCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
         if !NSUserDefaults.standardUserDefaults().boolForKey(userDefaultsKeyNotFirstLaunch) {
             println("saving")
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: userDefaultsKeyNotFirstLaunch)

@@ -11,18 +11,26 @@ import ReCalCommon
 
 private let calendarViewContentViewSegueId = "CalendarEmbed"
 private let agendaViewControllerStoryboardId = "AgendaViewController"
+private let eventNavigationViewControllerStoryboardId = "eventNavigationViewController"
 
-class CalendarViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+class CalendarViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, AgendaViewControllerDelegate, EventViewControllerDelegate {
     
     @IBOutlet weak var viewControllerSegmentedControl: UISegmentedControl!
     
     lazy private var agendaViewController: AgendaViewController = {
-        return self.storyboard?.instantiateViewControllerWithIdentifier(agendaViewControllerStoryboardId) as AgendaViewController
+        let agendaVC = self.storyboard?.instantiateViewControllerWithIdentifier(agendaViewControllerStoryboardId) as AgendaViewController
+        agendaVC.delegate = self
+        return agendaVC
     }()
     lazy private var dayViewController: UIViewController = {
         return UIViewController()
     }()
-    
+    lazy private var eventNavigationViewController: UINavigationController = {
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier(eventNavigationViewControllerStoryboardId) as UINavigationController
+        let eventVC = vc.viewControllers.first as EventViewController
+        eventVC.delegate = self
+        return vc
+    }()
     lazy private var viewControllers: [UIViewController] = {
         return [self.agendaViewController, self.dayViewController]
     }()
@@ -55,7 +63,11 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
             
         }
     }
-    
+    private func presentEventViewController(#eventObjectId: NSManagedObjectID) {
+        let eventViewController = self.eventNavigationViewController.viewControllers.first as EventViewController
+        eventViewController.eventObjectId = eventObjectId
+        self.presentViewController(self.eventNavigationViewController, animated: true, completion: nil)
+    }
     // MARK: - Page View Controller Data Source
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         let indexes = arrayFindIndexesOfElement(array: self.viewControllers, element: viewController)
@@ -106,4 +118,13 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
         }
     }
 
+    // MARK: - Agenda View Controller Delegate
+    func agendaViewController(agendaViewController: AgendaViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID) {
+        self.presentEventViewController(eventObjectId: managedObjectId)
+    }
+    
+    // MARK: - Event View Controller Delegate
+    func eventViewControllerDidTapDismissButton(eventViewController: EventViewController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

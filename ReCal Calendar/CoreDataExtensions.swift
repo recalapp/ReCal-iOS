@@ -64,6 +64,9 @@ extension CDEvent {
     var agendaSection: String? {
         return AgendaViewController.AgendaSection(date: self.eventStart)?.rawValue
     }
+    var color: UIColor? {
+        return (self.section.enrollments.anyObject() as? CDSectionEnrollment)?.color as? UIColor
+    }
 }
 extension CDUser {
     var enrolledSections: Set<CDSection> {
