@@ -75,6 +75,7 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
         self.presentViewController(self.eventNavigationViewController, animated: true, completion: nil)
     }
     @IBAction func settingsButtonTapped(sender: UIBarButtonItem) {
+        assert(self.presentedViewController == nil)
         self.presentViewController(self.settingsNavigationViewController, animated: true, completion: nil)
     }
     // MARK: - Page View Controller Data Source
@@ -142,5 +143,10 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     func settingsViewControllerDidTapDismissButton(settingsViewController: SettingsViewController) {
         assert(self.presentedViewController == self.settingsNavigationViewController)
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    func settingsViewControllerDidTapLogOutButton(settingsViewController: SettingsViewController) {
+        assert(self.presentedViewController == self.settingsNavigationViewController)
+        self.dismissViewControllerAnimated(true, completion: nil)
+        Settings.currentSettings.authenticator.logOut()
     }
 }

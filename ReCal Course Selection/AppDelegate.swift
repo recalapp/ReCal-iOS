@@ -17,38 +17,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let initialCoursesFileName = "courses"
     var window: UIWindow?
 
+    func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+        if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
+            println(url)
+            println(url.scheme)
+            println(url.host)
+            if url.scheme == courseSelectionUrlScheme {
+                return true
+            }
+            return false
+        }
+        return true
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        Settings.currentSettings.theme = .Light
-        switch Settings.currentSettings.theme {
-        case .Light:
-            Settings.currentSettings.colorScheme = LightColorScheme()
-        case .Dark:
-            Settings.currentSettings.colorScheme = DarkColorScheme()
-        }
-        let rootViewController = self.window?.rootViewController
-        Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
-        Settings.currentSettings.coreDataImporter = CourseSelectionCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
-        if !NSUserDefaults.standardUserDefaults().boolForKey(userDefaultsKeyNotFirstLaunch) {
-            println("saving")
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: userDefaultsKeyNotFirstLaunch)
-            let filePathOpt = NSBundle.mainBundle().pathForResource(initialCoursesFileName, ofType: "json")
-            if let filePath = filePathOpt {
-                let initialDataOpt = NSData(contentsOfFile: filePath)
-                if let initialData = initialDataOpt {
-                    Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+        let launch: ()->Void = {
+            Settings.currentSettings.theme = .Light
+            switch Settings.currentSettings.theme {
+            case .Light:
+                Settings.currentSettings.colorScheme = LightColorScheme()
+            case .Dark:
+                Settings.currentSettings.colorScheme = DarkColorScheme()
+            }
+            let rootViewController = self.window?.rootViewController
+            Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
+            Settings.currentSettings.coreDataImporter = CourseSelectionCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
+            if !NSUserDefaults.standardUserDefaults().boolForKey(self.userDefaultsKeyNotFirstLaunch) {
+                println("saving")
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: self.userDefaultsKeyNotFirstLaunch)
+                let filePathOpt = NSBundle.mainBundle().pathForResource(self.initialCoursesFileName, ofType: "json")
+                if let filePath = filePathOpt {
+                    let initialDataOpt = NSData(contentsOfFile: filePath)
+                    if let initialData = initialDataOpt {
+                        Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+                    }
                 }
             }
+            NSOperationQueue().addOperationWithBlock {
+                Settings.currentSettings.coreDataImporter.importPendingItems()
+            }
         }
-        NSOperationQueue().addOperationWithBlock {
-            Settings.currentSettings.coreDataImporter.importPendingItems()
+        if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
+            if url.scheme == courseSelectionUrlScheme {
+                launch()
+                return true
+            }
+            return false
         }
-        
+        launch()
         return true
     }
 
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        if url.scheme == recalUrlScheme && url.host == courseSelectionUrlHost {
+        if url.scheme == courseSelectionUrlScheme {
             return true
         }
         return false

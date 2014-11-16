@@ -195,9 +195,9 @@
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="sMn-nn-9V2">
-                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="3Sc-Bh-DN0">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="3Sc-Bh-DN0">
                             <connections>
-                                <action selector="logOutButtonTapped:" destination="BYZ-38-t0r" id="OgV-zm-8qk"/>
+                                <action selector="settingsButtonTapped:" destination="BYZ-38-t0r" id="SZj-0d-Lwr"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Change Schedule" id="sAT-3q-HMP">

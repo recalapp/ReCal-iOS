@@ -27,7 +27,7 @@
 			<string>io.recal.courseSelection</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>recal</string>
+				<string>recalCourseSelection</string>
 			</array>
 		</dict>
 	</array>

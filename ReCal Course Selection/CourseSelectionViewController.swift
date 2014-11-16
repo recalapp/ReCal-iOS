@@ -14,7 +14,7 @@ private let courseCellIdentifier = "CourseCell"
 private let searchViewControllerStoryboardId = "CourseSearch"
 
 class CourseSelectionViewController: DoubleSidebarViewController, UICollectionViewDelegate, UITableViewDelegate, ScheduleCollectionViewDataSourceDelegate, EnrolledCoursesTableViewDataSourceDelegate, CourseSearchTableViewControllerDelegate,
-    ScheduleSelectionDelegate {
+    ScheduleSelectionDelegate, SettingsViewControllerDelegate {
     
     // MARK: - Variables
     private let enrolledCoursesTableViewDataSource = EnrolledCoursesTableViewDataSource()
@@ -47,6 +47,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     private var scheduleView: UICollectionView!
     private var enrolledCoursesView: UITableView!
     private var searchViewController: CourseSearchTableViewController!
+    lazy private var settingsNavigationViewController: UINavigationController = {
+        let settingsVC = SettingsViewController.instantiateFromStoryboard()
+        let navigationController = UINavigationController(rootViewController: settingsVC)
+        settingsVC.delegate = self
+        return navigationController
+        }()
     
     // MARK: - Methods
     override func viewDidLoad() {
@@ -253,9 +259,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         alertController.addAction(cancelAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
-    @IBAction func logOutButtonTapped(sender: UIBarButtonItem) {
-        Settings.currentSettings.authenticator.logOut()
-        self.schedule = nil
+    @IBAction func settingsButtonTapped(sender: UIBarButtonItem) {
+        assert(self.presentedViewController == nil)
+        self.presentViewController(self.settingsNavigationViewController, animated: true, completion: nil)
     }
     
     // MARK: - Table View Delegate
@@ -341,6 +347,20 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         default:
             break
         }
+    }
+    
+    // MARK: - Settings View Controller Delegate
+    func settingsViewControllerDidTapDismissButton(settingsViewController: SettingsViewController) {
+        assert(self.presentedViewController == self.settingsNavigationViewController)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    func settingsViewControllerDidTapLogOutButton(settingsViewController: SettingsViewController) {
+        assert(self.presentedViewController == self.settingsNavigationViewController)
+        self.dismissViewControllerAnimated(true) { (_) in
+            Settings.currentSettings.authenticator.logOut()
+            self.schedule = nil
+        }
+        
     }
     
     override func prefersStatusBarHidden() -> Bool {

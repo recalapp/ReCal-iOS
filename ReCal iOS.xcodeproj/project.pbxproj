@@ -54,6 +54,7 @@
 		81792B421A1929F00035D062 /* StaticTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B411A1929F00035D062 /* StaticTableViewDataSource.swift */; };
 		81792B441A192E210035D062 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B431A192E210035D062 /* SettingsViewController.swift */; };
 		81792B461A194B690035D062 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B451A194B690035D062 /* URLs.swift */; };
+		81792B481A194ECB0035D062 /* SettingsCenterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B471A194ECB0035D062 /* SettingsCenterTableViewCell.swift */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819912F11A17E6DC00756342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819912F01A17E6DC00756342 /* EventViewController.swift */; };
@@ -248,6 +249,7 @@
 		81792B411A1929F00035D062 /* StaticTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticTableViewDataSource.swift; sourceTree = "<group>"; };
 		81792B431A192E210035D062 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		81792B451A194B690035D062 /* URLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
+		81792B471A194ECB0035D062 /* SettingsCenterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCenterTableViewCell.swift; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819912F01A17E6DC00756342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -580,6 +582,7 @@
 			isa = PBXGroup;
 			children = (
 				81792B431A192E210035D062 /* SettingsViewController.swift */,
+				81792B471A194ECB0035D062 /* SettingsCenterTableViewCell.swift */,
 			);
 			name = "Settings View Controller";
 			sourceTree = "<group>";
@@ -1194,6 +1197,7 @@
 				8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */,
 				81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */,
 				8111F63319F4947700A331E3 /* Util.swift in Sources */,
+				81792B481A194ECB0035D062 /* SettingsCenterTableViewCell.swift in Sources */,
 				81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */,
 				81BCA54A1A0FEB9500391608 /* AuthenticationPromptViewController.swift in Sources */,
 				81B6D3111A0DA65900B883A6 /* ColorScheme.swift in Sources */,
