@@ -107,7 +107,7 @@ public class LightColorScheme: ColorScheme {
     
     /// The blur effect to be used throughout the app
     public override var blurEffect: UIVisualEffect {
-        return UIBlurEffect(style: .Light)
+        return UIBlurEffect(style: .ExtraLight)
     }
     
     /// The color to indicate an alert.

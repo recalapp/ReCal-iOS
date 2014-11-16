@@ -53,6 +53,7 @@
 		81792B3A1A18823B0035D062 /* UserProfileServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B391A18823B0035D062 /* UserProfileServerCommunication.swift */; };
 		81792B421A1929F00035D062 /* StaticTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B411A1929F00035D062 /* StaticTableViewDataSource.swift */; };
 		81792B441A192E210035D062 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B431A192E210035D062 /* SettingsViewController.swift */; };
+		81792B461A194B690035D062 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B451A194B690035D062 /* URLs.swift */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819912F11A17E6DC00756342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819912F01A17E6DC00756342 /* EventViewController.swift */; };
@@ -246,6 +247,7 @@
 		81792B391A18823B0035D062 /* UserProfileServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileServerCommunication.swift; sourceTree = "<group>"; };
 		81792B411A1929F00035D062 /* StaticTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticTableViewDataSource.swift; sourceTree = "<group>"; };
 		81792B431A192E210035D062 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		81792B451A194B690035D062 /* URLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819912F01A17E6DC00756342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 				81A094C11A067DBB00A0C3CE /* LaunchScreen.xib */,
 				81A094C31A067DBB00A0C3CE /* Main.storyboard */,
 				81A094A11A067D6200A0C3CE /* Supporting Files */,
+				81792B451A194B690035D062 /* URLs.swift */,
 			);
 			path = "ReCal Course Selection";
 			sourceTree = "<group>";
@@ -1124,6 +1127,7 @@
 				81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */,
 				8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */,
 				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
+				81792B461A194B690035D062 /* URLs.swift in Sources */,
 				8107FD7F1A11781200296BBB /* CDSemester.m in Sources */,
 				816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */,
 				81A094E71A067DFD00A0C3CE /* Course.swift in Sources */,
