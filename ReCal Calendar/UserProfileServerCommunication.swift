@@ -21,7 +21,7 @@ class UserProfileServerCommunicator : ServerCommunicator.ServerCommunication {
     }
     
     override var idleInterval: Int {
-        return 9
+        return 20
     }
     
     override func handleCommunicationResult(result: ServerCommunicator.Result) -> ServerCommunicator.CompleteAction {
@@ -33,6 +33,15 @@ class UserProfileServerCommunicator : ServerCommunicator.ServerCommunication {
         case .Failure(let error):
             println("Error downloading user profile data. Error: \(error)")
             return .NoAction
+        }
+    }
+    override func shouldSendRequest() -> ServerCommunicator.ShouldSend {
+        Settings.currentSettings.authenticator.authenticate()
+        switch Settings.currentSettings.authenticator.state {
+        case .Authenticated(_):
+            return .Send
+        case .Unauthenticated, .Cached(_), .PreviouslyAuthenticated(_):
+            return .NextInterrupt
         }
     }
 }

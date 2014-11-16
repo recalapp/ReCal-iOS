@@ -79,7 +79,11 @@ public class Authenticator: AuthenticationViewControllerDelegate {
                 } else {
                     // redirection occurred. Present a view controller to let the user log in
                     self.advanceStateWithAuthenticationResult(.Failure)
-                    self.rootViewController.presentViewController(self.authenticationNavigationController, animated: true, completion: nil)
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        if self.rootViewController.presentedViewController != self.authenticationNavigationController {
+                            self.rootViewController.presentViewController(self.authenticationNavigationController, animated: true, completion: nil)
+                        }
+                    }
                 }
             } else {
                 self.advanceStateWithAuthenticationResult(.Failure)

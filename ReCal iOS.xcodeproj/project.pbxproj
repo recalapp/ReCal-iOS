@@ -30,8 +30,6 @@
 		811A0F731A125B0B0012030E /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F721A125B0B0012030E /* CoreDataExtensions.swift */; };
 		811A0F751A1299460012030E /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F741A1299460012030E /* SectionType.swift */; };
 		811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F761A12F1240012030E /* CoreDataImporter.swift */; };
-		813C00ED1A13AE8D00A3B769 /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = 813C00EB1A13AE8D00A3B769 /* events.json */; };
-		813C00EE1A13AE8D00A3B769 /* user_profile_info.json in Resources */ = {isa = PBXBuildFile; fileRef = 813C00EC1A13AE8D00A3B769 /* user_profile_info.json */; };
 		813C00F01A13AEF900A3B769 /* CalendarCoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */; };
 		8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */; };
 		8146ECB21A0ADB68005FF4C2 /* ManagedObjectProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */; };
@@ -220,8 +218,6 @@
 		811A0F721A125B0B0012030E /* CoreDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtensions.swift; sourceTree = "<group>"; };
 		811A0F741A1299460012030E /* SectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionType.swift; sourceTree = "<group>"; };
 		811A0F761A12F1240012030E /* CoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataImporter.swift; sourceTree = "<group>"; };
-		813C00EB1A13AE8D00A3B769 /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
-		813C00EC1A13AE8D00A3B769 /* user_profile_info.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user_profile_info.json; sourceTree = "<group>"; };
 		813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCoreDataImporter.swift; sourceTree = "<group>"; };
 		8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedObjectProxy.swift; path = "../ReCal Course Selection/ManagedObjectProxy.swift"; sourceTree = "<group>"; };
@@ -732,8 +728,6 @@
 		81E50D401A0DB5420074F381 /* ReCal Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				813C00EB1A13AE8D00A3B769 /* events.json */,
-				813C00EC1A13AE8D00A3B769 /* user_profile_info.json */,
 				811A0F531A125AA30012030E /* ReCal Calendar-Bridging-Header.h */,
 				8107FD8D1A119C6C00296BBB /* Calendar */,
 				811E81731A11148D00407991 /* Models */,
@@ -1069,8 +1063,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				813C00EE1A13AE8D00A3B769 /* user_profile_info.json in Resources */,
-				813C00ED1A13AE8D00A3B769 /* events.json in Resources */,
 				81E50D4C1A0DB5420074F381 /* Main.storyboard in Resources */,
 				81E50D511A0DB5420074F381 /* LaunchScreen.xib in Resources */,
 				81E50D4E1A0DB5420074F381 /* Images.xcassets in Resources */,

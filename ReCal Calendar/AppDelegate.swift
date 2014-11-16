@@ -29,23 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Settings.currentSettings.coreDataImporter = CalendarCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
         Settings.currentSettings.serverCommunicator.registerServerCommunication(EventsServerCommunication())
         Settings.currentSettings.serverCommunicator.registerServerCommunication(UserProfileServerCommunicator())
-        
-        // TODO delete, temporary code
-//        let userProfileFilePathOpt = NSBundle.mainBundle().pathForResource("user_profile_info", ofType: "json")
-//        if let filePath = userProfileFilePathOpt {
-//            let initialDataOpt = NSData(contentsOfFile: filePath)
-//            if let initialData = initialDataOpt {
-//                Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData, withTemporaryFileName: CalendarCoreDataImporter.TemporaryFileNames.userProfile)
-//            }
-//        }
-//        let eventsProfileFilePathOpt = NSBundle.mainBundle().pathForResource("events", ofType: "json")
-//        if let filePath = eventsProfileFilePathOpt {
-//            let initialDataOpt = NSData(contentsOfFile: filePath)
-//            if let initialData = initialDataOpt {
-//                Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData, withTemporaryFileName: CalendarCoreDataImporter.TemporaryFileNames.events)
-//            }
-//        }
-        Settings.currentSettings.coreDataImporter.importPendingItems()
         return true
     }
 

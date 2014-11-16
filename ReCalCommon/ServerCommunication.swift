@@ -29,5 +29,9 @@ extension ServerCommunicator {
             assertionFailure("Abstract method")
             return .NoAction
         }
+        
+        public func shouldSendRequest()->ServerCommunicator.ShouldSend {
+            return .Send
+        }
     }
 }

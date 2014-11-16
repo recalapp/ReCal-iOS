@@ -17,7 +17,7 @@ class EventsServerCommunication : ServerCommunicator.ServerCommunication {
     }
     
     override var idleInterval: Int {
-        return 3
+        return 10
     }
     
     init(){
@@ -33,6 +33,15 @@ class EventsServerCommunication : ServerCommunicator.ServerCommunication {
         case .Failure(let error):
             println("Error downloading event data. Error: \(error)")
             return .NoAction
+        }
+    }
+    override func shouldSendRequest() -> ServerCommunicator.ShouldSend {
+        Settings.currentSettings.authenticator.authenticate()
+        switch Settings.currentSettings.authenticator.state {
+        case .Authenticated(_):
+            return .Send
+        case .Unauthenticated, .Cached(_), .PreviouslyAuthenticated(_):
+            return .NextInterrupt
         }
     }
 }

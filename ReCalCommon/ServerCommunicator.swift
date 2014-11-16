@@ -57,18 +57,26 @@ public final class ServerCommunicator {
             }
             
         case .Ready:
-            serverCommunication.status = .Connecting
-            NSURLConnection.sendAsynchronousRequest(serverCommunication.request, queue: self.serverCommunicationQueue, completionHandler: { (response, data, error) -> Void in
-                serverCommunication.status = .Processing
-                let result: Result = error != nil ? .Failure(error) : .Success(response, data)
-                switch serverCommunication.handleCommunicationResult(result) {
-                case .ConnectAgain:
-                    serverCommunication.status = .Ready
-                    return self.advanceStateForServerCommunication(serverCommunication, reason: .Manual)
-                case .NoAction:
-                    serverCommunication.status = .Idle(serverCommunication.idleInterval)
-                }
-            })
+            switch serverCommunication.shouldSendRequest() {
+            case .Send:
+                serverCommunication.status = .Connecting
+                NSURLConnection.sendAsynchronousRequest(serverCommunication.request, queue: self.serverCommunicationQueue, completionHandler: { (response, data, error) -> Void in
+                    serverCommunication.status = .Processing
+                    let result: Result = error != nil ? .Failure(error) : .Success(response, data)
+                    switch serverCommunication.handleCommunicationResult(result) {
+                    case .ConnectAgain:
+                        serverCommunication.status = .Ready
+                        return self.advanceStateForServerCommunication(serverCommunication, reason: .Manual)
+                    case .NoAction:
+                        serverCommunication.status = .Idle(serverCommunication.idleInterval)
+                    }
+                })
+            case .Cancel:
+                serverCommunication.status = .Idle(serverCommunication.idleInterval)
+            case .NextInterrupt:
+                serverCommunication.status = .Ready
+            }
+            
         }
     }
     
@@ -89,6 +97,11 @@ public final class ServerCommunicator {
     private enum AdvanceReason {
         case TimerInterrupt
         case Manual
+    }
+    public enum ShouldSend {
+        case Send
+        case Cancel
+        case NextInterrupt
     }
     public enum Result {
         case Success(NSURLResponse, NSData)
