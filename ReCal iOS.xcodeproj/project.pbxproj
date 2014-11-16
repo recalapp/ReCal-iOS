@@ -51,6 +51,7 @@
 		81792B351A182BE10035D062 /* ServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B341A182BE10035D062 /* ServerCommunication.swift */; };
 		81792B381A1880810035D062 /* EventsServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B371A1880810035D062 /* EventsServerCommunication.swift */; };
 		81792B3A1A18823B0035D062 /* UserProfileServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B391A18823B0035D062 /* UserProfileServerCommunication.swift */; };
+		81792B421A1929F00035D062 /* StaticTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B411A1929F00035D062 /* StaticTableViewDataSource.swift */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819912F11A17E6DC00756342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819912F01A17E6DC00756342 /* EventViewController.swift */; };
@@ -242,6 +243,7 @@
 		81792B341A182BE10035D062 /* ServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCommunication.swift; sourceTree = "<group>"; };
 		81792B371A1880810035D062 /* EventsServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsServerCommunication.swift; sourceTree = "<group>"; };
 		81792B391A18823B0035D062 /* UserProfileServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileServerCommunication.swift; sourceTree = "<group>"; };
+		81792B411A1929F00035D062 /* StaticTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticTableViewDataSource.swift; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819912F01A17E6DC00756342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -570,6 +572,21 @@
 			name = "Server Communication";
 			sourceTree = "<group>";
 		};
+		81792B3B1A1928A20035D062 /* Settings View Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Settings View Controller";
+			sourceTree = "<group>";
+		};
+		81792B3C1A1928DD0035D062 /* Static Table View */ = {
+			isa = PBXGroup;
+			children = (
+				81792B411A1929F00035D062 /* StaticTableViewDataSource.swift */,
+			);
+			name = "Static Table View";
+			sourceTree = "<group>";
+		};
 		81A094A01A067D6200A0C3CE /* ReCal Course Selection */ = {
 			isa = PBXGroup;
 			children = (
@@ -678,6 +695,8 @@
 		81D9F25C19EF4D9600F987B9 /* ReCalCommon */ = {
 			isa = PBXGroup;
 			children = (
+				81792B3C1A1928DD0035D062 /* Static Table View */,
+				81792B3B1A1928A20035D062 /* Settings View Controller */,
 				81792B311A182B9A0035D062 /* Server Communicator */,
 				81000B1A1A0E561E00246BD3 /* Authenticator */,
 				81F9A3F91A06B2B400083E55 /* Search Predicates */,
@@ -1149,6 +1168,7 @@
 				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,
 				81F76B1F1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift in Sources */,
 				81F76B191A16DFB0001B6233 /* ColorManagedObjectAttributeImporter.swift in Sources */,
+				81792B421A1929F00035D062 /* StaticTableViewDataSource.swift in Sources */,
 				81F9A4061A06BE3300083E55 /* ClosureSearchPredicate.swift in Sources */,
 				8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */,
 				81BCA5461A0FE87600391608 /* AuthenticationNavigationController.swift in Sources */,
