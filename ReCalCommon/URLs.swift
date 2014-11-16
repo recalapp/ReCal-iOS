@@ -8,6 +8,6 @@
 
 import Foundation
 
-public let baseUrl = "http://recal.io"
+public let baseUrl = "http://localhost:8000"
 public let authenticationUrl = "\(baseUrl)/mobile_logged_in"
 public let logOutUrl = "\(baseUrl)/logout"

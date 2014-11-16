@@ -7,3 +7,7 @@
 //
 
 import Foundation
+import ReCalCommon
+
+let eventsPullUrl = "\(baseUrl)/get"
+let userProfileUrl = "\(baseUrl)/get/user_profile_info"

@@ -1,0 +1,38 @@
+//
+//  UserProfileServerCommunication.swift
+//  ReCal iOS
+//
+//  Created by Naphat Sanguansin on 11/16/14.
+//  Copyright (c) 2014 ReCal. All rights reserved.
+//
+
+import Foundation
+import ReCalCommon
+
+class UserProfileServerCommunicator : ServerCommunicator.ServerCommunication {
+    
+    override var request: NSURLRequest {
+        let request = NSURLRequest(URL: NSURL(string: userProfileUrl)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10)
+        return request
+    }
+    
+    init(){
+        super.init(identifier: "userProfile")
+    }
+    
+    override var idleInterval: Int {
+        return 9
+    }
+    
+    override func handleCommunicationResult(result: ServerCommunicator.Result) -> ServerCommunicator.CompleteAction {
+        switch result {
+        case .Success(_, let data):
+            println("Successfully downloaded user profile data")
+            Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CalendarCoreDataImporter.TemporaryFileNames.userProfile)
+            return .NoAction
+        case .Failure(let error):
+            println("Error downloading user profile data. Error: \(error)")
+            return .NoAction
+        }
+    }
+}

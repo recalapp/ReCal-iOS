@@ -51,6 +51,8 @@
 		81792B301A17FD600035D062 /* EventDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B2F1A17FD600035D062 /* EventDescriptionTableViewCell.swift */; };
 		81792B331A182BD80035D062 /* ServerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B321A182BD80035D062 /* ServerCommunicator.swift */; };
 		81792B351A182BE10035D062 /* ServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B341A182BE10035D062 /* ServerCommunication.swift */; };
+		81792B381A1880810035D062 /* EventsServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B371A1880810035D062 /* EventsServerCommunication.swift */; };
+		81792B3A1A18823B0035D062 /* UserProfileServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B391A18823B0035D062 /* UserProfileServerCommunication.swift */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819912F11A17E6DC00756342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819912F01A17E6DC00756342 /* EventViewController.swift */; };
@@ -242,6 +244,8 @@
 		81792B2F1A17FD600035D062 /* EventDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		81792B321A182BD80035D062 /* ServerCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCommunicator.swift; sourceTree = "<group>"; };
 		81792B341A182BE10035D062 /* ServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCommunication.swift; sourceTree = "<group>"; };
+		81792B371A1880810035D062 /* EventsServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsServerCommunication.swift; sourceTree = "<group>"; };
+		81792B391A18823B0035D062 /* UserProfileServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileServerCommunication.swift; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819912F01A17E6DC00756342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -469,6 +473,7 @@
 		811E81731A11148D00407991 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				81792B361A18806C0035D062 /* Server Communication */,
 				811A0F721A125B0B0012030E /* CoreDataExtensions.swift */,
 				811A0F521A125A8E0012030E /* Core Data */,
 				811A0F741A1299460012030E /* SectionType.swift */,
@@ -558,6 +563,15 @@
 				81792B341A182BE10035D062 /* ServerCommunication.swift */,
 			);
 			name = "Server Communicator";
+			sourceTree = "<group>";
+		};
+		81792B361A18806C0035D062 /* Server Communication */ = {
+			isa = PBXGroup;
+			children = (
+				81792B371A1880810035D062 /* EventsServerCommunication.swift */,
+				81792B391A18823B0035D062 /* UserProfileServerCommunication.swift */,
+			);
+			name = "Server Communication";
 			sourceTree = "<group>";
 		};
 		81A094A01A067D6200A0C3CE /* ReCal Course Selection */ = {
@@ -1197,10 +1211,12 @@
 				81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */,
 				81F76B261A17A345001B6233 /* CDEvent.m in Sources */,
 				813C00F01A13AEF900A3B769 /* CalendarCoreDataImporter.swift in Sources */,
+				81792B3A1A18823B0035D062 /* UserProfileServerCommunication.swift in Sources */,
 				81AA2C641A12F48800A31F61 /* EventType.swift in Sources */,
 				8107FD921A11B11C00296BBB /* AgendaTableViewCell.swift in Sources */,
 				81F76B1D1A16ED66001B6233 /* CourseAttributeImporter.swift in Sources */,
 				811A0F711A125ACF0012030E /* CDCourseListing.m in Sources */,
+				81792B381A1880810035D062 /* EventsServerCommunication.swift in Sources */,
 				81F76B091A13E2AA001B6233 /* CDUser.m in Sources */,
 				811A0F651A125ACF0012030E /* CDCourse.m in Sources */,
 				81F76B151A16B9B4001B6233 /* EventAttributeImporter.swift in Sources */,
