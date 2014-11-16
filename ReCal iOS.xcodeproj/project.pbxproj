@@ -52,6 +52,7 @@
 		81792B381A1880810035D062 /* EventsServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B371A1880810035D062 /* EventsServerCommunication.swift */; };
 		81792B3A1A18823B0035D062 /* UserProfileServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B391A18823B0035D062 /* UserProfileServerCommunication.swift */; };
 		81792B421A1929F00035D062 /* StaticTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B411A1929F00035D062 /* StaticTableViewDataSource.swift */; };
+		81792B441A192E210035D062 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B431A192E210035D062 /* SettingsViewController.swift */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819912F11A17E6DC00756342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819912F01A17E6DC00756342 /* EventViewController.swift */; };
@@ -244,6 +245,7 @@
 		81792B371A1880810035D062 /* EventsServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsServerCommunication.swift; sourceTree = "<group>"; };
 		81792B391A18823B0035D062 /* UserProfileServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileServerCommunication.swift; sourceTree = "<group>"; };
 		81792B411A1929F00035D062 /* StaticTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticTableViewDataSource.swift; sourceTree = "<group>"; };
+		81792B431A192E210035D062 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819912F01A17E6DC00756342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -575,6 +577,7 @@
 		81792B3B1A1928A20035D062 /* Settings View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				81792B431A192E210035D062 /* SettingsViewController.swift */,
 			);
 			name = "Settings View Controller";
 			sourceTree = "<group>";
@@ -1159,6 +1162,7 @@
 				8146ECB31A0AF132005FF4C2 /* ManagedObjectProxy.swift in Sources */,
 				81BCA54C1A0FF69000391608 /* URLs.swift in Sources */,
 				81000B1F1A0EA1E100246BD3 /* AuthenticationViewController.swift in Sources */,
+				81792B441A192E210035D062 /* SettingsViewController.swift in Sources */,
 				81000B1C1A0E56B800246BD3 /* Authenticator.swift in Sources */,
 				81F76B101A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift in Sources */,
 				811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */,

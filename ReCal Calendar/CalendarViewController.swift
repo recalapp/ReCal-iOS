@@ -13,7 +13,7 @@ private let calendarViewContentViewSegueId = "CalendarEmbed"
 private let agendaViewControllerStoryboardId = "AgendaViewController"
 private let eventNavigationViewControllerStoryboardId = "eventNavigationViewController"
 
-class CalendarViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, AgendaViewControllerDelegate, EventViewControllerDelegate {
+class CalendarViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, AgendaViewControllerDelegate, EventViewControllerDelegate, SettingsViewControllerDelegate {
     
     @IBOutlet weak var viewControllerSegmentedControl: UISegmentedControl!
     
@@ -30,6 +30,12 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
         let eventVC = vc.viewControllers.first as EventViewController
         eventVC.delegate = self
         return vc
+    }()
+    lazy private var settingsNavigationViewController: UINavigationController = {
+        let settingsVC = SettingsViewController.instantiateFromStoryboard()
+        let navigationController = UINavigationController(rootViewController: settingsVC)
+        settingsVC.delegate = self
+        return navigationController
     }()
     lazy private var viewControllers: [UIViewController] = {
         return [self.agendaViewController, self.dayViewController]
@@ -67,6 +73,9 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
         let eventViewController = self.eventNavigationViewController.viewControllers.first as EventViewController
         eventViewController.eventObjectId = eventObjectId
         self.presentViewController(self.eventNavigationViewController, animated: true, completion: nil)
+    }
+    @IBAction func settingsButtonTapped(sender: UIBarButtonItem) {
+        self.presentViewController(self.settingsNavigationViewController, animated: true, completion: nil)
     }
     // MARK: - Page View Controller Data Source
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
@@ -125,6 +134,13 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     
     // MARK: - Event View Controller Delegate
     func eventViewControllerDidTapDismissButton(eventViewController: EventViewController) {
+        assert(self.presentedViewController == self.eventNavigationViewController)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    // MARK: - Settings View Controller Delegate
+    func settingsViewControllerDidTapDismissButton(settingsViewController: SettingsViewController) {
+        assert(self.presentedViewController == self.settingsNavigationViewController)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

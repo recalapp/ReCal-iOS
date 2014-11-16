@@ -51,6 +51,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="zJ4-re-g8W">
                         <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="m5l-nN-o1a">
+                            <connections>
+                                <action selector="settingsButtonTapped:" destination="vXZ-lx-hvc" id="8kQ-VO-Kz1"/>
+                            </connections>
+                        </barButtonItem>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="irs-6V-KPw">
                             <rect key="frame" x="180" y="7" width="240" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -259,7 +264,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Event" id="XGB-CP-suh">
-                        <barButtonItem key="rightBarButtonItem" title="Cross Button Here" id="k2m-Va-3yg">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="k2m-Va-3yg">
                             <connections>
                                 <action selector="dismissButtonTapped:" destination="OSa-Bh-pDs" id="DCB-ZC-19b"/>
                             </connections>

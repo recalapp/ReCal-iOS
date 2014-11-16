@@ -109,5 +109,46 @@
             </objects>
             <point key="canvasLocation" x="-408" y="735"/>
         </scene>
+        <!--ReCal-->
+        <scene sceneID="0la-6J-z93">
+            <objects>
+                <tableViewController storyboardIdentifier="Settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vdn-ty-LA2" customClass="SettingsViewController" customModule="ReCalCommon" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="uQK-HE-CaF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Basic" textLabel="KH8-gh-Kuv" style="IBUITableViewCellStyleDefault" id="NUk-ds-Whi">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NUk-ds-Whi" id="6IU-dI-bVv">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KH8-gh-Kuv">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="vdn-ty-LA2" id="syN-ya-Vb0"/>
+                            <outlet property="delegate" destination="vdn-ty-LA2" id="0xI-QT-fTy"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="ReCal" id="XRS-d4-s2P">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="czm-nu-8kN">
+                            <connections>
+                                <action selector="dismissButtonTapped:" destination="vdn-ty-LA2" id="dJX-05-8BR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EEM-y5-b5V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-169" y="1538"/>
+        </scene>
     </scenes>
 </document>
