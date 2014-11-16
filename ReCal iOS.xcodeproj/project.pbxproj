@@ -49,6 +49,8 @@
 		8172B96E19F562590070E7DF /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96619F562590070E7DF /* Stack.swift */; };
 		81792B2E1A17F9F50035D062 /* EventTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B2D1A17F9F50035D062 /* EventTimeTableViewCell.swift */; };
 		81792B301A17FD600035D062 /* EventDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B2F1A17FD600035D062 /* EventDescriptionTableViewCell.swift */; };
+		81792B331A182BD80035D062 /* ServerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B321A182BD80035D062 /* ServerCommunicator.swift */; };
+		81792B351A182BE10035D062 /* ServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B341A182BE10035D062 /* ServerCommunication.swift */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819912F11A17E6DC00756342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819912F01A17E6DC00756342 /* EventViewController.swift */; };
@@ -238,6 +240,8 @@
 		8172B96719F562590070E7DF /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 		81792B2D1A17F9F50035D062 /* EventTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTimeTableViewCell.swift; sourceTree = "<group>"; };
 		81792B2F1A17FD600035D062 /* EventDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		81792B321A182BD80035D062 /* ServerCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCommunicator.swift; sourceTree = "<group>"; };
+		81792B341A182BE10035D062 /* ServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCommunication.swift; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819912F01A17E6DC00756342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -547,6 +551,15 @@
 			name = Calendar;
 			sourceTree = "<group>";
 		};
+		81792B311A182B9A0035D062 /* Server Communicator */ = {
+			isa = PBXGroup;
+			children = (
+				81792B321A182BD80035D062 /* ServerCommunicator.swift */,
+				81792B341A182BE10035D062 /* ServerCommunication.swift */,
+			);
+			name = "Server Communicator";
+			sourceTree = "<group>";
+		};
 		81A094A01A067D6200A0C3CE /* ReCal Course Selection */ = {
 			isa = PBXGroup;
 			children = (
@@ -655,6 +668,7 @@
 		81D9F25C19EF4D9600F987B9 /* ReCalCommon */ = {
 			isa = PBXGroup;
 			children = (
+				81792B311A182B9A0035D062 /* Server Communicator */,
 				81000B1A1A0E561E00246BD3 /* Authenticator */,
 				81F9A3F91A06B2B400083E55 /* Search Predicates */,
 				81FCD27E19F7414400B6DC2D /* SlidingSidebarViewController */,
@@ -1124,6 +1138,7 @@
 				81F76B101A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift in Sources */,
 				811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */,
 				81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */,
+				81792B331A182BD80035D062 /* ServerCommunicator.swift in Sources */,
 				81E6406D19FACDCA003A49F8 /* Set.swift in Sources */,
 				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,
 				81F76B1F1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift in Sources */,
@@ -1135,6 +1150,7 @@
 				81F76B0C1A169812001B6233 /* ManagedObjectAttributeImporter.swift in Sources */,
 				8172B96E19F562590070E7DF /* Stack.swift in Sources */,
 				818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */,
+				81792B351A182BE10035D062 /* ServerCommunication.swift in Sources */,
 				81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */,
 				8172B96A19F562590070E7DF /* Cache.swift in Sources */,
 				8172B96D19F562590070E7DF /* Queue.swift in Sources */,
