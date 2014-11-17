@@ -32,15 +32,16 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
         eventVC.delegate = self
         return vc
     }()
-    lazy private var settingsNavigationViewController: UINavigationController = {
+    lazy private var settingsViewController: SettingsViewController = {
         let settingsVC = SettingsViewController.instantiateFromStoryboard()
-        let navigationController = UINavigationController(rootViewController: settingsVC)
         settingsVC.delegate = self
-        return navigationController
+        return settingsVC
     }()
     lazy private var viewControllers: [UIViewController] = {
         return [self.agendaViewController, self.dayViewController]
     }()
+    
+    private var settingsViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     
     weak private var pageViewController: UIPageViewController!
     
@@ -78,7 +79,11 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     }
     @IBAction func settingsButtonTapped(sender: UIBarButtonItem) {
         assert(self.presentedViewController == nil)
-        self.presentViewController(self.settingsNavigationViewController, animated: true, completion: nil)
+        self.settingsViewControllerTransitioningDelegate = SidebarOverlayTransitioningDelegate()
+        let settingsVC = self.settingsViewController
+        settingsVC.modalPresentationStyle = .Custom
+        settingsVC.transitioningDelegate = self.settingsViewControllerTransitioningDelegate!
+        self.presentViewController(settingsVC, animated: true, completion: nil)
     }
     // MARK: - Page View Controller Data Source
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
@@ -143,12 +148,16 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
 
     // MARK: - Settings View Controller Delegate
     func settingsViewControllerDidTapDismissButton(settingsViewController: SettingsViewController) {
-        assert(self.presentedViewController == self.settingsNavigationViewController)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        assert(self.presentedViewController == self.settingsViewController)
+        self.dismissViewControllerAnimated(true, completion: {
+            self.settingsViewControllerTransitioningDelegate = nil
+        })
     }
     func settingsViewControllerDidTapLogOutButton(settingsViewController: SettingsViewController) {
-        assert(self.presentedViewController == self.settingsNavigationViewController)
-        self.dismissViewControllerAnimated(true, completion: nil)
-        Settings.currentSettings.authenticator.logOut()
+        assert(self.presentedViewController == self.settingsViewController)
+        self.dismissViewControllerAnimated(true, completion: {
+            self.settingsViewControllerTransitioningDelegate = nil
+            Settings.currentSettings.authenticator.logOut()
+        })
     }
 }

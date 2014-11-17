@@ -47,15 +47,19 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     private var scheduleView: UICollectionView!
     private var enrolledCoursesView: UITableView!
     private var searchViewController: CourseSearchTableViewController!
-    lazy private var settingsNavigationViewController: UINavigationController = {
+    lazy private var settingsViewController: SettingsViewController = {
         let settingsVC = SettingsViewController.instantiateFromStoryboard()
-        let navigationController = UINavigationController(rootViewController: settingsVC)
         settingsVC.delegate = self
-        return navigationController
+        return settingsVC
         }()
+    private var settingsViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     // MARK: - Methods
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
@@ -264,7 +268,11 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     @IBAction func settingsButtonTapped(sender: UIBarButtonItem) {
         assert(self.presentedViewController == nil)
-        self.presentViewController(self.settingsNavigationViewController, animated: true, completion: nil)
+        self.settingsViewControllerTransitioningDelegate = SidebarOverlayTransitioningDelegate()
+        let settingsVC = self.settingsViewController
+        settingsVC.modalPresentationStyle = .Custom
+        settingsVC.transitioningDelegate = self.settingsViewControllerTransitioningDelegate!
+        self.presentViewController(settingsVC, animated: true, completion: nil)
     }
     
     // MARK: - Table View Delegate
@@ -354,19 +362,17 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     
     // MARK: - Settings View Controller Delegate
     func settingsViewControllerDidTapDismissButton(settingsViewController: SettingsViewController) {
-        assert(self.presentedViewController == self.settingsNavigationViewController)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        assert(self.presentedViewController == self.settingsViewController)
+        self.dismissViewControllerAnimated(true, completion: {
+            self.settingsViewControllerTransitioningDelegate = nil
+        })
     }
     func settingsViewControllerDidTapLogOutButton(settingsViewController: SettingsViewController) {
-        assert(self.presentedViewController == self.settingsNavigationViewController)
-        self.dismissViewControllerAnimated(true) { (_) in
+        assert(self.presentedViewController == self.settingsViewController)
+        self.dismissViewControllerAnimated(true, completion: {
+            self.settingsViewControllerTransitioningDelegate = nil
             Settings.currentSettings.authenticator.logOut()
             self.schedule = nil
-        }
-        
-    }
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return false
+        })
     }
 }

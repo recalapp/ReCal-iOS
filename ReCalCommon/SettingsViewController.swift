@@ -54,7 +54,6 @@ public class SettingsViewController: UITableViewController {
         let recalAppsSection = SectionInfo(name: .Empty, items: [
             ItemInfo(cellIdentifier: basicCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
                 cell.textLabel.text = "Course Selection"
-                println(NSBundle.mainBundle().bundleIdentifier)
                 if NSBundle.mainBundle().bundleIdentifier == courseSelectionBundleIdentifier {
                     cell.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
                 }
@@ -118,6 +117,7 @@ public class SettingsViewController: UITableViewController {
 }
 
 public protocol SettingsViewControllerDelegate: class {
+    /// Called when dismiss button is tapped. Only used if SettingsViewController is in a NavigationController
     func settingsViewControllerDidTapDismissButton(settingsViewController: SettingsViewController)
     func settingsViewControllerDidTapLogOutButton(settingsViewController: SettingsViewController)
 }

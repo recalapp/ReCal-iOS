@@ -34,6 +34,9 @@
 		8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */; };
 		8146ECB21A0ADB68005FF4C2 /* ManagedObjectProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */; };
 		8146ECB31A0AF132005FF4C2 /* ManagedObjectProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */; };
+		814735091A1A3C31004B3A34 /* SidebarOverlayPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814735081A1A3C31004B3A34 /* SidebarOverlayPresentationController.swift */; };
+		8147350B1A1A3DEC004B3A34 /* SidebarOverlayAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8147350A1A1A3DEC004B3A34 /* SidebarOverlayAnimatedTransitioning.swift */; };
+		8147350D1A1A40AD004B3A34 /* SidebarOverlayTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8147350C1A1A40AD004B3A34 /* SidebarOverlayTransitioningDelegate.swift */; };
 		814D4E741A0C815100C21848 /* ScheduleSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E731A0C815100C21848 /* ScheduleSelectionViewController.swift */; };
 		814D4E761A0C880500C21848 /* ScheduleCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E751A0C880500C21848 /* ScheduleCreationViewController.swift */; };
 		814D4E781A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814D4E771A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift */; };
@@ -226,6 +229,9 @@
 		813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCoreDataImporter.swift; sourceTree = "<group>"; };
 		8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedObjectProxy.swift; path = "../ReCal Course Selection/ManagedObjectProxy.swift"; sourceTree = "<group>"; };
+		814735081A1A3C31004B3A34 /* SidebarOverlayPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarOverlayPresentationController.swift; sourceTree = "<group>"; };
+		8147350A1A1A3DEC004B3A34 /* SidebarOverlayAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarOverlayAnimatedTransitioning.swift; sourceTree = "<group>"; };
+		8147350C1A1A40AD004B3A34 /* SidebarOverlayTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarOverlayTransitioningDelegate.swift; sourceTree = "<group>"; };
 		814D4E731A0C815100C21848 /* ScheduleSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleSelectionViewController.swift; sourceTree = "<group>"; };
 		814D4E751A0C880500C21848 /* ScheduleCreationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleCreationViewController.swift; sourceTree = "<group>"; };
 		814D4E771A0C8E4D00C21848 /* ScheduleSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleSelectionDelegate.swift; sourceTree = "<group>"; };
@@ -489,6 +495,16 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		814735071A1A3BEE004B3A34 /* Sidebar Overlay Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				814735081A1A3C31004B3A34 /* SidebarOverlayPresentationController.swift */,
+				8147350A1A1A3DEC004B3A34 /* SidebarOverlayAnimatedTransitioning.swift */,
+				8147350C1A1A40AD004B3A34 /* SidebarOverlayTransitioningDelegate.swift */,
+			);
+			name = "Sidebar Overlay Presentation";
+			sourceTree = "<group>";
+		};
 		814D4E711A0C80E300C21848 /* Schedules Management */ = {
 			isa = PBXGroup;
 			children = (
@@ -706,6 +722,7 @@
 		81D9F25C19EF4D9600F987B9 /* ReCalCommon */ = {
 			isa = PBXGroup;
 			children = (
+				814735071A1A3BEE004B3A34 /* Sidebar Overlay Presentation */,
 				81792B3C1A1928DD0035D062 /* Static Table View */,
 				81792B3B1A1928A20035D062 /* Settings View Controller */,
 				81792B311A182B9A0035D062 /* Server Communicator */,
@@ -1166,6 +1183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81853EE91A102D28002E9B1A /* Serializable.swift in Sources */,
+				814735091A1A3C31004B3A34 /* SidebarOverlayPresentationController.swift in Sources */,
 				81F76B1B1A16E385001B6233 /* ToManyChildManagedObjectAttributeImporter.swift in Sources */,
 				81F76B0E1A16B290001B6233 /* CompositeManagedObjectAttributeImporter.swift in Sources */,
 				81F76B211A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift in Sources */,
@@ -1190,6 +1208,7 @@
 				81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */,
 				81F76B0C1A169812001B6233 /* ManagedObjectAttributeImporter.swift in Sources */,
 				8172B96E19F562590070E7DF /* Stack.swift in Sources */,
+				8147350D1A1A40AD004B3A34 /* SidebarOverlayTransitioningDelegate.swift in Sources */,
 				818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */,
 				81792B351A182BE10035D062 /* ServerCommunication.swift in Sources */,
 				81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */,
@@ -1202,6 +1221,7 @@
 				81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */,
 				8111F63319F4947700A331E3 /* Util.swift in Sources */,
 				81792B481A194ECB0035D062 /* SettingsCenterTableViewCell.swift in Sources */,
+				8147350B1A1A3DEC004B3A34 /* SidebarOverlayAnimatedTransitioning.swift in Sources */,
 				81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */,
 				81BCA54A1A0FEB9500391608 /* AuthenticationPromptViewController.swift in Sources */,
 				81B6D3111A0DA65900B883A6 /* ColorScheme.swift in Sources */,
