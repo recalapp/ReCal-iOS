@@ -28,12 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let launch: ()->Void = {
             Settings.currentSettings.theme = .Light
-            switch Settings.currentSettings.theme {
-            case .Light:
-                Settings.currentSettings.colorScheme = LightColorScheme()
-            case .Dark:
-                Settings.currentSettings.colorScheme = DarkColorScheme()
-            }
             let rootViewController = self.window?.rootViewController
             Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
             Settings.currentSettings.coreDataImporter = CalendarCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)

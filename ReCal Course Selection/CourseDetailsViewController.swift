@@ -19,9 +19,25 @@ class CourseDetailsViewController: UITableViewController {
         }
     }
     
+    private var notificationObservers: [AnyObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+        let updateColorScheme: ()->Void = {
+            self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+        }
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+            self.tableView.reloadData()
+        }
+        self.notificationObservers.append(observer1)
+    }
+    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
     
     // MARK: - Table view data source

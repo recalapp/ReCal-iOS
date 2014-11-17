@@ -20,14 +20,26 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     
     var managedObjectContext: NSManagedObjectContext!
     
+    private var notificationObservers: [AnyObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        let updateColorScheme: ()->Void = {
+            self.tableView.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+            self.tableView.reloadData()
+        }
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
+    }
+    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

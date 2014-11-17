@@ -31,13 +31,16 @@ public class AuthenticationNavigationController: UINavigationController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.view.tintColor = Settings.currentSettings.colorScheme.actionableTextColor
-        switch Settings.currentSettings.theme {
-        case .Light:
-            self.navigationBar.barStyle = .Default
-        case .Dark:
-            self.navigationBar.barStyle = .Black
+        let updateWithColorScheme:(ColorScheme)->Void = {(colorScheme) in
+            self.view.tintColor = colorScheme.actionableTextColor
+            switch Settings.currentSettings.theme {
+            case .Light:
+                self.navigationBar.barStyle = .Default
+            case .Dark:
+                self.navigationBar.barStyle = .Black
+            }
         }
+        updateWithColorScheme(Settings.currentSettings.colorScheme)
         
         switch Settings.currentSettings.authenticator.state {
         case .Unauthenticated:
@@ -46,7 +49,7 @@ public class AuthenticationNavigationController: UINavigationController {
             self.setViewControllers([self.logicalRootViewController], animated: false)
         }
         
-        let observer = NSNotificationCenter.defaultCenter().addObserverForName(authenticatorStateDidChangeNofication, object: nil, queue: nil) { (_) -> Void in
+        let observer = NSNotificationCenter.defaultCenter().addObserverForName(authenticatorStateDidChangeNofication, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
             switch Settings.currentSettings.authenticator.state {
             case .Authenticated(_), .PreviouslyAuthenticated(_), .Cached(_):
                 if self.topViewController == self.authenticationPromptViewController {
@@ -59,7 +62,11 @@ public class AuthenticationNavigationController: UINavigationController {
                 }
             }
         }
+        let observer2 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateWithColorScheme(Settings.currentSettings.colorScheme)
+        }
         self.notificationObservers.append(observer)
+        self.notificationObservers.append(observer2)
     }
     public override func viewDidAppear(animated: Bool) {
         UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Slide)

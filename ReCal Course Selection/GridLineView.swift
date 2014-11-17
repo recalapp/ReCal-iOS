@@ -19,8 +19,22 @@ class GridLineView: UICollectionReusableView {
         super.init(coder: aDecoder)
         self.initialize()
     }
+
+    private var notificationObservers: [AnyObject] = []
     
     private func initialize() {
-        self.backgroundColor = Settings.currentSettings.colorScheme.secondaryContentBackgroundColor
+        let updateColorScheme: ()->Void = {
+            self.backgroundColor = Settings.currentSettings.colorScheme.secondaryContentBackgroundColor
+        }
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
+    }
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
 }

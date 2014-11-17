@@ -12,10 +12,22 @@ import ReCalCommon
 class TimeRowHeaderView: UICollectionReusableView {
 
     @IBOutlet weak var timeLabel: UILabel!
+    private var notificationObservers: [AnyObject] = []
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.timeLabel.textColor = Settings.currentSettings.colorScheme.textColor
-        // Initialization code
+        
+        let updateColorScheme: ()->Void = {
+            self.timeLabel.textColor = Settings.currentSettings.colorScheme.textColor
+        }
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
     }
-    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
+    }
 }

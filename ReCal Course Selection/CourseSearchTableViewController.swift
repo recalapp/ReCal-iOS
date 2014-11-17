@@ -82,14 +82,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             let searchController = UISearchController(searchResultsController: nil)
             searchController.searchBar.frame = CGRect(origin: CGPointZero, size: CGSize(width: self.tableView.bounds.size.width, height: 44))
             searchController.searchResultsUpdater = self
-            switch Settings.currentSettings.theme {
-            case .Light:
-                searchController.searchBar.barStyle = .Default
-                searchController.searchBar.keyboardAppearance = .Default
-            case .Dark:
-                searchController.searchBar.barStyle = .Black
-                searchController.searchBar.keyboardAppearance = .Dark
-            }
+            
             
             searchController.delegate = self
             searchController.dimsBackgroundDuringPresentation = false
@@ -99,15 +92,27 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         }()
         
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
-            self.searchManagedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+            self.searchManagedObjectContext.performBlockAndWait {
+                self.searchManagedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+            }
+        }
+        let updateWithColorScheme: ()->Void = {
+            self.tableView.reloadData()
+            switch Settings.currentSettings.theme {
+            case .Light:
+                self.searchController.searchBar.barStyle = .Default
+                self.searchController.searchBar.keyboardAppearance = .Default
+            case .Dark:
+                self.searchController.searchBar.barStyle = .Black
+                self.searchController.searchBar.keyboardAppearance = .Dark
+            }
+        }
+        updateWithColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateWithColorScheme()
         }
         self.notificationObservers.append(observer)
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.notificationObservers.append(observer1)
     }
     deinit {
         for observer in self.notificationObservers {

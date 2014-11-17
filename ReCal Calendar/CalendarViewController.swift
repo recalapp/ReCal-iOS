@@ -45,20 +45,35 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     
     weak private var pageViewController: UIPageViewController!
     
+    private var notificationObservers: [AnyObject] = []
+    
     @IBOutlet weak var contentView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         Settings.currentSettings.authenticator.authenticate()
-        switch Settings.currentSettings.theme {
-        case .Light:
-            self.navigationController?.navigationBar.barStyle = .Default
-        case .Dark:
-            self.navigationController?.navigationBar.barStyle = .Black
-        }
-        self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
         self.settingsButton.title = navigationThreeBars
+        let updateColorScheme: ()->Void = {
+            switch Settings.currentSettings.theme {
+            case .Light:
+                self.navigationController?.navigationBar.barStyle = .Default
+            case .Dark:
+                self.navigationController?.navigationBar.barStyle = .Black
+            }
+            self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+        }
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
     }
 
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

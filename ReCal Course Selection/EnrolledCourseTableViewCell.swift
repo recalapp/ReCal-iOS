@@ -65,12 +65,27 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         
     }
     
+    private var notificationObservers: [AnyObject] = []
+    
     @IBOutlet weak var colorTagView: UIView!
     @IBOutlet weak var courseLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.courseLabel.textColor = Settings.currentSettings.colorScheme.textColor
-        // Initialization code
+        
+        let updateColorScheme: ()->Void = {
+            self.courseLabel.textColor = Settings.currentSettings.colorScheme.textColor
+            self.refresh()
+        }
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
+    }
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
     
     /// return all sections with the specified section type

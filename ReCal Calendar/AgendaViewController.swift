@@ -59,6 +59,10 @@ class AgendaViewController: UITableViewController {
             }
         }
         self.notificationObservers.append(observer1)
+        let observer2 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            self.tableView.reloadData()
+        }
+        self.notificationObservers.append(observer2)
         self.reloadTableViewData()
     }
     deinit {

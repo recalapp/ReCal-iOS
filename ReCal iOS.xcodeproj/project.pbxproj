@@ -94,6 +94,7 @@
 		81BCA5481A0FE94300391608 /* CourseSelectionNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */; };
 		81BCA54A1A0FEB9500391608 /* AuthenticationPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA5491A0FEB9500391608 /* AuthenticationPromptViewController.swift */; };
 		81BCA54C1A0FF69000391608 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA54B1A0FF69000391608 /* URLs.swift */; };
+		81C70E461A1A804C007F33F5 /* SettingsSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C70E451A1A804C007F33F5 /* SettingsSwitchTableViewCell.swift */; };
 		81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D016951A1003880020C9CC /* AuthenticationContainerViewController.swift */; };
 		81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D93B7F1A09A7E900914FB3 /* CourseSearchOperation.swift */; };
 		81D9F26019EF4D9600F987B9 /* ReCalCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -296,6 +297,7 @@
 		81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionNavigationController.swift; sourceTree = "<group>"; };
 		81BCA5491A0FEB9500391608 /* AuthenticationPromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPromptViewController.swift; sourceTree = "<group>"; };
 		81BCA54B1A0FF69000391608 /* URLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
+		81C70E451A1A804C007F33F5 /* SettingsSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		81D016951A1003880020C9CC /* AuthenticationContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationContainerViewController.swift; sourceTree = "<group>"; };
 		81D93B7F1A09A7E900914FB3 /* CourseSearchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSearchOperation.swift; sourceTree = "<group>"; };
 		81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReCalCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -601,6 +603,7 @@
 			children = (
 				81792B431A192E210035D062 /* SettingsViewController.swift */,
 				81792B471A194ECB0035D062 /* SettingsCenterTableViewCell.swift */,
+				81C70E451A1A804C007F33F5 /* SettingsSwitchTableViewCell.swift */,
 			);
 			name = "Settings View Controller";
 			sourceTree = "<group>";
@@ -1224,6 +1227,7 @@
 				8147350B1A1A3DEC004B3A34 /* SidebarOverlayAnimatedTransitioning.swift in Sources */,
 				81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */,
 				81BCA54A1A0FEB9500391608 /* AuthenticationPromptViewController.swift in Sources */,
+				81C70E461A1A804C007F33F5 /* SettingsSwitchTableViewCell.swift in Sources */,
 				81B6D3111A0DA65900B883A6 /* ColorScheme.swift in Sources */,
 				81F76B121A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift in Sources */,
 				81130C011A0C168F00F1F496 /* OrderedSet.swift in Sources */,

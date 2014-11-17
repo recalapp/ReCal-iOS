@@ -28,15 +28,32 @@ class AgendaTableViewCell: UITableViewCell {
         }
     }
     
+    private var notificationObservers: [AnyObject] = []
+    
     @IBOutlet weak var colorTagView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
-        self.titleLabel.textColor = Settings.currentSettings.colorScheme.textColor
-        self.courseLabel.textColor = Settings.currentSettings.colorScheme.textColor
-        self.timeLabel.textColor = Settings.currentSettings.colorScheme.textColor
+        self.updateColorWithColorScheme(Settings.currentSettings.colorScheme)
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            self.updateColorWithColorScheme(Settings.currentSettings.colorScheme)
+        }
+        self.notificationObservers.append(observer1)
+    }
+    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
 
+    private func updateColorWithColorScheme(colorScheme: ColorScheme) {
+        let backgroundColor = self.selected ? colorScheme.selectedContentBackgroundColor : colorScheme.contentBackgroundColor
+        self.backgroundColor = backgroundColor
+        self.titleLabel.textColor = colorScheme.textColor
+        self.courseLabel.textColor = colorScheme.textColor
+        self.timeLabel.textColor = colorScheme.textColor
+    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

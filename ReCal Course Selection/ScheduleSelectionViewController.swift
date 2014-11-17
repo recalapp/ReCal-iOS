@@ -55,13 +55,23 @@ class ScheduleSelectionViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
         
+        let updateColorScheme: ()->Void = {
+            self.tableView.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+            self.tableView.reloadData()
+        }
+        updateColorScheme()
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
-            self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+            self.managedObjectContext.performBlockAndWait {
+                self.managedObjectContext.mergeChangesFromContextDidSaveNotification    (notification)
+            }
             self.fetchSchedules()
         }
         self.notificationObservers.append(observer)
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
         self.fetchSchedules()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

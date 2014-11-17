@@ -12,15 +12,32 @@ public class AuthenticationPromptViewController: UIViewController {
     
     @IBOutlet weak public var titleLabel: UILabel!
     @IBOutlet weak public var authenticateButton: UIButton!
+    
+    private var notificationObservers: [AnyObject] = []
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
-        self.titleLabel.textColor = Settings.currentSettings.colorScheme.textColor
-        self.authenticateButton.backgroundColor = Settings.currentSettings.colorScheme.actionableTextColor
-        self.authenticateButton.setTitleColor(Settings.currentSettings.colorScheme.alternateActionableTextColor, forState: UIControlState.Normal)
+        let updateWithColorScheme: (ColorScheme)->Void = {(colorScheme) in
+            self.view.backgroundColor = colorScheme.accessoryBackgroundColor
+            self.titleLabel.textColor = colorScheme.textColor
+            self.authenticateButton.backgroundColor = colorScheme.actionableTextColor
+            self.authenticateButton.setTitleColor(colorScheme.alternateActionableTextColor, forState: UIControlState.Normal)
+        }
+        updateWithColorScheme(Settings.currentSettings.colorScheme)
+        
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateWithColorScheme(Settings.currentSettings.colorScheme)
+        }
+        self.notificationObservers.append(observer1)
         // Do any additional setup after loading the view.
     }
-
+    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
+    }
+    
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -29,13 +46,4 @@ public class AuthenticationPromptViewController: UIViewController {
     @IBAction public func authenticateButtonTapped(sender: UIButton) {
         Settings.currentSettings.authenticator.authenticate()
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }

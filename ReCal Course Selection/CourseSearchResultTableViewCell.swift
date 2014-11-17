@@ -16,14 +16,26 @@ class CourseSearchResultTableViewCell: UITableViewCell {
             self.refresh()
         }
     }
-    
+    private var notificationObservers: [AnyObject] = []
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        self.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
-        self.textLabel.textColor = Settings.currentSettings.colorScheme.textColor
-        self.detailTextLabel?.textColor = Settings.currentSettings.colorScheme.textColor
-        //self.tintColor = ColorScheme.currentColorScheme.textColor
+        let updateColorScheme: ()->Void = {
+            let backgroundColor = self.selected ? Settings.currentSettings.colorScheme.selectedContentBackgroundColor : Settings.currentSettings.colorScheme.contentBackgroundColor
+            self.backgroundColor = backgroundColor
+            self.textLabel.textColor = Settings.currentSettings.colorScheme.textColor
+            self.detailTextLabel?.textColor = Settings.currentSettings.colorScheme.textColor
+        }
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
+    }
+    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

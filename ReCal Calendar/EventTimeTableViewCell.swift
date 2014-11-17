@@ -14,19 +14,28 @@ class EventTimeTableViewCell: UITableViewCell {
     @IBOutlet weak var startLabel: UILabel!
     @IBOutlet weak var toLabel: UILabel!
     @IBOutlet weak var endLabel: UILabel!
+    private var notificationObservers: [AnyObject] = []
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.startLabel.textColor = Settings.currentSettings.colorScheme.textColor
-        self.toLabel.textColor = Settings.currentSettings.colorScheme.textColor
+        
         self.toLabel.text = leftToRightArrow
         self.toLabel.font = UIFont.systemFontOfSize(UIFont.labelFontSize() * 1.5)
-        self.endLabel.textColor = Settings.currentSettings.colorScheme.textColor
+        
+        let updateColorScheme: ()->Void = {
+            self.endLabel.textColor = Settings.currentSettings.colorScheme.textColor
+            self.startLabel.textColor = Settings.currentSettings.colorScheme.textColor
+            self.toLabel.textColor = Settings.currentSettings.colorScheme.textColor
+        }
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
-
 }

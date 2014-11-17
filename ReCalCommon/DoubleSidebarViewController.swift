@@ -24,9 +24,6 @@ private func breakCharacters(string: String) -> String {
 
 // MARK: - Double Sidebar View Controller
 public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate {
-
-    // MARK: Options
-    private let primaryContentViewInScrollView = true
     
     // Mark: Variables
     /// The padding between the sidebar and the space outside of the view (so for the left sidebar, it's the left padding)
@@ -116,38 +113,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     private var sidebarState: DoubleSidebarState = .Unselected {
         didSet {
             if oldValue != sidebarState {
-                var translation: CGAffineTransform
-                var leftCoverHidden: Bool
-                var rightCoverHidden: Bool
-                switch sidebarState {
-                case .Unselected:
-                    translation = CGAffineTransformIdentity
-                    leftCoverHidden = false
-                    rightCoverHidden = false
-                case .LeftSidebarShown:
-                    translation = CGAffineTransformMakeTranslation(self.sidebarWidth/2, 0)
-                    leftCoverHidden = true
-                    rightCoverHidden = false
-                case .RightSidebarShown:
-                    translation = CGAffineTransformMakeTranslation(-self.sidebarWidth/2, 0)
-                    leftCoverHidden = false
-                    rightCoverHidden = true
-                }
-                self.leftSidebarCoverView.hidden = false
-                self.rightSidebarCoverView.hidden = false
-                UIView.animateWithDuration(animationSpeed, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
-                    if !self.primaryContentViewInScrollView {
-                        self.primaryContentView.transform = translation
-                    }
-                    self.leftSidebarCoverView.alpha = leftCoverHidden ? 0.0 : 1.0
-                    self.rightSidebarCoverView.alpha = rightCoverHidden ? 0.0 : 1.0
-                    }, completion: { (completed) -> Void in
-                        self.leftSidebarCoverView.hidden = completed && leftCoverHidden
-                        self.rightSidebarCoverView.hidden = completed && rightCoverHidden
-                })
-                self.updateSidebarUserInteraction()
-                self.leftSidebarTapGestureRecognizer.enabled = sidebarState == .Unselected
-                self.rightSidebarTapGestureRecognizer.enabled = sidebarState == .Unselected
+                self.updateInterfaceForState(self.sidebarState)
             }
         }
     }
@@ -158,6 +124,34 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     }
     
     // MARK: Methods
+    private func updateInterfaceForState(sidebarState: DoubleSidebarState) {
+        var leftCoverHidden: Bool
+        var rightCoverHidden: Bool
+        switch sidebarState {
+        case .Unselected:
+            leftCoverHidden = false
+            rightCoverHidden = false
+        case .LeftSidebarShown:
+            leftCoverHidden = true
+            rightCoverHidden = false
+        case .RightSidebarShown:
+            leftCoverHidden = false
+            rightCoverHidden = true
+        }
+        self.leftSidebarCoverView.hidden = false
+        self.rightSidebarCoverView.hidden = false
+        UIView.animateWithDuration(animationSpeed, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+            self.leftSidebarCoverView.alpha = leftCoverHidden ? 0.0 : 1.0
+            self.rightSidebarCoverView.alpha = rightCoverHidden ? 0.0 : 1.0
+            }, completion: { (completed) -> Void in
+                self.leftSidebarCoverView.hidden = completed && leftCoverHidden
+                self.rightSidebarCoverView.hidden = completed && rightCoverHidden
+        })
+        self.updateSidebarUserInteraction()
+        self.leftSidebarTapGestureRecognizer.enabled = sidebarState == .Unselected
+        self.rightSidebarTapGestureRecognizer.enabled = sidebarState == .Unselected
+    }
+    
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         self.viewContentSize = size
@@ -194,18 +188,30 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         return CGPoint(x: x, y: self.sidebarContainerScrollView.contentOffset.y)
     }
     
+    private var notificationObservers: [AnyObject] = []
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.viewContentSize = self.viewContentSize ?? self.view.bounds.size
         let contentView = UIView()
         self.primaryContentView = contentView
         self.setUpSidebar()
-        if !self.primaryContentViewInScrollView {
-            contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
-            self.view.addSubview(contentView)
-            self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(contentView, inParentView: self.view, withInsets: UIEdgeInsets(top: 0, left: self.sidebarWidth/2, bottom: 0, right: self.sidebarWidth/2)))
-        }
         self.updateSidebarUserInteraction()
+        let updateColorScheme: ()->Void = {
+            self.refreshSidebarCoverView()
+            self.updateInterfaceForState(self.sidebarState)
+        }
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
+    }
+    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
     
     private func setUpSidebar() {
@@ -227,6 +233,25 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.rightSidebarView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.rightSidebarContentView, inParentView: self.rightSidebarView, withInsets: UIEdgeInsets(top: 0, left: self.sidebarInnerPadding, bottom: 0, right: self.sidebarOuterPadding)))
         
         // add the covers
+        self.refreshSidebarCoverView()
+        
+        // tap gesture recognizers
+        self.leftSidebarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleSidebarTap:")
+        self.leftSidebarView.addGestureRecognizer(self.leftSidebarTapGestureRecognizer)
+        self.rightSidebarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleSidebarTap:")
+        self.rightSidebarView.addGestureRecognizer(self.rightSidebarTapGestureRecognizer)
+        
+        self.setUpOverlayScrollView()
+    }
+    
+    private func refreshSidebarCoverView() {
+        // add the covers
+        if self.leftSidebarCoverView != nil {
+            self.leftSidebarCoverView.removeFromSuperview()
+        }
+        if self.rightSidebarCoverView != nil {
+            self.rightSidebarCoverView.removeFromSuperview()
+        }
         let leftBlurEffect = Settings.currentSettings.colorScheme.blurEffect
         let rightBlurEffect = Settings.currentSettings.colorScheme.blurEffect
         self.leftSidebarCoverView = UIVisualEffectView(effect: leftBlurEffect)
@@ -262,14 +287,6 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.rightSidebarCoverLabel = UILabel()
         self.rightSidebarCoverLabel.text = breakCharacters(self.rightSidebarCoverText)
         addCoverLabelForView(self.rightSidebarCoverLabel, self.rightSidebarCoverView, false)
-        
-        // tap gesture recognizers
-        self.leftSidebarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleSidebarTap:")
-        self.leftSidebarView.addGestureRecognizer(self.leftSidebarTapGestureRecognizer)
-        self.rightSidebarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleSidebarTap:")
-        self.rightSidebarView.addGestureRecognizer(self.rightSidebarTapGestureRecognizer)
-        
-        self.setUpOverlayScrollView()
     }
     
     /// Set up the scroll view for sidebar
@@ -290,9 +307,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         
         scrollView.addSubview(self.rightSidebarView)
         
-        if self.primaryContentViewInScrollView {
-            scrollView.addSubview(self.primaryContentView)
-        }
+        scrollView.addSubview(self.primaryContentView)
         self.updateSidebarContainerScrollViewContentSize()
     }
     

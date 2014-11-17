@@ -53,9 +53,16 @@ class EventViewController: UITableViewController {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }
         }
-        
-        self.navigationController?.navigationBar.tintColor = Settings.currentSettings.colorScheme.textColor
-        self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+        self.notificationObservers.append(observer1)
+        let updateColorScheme: ()->Void = {
+            self.navigationController?.navigationBar.tintColor = Settings.currentSettings.colorScheme.textColor
+            self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+        }
+        updateColorScheme()
+        let observer2 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer2)
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEEE, MMM d, y" // Tuesday, Nov 4, 2014

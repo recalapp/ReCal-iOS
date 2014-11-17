@@ -9,6 +9,9 @@
 import Foundation
 
 public class Settings {
+    public struct Notifications {
+        public static let ThemeDidChange = "SettingsNotificationsThemeDidChange"
+    }
     private struct Static {
         static var instance: Settings?
         static var token: dispatch_once_t = 0
@@ -22,15 +25,26 @@ public class Settings {
         return Static.instance!
     }
     
-    public var theme: Theme = .Dark
+    public var theme: Theme = .Dark {
+        didSet {
+            switch theme {
+            case .Dark:
+                colorScheme = DarkColorScheme()
+            case .Light:
+                colorScheme = LightColorScheme()
+            }
+            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.ThemeDidChange, object: self)
+        }
+    }
     
-    public var colorScheme: ColorScheme = DarkColorScheme()
+    private(set) public var colorScheme: ColorScheme = DarkColorScheme()
     
     public var authenticator: Authenticator = Authenticator(rootViewController: UIViewController(), forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
     
     public var coreDataImporter: CoreDataImporter!
     
     public var serverCommunicator: ServerCommunicator = ServerCommunicator()
+    
 }
 
 public enum Theme {

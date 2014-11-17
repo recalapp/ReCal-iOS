@@ -15,15 +15,30 @@ class AuthenticationViewController: UIViewController, UIWebViewDelegate {
     
     @IBOutlet weak var webView: UIWebView!
     
+    private var notificationObservers: [AnyObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        switch Settings.currentSettings.theme {
-        case .Light:
-            self.navigationController?.navigationBar.barStyle = .Default
-        case .Dark:
-            self.navigationController?.navigationBar.barStyle = .Black
+        let updateColorScheme: ()->Void = {
+            switch Settings.currentSettings.theme {
+            case .Light:
+                self.navigationController?.navigationBar.barStyle = .Default
+            case .Dark:
+                self.navigationController?.navigationBar.barStyle = .Black
+            }
+            self.navigationController?.navigationBar.tintColor = Settings.currentSettings.colorScheme.actionableTextColor
         }
-        self.navigationController?.navigationBar.tintColor = Settings.currentSettings.colorScheme.actionableTextColor
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
+    }
+    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

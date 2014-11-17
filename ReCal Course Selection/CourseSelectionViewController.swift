@@ -70,6 +70,8 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     private var scheduleSelectionViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     
     @IBOutlet weak var settingsButton: UIBarButtonItem!
+    private var enrolledLabel: UILabel!
+    private var enrolledLine: UIView!
     // MARK: - Methods
     override func prefersStatusBarHidden() -> Bool {
         return false
@@ -109,7 +111,26 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                 }
             }
         }
+        let updateWithColorScheme: ()->Void = {
+            if let scheduleView = self.scheduleView {
+                scheduleView.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
+            }
+            if let enrolledLabel = self.enrolledLabel {
+                enrolledLabel.textColor = Settings.currentSettings.colorScheme.textColor
+            }
+            if let enrolledLine = self.enrolledLine {
+                enrolledLine.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
+            }
+            self.rightSidebarBackgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+            self.leftSidebarBackgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+        }
+        let observer3 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateWithColorScheme()
+        }
+        updateWithColorScheme()
         self.notificationObservers.append(observer)
+        self.notificationObservers.append(observer2)
+        self.notificationObservers.append(observer3)
         
         self.definesPresentationContext = true
         self.leftSidebarCoverText = "SEARCH"
@@ -194,6 +215,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             self.rightSidebarContentView.addConstraints([topLabelConstraint, leadingLabelConstraint])
             return enrolledLabel
         }()
+        self.enrolledLabel = enrolledLabel
         
         let line: UIView = {
             let line = UIView()
@@ -207,6 +229,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             self.rightSidebarContentView.addConstraints([topLineConstraint, leadingLineConstraint, trailingLineConstraint])
             return line
         }()
+        self.enrolledLine = line
         
         self.enrolledCoursesView = {
             let enrolledCoursesView = UITableView()

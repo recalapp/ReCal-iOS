@@ -34,13 +34,20 @@ public class AuthenticationContainerViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.statusLabel.text = "Error authenticating. Tap to retry."
-        self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
-        self.statusLabel.textColor = Settings.currentSettings.colorScheme.alertTextColor
-        self.statusView.backgroundColor = Settings.currentSettings.colorScheme.alertBackgroundColor
-        let observer = NSNotificationCenter.defaultCenter().addObserverForName(authenticatorStateDidChangeNofication, object: nil, queue: nil) { (_) -> Void in
+        let updateWithColorScheme: (ColorScheme)->Void = {(colorScheme) in
+            self.view.backgroundColor = colorScheme.accessoryBackgroundColor
+            self.statusLabel.textColor = colorScheme.alertTextColor
+            self.statusView.backgroundColor = colorScheme.alertBackgroundColor
+        }
+        updateWithColorScheme(Settings.currentSettings.colorScheme)
+        let observer = NSNotificationCenter.defaultCenter().addObserverForName(authenticatorStateDidChangeNofication, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
             self.setNeedsStatusBarAppearanceUpdate()
         }
+        let observer2 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateWithColorScheme(Settings.currentSettings.colorScheme)
+        }
         self.notificationObservers.append(observer)
+        self.notificationObservers.append(observer2)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleStatusViewTap:")
         self.statusView.addGestureRecognizer(tapGestureRecognizer)

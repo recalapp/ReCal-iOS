@@ -11,10 +11,11 @@ import UIKit
 private let storyboardId = "Settings"
 private let basicCellIdentifier = "Basic"
 private let centerCellIdentifier = "Center"
+private let switchCellIdentifier = "Switch"
 private let calendarBundleIdentifier = "io.recal.ReCal-Calendar"
 private let courseSelectionBundleIdentifier = "io.recal.ReCal-Course-Selection"
 
-public class SettingsViewController: UITableViewController {
+public class SettingsViewController: UITableViewController, SettingsSwitchTableViewCellDelegate {
     
     public weak var delegate: SettingsViewControllerDelegate?
     
@@ -26,16 +27,18 @@ public class SettingsViewController: UITableViewController {
     private let courseSelectionRow = 0
     private let calendarRow = 1
     
-    private let logOutSection = 2
+    private let logOutSection = 3
     
     public class func instantiateFromStoryboard() -> SettingsViewController {
         let storyboard = UIStoryboard(name: "ReCalCommon", bundle: NSBundle(identifier: "io.recal.ReCalCommon"))
         return storyboard.instantiateViewControllerWithIdentifier(storyboardId) as SettingsViewController
     }
     
+    private var notificationObservers: [AnyObject] = []
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
-        let nameSection = SectionInfo(name: .Empty, items: [
+        let nameSection = SectionInfo(name: .Literal("Logged in as:"), items: [
             ItemInfo(cellIdentifier: centerCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
                 let centerCell = cell as SettingsCenterTableViewCell
                 switch Settings.currentSettings.authenticator.state {
@@ -67,6 +70,19 @@ public class SettingsViewController: UITableViewController {
                 return cell
             })
         ])
+        let preferencesSection = SectionInfo(name: .Literal("Preferences"), items: [
+            ItemInfo(cellIdentifier: switchCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
+                let switchCell = cell as SettingsSwitchTableViewCell
+                switchCell.delegate = self
+                switchCell.label.text = "Dark Mode"
+                if Settings.currentSettings.colorScheme is DarkColorScheme {
+                    switchCell.switchControl.on = true
+                } else {
+                    switchCell.switchControl.on = false
+                }
+                return switchCell
+            })
+        ])
         let logOutSection = SectionInfo(name: .Empty, items: [
             ItemInfo(cellIdentifier: centerCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
                 let centerCell = cell as SettingsCenterTableViewCell
@@ -75,11 +91,26 @@ public class SettingsViewController: UITableViewController {
                 return centerCell
             })
         ])
-        self.dataSource.setSectionInfos([nameSection, recalAppsSection, logOutSection])
+        self.dataSource.setSectionInfos([nameSection, recalAppsSection, preferencesSection, logOutSection])
         self.tableView.dataSource = self.dataSource
-        self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+        
+        
+        let updateColorScheme: ()->Void = {
+            self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+            self.tableView.reloadData()
+        }
+        updateColorScheme()
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
     }
 
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
+    }
     
     // MARK: - Table View Delegate
     public override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -113,6 +144,15 @@ public class SettingsViewController: UITableViewController {
     }
     @IBAction func dismissButtonTapped(sender: UIBarButtonItem) {
         self.delegate?.settingsViewControllerDidTapDismissButton(self)
+    }
+    
+    // MARK: - Settings Switch Table View Cell Delegate
+    func settingsSwitchTableViewCell(cell: SettingsSwitchTableViewCell, valueDidChange selected: Bool) {
+        if selected {
+            Settings.currentSettings.theme = .Dark
+        } else {
+            Settings.currentSettings.theme = .Light
+        }
     }
 }
 
