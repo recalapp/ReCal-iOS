@@ -168,7 +168,7 @@
         <!--Navigation Controller-->
         <scene sceneID="BJd-Db-t44">
             <objects>
-                <navigationController id="e69-Ty-YPE" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ScheduleSelectionNavigation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e69-Ty-YPE" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="rjJ-4B-GEL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -202,7 +202,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Change Schedule" id="sAT-3q-HMP">
                             <connections>
-                                <segue destination="e69-Ty-YPE" kind="presentation" identifier="ChangeSchedule" id="6tw-2U-rN1"/>
+                                <action selector="scheduleChangeButtonTapped:" destination="BYZ-38-t0r" id="SKs-A2-6KW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

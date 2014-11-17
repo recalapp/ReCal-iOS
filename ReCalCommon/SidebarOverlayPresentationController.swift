@@ -9,6 +9,8 @@
 import UIKit
 
 class SidebarOverlayPresentationController: UIPresentationController {
+    weak var sidebarDelegate: SidebarOverlayPresentationDelegate?
+    
     lazy private var dimmingView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0, alpha: 0.4)
@@ -17,27 +19,37 @@ class SidebarOverlayPresentationController: UIPresentationController {
         view.addGestureRecognizer(tapGestureRecognizer)
         return view
     }()
+    
+    var direction: SidebarOverlayTransitioningDelegate.Direction = .Left
+    
+    private var dimmingViewFrame: CGRect {
+        let statusBarFrame = UIApplication.sharedApplication().statusBarFrame
+        return CGRect(origin: CGPoint(x: 0, y: statusBarFrame.height), size: CGSize(width: self.containerView.bounds.width, height: self.containerView.bounds.height - statusBarFrame.height))
+    }
+    
     override func sizeForChildContentContainer(container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         switch (self.traitCollection.horizontalSizeClass, self.traitCollection.verticalSizeClass) {
         case (.Regular, _), (.Unspecified, _), (.Compact, .Compact):
-            return CGSize(width: floor(parentSize.width/3), height: parentSize.height)
+            return CGSize(width: floor(parentSize.width/2), height: parentSize.height)
         case (.Compact, .Regular), (.Compact, .Unspecified):
             return CGSize(width: floor(parentSize.width/1.5), height: parentSize.height)
         }
     }
     override func frameOfPresentedViewInContainerView() -> CGRect {
         let size = self.sizeForChildContentContainer(self.presentedViewController, withParentContainerSize: self.containerView.bounds.size)
-        return CGRect(origin: CGPoint(x: 0, y: 0), size: size)
+        let originX = self.direction == .Left ? 0 : self.containerView.bounds.size.width - size.width
+        return CGRect(origin: CGPoint(x: originX, y: 0), size: size)
     }
     override func containerViewWillLayoutSubviews() {
-        self.dimmingView.frame = self.containerView.bounds
+        // for rotation
+        self.dimmingView.frame = self.dimmingViewFrame
         self.presentedView().frame = self.frameOfPresentedViewInContainerView()
     }
     override func adaptivePresentationStyle() -> UIModalPresentationStyle {
         return UIModalPresentationStyle.Custom
     }
     override func presentationTransitionWillBegin() {
-        self.dimmingView.frame = self.containerView.bounds
+        self.dimmingView.frame = self.dimmingViewFrame
         self.containerView.addSubview(self.dimmingView)
         if let transitionCoordinator = self.presentedViewController.transitionCoordinator() {
             transitionCoordinator.animateAlongsideTransition({ (_: UIViewControllerTransitionCoordinatorContext!) -> Void in
@@ -64,7 +76,11 @@ class SidebarOverlayPresentationController: UIPresentationController {
     
     func handleDimmingViewTap(gestureRecognizer: UITapGestureRecognizer) {
         if gestureRecognizer.state == .Ended {
-            self.presentingViewController.dismissViewControllerAnimated(true, completion: nil)
+            if let delegate = self.sidebarDelegate {
+                delegate.sidebarOverlayPresentation(self, didTapOutsidePresentedViewController: self.presentedViewController, presentingViewController: self.presentingViewController)
+            } else {
+                self.presentingViewController.dismissViewControllerAnimated(true, completion: nil)
+            }
         }
     }
 }

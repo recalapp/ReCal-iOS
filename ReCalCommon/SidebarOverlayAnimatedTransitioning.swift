@@ -9,12 +9,16 @@
 import UIKit
 
 class SidebarOverlayAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
+    let direction: SidebarOverlayTransitioningDelegate.Direction
+    init(direction: SidebarOverlayTransitioningDelegate.Direction) {
+        self.direction = direction
+    }
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
     }
     func animationEnded(transitionCompleted: Bool) {
     }
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
-        return 0.5
+        return 0.4
     }
 }
 
@@ -27,7 +31,8 @@ class SidebarOverlayPresentationAnimatedTransitioning: SidebarOverlayAnimatedTra
         let presentedView: UIView! = presentedVC.view
         
         let finalFrame = transitionContext.finalFrameForViewController(presentedVC)
-        let initialFrame = CGRect(origin: CGPoint(x: -finalFrame.size.width, y: finalFrame.origin.y), size: finalFrame.size)
+        let originX = self.direction == .Left ? -finalFrame.size.width : containerView.bounds.size.width + finalFrame.size.width
+        let initialFrame = CGRect(origin: CGPoint(x: originX, y: finalFrame.origin.y), size: finalFrame.size)
         presentedView.frame = initialFrame
         containerView.addSubview(presentedView)
         
@@ -48,7 +53,8 @@ class SidebarOverlayDismissalAnimatedTransitioning: SidebarOverlayAnimatedTransi
         let presentedView: UIView! = presentedVC.view
         
         let initialFrame = transitionContext.finalFrameForViewController(presentedVC)
-        let finalFrame = CGRect(origin: CGPoint(x: -initialFrame.size.width, y: initialFrame.origin.y), size: initialFrame.size)
+        let originX = self.direction == .Left ? -initialFrame.size.width : containerView.bounds.size.width + initialFrame.size.width
+        let finalFrame = CGRect(origin: CGPoint(x: originX, y: initialFrame.origin.y), size: initialFrame.size)
         
         UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.allZeros, animations: { () -> Void in
             presentedView.frame = finalFrame

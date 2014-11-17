@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public final class StaticTableViewDataSource : NSObject, UITableViewDataSource {
     private var sections: [SectionInfo] = []

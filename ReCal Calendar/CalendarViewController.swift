@@ -79,7 +79,7 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     }
     @IBAction func settingsButtonTapped(sender: UIBarButtonItem) {
         assert(self.presentedViewController == nil)
-        self.settingsViewControllerTransitioningDelegate = SidebarOverlayTransitioningDelegate()
+        self.settingsViewControllerTransitioningDelegate = SidebarOverlayTransitioningDelegate(direction: .Left)
         let settingsVC = self.settingsViewController
         settingsVC.modalPresentationStyle = .Custom
         settingsVC.transitioningDelegate = self.settingsViewControllerTransitioningDelegate!

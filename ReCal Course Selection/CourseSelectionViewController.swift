@@ -12,9 +12,10 @@ import ReCalCommon
 private let changeScheduleSegueId = "ChangeSchedule"
 private let courseCellIdentifier = "CourseCell"
 private let searchViewControllerStoryboardId = "CourseSearch"
+private let scheduleSelectionNavigationControllerStoryboardId = "ScheduleSelectionNavigation"
 
 class CourseSelectionViewController: DoubleSidebarViewController, UICollectionViewDelegate, UITableViewDelegate, ScheduleCollectionViewDataSourceDelegate, EnrolledCoursesTableViewDataSourceDelegate, CourseSearchTableViewControllerDelegate,
-    ScheduleSelectionDelegate, SettingsViewControllerDelegate {
+    ScheduleSelectionDelegate, SettingsViewControllerDelegate, SidebarOverlayPresentationDelegate {
     
     // MARK: - Variables
     private let enrolledCoursesTableViewDataSource = EnrolledCoursesTableViewDataSource()
@@ -52,7 +53,21 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         settingsVC.delegate = self
         return settingsVC
         }()
+    lazy private var scheduleSelectionNavigationController: UINavigationController = {
+        let navigationVC = self.storyboard?.instantiateViewControllerWithIdentifier(scheduleSelectionNavigationControllerStoryboardId) as UINavigationController
+        switch Settings.currentSettings.theme {
+        case .Light:
+            navigationVC.navigationBar.barStyle = .Default
+        case .Dark:
+            navigationVC.navigationBar.barStyle = .Black
+        }
+        
+        let scheduleSelectionViewController = navigationVC.topViewController as ScheduleSelectionViewController
+        scheduleSelectionViewController.delegate = self
+        return navigationVC
+    }()
     private var settingsViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
+    private var scheduleSelectionViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     // MARK: - Methods
@@ -112,13 +127,23 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         if self.schedule == nil {
-            self.performSegueWithIdentifier(changeScheduleSegueId, sender: self)
+            self.presentScheduleSelection()
         } else {
             self.reloadScheduleView()
             self.reloadEnrolledCoursesView()
             self.reloadSearchViewController()
         }
+    }
+    
+    private func presentScheduleSelection() {
+        let delegate = SidebarOverlayTransitioningDelegate(direction: .Right)
+        delegate.delegate = self
+        self.scheduleSelectionViewControllerTransitioningDelegate = delegate
+        self.scheduleSelectionNavigationController.modalPresentationStyle = .Custom
+        self.scheduleSelectionNavigationController.transitioningDelegate = self.scheduleSelectionViewControllerTransitioningDelegate
+        self.presentViewController(self.scheduleSelectionNavigationController, animated: true, completion: nil)
     }
     
     private func saveSchedule() {
@@ -268,13 +293,16 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     @IBAction func settingsButtonTapped(sender: UIBarButtonItem) {
         assert(self.presentedViewController == nil)
-        self.settingsViewControllerTransitioningDelegate = SidebarOverlayTransitioningDelegate()
+        self.settingsViewControllerTransitioningDelegate = SidebarOverlayTransitioningDelegate(direction: .Left)
         let settingsVC = self.settingsViewController
         settingsVC.modalPresentationStyle = .Custom
         settingsVC.transitioningDelegate = self.settingsViewControllerTransitioningDelegate!
         self.presentViewController(settingsVC, animated: true, completion: nil)
     }
     
+    @IBAction func scheduleChangeButtonTapped(sender: UIBarButtonItem) {
+        self.presentScheduleSelection()
+    }
     // MARK: - Table View Delegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if tableView == self.enrolledCoursesView {
@@ -325,6 +353,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     
     // MARK: - Schedule Selection Delegate
     func didSelectScheduleWithObjectId(objectId: NSManagedObjectID) {
+        assert(self.presentedViewController == self.scheduleSelectionNavigationController)
         var schedule: CDSchedule?
         self.managedObjectContext.performBlockAndWait {
             schedule = self.managedObjectContext.objectWithID(objectId) as? CDSchedule
@@ -334,29 +363,8 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         } else {
             assertionFailure("Failed to get schedule")
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        switch segue {
-        case let _ where segue.identifier == changeScheduleSegueId:
-            let navigationController = segue.destinationViewController as UINavigationController
-            switch Settings.currentSettings.theme {
-            case .Light:
-                navigationController.navigationBar.barStyle = .Default
-            case .Dark:
-                navigationController.navigationBar.barStyle = .Black
-            }
-            
-            let scheduleSelectionViewController = navigationController.topViewController as ScheduleSelectionViewController
-            scheduleSelectionViewController.delegate = self
-        default:
-            break
+        self.dismissViewControllerAnimated(true) {
+            self.scheduleSelectionViewControllerTransitioningDelegate = nil
         }
     }
     
@@ -374,5 +382,19 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             Settings.currentSettings.authenticator.logOut()
             self.schedule = nil
         })
+    }
+    
+    // MARK: - Sidebar Overlay Transitioning Delegate
+    func sidebarOverlayPresentation(presentationController: UIPresentationController, didTapOutsidePresentedViewController presentedViewController: UIViewController, presentingViewController: UIViewController) {
+        assert(self.presentedViewController == self.scheduleSelectionNavigationController)
+        if self.schedule == nil {
+            let alertController = UIAlertController(title: "Please select a schedule", message: nil, preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            presentedViewController.presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                self.scheduleSelectionViewControllerTransitioningDelegate = nil
+            })
+        }
     }
 }
