@@ -17,7 +17,7 @@ public class AuthenticationPromptViewController: UIViewController {
         self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
         self.titleLabel.textColor = Settings.currentSettings.colorScheme.textColor
         self.authenticateButton.backgroundColor = Settings.currentSettings.colorScheme.actionableTextColor
-        self.authenticateButton.setTitleColor(Settings.currentSettings.colorScheme.textColor, forState: UIControlState.Normal)
+        self.authenticateButton.setTitleColor(Settings.currentSettings.colorScheme.alternateActionableTextColor, forState: UIControlState.Normal)
         // Do any additional setup after loading the view.
     }
 

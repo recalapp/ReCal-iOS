@@ -54,7 +54,8 @@ public class AuthenticationNavigationController: UINavigationController {
                 }
             case .Unauthenticated:
                 if self.topViewController != self.authenticationPromptViewController {
-                    self.setViewControllers([self.authenticationPromptViewController], animated: true)
+                    self.setViewControllers([self.authenticationPromptViewController, self.topViewController], animated: false)
+                    self.popToRootViewControllerAnimated(true)
                 }
             }
         }

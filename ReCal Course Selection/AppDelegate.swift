@@ -19,9 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
-            println(url)
-            println(url.scheme)
-            println(url.host)
             if url.scheme == courseSelectionUrlScheme {
                 return true
             }

@@ -247,6 +247,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
             label.font = UIFont.systemFontOfSize(UIFont.labelFontSize()*1.5)
             label.lineBreakMode = .ByCharWrapping
             label.numberOfLines = 0
+            label.tintColor = Settings.currentSettings.colorScheme.textColor
             let leftVibrancyEffect = UIVibrancyEffect(forBlurEffect: coverView.effect as UIBlurEffect)
             let leftVibrancyEffectView = UIVisualEffectView(effect: leftVibrancyEffect)
             leftVibrancyEffectView.setTranslatesAutoresizingMaskIntoConstraints(false)

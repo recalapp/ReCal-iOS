@@ -42,7 +42,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     lazy private var timeFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        formatter.timeStyle = .ShortStyle
+        formatter.dateFormat = "h a"
         return formatter
     }()
     
@@ -52,7 +52,6 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     /// Register the collection view and layout with the appropriate view classes
     func registerReusableViewsWithCollectionView(collectionView: UICollectionView, forLayout layout: UICollectionViewLayout) {
-        collectionView.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
         collectionView.registerNib(UINib(nibName: "EventCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: eventCellIdentifier)
         collectionView.registerNib(UINib(nibName: "TimeRowHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.TimeRowHeader.rawValue, withReuseIdentifier: timeRowHeaderViewIdentifier)
         collectionView.registerNib(UINib(nibName: "DayColumnHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.rawValue, withReuseIdentifier: dayColumnHeaderViewIdentifier)
@@ -214,7 +213,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     
     /// Return the width of the time header
     func timeRowHeaderWidthForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float {
-        return 80.0
+        return 55.0
     }
     
     /// Return the minimum hour, from 0 to 23

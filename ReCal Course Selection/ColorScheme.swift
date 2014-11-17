@@ -58,6 +58,11 @@ public class ColorScheme {
         return UIColor.blueColor()
     }
     
+    /// Should be the color such that, if the default actionableTextColor were the background, this text would be readable
+    public var alternateActionableTextColor: UIColor {
+        return UIColor.lightTextColor()
+    }
+    
     /// The blur effect to be used throughout the app
     public var blurEffect: UIVisualEffect {
         return UIBlurEffect(style: .Light)
@@ -77,12 +82,12 @@ public class ColorScheme {
 public class LightColorScheme: ColorScheme {
     /// The background color for views that do not display actual content
     public override var accessoryBackgroundColor: UIColor {
-        return UIColor(red: 201.0/255.0, green: 201.0/255.0, blue: 206.0/255.0, alpha: 1).lighterColor()
+        return UIColor(red: 247/255.0, green: 247/255.0, blue: 252/255.0, alpha: 1)
     }
     
     /// Color used when one content is portrayed to be less important than the main content, such as a table view header
     public override var secondaryContentBackgroundColor: UIColor {
-        return self.accessoryBackgroundColor.colorWithBrightness(scale: 0.98)
+        return UIColor(red: 201/255.0, green: 201/255.0, blue: 206/255.0, alpha: 0.95)
     }
     
     /// The background color for views that do display content
@@ -92,7 +97,7 @@ public class LightColorScheme: ColorScheme {
     
     /// The background color for selected items
     public override var selectedContentBackgroundColor: UIColor {
-        return UIColor.lightGrayColor().lighterColor()
+        return UIColor(red: 229/255.0, green: 229/255.0, blue: 229/255.0, alpha: 1.0)
     }
     
     /// The text color for content
@@ -102,7 +107,12 @@ public class LightColorScheme: ColorScheme {
     
     /// Color to indicate that a text is a button, or is actionable
     public override var actionableTextColor: UIColor {
-        return UIColor.blueColor()
+        return UIColor(red: 0/255.0, green: 107/255.0, blue: 255/255.0, alpha: 1.0)
+    }
+    
+    /// Should be the color such that, if the default actionableTextColor were the background, this text would be readable
+    public override var alternateActionableTextColor: UIColor {
+        return UIColor.whiteColor()
     }
     
     /// The blur effect to be used throughout the app
@@ -150,6 +160,11 @@ public class DarkColorScheme: ColorScheme {
     /// Color to indicate that a text is a button, or is actionable
     public override var actionableTextColor: UIColor {
         return UIColor(red: 52.0/255.0, green: 152.0/255.0, blue: 219.0/255.0, alpha: 1)
+    }
+    
+    /// Should be the color such that, if the default actionableTextColor were the background, this text would be readable
+    public override var alternateActionableTextColor: UIColor {
+        return UIColor.lightTextColor()
     }
     
     /// The blur effect to be used throughout the app

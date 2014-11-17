@@ -135,6 +135,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             scheduleView.allowsMultipleSelection = true
             self.primaryContentView.addSubview(scheduleView)
             self.primaryContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(scheduleView, inParentView: self.primaryContentView, withInsets: UIEdgeInsetsZero))
+            scheduleView.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
             return scheduleView
         }()
         
