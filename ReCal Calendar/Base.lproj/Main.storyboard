@@ -70,6 +70,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="contentView" destination="mm3-Un-elg" id="lVO-Mh-bVr"/>
+                        <outlet property="settingsButton" destination="m5l-nN-o1a" id="MJr-30-gfS"/>
                         <outlet property="viewControllerSegmentedControl" destination="irs-6V-KPw" id="q4U-I7-HLa"/>
                     </connections>
                 </viewController>

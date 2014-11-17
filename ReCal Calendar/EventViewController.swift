@@ -53,9 +53,7 @@ class EventViewController: UITableViewController {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }
         }
-        self.notificationObservers.append(observer1)
         
-//        self.dismissButton.title = "\u{2573} "
         self.navigationController?.navigationBar.tintColor = Settings.currentSettings.colorScheme.textColor
         self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
         

@@ -54,6 +54,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         return navigationController
         }()
     
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +98,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.initializeScheduleView()
         self.initializeEnrolledCoursesView()
         self.initializeSearchViewController()
+        self.settingsButton.title = navigationThreeBars
     }
     
     deinit {

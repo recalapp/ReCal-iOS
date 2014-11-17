@@ -15,6 +15,7 @@ private let eventNavigationViewControllerStoryboardId = "eventNavigationViewCont
 
 class CalendarViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, AgendaViewControllerDelegate, EventViewControllerDelegate, SettingsViewControllerDelegate {
     
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var viewControllerSegmentedControl: UISegmentedControl!
     
     lazy private var agendaViewController: AgendaViewController = {
@@ -54,6 +55,7 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
             self.navigationController?.navigationBar.barStyle = .Black
         }
         self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+        self.settingsButton.title = navigationThreeBars
     }
 
     override func didReceiveMemoryWarning() {

@@ -230,13 +230,12 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     func hourStepForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float {
         return Float(self.hourStep)
     }
-}
-
-struct ScheduleEvent {
-    let course: Course
-    let section: Section
-    let sectionMeeting: SectionMeeting
-    let enrolled: Bool
+    struct ScheduleEvent {
+        let course: Course
+        let section: Section
+        let sectionMeeting: SectionMeeting
+        let enrolled: Bool
+    }
 }
 
 protocol ScheduleCollectionViewDataSourceDelegate: class {

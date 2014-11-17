@@ -55,6 +55,7 @@
 		81792B441A192E210035D062 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B431A192E210035D062 /* SettingsViewController.swift */; };
 		81792B461A194B690035D062 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B451A194B690035D062 /* URLs.swift */; };
 		81792B481A194ECB0035D062 /* SettingsCenterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B471A194ECB0035D062 /* SettingsCenterTableViewCell.swift */; };
+		81792B4A1A1980C10035D062 /* Unicode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B491A1980C10035D062 /* Unicode.swift */; };
 		81853EE91A102D28002E9B1A /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81853EE81A102D28002E9B1A /* Serializable.swift */; };
 		818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */; };
 		819912F11A17E6DC00756342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819912F01A17E6DC00756342 /* EventViewController.swift */; };
@@ -250,6 +251,7 @@
 		81792B431A192E210035D062 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		81792B451A194B690035D062 /* URLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		81792B471A194ECB0035D062 /* SettingsCenterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCenterTableViewCell.swift; sourceTree = "<group>"; };
+		81792B491A1980C10035D062 /* Unicode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unicode.swift; sourceTree = "<group>"; };
 		81853EE81A102D28002E9B1A /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleSidebarViewController.swift; sourceTree = "<group>"; };
 		819912F01A17E6DC00756342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
@@ -724,6 +726,7 @@
 				81000B211A0EA6C200246BD3 /* ReCalCommon.storyboard */,
 				81BCA54B1A0FF69000391608 /* URLs.swift */,
 				81853EE81A102D28002E9B1A /* Serializable.swift */,
+				81792B491A1980C10035D062 /* Unicode.swift */,
 			);
 			path = ReCalCommon;
 			sourceTree = "<group>";
@@ -1170,6 +1173,7 @@
 				81BCA54C1A0FF69000391608 /* URLs.swift in Sources */,
 				81000B1F1A0EA1E100246BD3 /* AuthenticationViewController.swift in Sources */,
 				81792B441A192E210035D062 /* SettingsViewController.swift in Sources */,
+				81792B4A1A1980C10035D062 /* Unicode.swift in Sources */,
 				81000B1C1A0E56B800246BD3 /* Authenticator.swift in Sources */,
 				81F76B101A16B2B2001B6233 /* StringManagedObjectAttributeImporter.swift in Sources */,
 				811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */,

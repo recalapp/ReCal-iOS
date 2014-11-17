@@ -9,11 +9,11 @@
 import UIKit
 
 class EventCollectionViewCell: UICollectionViewCell {
-
+    
     let selectedAlpha: CGFloat = 1.0
     let unselectedAlpha: CGFloat = 0.5
     
-    var event: ScheduleEvent? = nil {
+    var event: ScheduleCollectionViewDataSource.ScheduleEvent? = nil {
         didSet {
             if let event = self.event {
                 self.eventTitleLabel.text = event.section.displayText

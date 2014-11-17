@@ -18,7 +18,7 @@ class EventTimeTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.startLabel.textColor = Settings.currentSettings.colorScheme.textColor
         self.toLabel.textColor = Settings.currentSettings.colorScheme.textColor
-        self.toLabel.text = "\u{2192}"
+        self.toLabel.text = leftToRightArrow
         self.toLabel.font = UIFont.systemFontOfSize(UIFont.labelFontSize() * 1.5)
         self.endLabel.textColor = Settings.currentSettings.colorScheme.textColor
     }
