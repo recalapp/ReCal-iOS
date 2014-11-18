@@ -151,10 +151,6 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         super.viewWillAppear(animated)
         if self.schedule == nil {
             self.presentScheduleSelection()
-        } else {
-            self.reloadScheduleView()
-            self.reloadEnrolledCoursesView()
-            self.reloadSearchViewController()
         }
     }
     
@@ -383,6 +379,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }
         if schedule != nil {
             self.schedule = Schedule(managedObject: schedule!)
+            self.reloadEnrolledCoursesView()
+            self.reloadScheduleView()
+            self.reloadSearchViewController()
         } else {
             assertionFailure("Failed to get schedule")
         }

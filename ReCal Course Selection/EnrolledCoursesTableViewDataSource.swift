@@ -14,7 +14,11 @@ private let courseCellIdentifier = "CourseCell"
 class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, EnrolledCourseTableViewCellDelegate {
     
     weak var delegate: EnrolledCoursesTableViewDataSourceDelegate?
-    var enrollments = Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>>()
+    var enrollments: Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>> = Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>>() {
+        didSet {
+            self.selectedIndexPath = nil
+        }
+    }
     var courseColorMap: Dictionary<Course, UIColor> = Dictionary()
     var enrolledCourses: [Course] {
         return self.enrollments.keys.array

@@ -156,6 +156,10 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     }
     */
     
+    // MARK: Scroll View Delegate
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    }
+    
     // MARK: - Calendar Week View Layout Data Source
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, endDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
         return nil
