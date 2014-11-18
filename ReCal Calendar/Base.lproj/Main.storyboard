@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yfR-Xm-BTQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yfR-Xm-BTQ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -34,7 +34,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mm3-Un-elg">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZf-2e-IQi" userLabel="Week View Container">
+                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <connections>
+                                    <segue destination="6Ww-OZ-WuX" kind="embed" id="jGz-BH-TUT"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mm3-Un-elg" userLabel="Page View Container">
                                 <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                                 <connections>
                                     <segue destination="xGl-yB-3OG" kind="embed" identifier="CalendarEmbed" id="cfv-bK-dEH"/>
@@ -44,8 +50,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="mm3-Un-elg" secondAttribute="trailing" id="9Ch-42-cil"/>
+                            <constraint firstAttribute="trailing" secondItem="UZf-2e-IQi" secondAttribute="trailing" id="HJG-Xg-f2N"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="UZf-2e-IQi" secondAttribute="bottom" id="RNg-hv-3Dm"/>
                             <constraint firstAttribute="bottom" secondItem="mm3-Un-elg" secondAttribute="bottom" id="gMf-Df-6el"/>
                             <constraint firstItem="mm3-Un-elg" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="hoB-3V-zij"/>
+                            <constraint firstItem="UZf-2e-IQi" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="o6K-mu-qlD"/>
+                            <constraint firstItem="UZf-2e-IQi" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="rtp-nR-nHK"/>
                             <constraint firstItem="mm3-Un-elg" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="uKx-yN-zAi"/>
                         </constraints>
                     </view>
@@ -69,13 +79,44 @@
                         </segmentedControl>
                     </navigationItem>
                     <connections>
-                        <outlet property="contentView" destination="mm3-Un-elg" id="lVO-Mh-bVr"/>
+                        <outlet property="pageViewContentView" destination="mm3-Un-elg" id="8Rb-ek-yo3"/>
                         <outlet property="settingsButton" destination="m5l-nN-o1a" id="MJr-30-gfS"/>
                         <outlet property="viewControllerSegmentedControl" destination="irs-6V-KPw" id="q4U-I7-HLa"/>
+                        <outlet property="weekViewContentView" destination="UZf-2e-IQi" id="JdF-zU-vRm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Week View Controller-->
+        <scene sceneID="xnY-qq-bAi">
+            <objects>
+                <collectionViewController id="6Ww-OZ-WuX" customClass="WeekViewController" customModule="ReCal_Calendar" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Qnv-rD-4F5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <collectionViewLayout key="collectionViewLayout" id="Pag-e9-xa7" customClass="CollectionViewCalendarWeekLayout" customModule="ReCalCommon"/>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="lYQ-gY-HkY">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="6Ww-OZ-WuX" id="lid-VY-XUn"/>
+                            <outlet property="delegate" destination="6Ww-OZ-WuX" id="1mj-Lu-MeC"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mzg-fi-VbL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1088" y="7"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="w1x-y5-RcH">

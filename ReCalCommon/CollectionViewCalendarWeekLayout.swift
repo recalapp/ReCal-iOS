@@ -85,14 +85,14 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     }
     private var minimumHour: Int {
         if let minimumHour = self.dataSource?.minimumHourForCollectionView(self.collectionView!, layout: self) {
-            assert(minimumHour >= 0 && minimumHour < 23, "The minimum hour must be between 0 and 23, inclusive") // autoclosure means we don't do this unless when debugging
+            assert(minimumHour >= 0 && minimumHour <= 23, "The minimum hour must be between 0 and 23, inclusive") // autoclosure means we don't do this unless when debugging
             return minimumHour
         }
         return 0 // default value
     }
     private var maximumHour: Int {
         if let maximumHour = self.dataSource?.maximumHourForCollectionView(self.collectionView!, layout: self) {
-            assert(maximumHour >= 1 && maximumHour < 24, "The maximum hour must be between 1 and 24, inclusive")
+            assert(maximumHour >= 1 && maximumHour <= 24, "The maximum hour must be between 1 and 24, inclusive")
             assert(maximumHour > self.minimumHour, "The maximum hour must be greater than the minimum hour")
             return maximumHour
         }
@@ -210,7 +210,6 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     private func offsetYForTime(time: NSDate)-> CGFloat {
         // get how many hours this is away from min 
         let topMargin = self.dayColumnHeaderHeight
-        
         let component = self.calendar.components((NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute), fromDate: time)
         let curHour: Float = Float(component.hour) + Float(component.minute)/60.0
         let deltaHour = curHour - Float(self.minimumHour)

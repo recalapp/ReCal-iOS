@@ -47,7 +47,8 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     
     private var notificationObservers: [AnyObject] = []
     
-    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var weekViewContentView: UIView!
+    @IBOutlet weak var pageViewContentView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         Settings.currentSettings.authenticator.authenticate()
@@ -60,6 +61,8 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
                 self.navigationController?.navigationBar.barStyle = .Black
             }
             self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+            self.pageViewContentView.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+            self.weekViewContentView.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
         }
         updateColorScheme()
         let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
@@ -71,6 +74,55 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     deinit {
         for observer in self.notificationObservers {
             NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        let (beginning, animation, completion) = self.adjustAppearanceForTraitCollection(self.traitCollection)
+        beginning()
+        animation()
+        completion()
+    }
+    
+    override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        let (beginning, animation, completion) = self.adjustAppearanceForTraitCollection(newCollection)
+        beginning()
+        coordinator.animateAlongsideTransition({ (_: UIViewControllerTransitionCoordinatorContext!) -> Void in
+            animation()
+            }, completion: { (_: UIViewControllerTransitionCoordinatorContext!) -> Void in
+                completion()
+        })
+    }
+    
+    private func adjustAppearanceForTraitCollection(collection: UITraitCollection)->(Void->Void, Void->Void, Void->Void) {
+        let beginning: Void->Void = {
+            self.pageViewContentView.hidden = false
+            self.weekViewContentView.hidden = false
+            self.viewControllerSegmentedControl.hidden = false
+        }
+        switch (collection.verticalSizeClass, collection.horizontalSizeClass) {
+        case (.Compact, _):
+            let animation: Void->Void = {
+                self.pageViewContentView.alpha = 0
+                self.weekViewContentView.alpha = 1
+                self.viewControllerSegmentedControl.alpha = 0
+            }
+            let completion: Void->Void = {
+                self.pageViewContentView.hidden = true
+                self.viewControllerSegmentedControl.hidden = true
+            }
+            return (beginning, animation, completion)
+        case _:
+            let animation: Void->Void = {
+                self.pageViewContentView.alpha = 1
+                self.weekViewContentView.alpha = 0
+                self.viewControllerSegmentedControl.alpha = 1
+            }
+            let completion: Void->Void = {
+                self.weekViewContentView.hidden = true
+            }
+            return (beginning, animation, completion)
         }
     }
     

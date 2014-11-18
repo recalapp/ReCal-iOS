@@ -24,6 +24,16 @@
 		8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */; };
 		81130BCE1A0C0D7D00F1F496 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81130BCD1A0C0D7D00F1F496 /* Day.swift */; };
 		81130C011A0C168F00F1F496 /* OrderedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81130C001A0C168F00F1F496 /* OrderedSet.swift */; };
+		811373E31A1B97D000E9387A /* WeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811373E21A1B97D000E9387A /* WeekViewController.swift */; };
+		811373EE1A1B9AEA00E9387A /* TimeRowHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811373ED1A1B9AEA00E9387A /* TimeRowHeaderBackgroundView.swift */; };
+		811373F31A1B9B2000E9387A /* TimeRowHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811373F11A1B9B2000E9387A /* TimeRowHeaderView.swift */; };
+		811373F41A1B9B2000E9387A /* TimeRowHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811373F21A1B9B2000E9387A /* TimeRowHeaderView.xib */; };
+		811373F61A1B9B8B00E9387A /* DayColumnHeaderBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811373F51A1B9B8B00E9387A /* DayColumnHeaderBackgroundView.swift */; };
+		811373F91A1B9BC100E9387A /* DayColumnHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811373F71A1B9BC100E9387A /* DayColumnHeaderView.swift */; };
+		811373FA1A1B9BC100E9387A /* DayColumnHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811373F81A1B9BC100E9387A /* DayColumnHeaderView.xib */; };
+		811373FC1A1B9CC700E9387A /* GridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811373FB1A1B9CC700E9387A /* GridLineView.swift */; };
+		811374011A1B9D0300E9387A /* EventCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811373FF1A1B9D0300E9387A /* EventCollectionViewCell.swift */; };
+		811374021A1B9D0300E9387A /* EventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 811374001A1B9D0300E9387A /* EventCollectionViewCell.xib */; };
 		811A0F651A125ACF0012030E /* CDCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F641A125ACF0012030E /* CDCourse.m */; };
 		811A0F6E1A125ACF0012030E /* CDServerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F6D1A125ACF0012030E /* CDServerObject.m */; };
 		811A0F711A125ACF0012030E /* CDCourseListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F701A125ACF0012030E /* CDCourseListing.m */; };
@@ -217,6 +227,16 @@
 		8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSelectionControl.swift; sourceTree = "<group>"; };
 		81130BCD1A0C0D7D00F1F496 /* Day.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		81130C001A0C168F00F1F496 /* OrderedSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderedSet.swift; sourceTree = "<group>"; };
+		811373E21A1B97D000E9387A /* WeekViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekViewController.swift; sourceTree = "<group>"; };
+		811373ED1A1B9AEA00E9387A /* TimeRowHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderBackgroundView.swift; sourceTree = "<group>"; };
+		811373F11A1B9B2000E9387A /* TimeRowHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderView.swift; sourceTree = "<group>"; };
+		811373F21A1B9B2000E9387A /* TimeRowHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeRowHeaderView.xib; sourceTree = "<group>"; };
+		811373F51A1B9B8B00E9387A /* DayColumnHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayColumnHeaderBackgroundView.swift; sourceTree = "<group>"; };
+		811373F71A1B9BC100E9387A /* DayColumnHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayColumnHeaderView.swift; sourceTree = "<group>"; };
+		811373F81A1B9BC100E9387A /* DayColumnHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayColumnHeaderView.xib; sourceTree = "<group>"; };
+		811373FB1A1B9CC700E9387A /* GridLineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLineView.swift; sourceTree = "<group>"; };
+		811373FF1A1B9D0300E9387A /* EventCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCollectionViewCell.swift; sourceTree = "<group>"; };
+		811374001A1B9D0300E9387A /* EventCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventCollectionViewCell.xib; sourceTree = "<group>"; };
 		811A0F531A125AA30012030E /* ReCal Calendar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReCal Calendar-Bridging-Header.h"; sourceTree = "<group>"; };
 		811A0F631A125ACF0012030E /* CDCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourse.h; sourceTree = "<group>"; };
 		811A0F641A125ACF0012030E /* CDCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourse.m; sourceTree = "<group>"; };
@@ -414,6 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				81E50D661A0E50C30074F381 /* CalendarViewController.swift */,
+				811373E11A1B8FFB00E9387A /* Week View */,
 				8107FD901A11B10800296BBB /* Agenda */,
 				81F76B271A17E274001B6233 /* Event */,
 			);
@@ -435,6 +456,31 @@
 				8111F63519F4957F00A331E3 /* SlidingSelectionControl.swift */,
 			);
 			name = Controls;
+			sourceTree = "<group>";
+		};
+		811373E11A1B8FFB00E9387A /* Week View */ = {
+			isa = PBXGroup;
+			children = (
+				811373EC1A1B9AD400E9387A /* Calendar Components */,
+				811373E21A1B97D000E9387A /* WeekViewController.swift */,
+			);
+			name = "Week View";
+			sourceTree = "<group>";
+		};
+		811373EC1A1B9AD400E9387A /* Calendar Components */ = {
+			isa = PBXGroup;
+			children = (
+				811373ED1A1B9AEA00E9387A /* TimeRowHeaderBackgroundView.swift */,
+				811373F11A1B9B2000E9387A /* TimeRowHeaderView.swift */,
+				811373F21A1B9B2000E9387A /* TimeRowHeaderView.xib */,
+				811373F51A1B9B8B00E9387A /* DayColumnHeaderBackgroundView.swift */,
+				811373F71A1B9BC100E9387A /* DayColumnHeaderView.swift */,
+				811373F81A1B9BC100E9387A /* DayColumnHeaderView.xib */,
+				811373FB1A1B9CC700E9387A /* GridLineView.swift */,
+				811373FF1A1B9D0300E9387A /* EventCollectionViewCell.swift */,
+				811374001A1B9D0300E9387A /* EventCollectionViewCell.xib */,
+			);
+			name = "Calendar Components";
 			sourceTree = "<group>";
 		};
 		811A0F521A125A8E0012030E /* Core Data */ = {
@@ -1115,8 +1161,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				81E50D4C1A0DB5420074F381 /* Main.storyboard in Resources */,
+				811373F41A1B9B2000E9387A /* TimeRowHeaderView.xib in Resources */,
 				81E50D511A0DB5420074F381 /* LaunchScreen.xib in Resources */,
+				811373FA1A1B9BC100E9387A /* DayColumnHeaderView.xib in Resources */,
 				81E50D4E1A0DB5420074F381 /* Images.xcassets in Resources */,
+				811374021A1B9D0300E9387A /* EventCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1248,11 +1297,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				81F76B171A16DE58001B6233 /* SectionAttributeImporter.swift in Sources */,
+				811374011A1B9D0300E9387A /* EventCollectionViewCell.swift in Sources */,
+				811373FC1A1B9CC700E9387A /* GridLineView.swift in Sources */,
+				811373F31A1B9B2000E9387A /* TimeRowHeaderView.swift in Sources */,
 				811A0F6E1A125ACF0012030E /* CDServerObject.m in Sources */,
 				81792B301A17FD600035D062 /* EventDescriptionTableViewCell.swift in Sources */,
 				819912F11A17E6DC00756342 /* EventViewController.swift in Sources */,
 				81792B2E1A17F9F50035D062 /* EventTimeTableViewCell.swift in Sources */,
 				811A0F751A1299460012030E /* SectionType.swift in Sources */,
+				811373F61A1B9B8B00E9387A /* DayColumnHeaderBackgroundView.swift in Sources */,
 				81F76B031A13DAF9001B6233 /* CDSection.m in Sources */,
 				81E50D671A0E50C30074F381 /* CalendarViewController.swift in Sources */,
 				81E50D441A0DB5420074F381 /* AppDelegate.swift in Sources */,
@@ -1261,9 +1314,11 @@
 				81F76B001A13DAF9001B6233 /* CDSectionEnrollment.m in Sources */,
 				81E50D651A0E503B0074F381 /* URLs.swift in Sources */,
 				81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */,
+				811373EE1A1B9AEA00E9387A /* TimeRowHeaderBackgroundView.swift in Sources */,
 				81F76B261A17A345001B6233 /* CDEvent.m in Sources */,
 				813C00F01A13AEF900A3B769 /* CalendarCoreDataImporter.swift in Sources */,
 				81792B3A1A18823B0035D062 /* UserProfileServerCommunication.swift in Sources */,
+				811373F91A1B9BC100E9387A /* DayColumnHeaderView.swift in Sources */,
 				81AA2C641A12F48800A31F61 /* EventType.swift in Sources */,
 				8107FD921A11B11C00296BBB /* AgendaTableViewCell.swift in Sources */,
 				81F76B1D1A16ED66001B6233 /* CourseAttributeImporter.swift in Sources */,
@@ -1271,6 +1326,7 @@
 				81792B381A1880810035D062 /* EventsServerCommunication.swift in Sources */,
 				81F76B091A13E2AA001B6233 /* CDUser.m in Sources */,
 				811A0F651A125ACF0012030E /* CDCourse.m in Sources */,
+				811373E31A1B97D000E9387A /* WeekViewController.swift in Sources */,
 				81F76B151A16B9B4001B6233 /* EventAttributeImporter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
