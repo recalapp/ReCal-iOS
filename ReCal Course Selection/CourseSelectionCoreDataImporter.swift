@@ -59,106 +59,57 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
     }
     
     private func processCoursesData(data: NSData) -> ImportResult {
-        let processSemesterDictionary: (Dictionary<String, AnyObject>)->CDSemester = {(semesterDict) in
-            let semesterServerIdObject: AnyObject = semesterDict["id"]!
-            let semesterServerId = "\(semesterServerIdObject)"
-            let semester = self.fetchOrCreateEntityWithServerId(semesterServerId, entityName: "CDSemester") as CDSemester
-            semester.termCode = semesterDict["term_code"]! as String
-            return semester
-        }
-        let processSectionMeetingDictionary: (Dictionary<String, AnyObject>)->CDSectionMeeting = {(sectionMeetingDict) in
-            let targetDays = (sectionMeetingDict["days"] as String).lowercaseString
-            let getTimeComponents:(String)->NSDateComponents = {(timeString) in
-                let date = self.timeFormatter.dateFromString(timeString)!
-                let components = self.calendar.components(NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: date)
-                return components
+        let revertChanges: ()->Void = {
+            self.backgroundManagedObjectContext.performBlockAndWait {
+                self.backgroundManagedObjectContext.reset()
             }
-            let targetStartTime = getTimeComponents(sectionMeetingDict["start_time"] as String)
-            let targetEndTime = getTimeComponents(sectionMeetingDict["end_time"] as String)
-            let serverIdObject: AnyObject = sectionMeetingDict["id"]!
-            let serverId = "\(serverIdObject)"
-            let meeting = self.fetchOrCreateEntityWithServerId(serverId, entityName: "CDSectionMeeting") as CDSectionMeeting
-            meeting.daysStorage = targetDays
-            meeting.startHour = targetStartTime.hour
-            meeting.startMinute = targetStartTime.minute
-            meeting.endHour = targetEndTime.hour
-            meeting.endMinute = targetEndTime.minute
-            meeting.location = sectionMeetingDict["location"] as String
-            return meeting
-        }
-        let processSectionDictionary: (Dictionary<String, AnyObject>)->CDSection = {(sectionDict) in
-            let sectionServerIdObject: AnyObject = sectionDict["id"]!
-            let sectionServerId = "\(sectionServerIdObject)"
-            let section = self.fetchOrCreateEntityWithServerId(sectionServerId, entityName: "CDSection") as CDSection
-            section.removeMeetings(section.meetings)
-            var meetings = NSMutableSet()
-            for sectionMeetingDict in sectionDict["meetings"] as [Dictionary<String, AnyObject>] {
-                meetings.addObject(processSectionMeetingDictionary(sectionMeetingDict))
-            }
-            section.addMeetings(meetings)
-            section.name = sectionDict["name"] as String
-            section.sectionTypeCode = (sectionDict["section_type"] as String).lowercaseString
-            return section
-        }
-        let processCourseDictionary: (Dictionary<String, AnyObject>)->CDCourse = {(courseDict) in
-            let courseServerIdObject: AnyObject = courseDict["id"]!
-            let courseServerId = "\(courseServerIdObject)"
-            let semester = processSemesterDictionary(courseDict["semester"] as Dictionary<String, AnyObject>)
-            let course = self.fetchOrCreateEntityWithServerId(courseServerId, entityName: "CDCourse") as CDCourse
-            
-            // listings
-            for oldListing in course.courseListings {
-                self.backgroundManagedObjectContext.performBlockAndWait {
-                    self.backgroundManagedObjectContext.deleteObject(oldListing as NSManagedObject)
-                }
-            }
-            let processCourseListingDictionary: (Dictionary<String, AnyObject>)->CDCourseListing = {(courseListingDict) in
-                let targetCourseNumber = courseListingDict["number"] as String
-                let targetDepartmentCode = courseListingDict["dept"] as String
-                var listing: CDCourseListing?
-                self.backgroundManagedObjectContext.performBlockAndWait {
-                    listing = NSEntityDescription.insertNewObjectForEntityForName("CDCourseListing", inManagedObjectContext: self.backgroundManagedObjectContext) as? CDCourseListing
-                }
-                listing?.isPrimary = courseListingDict["is_primary"] as NSNumber
-                listing?.departmentCode = targetDepartmentCode
-                listing?.courseNumber = targetCourseNumber
-                return listing!
-            }
-            course.removeCourseListings(course.courseListings)
-            let listings = NSMutableSet()
-            for courseListingDict in courseDict["course_listings"] as [Dictionary<String, AnyObject>] {
-                listings.addObject(processCourseListingDictionary(courseListingDict))
-            }
-            course.addCourseListings(listings)
-            
-            // sections
-            course.removeSections(course.sections)
-            let sections = NSMutableSet()
-            for sectionDict in courseDict["sections"] as [Dictionary<String, AnyObject>] {
-                sections.addObject(processSectionDictionary(sectionDict))
-            }
-            course.addSections(sections)
-            
-            // other course info
-            course.title = courseDict["title"] as String
-            course.courseDescription = courseDict["description"] as String
-            semester.addCoursesObject(course)
-            return course
         }
         if let downloadedDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Dictionary<String, AnyObject> {
-            for courseDict in downloadedDict["objects"] as [Dictionary<String, AnyObject>] {
-                processCourseDictionary(courseDict)
-                // TODO remove courses not found here
+            let courseImporter = CourseAttributeImporter()
+            let processCourseDict: Dictionary<String, AnyObject> -> ImportResult = { (dict) in
+                let serverId: AnyObject? = dict["id"]
+                if serverId == nil {
+                    return .Failure
+                }
+                let course = self.fetchOrCreateEntityWithServerId("\(serverId)", entityName: "CDCourse") as CDCourse
+                let result = courseImporter.importAttributeFromDictionary(dict, intoManagedObject: course, inManagedObjectContext: self.backgroundManagedObjectContext)
+                switch result {
+                case .Success:
+                    return .Success
+                case .Error(_):
+                    return .Failure
+                }
             }
-            var errorOpt: NSError?
-            self.backgroundManagedObjectContext.performBlockAndWait {
-                let _ = self.backgroundManagedObjectContext.save(&errorOpt)
-            }
-            if let error = errorOpt {
-                println("Error saving. Aborting. Error: \(error)")
-                return .ShouldRetry
+            if let courseDictArray = downloadedDict["objects"] as? [Dictionary<String, AnyObject>] {
+                let result = courseDictArray.map(processCourseDict).reduce(ImportResult.Success, combine: { (oldResult, newResult) in
+                    switch (oldResult, newResult) {
+                    case (.Success, .Success):
+                        return .Success
+                    default:
+                        return .Failure
+                    }
+                })
+                switch result {
+                case .Success:
+                    var errorOpt: NSError?
+                    println("Inserted item count: \(self.backgroundManagedObjectContext.insertedObjects.count)")
+                    println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
+                    println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
+                    self.backgroundManagedObjectContext.performBlockAndWait {
+                        let _ = self.backgroundManagedObjectContext.save(&errorOpt)
+                    }
+                    if let error = errorOpt {
+                        println("Error saving. Aborting. Error: \(error)")
+                        return .ShouldRetry
+                    } else {
+                        return .Success
+                    }
+                case .Failure, .ShouldRetry:
+                    revertChanges()
+                    return result
+                }
             } else {
-                return .Success
+                return .Failure
             }
         } else {
             return .Failure
@@ -223,6 +174,9 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                             toChange.active = NSNumber(bool: false)
                         }
                     }
+                    println("Inserted item count: \(self.backgroundManagedObjectContext.insertedObjects.count)")
+                    println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
+                    println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
                     self.backgroundManagedObjectContext.performBlockAndWait {
                         let _ = self.backgroundManagedObjectContext.save(&errorOpt)
                     }

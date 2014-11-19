@@ -38,7 +38,7 @@
         <relationship name="section" maxCount="1" deletionRule="Nullify" destinationEntity="CDSection" inverseName="meetings" inverseEntity="CDSection" syncable="YES"/>
     </entity>
     <entity name="CDSemester" representedClassName="CDSemester" parentEntity="CDServerObject" syncable="YES">
-        <attribute name="active" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="active" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="termCode" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="courses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDCourse" inverseName="semester" inverseEntity="CDCourse" syncable="YES"/>
         <relationship name="schedules" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSchedule" inverseName="semester" inverseEntity="CDSchedule" syncable="YES"/>

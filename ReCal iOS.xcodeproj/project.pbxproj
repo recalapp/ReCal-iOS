@@ -40,6 +40,11 @@
 		811A0F751A1299460012030E /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F741A1299460012030E /* SectionType.swift */; };
 		811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F761A12F1240012030E /* CoreDataImporter.swift */; };
 		813537571A1CF465002AB008 /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = 813537561A1CF465002AB008 /* CDSemester.m */; };
+		8135375A1A1D2296002AB008 /* CourseAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813537591A1D2296002AB008 /* CourseAttributeImporter.swift */; };
+		8135375C1A1D2301002AB008 /* CourseListingAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8135375B1A1D2301002AB008 /* CourseListingAttributeImporter.swift */; };
+		8135375E1A1D2431002AB008 /* SectionAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8135375D1A1D2431002AB008 /* SectionAttributeImporter.swift */; };
+		813537601A1D24A3002AB008 /* SectionMeetingAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8135375F1A1D24A3002AB008 /* SectionMeetingAttributeImporter.swift */; };
+		813537621A1D2849002AB008 /* SemesterAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813537611A1D2849002AB008 /* SemesterAttributeImporter.swift */; };
 		813C00F01A13AEF900A3B769 /* CalendarCoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */; };
 		8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */; };
 		8146ECB21A0ADB68005FF4C2 /* ManagedObjectProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */; };
@@ -247,6 +252,11 @@
 		811A0F761A12F1240012030E /* CoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataImporter.swift; sourceTree = "<group>"; };
 		813537551A1CF465002AB008 /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
 		813537561A1CF465002AB008 /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
+		813537591A1D2296002AB008 /* CourseAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseAttributeImporter.swift; sourceTree = "<group>"; };
+		8135375B1A1D2301002AB008 /* CourseListingAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseListingAttributeImporter.swift; sourceTree = "<group>"; };
+		8135375D1A1D2431002AB008 /* SectionAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionAttributeImporter.swift; sourceTree = "<group>"; };
+		8135375F1A1D24A3002AB008 /* SectionMeetingAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionMeetingAttributeImporter.swift; sourceTree = "<group>"; };
+		813537611A1D2849002AB008 /* SemesterAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterAttributeImporter.swift; sourceTree = "<group>"; };
 		813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCoreDataImporter.swift; sourceTree = "<group>"; };
 		8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedObjectProxy.swift; path = "../ReCal Course Selection/ManagedObjectProxy.swift"; sourceTree = "<group>"; };
@@ -543,6 +553,19 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		813537581A1D223A002AB008 /* Core Data Import */ = {
+			isa = PBXGroup;
+			children = (
+				816CBB551A092909002C610A /* CourseSelectionCoreDataImporter.swift */,
+				813537591A1D2296002AB008 /* CourseAttributeImporter.swift */,
+				8135375B1A1D2301002AB008 /* CourseListingAttributeImporter.swift */,
+				8135375D1A1D2431002AB008 /* SectionAttributeImporter.swift */,
+				8135375F1A1D24A3002AB008 /* SectionMeetingAttributeImporter.swift */,
+				813537611A1D2849002AB008 /* SemesterAttributeImporter.swift */,
+			);
+			name = "Core Data Import";
+			sourceTree = "<group>";
+		};
 		814735071A1A3BEE004B3A34 /* Sidebar Overlay Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -714,7 +737,7 @@
 				81A094CE1A067DFD00A0C3CE /* Course.swift */,
 				81A094DF1A067DFD00A0C3CE /* Section.swift */,
 				81130BCD1A0C0D7D00F1F496 /* Day.swift */,
-				816CBB551A092909002C610A /* CourseSelectionCoreDataImporter.swift */,
+				813537581A1D223A002AB008 /* Core Data Import */,
 				816CBB511A092144002C610A /* CoreDataExtensions.swift */,
 				8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */,
 				816CBB1C1A091CFB002C610A /* Core Data */,
@@ -1192,11 +1215,14 @@
 				81A094FA1A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift in Sources */,
 				81A094F31A067DFD00A0C3CE /* GridLineView.swift in Sources */,
 				81A094F11A067DFD00A0C3CE /* EventCollectionViewCell.swift in Sources */,
+				813537621A1D2849002AB008 /* SemesterAttributeImporter.swift in Sources */,
 				81A094F71A067DFD00A0C3CE /* Section.swift in Sources */,
+				8135375C1A1D2301002AB008 /* CourseListingAttributeImporter.swift in Sources */,
 				8107FD851A11781200296BBB /* CDCourseListing.m in Sources */,
 				81A094EC1A067DFD00A0C3CE /* DayColumnHeaderView.swift in Sources */,
 				81A094FB1A067DFD00A0C3CE /* TimeRowHeaderView.swift in Sources */,
 				81A094EE1A067DFD00A0C3CE /* EnrolledCoursesTableViewDataSource.swift in Sources */,
+				8135375E1A1D2431002AB008 /* SectionAttributeImporter.swift in Sources */,
 				81A094EA1A067DFD00A0C3CE /* CourseSelectionViewController.swift in Sources */,
 				816CBB561A092909002C610A /* CourseSelectionCoreDataImporter.swift in Sources */,
 				81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */,
@@ -1205,9 +1231,11 @@
 				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
 				81792B461A194B690035D062 /* URLs.swift in Sources */,
 				816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */,
+				8135375A1A1D2296002AB008 /* CourseAttributeImporter.swift in Sources */,
 				81A094E71A067DFD00A0C3CE /* Course.swift in Sources */,
 				8107FD8B1A11781200296BBB /* CDSchedule.m in Sources */,
 				81A094EF1A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift in Sources */,
+				813537601A1D24A3002AB008 /* SectionMeetingAttributeImporter.swift in Sources */,
 				814D4E761A0C880500C21848 /* ScheduleCreationViewController.swift in Sources */,
 				81BCA5481A0FE94300391608 /* CourseSelectionNavigationController.swift in Sources */,
 				81F9A40E1A070B1600083E55 /* CourseDetailsViewController.swift in Sources */,
