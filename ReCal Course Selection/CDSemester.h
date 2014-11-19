@@ -2,7 +2,7 @@
 //  CDSemester.h
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 11/6/14.
+//  Created by Naphat Sanguansin on 11/19/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
@@ -15,6 +15,7 @@
 @interface CDSemester : CDServerObject
 
 @property (nonatomic, retain) NSString * termCode;
+@property (nonatomic, retain) NSNumber * active;
 @property (nonatomic, retain) NSSet *courses;
 @property (nonatomic, retain) NSSet *schedules;
 @end

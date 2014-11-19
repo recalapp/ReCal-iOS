@@ -11,10 +11,20 @@ import UIKit
 public final class StaticTableViewDataSource : NSObject, UITableViewDataSource {
     private var sections: [SectionInfo] = []
     public subscript(sectionIndex: Int)->SectionInfo {
-        return self.sections[sectionIndex]
+        get {
+            return self.sections[sectionIndex]
+        }
+        set {
+            self.sections[sectionIndex] = newValue
+        }
     }
     public subscript(sectionIndex: Int, itemIndex: Int)->ItemInfo {
-        return self.sections[sectionIndex][itemIndex]
+        get {
+            return self.sections[sectionIndex][itemIndex]
+        }
+        set {
+            self.sections[sectionIndex][itemIndex] = newValue
+        }
     }
     public var numberOfSections: Int {
         return self.sections.count
@@ -50,12 +60,17 @@ public final class StaticTableViewDataSource : NSObject, UITableViewDataSource {
 public extension StaticTableViewDataSource {
     public struct SectionInfo {
         public let name: SectionName
-        public let items: [ItemInfo]
+        public var items: [ItemInfo]
         public var numberOfItems: Int {
             return items.count
         }
         public subscript(itemIndex: Int)->ItemInfo {
-            return items[itemIndex]
+            get {
+                return items[itemIndex]
+            }
+            set {
+                items[itemIndex] = newValue
+            }
         }
         public enum SectionName {
             case Literal(String)
@@ -70,9 +85,16 @@ public extension StaticTableViewDataSource {
     public struct ItemInfo {
         public let cellIdentifier: String
         public let cellProcessBlock: (UITableViewCell)->UITableViewCell
+        public var selected: Bool
         public init(cellIdentifier: String, cellProcessBlock: (UITableViewCell)->UITableViewCell) {
             self.cellIdentifier = cellIdentifier
             self.cellProcessBlock = cellProcessBlock
+            self.selected = false
+        }
+        public init(cellIdentifier: String, selected: Bool, cellProcessBlock: (UITableViewCell)->UITableViewCell) {
+            self.cellIdentifier = cellIdentifier
+            self.cellProcessBlock = cellProcessBlock
+            self.selected = selected
         }
     }
 }

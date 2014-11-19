@@ -13,7 +13,6 @@
 		81000B221A0EA6C200246BD3 /* ReCalCommon.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81000B211A0EA6C200246BD3 /* ReCalCommon.storyboard */; };
 		8107FD791A11781100296BBB /* CDSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD781A11781100296BBB /* CDSection.m */; };
 		8107FD7C1A11781200296BBB /* CDServerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD7B1A11781200296BBB /* CDServerObject.m */; };
-		8107FD7F1A11781200296BBB /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD7E1A11781200296BBB /* CDSemester.m */; };
 		8107FD821A11781200296BBB /* CDCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD811A11781200296BBB /* CDCourse.m */; };
 		8107FD851A11781200296BBB /* CDCourseListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD841A11781200296BBB /* CDCourseListing.m */; };
 		8107FD881A11781200296BBB /* CDSectionMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 8107FD871A11781200296BBB /* CDSectionMeeting.m */; };
@@ -40,6 +39,7 @@
 		811A0F731A125B0B0012030E /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F721A125B0B0012030E /* CoreDataExtensions.swift */; };
 		811A0F751A1299460012030E /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F741A1299460012030E /* SectionType.swift */; };
 		811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F761A12F1240012030E /* CoreDataImporter.swift */; };
+		813537571A1CF465002AB008 /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = 813537561A1CF465002AB008 /* CDSemester.m */; };
 		813C00F01A13AEF900A3B769 /* CalendarCoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */; };
 		8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */; };
 		8146ECB21A0ADB68005FF4C2 /* ManagedObjectProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */; };
@@ -211,8 +211,6 @@
 		8107FD781A11781100296BBB /* CDSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSection.m; sourceTree = "<group>"; };
 		8107FD7A1A11781200296BBB /* CDServerObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDServerObject.h; sourceTree = "<group>"; };
 		8107FD7B1A11781200296BBB /* CDServerObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDServerObject.m; sourceTree = "<group>"; };
-		8107FD7D1A11781200296BBB /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
-		8107FD7E1A11781200296BBB /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
 		8107FD801A11781200296BBB /* CDCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourse.h; sourceTree = "<group>"; };
 		8107FD811A11781200296BBB /* CDCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourse.m; sourceTree = "<group>"; };
 		8107FD831A11781200296BBB /* CDCourseListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourseListing.h; sourceTree = "<group>"; };
@@ -247,6 +245,8 @@
 		811A0F721A125B0B0012030E /* CoreDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtensions.swift; sourceTree = "<group>"; };
 		811A0F741A1299460012030E /* SectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionType.swift; sourceTree = "<group>"; };
 		811A0F761A12F1240012030E /* CoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataImporter.swift; sourceTree = "<group>"; };
+		813537551A1CF465002AB008 /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
+		813537561A1CF465002AB008 /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
 		813C00EF1A13AEF900A3B769 /* CalendarCoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCoreDataImporter.swift; sourceTree = "<group>"; };
 		8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedObjectProxy.swift; path = "../ReCal Course Selection/ManagedObjectProxy.swift"; sourceTree = "<group>"; };
@@ -585,12 +585,12 @@
 				8107FD841A11781200296BBB /* CDCourseListing.m */,
 				8107FD801A11781200296BBB /* CDCourse.h */,
 				8107FD811A11781200296BBB /* CDCourse.m */,
-				8107FD7D1A11781200296BBB /* CDSemester.h */,
-				8107FD7E1A11781200296BBB /* CDSemester.m */,
 				8107FD7A1A11781200296BBB /* CDServerObject.h */,
 				8107FD7B1A11781200296BBB /* CDServerObject.m */,
 				8107FD771A11781100296BBB /* CDSection.h */,
 				8107FD781A11781100296BBB /* CDSection.m */,
+				813537551A1CF465002AB008 /* CDSemester.h */,
+				813537561A1CF465002AB008 /* CDSemester.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1201,9 +1201,9 @@
 				816CBB561A092909002C610A /* CourseSelectionCoreDataImporter.swift in Sources */,
 				81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */,
 				8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */,
+				813537571A1CF465002AB008 /* CDSemester.m in Sources */,
 				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
 				81792B461A194B690035D062 /* URLs.swift in Sources */,
-				8107FD7F1A11781200296BBB /* CDSemester.m in Sources */,
 				816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */,
 				81A094E71A067DFD00A0C3CE /* Course.swift in Sources */,
 				8107FD8B1A11781200296BBB /* CDSchedule.m in Sources */,

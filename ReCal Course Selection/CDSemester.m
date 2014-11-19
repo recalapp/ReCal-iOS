@@ -2,7 +2,7 @@
 //  CDSemester.m
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 11/6/14.
+//  Created by Naphat Sanguansin on 11/19/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 @implementation CDSemester
 
 @dynamic termCode;
+@dynamic active;
 @dynamic courses;
 @dynamic schedules;
 

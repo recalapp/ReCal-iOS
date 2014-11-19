@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A388a" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CDCourse" representedClassName="CDCourse" parentEntity="CDServerObject" syncable="YES">
         <attribute name="courseDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
@@ -38,6 +38,7 @@
         <relationship name="section" maxCount="1" deletionRule="Nullify" destinationEntity="CDSection" inverseName="meetings" inverseEntity="CDSection" syncable="YES"/>
     </entity>
     <entity name="CDSemester" representedClassName="CDSemester" parentEntity="CDServerObject" syncable="YES">
+        <attribute name="active" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="termCode" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="courses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDCourse" inverseName="semester" inverseEntity="CDCourse" syncable="YES"/>
         <relationship name="schedules" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSchedule" inverseName="semester" inverseEntity="CDSchedule" syncable="YES"/>
@@ -51,7 +52,7 @@
         <element name="CDSchedule" positionX="-3717" positionY="-3852" width="128" height="118"/>
         <element name="CDSection" positionX="-3035" positionY="-3708" width="128" height="118"/>
         <element name="CDSectionMeeting" positionX="-3051" positionY="-3888" width="128" height="148"/>
-        <element name="CDSemester" positionX="-3521" positionY="-3735" width="128" height="88"/>
+        <element name="CDSemester" positionX="-3521" positionY="-3735" width="128" height="103"/>
         <element name="CDServerObject" positionX="-3377" positionY="-3996" width="128" height="58"/>
     </elements>
 </model>

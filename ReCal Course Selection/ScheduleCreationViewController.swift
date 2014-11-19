@@ -10,8 +10,12 @@ import UIKit
 import ReCalCommon
 
 private let nameCellIdentifier = "NameCell"
+private let basicCellIdentifier = "Basic"
 
 class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate {
+    private typealias SectionInfo = StaticTableViewDataSource.SectionInfo
+    private typealias ItemInfo = StaticTableViewDataSource.ItemInfo
+    
     weak var delegate: ScheduleSelectionDelegate?
 
     private var nameTextField: UITextField? {
@@ -21,9 +25,50 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     var managedObjectContext: NSManagedObjectContext!
     
     private var notificationObservers: [AnyObject] = []
+    private let dataSource: StaticTableViewDataSource = StaticTableViewDataSource()
     
+    private let semestersSectionIndex = 1
+    private var semesters: [CDSemester] = []
+    private var selectedSemester: CDSemester? {
+        didSet {
+            self.updateSaveButtonState()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let nameSection = SectionInfo(name: .Literal("Schedule Name:"), items: [
+            ItemInfo(cellIdentifier: nameCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
+                if let nameTextField = cell.viewWithTag(1) as? UITextField {
+                    nameTextField.textColor = Settings.currentSettings.colorScheme.textColor
+                    nameTextField.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
+                    switch Settings.currentSettings.theme {
+                    case .Light:
+                        nameTextField.keyboardAppearance = .Light
+                    case .Dark:
+                        nameTextField.keyboardAppearance = .Dark
+                    }
+                }
+                return cell
+            })
+        ])
+        let semestersSection = SectionInfo(name: .Literal("Semester:"), items: [])
+        self.dataSource.setSectionInfos([nameSection, semestersSection])
+        self.tableView.dataSource = self.dataSource
+        let processSemesters: [CDSemester] -> Void = { (semesters: [CDSemester]) in
+            self.semesters = semesters
+            let itemInfos = self.semesters.map { (semester: CDSemester) -> ItemInfo in
+                return ItemInfo(cellIdentifier: basicCellIdentifier, selected: semester.isEqual(self.selectedSemester), cellProcessBlock: { (cell) -> UITableViewCell in
+                    cell.textLabel.text = semester.termCode
+                    return cell
+                })
+            }
+            let semestersSection = SectionInfo(name: self.dataSource[self.semestersSectionIndex].name, items: itemInfos)
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                self.dataSource[self.semestersSectionIndex] = semestersSection
+                self.tableView.reloadData()
+            }
+        }
+        self.fetchActiveSemesters(processSemesters)
         
         let updateColorScheme: ()->Void = {
             self.tableView.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
@@ -33,7 +78,34 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
             updateColorScheme()
         }
+        let observer2 = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            // no need to merge. We don't own the managed object context
+            self.fetchActiveSemesters(processSemesters)
+        }
         self.notificationObservers.append(observer1)
+    }
+    
+    private func fetchActiveSemesters(callBack: (([CDSemester])->Void)?) {
+        let fetchRequest: NSFetchRequest = {
+            let fetchRequest = NSFetchRequest(entityName: "CDSemester")
+            fetchRequest.predicate = NSPredicate(format: "active = 1")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "termCode", ascending: false)]
+            return fetchRequest
+        }()
+        let queue = NSOperationQueue.currentQueue()
+        self.managedObjectContext.performBlock {
+            var errorOpt: NSError?
+            let fetched = self.managedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt)
+            if let error = errorOpt {
+                println("Error fetching semesters. Error: \(error)")
+                return
+            }
+            if let semesters = fetched as? [CDSemester] {
+                queue?.addOperationWithBlock {
+                    let _ = callBack?(semesters)
+                }
+            }
+        }
     }
     
     deinit {
@@ -44,18 +116,12 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     
     override func viewDidAppear(animated: Bool) {
         self.nameTextField?.becomeFirstResponder()
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
         if let name = self.nameTextField?.text? {
-            // TODO remove hard coded term code
-            var createdSchedule = Schedule(name: name, termCode: "1152")
+            assert(self.selectedSemester != nil)
+            var createdSchedule = Schedule(name: name, termCode: self.selectedSemester!.termCode)
             switch createdSchedule.commitToManagedObjectContext(self.managedObjectContext) {
             case .Success(let tempObjectId):
                 var success = false
@@ -78,48 +144,32 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         }
     }
     @IBAction func nameTextFieldValueChanged(sender: UITextField) {
-        if sender.text == "" {
-            self.navigationItem.rightBarButtonItem?.enabled = false
-        } else {
-            self.navigationItem.rightBarButtonItem?.enabled = true
-        }
-    }
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // Return the number of sections.
-        return 1
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Return the number of rows in the section.
-        return 1
+        self.updateSaveButtonState()
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Schedule Name"
-        default:
-            return nil
-        }
-    }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(nameCellIdentifier, forIndexPath: indexPath) as UITableViewCell
-
-        cell.textLabel.textColor = Settings.currentSettings.colorScheme.textColor
-        cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
-        if let nameTextField = cell.viewWithTag(1) as? UITextField {
-            nameTextField.textColor = Settings.currentSettings.colorScheme.textColor
-            nameTextField.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
-            switch Settings.currentSettings.theme {
-            case .Light:
-                nameTextField.keyboardAppearance = .Light
-            case .Dark:
-                nameTextField.keyboardAppearance = .Dark
+    private func updateSaveButtonState() {
+        self.navigationItem.rightBarButtonItem?.enabled = {
+            if self.nameTextField == nil || self.nameTextField!.text == "" {
+                return false
             }
-        }
-        return cell
+            if self.selectedSemester == nil {
+                return false
+            }
+            return true
+        }()
+    }
+    
+    /// MARK: - Table View Delegate
+    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return indexPath.section == self.semestersSectionIndex // semester section
+    }
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        assert(indexPath.section == self.semestersSectionIndex, "Only semesters are selectable")
+        assert(indexPath.row < self.dataSource[indexPath.section].numberOfItems)
+        assert(indexPath.row < self.semesters.count)
+        self.selectedSemester = self.semesters[indexPath.row]
+        var itemInfo = self.dataSource[indexPath.section, indexPath.row]
+        itemInfo.selected = true
+        self.dataSource[indexPath.section, indexPath.row] = itemInfo
     }
 }
