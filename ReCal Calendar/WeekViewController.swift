@@ -11,13 +11,16 @@ import ReCalCommon
 
 class WeekViewController: UICollectionViewController, CollectionViewDataSourceCalendarWeekLayout {
 
+    // MARK: Constants
     private let eventCellIdentifier = "EventsCell"
     private let dayColumnHeaderViewIdentifier = "DayHeader"
     private let timeRowHeaderViewIdentifier = "TimeHeader"
     private let minimumHour = 6
     private let maximumHour = 23
     private let hourStep = 2
+    private let numberOfVisibleDays = 100
     
+    // MARK: Variables
     lazy private var calendar: NSCalendar = {
         let calendarOpt = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
         assert(calendarOpt != nil, "Calendar cannot be nil")
@@ -32,10 +35,14 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     
     private var notificationObservers: [AnyObject] = []
     
+    private var centerVisibleDate = NSDate()
+    
+    private weak var layout: CollectionViewCalendarWeekLayout!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let layout = self.collectionViewLayout as CollectionViewCalendarWeekLayout
+        self.layout = self.collectionViewLayout as CollectionViewCalendarWeekLayout
         layout.dataSource = self
         self.collectionView.registerNib(UINib(nibName: "EventCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: eventCellIdentifier)
         self.collectionView.registerNib(UINib(nibName: "TimeRowHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.TimeRowHeader.rawValue, withReuseIdentifier: timeRowHeaderViewIdentifier)
@@ -72,7 +79,7 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 100
+        return self.numberOfVisibleDays
     }
 
 

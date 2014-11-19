@@ -27,7 +27,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     
     private let calendar: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     
-    private var daySectionWidth: CGFloat {
+    public var daySectionWidth: CGFloat {
         var finalWidth: Float = 300.0 // TODO default value?
         if let sectionWidth = self.dataSource?.daySectionWidthForCollectionView(self.collectionView!, layout: self) {
             switch sectionWidth {
