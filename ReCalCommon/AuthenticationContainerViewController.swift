@@ -18,22 +18,28 @@ public class AuthenticationContainerViewController: UIViewController {
     
     private var notificationObservers: [AnyObject] = []
 
-    private var statusViewShown: Bool {
+    private var statusViewState: StatusViewState {
         switch Settings.currentSettings.authenticator.state {
         case .Authenticated(_), .Cached(_), .Unauthenticated:
-            return false
+            return .NotShown
         case .PreviouslyAuthenticated(_):
-            return true
+            return .Shown("Error authenticating. Tap to retry.")
+        case .Demo(_):
+            return .Shown("Demo")
         }
     }
     
     private var statusViewHeight: CGFloat {
-        return self.statusViewShown ? 20 : 0
+        switch self.statusViewState {
+        case .NotShown:
+            return 0
+        case .Shown(_):
+            return 20
+        }
     }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.statusLabel.text = "Error authenticating. Tap to retry."
         let updateWithColorScheme: (ColorScheme)->Void = {(colorScheme) in
             self.view.backgroundColor = colorScheme.accessoryBackgroundColor
             self.statusLabel.textColor = colorScheme.alertTextColor
@@ -41,7 +47,7 @@ public class AuthenticationContainerViewController: UIViewController {
         }
         updateWithColorScheme(Settings.currentSettings.colorScheme)
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(authenticatorStateDidChangeNofication, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
-            self.setNeedsStatusBarAppearanceUpdate()
+            self.setNeedsAuthenticationStatusViewAppearanceUpdate()
         }
         let observer2 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
             updateWithColorScheme(Settings.currentSettings.colorScheme)
@@ -69,6 +75,12 @@ public class AuthenticationContainerViewController: UIViewController {
     
     private func setNeedsAuthenticationStatusViewAppearanceUpdate() {
         self.statusViewHeightConstraint?.constant = self.statusViewHeight
+        switch self.statusViewState {
+        case .NotShown:
+            self.statusLabel.text = ""
+        case .Shown(let statusString):
+            self.statusLabel.text = statusString
+        }
         UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.AllowAnimatedContent, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
             self.view.layoutIfNeeded()
@@ -109,6 +121,16 @@ public class AuthenticationContainerViewController: UIViewController {
         return .Slide
     }
     public override func prefersStatusBarHidden() -> Bool {
-        return self.statusViewShown
+        switch self.statusViewState {
+        case .NotShown:
+            return false
+        case .Shown(_):
+            return true
+        }
+    }
+    
+    private enum StatusViewState {
+        case NotShown
+        case Shown(String)
     }
 }

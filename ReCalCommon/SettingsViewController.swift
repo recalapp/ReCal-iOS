@@ -48,6 +48,8 @@ public class SettingsViewController: UITableViewController, SettingsSwitchTableV
                     centerCell.centerLabel.text = user.username
                 case .Cached(let user):
                     centerCell.centerLabel.text = user.username
+                case .Demo(let user):
+                    centerCell.centerLabel.text = user.username
                 case .Unauthenticated:
                     centerCell.centerLabel.text = "(Not signed in)"
                 }

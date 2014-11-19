@@ -41,6 +41,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
                     NSUserDefaults.standardUserDefaults().setObject(user.serialize(), forKey: authenticationUserDefaultsKey)
                 case .PreviouslyAuthenticated(let user):
                     NSUserDefaults.standardUserDefaults().setObject(user.serialize(), forKey: authenticationUserDefaultsKey)
+                case .Demo(_):
+                    break
                 case .Unauthenticated:
                     NSUserDefaults.standardUserDefaults().removeObjectForKey(authenticationUserDefaultsKey)
                 }
@@ -59,35 +61,46 @@ public class Authenticator: AuthenticationViewControllerDelegate {
     
     /// Check whether the user is authenticated. If he is, then return. Otherwise, present a view controller from rootViewController to authenticate the user. The function returns right away, so the thread is not blocked. Therefore, the caller must check the status to see if the authentication was successful
     public func authenticate() {
-        let urlRequest: NSURLRequest = {
-            let request = NSURLRequest(URL: self.authenticationUrl, cachePolicy: .ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
-            return request
-        }()
-        var responseOpt: NSURLResponse?
-        var errorOpt: NSError?
-        let data = NSURLConnection.sendSynchronousRequest(urlRequest, returningResponse: &responseOpt, error: &errorOpt)
-        if let error = errorOpt {
-            // connection error. Cannot do anything, so just return
-            println("Error connecting. Error: \(error)")
-            self.advanceStateWithAuthenticationResult(.Failure)
-        } else {
-            if let response = responseOpt as? NSHTTPURLResponse {
-                if self.authenticationUrl.isEqual(response.URL) && response.statusCode == 200 {
-                    // no redirection, and connection was successful, meaning data returned is the username
-                    let username = NSString(data: data!, encoding: NSASCIIStringEncoding) as String
-                    self.advanceStateWithAuthenticationResult(.Success(username))
-                } else {
-                    // redirection occurred. Present a view controller to let the user log in
-                    self.advanceStateWithAuthenticationResult(.Failure)
-                    NSOperationQueue.mainQueue().addOperationWithBlock {
-                        if self.rootViewController.presentedViewController != self.authenticationNavigationController {
-                            self.rootViewController.presentViewController(self.authenticationNavigationController, animated: true, completion: nil)
+        func authenticateDemo() {
+            return
+        }
+        func authenticateRealUser() {
+            let urlRequest: NSURLRequest = {
+                let request = NSURLRequest(URL: self.authenticationUrl, cachePolicy: .ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
+                return request
+                }()
+            var responseOpt: NSURLResponse?
+            var errorOpt: NSError?
+            let data = NSURLConnection.sendSynchronousRequest(urlRequest, returningResponse: &responseOpt, error: &errorOpt)
+            if let error = errorOpt {
+                // connection error. Cannot do anything, so just return
+                println("Error connecting. Error: \(error)")
+                self.advanceStateWithAuthenticationResult(.Failure)
+            } else {
+                if let response = responseOpt as? NSHTTPURLResponse {
+                    if self.authenticationUrl.isEqual(response.URL) && response.statusCode == 200 {
+                        // no redirection, and connection was successful, meaning data returned is the username
+                        let username = NSString(data: data!, encoding: NSASCIIStringEncoding) as String
+                        self.advanceStateWithAuthenticationResult(.Success(username))
+                    } else {
+                        // redirection occurred. Present a view controller to let the user log in
+                        self.advanceStateWithAuthenticationResult(.Failure)
+                        NSOperationQueue.mainQueue().addOperationWithBlock {
+                            if self.rootViewController.presentedViewController != self.authenticationNavigationController {
+                                self.rootViewController.presentViewController(self.authenticationNavigationController, animated: true, completion: nil)
+                            }
                         }
                     }
+                } else {
+                    self.advanceStateWithAuthenticationResult(.Failure)
                 }
-            } else {
-                self.advanceStateWithAuthenticationResult(.Failure)
             }
+        }
+        switch self.state {
+        case .Demo(_):
+            return authenticateDemo()
+        case .Authenticated(_), .PreviouslyAuthenticated(_), .Cached(_), .Unauthenticated:
+            return authenticateRealUser()
         }
     }
     
@@ -100,6 +113,10 @@ public class Authenticator: AuthenticationViewControllerDelegate {
         self.advanceStateWithAuthenticationResult(.LogOut)
     }
     
+    public func logInAsDemo() {
+        self.advanceStateWithAuthenticationResult(.SuccessDemo)
+    }
+    
     private func advanceStateWithAuthenticationResult(result: AuthenticationResult) {
         switch self.state {
         case .Authenticated(let user):
@@ -110,6 +127,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
                 self.state = .Unauthenticated
             case .Failure:
                 self.state = .PreviouslyAuthenticated(user)
+            case .SuccessDemo:
+                assertionFailure("Cannot start demo from a state other than unauthenticated")
             }
         case .Cached(let user):
             switch result {
@@ -119,6 +138,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
                 self.state = .Unauthenticated
             case .Failure:
                 self.state = .PreviouslyAuthenticated(user)
+            case .SuccessDemo:
+                assertionFailure("Cannot start demo from a state other than unauthenticated")
             }
         case .PreviouslyAuthenticated(_):
             switch result {
@@ -128,11 +149,27 @@ public class Authenticator: AuthenticationViewControllerDelegate {
                 self.state = .Unauthenticated
             case .Failure:
                 break
+            case .SuccessDemo:
+                assertionFailure("Cannot start demo from a state other than unauthenticated")
+            }
+        case .Demo(_):
+            switch result {
+            case .Success(let username):
+                assertionFailure("Should never get here")
+                self.state = .Demo(User(username: username))
+            case .Failure:
+                assertionFailure("Should never get here")
+            case .LogOut:
+                self.state = .Unauthenticated
+            case .SuccessDemo:
+                break
             }
         case .Unauthenticated:
             switch result {
             case .Success(let username):
                 self.state = .Authenticated(User(username: username))
+            case .SuccessDemo:
+                self.state = .Demo(User(username: "(demo)"))
             case .Failure, .LogOut:
                 break
             }
@@ -160,6 +197,7 @@ public class Authenticator: AuthenticationViewControllerDelegate {
 /// used as input to DFA
 private enum AuthenticationResult {
     case Success(String)
+    case SuccessDemo
     case Failure
     case LogOut
 }
@@ -168,6 +206,7 @@ public enum AuthenticationStatus: Equatable {
     case Authenticated(User)
     case PreviouslyAuthenticated(User)
     case Cached(User) // starting state if we cached a user
+    case Demo(User)
     case Unauthenticated
 }
 
@@ -181,7 +220,9 @@ public func == (lhs: AuthenticationStatus, rhs: AuthenticationStatus) -> Bool {
         return userLhs == userRhs
     case (.Unauthenticated, .Unauthenticated):
         return true
-    case (.Authenticated(_), _), (.PreviouslyAuthenticated(_), _), (.Cached(_), _), (.Unauthenticated, _):
+    case (.Demo(let userLhs), .Demo(let userRhs)):
+        return userLhs == userRhs
+    case (.Authenticated(_), _), (.PreviouslyAuthenticated(_), _), (.Cached(_), _), (.Unauthenticated, _), (.Demo, _):
         // avoids a default clause
         return false
     }

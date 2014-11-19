@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -83,7 +84,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="be0-rf-0Ne">
-                                <rect key="frame" x="239" y="295" width="121" height="40"/>
+                                <rect key="frame" x="239" y="269" width="121" height="40"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                 <state key="normal" title="Please Log In"/>
@@ -91,17 +92,29 @@
                                     <action selector="authenticateButtonTapped:" destination="n4E-kG-3LI" eventType="touchUpInside" id="lcN-0F-VAx"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYd-1L-UpF">
+                                <rect key="frame" x="267" y="319" width="64" height="40"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal" title="Demo"/>
+                                <connections>
+                                    <action selector="demoButtonTapped:" destination="n4E-kG-3LI" eventType="touchUpInside" id="BZE-df-RzR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="be0-rf-0Ne" secondAttribute="centerY" constant="-15" id="Gih-6X-j6j"/>
+                            <constraint firstItem="be0-rf-0Ne" firstAttribute="centerX" secondItem="aYd-1L-UpF" secondAttribute="centerX" id="7bP-VT-pML"/>
+                            <constraint firstAttribute="centerY" secondItem="be0-rf-0Ne" secondAttribute="bottom" constant="-9" id="Gih-6X-j6j"/>
                             <constraint firstAttribute="centerX" secondItem="Sax-5e-P0h" secondAttribute="centerX" id="H4K-It-VVP"/>
                             <constraint firstItem="Sax-5e-P0h" firstAttribute="top" secondItem="wTL-qY-jnY" secondAttribute="bottom" constant="20" id="Trn-xo-9Xr"/>
                             <constraint firstAttribute="centerX" secondItem="be0-rf-0Ne" secondAttribute="centerX" id="bYU-Mt-8RP"/>
+                            <constraint firstAttribute="centerY" secondItem="aYd-1L-UpF" secondAttribute="top" constant="-19" id="sXd-iQ-Mur"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="authenticateButton" destination="be0-rf-0Ne" id="ZJQ-0N-EOg"/>
+                        <outlet property="demoButton" destination="aYd-1L-UpF" id="v89-01-DyD"/>
                         <outlet property="titleLabel" destination="Sax-5e-P0h" id="IP4-JT-HaZ"/>
                     </connections>
                 </viewController>

@@ -12,6 +12,7 @@ public class AuthenticationPromptViewController: UIViewController {
     
     @IBOutlet weak public var titleLabel: UILabel!
     @IBOutlet weak public var authenticateButton: UIButton!
+    @IBOutlet weak var demoButton: UIButton!
     
     private var notificationObservers: [AnyObject] = []
     
@@ -22,6 +23,8 @@ public class AuthenticationPromptViewController: UIViewController {
             self.titleLabel.textColor = colorScheme.textColor
             self.authenticateButton.backgroundColor = colorScheme.actionableTextColor
             self.authenticateButton.setTitleColor(colorScheme.alternateActionableTextColor, forState: UIControlState.Normal)
+            self.demoButton.backgroundColor = colorScheme.actionableTextColor
+            self.demoButton.setTitleColor(colorScheme.alternateActionableTextColor, forState: UIControlState.Normal)
         }
         updateWithColorScheme(Settings.currentSettings.colorScheme)
         
@@ -38,12 +41,17 @@ public class AuthenticationPromptViewController: UIViewController {
         }
     }
     
-    override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     @IBAction public func authenticateButtonTapped(sender: UIButton) {
+        assert(sender === self.authenticateButton)
         Settings.currentSettings.authenticator.authenticate()
+    }
+    @IBAction func demoButtonTapped(sender: UIButton) {
+        assert(sender === self.demoButton)
+        let alertController = UIAlertController(title: "Demo Mode", message: "Demo mode allows you to try all the features of the app. However, nothing will be saved.", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (_) -> Void in
+            Settings.currentSettings.authenticator.logInAsDemo()
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
 }
