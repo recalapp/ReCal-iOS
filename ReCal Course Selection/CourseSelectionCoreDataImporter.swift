@@ -23,7 +23,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
     }()
     
     override var temporaryFileNames: [String] {
-        return [TemporaryFileNames.courses]
+        return [TemporaryFileNames.activeSemesters, TemporaryFileNames.courses]
     }
     
     private func fetchOrCreateEntityWithServerId(serverId: String, entityName: String) -> CDServerObject {
@@ -165,16 +165,98 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
         }
     }
     
+    private func processActiveSemestersData(data: NSData)->ImportResult {
+        let revertChanges: ()->Void = {
+            self.backgroundManagedObjectContext.performBlockAndWait {
+                self.backgroundManagedObjectContext.reset()
+            }
+        }
+        if let outerDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Dictionary<String, AnyObject> {
+            let processSemesterDict: Dictionary<String, AnyObject> -> (CDSemester?, ImportResult) = { (dict) in
+                let serverId: AnyObject? = dict["id"]
+                if serverId == nil {
+                    return (nil, .Failure)
+                }
+                let semester = self.fetchOrCreateEntityWithServerId("\(serverId)", entityName: "CDSemester") as CDSemester
+                let termCode = dict["term_code"] as? String
+                if termCode == nil {
+                    return (nil, .Failure)
+                }
+                self.backgroundManagedObjectContext.performBlockAndWait {
+                    semester.termCode = termCode!
+                    semester.active = NSNumber(bool: true)
+                }
+                return (semester, .Success)
+            }
+            if let activeSemesterDictArray = outerDict["semesters"] as? [Dictionary<String, AnyObject>] {
+                let (result, semesters) = activeSemesterDictArray.map(processSemesterDict).reduce((.Success, []), combine: { (cumulativePair, currentPair) -> (ImportResult, [CDSemester]) in
+                    let (cumulativeResult, semesters) = cumulativePair
+                    let (semesterOpt, result) = currentPair
+                    switch (cumulativeResult, result) {
+                    case (.Success, .Success):
+                        return (.Success, semesters + [semesterOpt!])
+                    default:
+                        return (.Failure, [])
+                    }
+                })
+                let semestersSet = NSSet(array: semesters)
+                switch result {
+                case .Success:
+                    var errorOpt: NSError?
+                    let fetchRequest: NSFetchRequest = {
+                        let fetchRequest = NSFetchRequest(entityName: "CDSemester")
+                        fetchRequest.predicate = NSPredicate(format: "active = 1")
+                        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "termCode", ascending: false)]
+                        return fetchRequest
+                    }()
+                    var oldActive: [CDSemester]?
+                    self.backgroundManagedObjectContext.performBlockAndWait {
+                        oldActive = self.backgroundManagedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt) as? [CDSemester]
+                    }
+                    if let error = errorOpt {
+                        println("Error getting old active semesters. Error: \(error)")
+                        return .ShouldRetry
+                    }
+                    oldActive = oldActive?.filter { !semestersSet.containsObject($0) }
+                    for toChange in oldActive! {
+                        self.backgroundManagedObjectContext.performBlockAndWait {
+                            toChange.active = NSNumber(bool: false)
+                        }
+                    }
+                    self.backgroundManagedObjectContext.performBlockAndWait {
+                        let _ = self.backgroundManagedObjectContext.save(&errorOpt)
+                    }
+                    if let error = errorOpt {
+                        println("Could not save active semesters. Error: \(error)")
+                        return .ShouldRetry
+                    } else {
+                        return .Success
+                    }
+                case .Failure, .ShouldRetry:
+                    revertChanges()
+                    return result
+                }
+            } else {
+                return .Failure
+            }
+        } else {
+            return .Failure
+        }
+    }
+    
     override func processData(data: NSData, fromTemporaryFileName fileName: String) -> ImportResult {
         switch fileName {
         case TemporaryFileNames.courses:
             return self.processCoursesData(data)
+        case TemporaryFileNames.activeSemesters:
+            return self.processActiveSemestersData(data)
         default:
             assertionFailure("Unsupported file")
             return .Failure
         }
     }
     struct TemporaryFileNames {
+        static let activeSemesters = "activeSemesters"
         static let courses = "courses"
     }
 }
