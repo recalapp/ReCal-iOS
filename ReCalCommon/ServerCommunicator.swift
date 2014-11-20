@@ -81,7 +81,6 @@ public final class ServerCommunicator {
     }
     
     public func registerServerCommunication(serverCommunication: ServerCommunication) {
-        assert(self.identiferServerCommunicationMapping[serverCommunication.identifier] == nil, "Server Communication with identifier \(serverCommunication.identifier) already exists")
         self.serverCommunicationQueue.addOperationWithBlock {
             self.identiferServerCommunicationMapping[serverCommunication.identifier] = serverCommunication
         }

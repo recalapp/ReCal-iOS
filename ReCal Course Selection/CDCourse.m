@@ -2,7 +2,7 @@
 //  CDCourse.m
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 11/7/14.
+//  Created by Naphat Sanguansin on 11/19/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
@@ -18,8 +18,8 @@
 @dynamic courseDescription;
 @dynamic title;
 @dynamic courseListings;
+@dynamic schedules;
 @dynamic sections;
 @dynamic semester;
-@dynamic schedules;
 
 @end

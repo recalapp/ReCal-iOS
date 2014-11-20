@@ -380,7 +380,6 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         if schedule != nil {
             self.schedule = Schedule(managedObject: schedule!)
             let courseServerCommunication = CourseServerCommunication(termCode: self.schedule.termCode)
-            Settings.currentSettings.serverCommunicator.unregisterServerCommunicationWithIdentifier(courseServerCommunication.identifier)
             Settings.currentSettings.serverCommunicator.registerServerCommunication(courseServerCommunication)
             if schedule!.semester.courses.count == 0 {
                 Settings.currentSettings.serverCommunicator.startServerCommunicationWithIdentifier(courseServerCommunication.identifier)
