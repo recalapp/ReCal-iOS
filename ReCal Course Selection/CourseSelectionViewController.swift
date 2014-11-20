@@ -379,6 +379,10 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }
         if schedule != nil {
             self.schedule = Schedule(managedObject: schedule!)
+            let courseServerCommunication = CourseServerCommunication(termCode: self.schedule.termCode)
+            Settings.currentSettings.serverCommunicator.unregisterServerCommunicationWithIdentifier(courseServerCommunication.identifier)
+            Settings.currentSettings.serverCommunicator.registerServerCommunication(courseServerCommunication)
+            Settings.currentSettings.serverCommunicator.startServerCommunicationWithIdentifier(courseServerCommunication.identifier)
             self.reloadEnrolledCoursesView()
             self.reloadScheduleView()
             self.reloadSearchViewController()
@@ -414,9 +418,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             alertController.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
             presentedViewController.presentViewController(alertController, animated: true, completion: nil)
         } else {
-            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.dismissViewControllerAnimated(true) {
                 self.scheduleSelectionViewControllerTransitioningDelegate = nil
-            })
+            }
         }
     }
 }

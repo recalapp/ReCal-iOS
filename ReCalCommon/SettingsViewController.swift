@@ -129,10 +129,10 @@ public class SettingsViewController: UITableViewController, SettingsSwitchTableV
         switch (indexPath.section, indexPath.row) {
         case (recalAppsSection, courseSelectionRow):
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            UIApplication.sharedApplication().openURL(NSURL(string: courseSelectionUrl)!)
+            UIApplication.sharedApplication().openURL(NSURL(string: Urls.courseSelection)!)
         case (recalAppsSection, calendarRow):
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            UIApplication.sharedApplication().openURL(NSURL(string: calendarUrl)!)
+            UIApplication.sharedApplication().openURL(NSURL(string: Urls.calendar)!)
         case (logOutSection, _):
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             self.delegate?.settingsViewControllerDidTapLogOutButton(self)

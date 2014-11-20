@@ -8,12 +8,15 @@
 
 import Foundation
 
-public let baseUrl = "http://recal.io"
-public let authenticationUrl = "\(baseUrl)/mobile_logged_in"
-public let logOutUrl = "\(baseUrl)/logout"
+public struct Urls {
+    public static let base = "http://recal.io"
+    public static let authentication = "\(base)/mobile_logged_in"
+    public static let logOut = "\(base)/logout"
+    
+    
+    public static let calendarUrlScheme = "recalCalendar"
+    public static let courseSelectionUrlScheme = "recalCourseSelection"
+    public static let calendar = "\(calendarUrlScheme)://launch"
+    public static let courseSelection = "\(courseSelectionUrlScheme)://launch"
+}
 
-
-public let calendarUrlScheme = "recalCalendar"
-public let courseSelectionUrlScheme = "recalCourseSelection"
-public let calendarUrl = "\(calendarUrlScheme)://launch"
-public let courseSelectionUrl = "\(courseSelectionUrlScheme)://launch"

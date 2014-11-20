@@ -40,7 +40,7 @@ class UserProfileServerCommunicator : ServerCommunicator.ServerCommunication {
         switch Settings.currentSettings.authenticator.state {
         case .Authenticated(_):
             return .Send
-        case .Unauthenticated, .Cached(_), .PreviouslyAuthenticated(_):
+        case .Unauthenticated, .Cached(_), .PreviouslyAuthenticated(_), .Demo(_):
             return .NextInterrupt
         }
     }

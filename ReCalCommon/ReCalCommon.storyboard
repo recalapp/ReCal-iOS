@@ -84,10 +84,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="be0-rf-0Ne">
-                                <rect key="frame" x="239" y="269" width="121" height="40"/>
+                                <rect key="frame" x="266" y="269" width="67" height="40"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                <state key="normal" title="Please Log In"/>
+                                <state key="normal" title="Log In"/>
                                 <connections>
                                     <action selector="authenticateButtonTapped:" destination="n4E-kG-3LI" eventType="touchUpInside" id="lcN-0F-VAx"/>
                                 </connections>

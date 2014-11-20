@@ -7,3 +7,9 @@
 //
 
 import Foundation
+import ReCalCommon
+
+extension Urls {
+    static let activeSemesters = "\(base)/api/v1/semesters"
+    static let courses = "\(base)/api/v1/courses"
+}

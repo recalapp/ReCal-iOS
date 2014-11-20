@@ -39,7 +39,7 @@ public class Settings {
     
     private(set) public var colorScheme: ColorScheme = DarkColorScheme()
     
-    public var authenticator: Authenticator = Authenticator(rootViewController: UIViewController(), forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
+    public var authenticator: Authenticator = Authenticator(rootViewController: UIViewController(), forAuthenticationUrlString: Urls.authentication, withLogOutUrlString: Urls.logOut)
     
     public var coreDataImporter: CoreDataImporter!
     

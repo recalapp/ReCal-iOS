@@ -87,6 +87,13 @@ public final class ServerCommunicator {
         }
     }
     
+    public func unregisterServerCommunicationWithIdentifier(identifier: String) {
+        assert(self.identiferServerCommunicationMapping[identifier] != nil, "Cannot unregister a communication that was never registered to begin with")
+        self.serverCommunicationQueue.addOperationWithBlock {
+            let _ = self.identiferServerCommunicationMapping.removeValueForKey(identifier)
+        }
+    }
+    
     public func startServerCommunicationWithIdentifier(identifier: String) {
         assert(self.identiferServerCommunicationMapping[identifier] != nil, "Server communication with identifier \(identifier) does not exist")
         self.serverCommunicationQueue.addOperationWithBlock {

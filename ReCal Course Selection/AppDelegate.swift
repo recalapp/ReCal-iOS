@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
-            if url.scheme == courseSelectionUrlScheme {
+            if url.scheme == Urls.courseSelectionUrlScheme {
                 return true
             }
             return false
@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let launch: ()->Void = {
             Settings.currentSettings.theme = .Light
             let rootViewController = self.window?.rootViewController
-            Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
+            Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: Urls.authentication, withLogOutUrlString: Urls.logOut)
             Settings.currentSettings.coreDataImporter = CourseSelectionCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
             if !NSUserDefaults.standardUserDefaults().boolForKey(self.userDefaultsKeyNotFirstLaunch) {
                 println("saving")
@@ -44,12 +44,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                 }
             }
-            NSOperationQueue().addOperationWithBlock {
-                Settings.currentSettings.coreDataImporter.importPendingItems()
-            }
+            Settings.currentSettings.coreDataImporter.importPendingItems()
+            Settings.currentSettings.serverCommunicator.registerServerCommunication(ActiveSemesterServerCommunication())
         }
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
-            if url.scheme == courseSelectionUrlScheme {
+            if url.scheme == Urls.courseSelectionUrlScheme {
                 launch()
                 return true
             }
@@ -60,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        if url.scheme == courseSelectionUrlScheme {
+        if url.scheme == Urls.courseSelectionUrlScheme {
             return true
         }
         return false
