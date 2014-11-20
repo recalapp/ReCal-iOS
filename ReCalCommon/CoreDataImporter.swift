@@ -39,7 +39,7 @@ public class CoreDataImporter {
     }()
     
     public convenience init(persistentStoreCoordinator: NSPersistentStoreCoordinator) {
-        self.init(persistentStoreCoordinator: persistentStoreCoordinator, importInterval: 60)
+        self.init(persistentStoreCoordinator: persistentStoreCoordinator, importInterval: 5)
     }
     public init(persistentStoreCoordinator: NSPersistentStoreCoordinator, importInterval: NSTimeInterval) {
         self.persistentStoreCoordinator = persistentStoreCoordinator

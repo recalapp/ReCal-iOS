@@ -10,6 +10,9 @@ import Foundation
 import ReCalCommon
 
 extension Urls {
-    static let activeSemesters = "\(base)/api/v1/semesters"
-    static let courses = "\(base)/api/v1/courses"
+    static let courseSelectionBase = "\(base)/course_selection"
+    static let activeSemesters = "\(courseSelectionBase)/api/v1/semester/?format=json"
+    static func courses(#semesterTermCode: String) -> String {
+        return "\(courseSelectionBase)/api/v1/course/?semester__term_code=\(semesterTermCode)&format=json"
+    }
 }

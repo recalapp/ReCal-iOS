@@ -67,6 +67,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
         if let downloadedDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Dictionary<String, AnyObject> {
             if let courseDictArray = downloadedDict["objects"] as? [Dictionary<String, AnyObject>] {
                 let courseImportOperationQueue = NSOperationQueue()
+                courseImportOperationQueue.name = "Course Import"
                 courseImportOperationQueue.qualityOfService = .UserInitiated
                 courseImportOperationQueue.maxConcurrentOperationCount = 2
                 let curQueue = NSOperationQueue.currentQueue()
@@ -132,13 +133,15 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 if termCode == nil {
                     return (nil, .Failure)
                 }
+                
                 self.backgroundManagedObjectContext.performBlockAndWait {
                     semester.termCode = termCode!
                     semester.active = NSNumber(bool: true)
                 }
                 return (semester, .Success)
             }
-            if let activeSemesterDictArray = outerDict["semesters"] as? [Dictionary<String, AnyObject>] {
+            if let activeSemesterDictArray = outerDict["objects"] as? [Dictionary<String, AnyObject>] {
+                println("Importing active semesters")
                 let (result, semesters) = activeSemesterDictArray.map(processSemesterDict).reduce((.Success, []), combine: { (cumulativePair, currentPair) -> (ImportResult, [CDSemester]) in
                     let (cumulativeResult, semesters) = cumulativePair
                     let (semesterOpt, result) = currentPair
@@ -187,6 +190,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     }
                 case .Failure, .ShouldRetry:
                     revertChanges()
+                    println("failure importing")
                     return result
                 }
             } else {

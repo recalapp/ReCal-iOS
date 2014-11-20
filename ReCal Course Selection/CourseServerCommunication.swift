@@ -12,8 +12,8 @@ import ReCalCommon
 class CourseServerCommunication: ServerCommunicator.ServerCommunication {
     let termCode: String
     override var request: NSURLRequest {
-        // TODO get actual url
-        let urlString = Urls.courses
+        // get actual url
+        let urlString = Urls.courses(semesterTermCode: self.termCode)
         return NSURLRequest(URL: NSURL(string: urlString)!)
     }
     override var idleInterval: Int {
