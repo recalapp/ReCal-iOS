@@ -13,6 +13,9 @@ public class CoreDataImporter {
     
     private var privateQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
+        queue.name = "Core Data Importer"
+        queue.qualityOfService = NSQualityOfService.Utility
+        queue.maxConcurrentOperationCount = 1
         return queue
     }()
     private let temporaryDirectory = "core_data_importer_temp"

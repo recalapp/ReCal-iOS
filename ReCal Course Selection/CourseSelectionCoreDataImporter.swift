@@ -65,30 +65,29 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
             }
         }
         if let downloadedDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Dictionary<String, AnyObject> {
-            let courseImporter = CourseAttributeImporter()
-            let processCourseDict: Dictionary<String, AnyObject> -> ImportResult = { (dict) in
-                let serverId: AnyObject? = dict["id"]
-                if serverId == nil {
-                    return .Failure
-                }
-                let course = self.fetchOrCreateEntityWithServerId("\(serverId)", entityName: "CDCourse") as CDCourse
-                let result = courseImporter.importAttributeFromDictionary(dict, intoManagedObject: course, inManagedObjectContext: self.backgroundManagedObjectContext)
-                switch result {
-                case .Success:
-                    return .Success
-                case .Error(_):
-                    return .Failure
-                }
-            }
             if let courseDictArray = downloadedDict["objects"] as? [Dictionary<String, AnyObject>] {
-                let result = courseDictArray.map(processCourseDict).reduce(ImportResult.Success, combine: { (oldResult, newResult) in
-                    switch (oldResult, newResult) {
-                    case (.Success, .Success):
-                        return .Success
-                    default:
-                        return .Failure
+                let courseImportOperationQueue = NSOperationQueue()
+                courseImportOperationQueue.qualityOfService = .UserInitiated
+                courseImportOperationQueue.maxConcurrentOperationCount = 2
+                let curQueue = NSOperationQueue.currentQueue()
+                var result: ImportResult = .Success
+                let courseImporter = CourseAttributeImporter()
+                for courseDict in courseDictArray {
+                    let courseImportOperation = CourseImportOperation(courseDictionary: courseDict, courseImporter: courseImporter, managedObjectContext: self.backgroundManagedObjectContext) { (newResult) -> Void in
+                        let _ = curQueue?.addOperationWithBlock {
+                            switch (result, newResult) {
+                            case (.Success, .Success):
+                                result = .Success
+                            default:
+                                result = .Failure
+                            }
+                        }
                     }
-                })
+                    courseImportOperationQueue.addOperation(courseImportOperation)
+                }
+                println("total: \(courseDictArray.count)")
+                courseImportOperationQueue.waitUntilAllOperationsAreFinished()
+                println("finished waiting")
                 switch result {
                 case .Success:
                     var errorOpt: NSError?

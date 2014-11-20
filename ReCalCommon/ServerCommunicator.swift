@@ -14,6 +14,9 @@ public final class ServerCommunicator {
     
     private var serverCommunicationQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
+        queue.name = "Server Communicator"
+        queue.qualityOfService = NSQualityOfService.Utility
+        queue.maxConcurrentOperationCount = 1
         return queue
     }()
     
