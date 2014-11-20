@@ -116,6 +116,7 @@ public class CoreDataImporter {
                                     println("Error deleting old temporary file. Aborting save. Error: \(error)")
                                 }
                             }
+                            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.DidImport, object: self, userInfo: [NotificationUserInfo.ImportFileName: fileName])
                         }
                     }
                 }
@@ -135,5 +136,11 @@ public class CoreDataImporter {
         
         /// Unrecoverable error. Delete temporary file
         case Failure
+    }
+    public struct Notifications {
+        public static let DidImport = "CoreDataImporterDidImport"
+    }
+    public struct NotificationUserInfo {
+        public static let ImportFileName = "ImportFileName"
     }
 }

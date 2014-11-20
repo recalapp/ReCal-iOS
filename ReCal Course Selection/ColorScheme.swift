@@ -10,18 +10,6 @@ import UIKit
 
 public class ColorScheme {
     // MARK: - Singleton pattern
-//    private struct Static {
-//        static var instance: ColorScheme?
-//    }
-//    
-//    public class var currentColorScheme: ColorScheme {
-//        get {
-//            return Static.instance!
-//        }
-//        set {
-//            Static.instance = newValue
-//        }
-//    }
     
     public init(){
         

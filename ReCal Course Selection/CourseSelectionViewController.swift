@@ -68,6 +68,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }()
     private var settingsViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     private var scheduleSelectionViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
+    private var loadingIndicatorViewController: LoadingIndicatorViewController?
     
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     private var enrolledLabel: UILabel!
@@ -109,6 +110,11 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                     println("Error deleting schedule. Error: \(error)")
                     return
                 }
+            }
+        }
+        let obsever3 = NSNotificationCenter.defaultCenter().addObserverForName(CoreDataImporter.Notifications.DidImport, object: nil, queue: NSOperationQueue.mainQueue()) { (notification: NSNotification!) -> Void in
+            if self.loadingIndicatorViewController != nil && (notification.userInfo?[CoreDataImporter.NotificationUserInfo.ImportFileName] as? String) == CourseSelectionCoreDataImporter.TemporaryFileNames.courses {
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
         let updateWithColorScheme: ()->Void = {
@@ -392,6 +398,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }
         self.dismissViewControllerAnimated(true) {
             self.scheduleSelectionViewControllerTransitioningDelegate = nil
+            if schedule!.semester.courses.count == 0 {
+                let loadingVC = LoadingIndicatorViewController.instantiateFromStoryboard()
+                loadingVC.textLabel.text = "Loading courses for semester \(schedule!.semester.termCode)"
+                loadingVC.modalTransitionStyle = .CrossDissolve
+                self.presentViewController(loadingVC, animated: true, completion: nil)
+            }
         }
     }
     
