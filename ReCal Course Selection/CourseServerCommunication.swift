@@ -40,7 +40,6 @@ class CourseServerCommunication: ServerCommunicator.ServerCommunication {
     
     
     override func shouldSendRequest()->ServerCommunicator.ShouldSend {
-        Settings.currentSettings.authenticator.authenticate()
         switch Settings.currentSettings.authenticator.state {
         case .Authenticated(_), .Demo(_), .Cached(_), .PreviouslyAuthenticated(_):
             return .Send

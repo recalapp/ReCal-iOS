@@ -382,7 +382,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             let courseServerCommunication = CourseServerCommunication(termCode: self.schedule.termCode)
             Settings.currentSettings.serverCommunicator.unregisterServerCommunicationWithIdentifier(courseServerCommunication.identifier)
             Settings.currentSettings.serverCommunicator.registerServerCommunication(courseServerCommunication)
-            Settings.currentSettings.serverCommunicator.startServerCommunicationWithIdentifier(courseServerCommunication.identifier)
+            if schedule!.semester.courses.count == 0 {
+                Settings.currentSettings.serverCommunicator.startServerCommunicationWithIdentifier(courseServerCommunication.identifier)
+            }
             self.reloadEnrolledCoursesView()
             self.reloadScheduleView()
             self.reloadSearchViewController()

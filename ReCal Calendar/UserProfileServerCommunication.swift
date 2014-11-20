@@ -36,11 +36,13 @@ class UserProfileServerCommunicator : ServerCommunicator.ServerCommunication {
         }
     }
     override func shouldSendRequest() -> ServerCommunicator.ShouldSend {
-        Settings.currentSettings.authenticator.authenticate()
         switch Settings.currentSettings.authenticator.state {
         case .Authenticated(_):
             return .Send
-        case .Unauthenticated, .Cached(_), .PreviouslyAuthenticated(_), .Demo(_):
+        case .Unauthenticated:
+            return .NextInterrupt
+        case .Cached(_), .PreviouslyAuthenticated(_), .Demo(_):
+            Settings.currentSettings.authenticator.authenticate()
             return .NextInterrupt
         }
     }
