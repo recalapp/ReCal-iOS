@@ -71,7 +71,8 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
             if let courseDictArray = downloadedDict["objects"] as? [Dictionary<String, AnyObject>] {
                 let courseImportOperationQueue = NSOperationQueue()
                 courseImportOperationQueue.name = "Course Import"
-                courseImportOperationQueue.qualityOfService = .UserInitiated
+                courseImportOperationQueue.qualityOfService = .Utility
+                courseImportOperationQueue.underlyingQueue = (NSOperationQueue.currentQueue()?.underlyingQueue)!
                 courseImportOperationQueue.maxConcurrentOperationCount = 2
                 let curQueue = NSOperationQueue.currentQueue()
                 var result: ImportResult = .Success
@@ -79,7 +80,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 progress.totalUnitCount = Int64(courseDictArray.count)
                 for courseDict in courseDictArray {
                     let courseImportOperation = CourseImportOperation(courseDictionary: courseDict, courseImporter: courseImporter, managedObjectContext: self.backgroundManagedObjectContext) { (newResult) -> Void in
-                        let _ = curQueue?.addOperationWithBlock {
+                        synchronize(self) {
                             progress.completedUnitCount += 1
                             switch (result, newResult) {
                             case (.Success, .Success):

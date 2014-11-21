@@ -103,15 +103,17 @@ public class CoreDataImporter {
         self.assertPrivateQueue()
         var progress = NSProgress(totalUnitCount: Int64(self.temporaryFileNames.count))
         // progress is now set
-        progress.becomeCurrentWithPendingUnitCount(progress.totalUnitCount)
+        
         for fileName in self.temporaryFileNames {
+            progress.becomeCurrentWithPendingUnitCount(1)
             self.importPendingItems(temporaryFileName: fileName)
+            progress.resignCurrent()
         }
-        progress.resignCurrent()
         return progress
     }
     
     public func importPendingItems(#temporaryFileName: String)-> NSProgress {
+        // ok to call this function many times. the second time, the file just wouldn't exist, which we handle
         self.assertPrivateQueue()
         let initialUnitCount: Int64 = 1
         var progress = NSProgress(totalUnitCount: initialUnitCount)

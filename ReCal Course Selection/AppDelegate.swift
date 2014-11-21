@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         launch()
         return true
     }
-
+    
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
         if url.scheme == Urls.courseSelectionUrlScheme {
             return true
