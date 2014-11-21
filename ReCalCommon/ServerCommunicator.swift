@@ -45,6 +45,12 @@ public final class ServerCommunicator {
         assert(NSOperationQueue.currentQueue() == self.serverCommunicationQueue, "Must be on the server communication queue")
         switch serverCommunication.status {
         case .Connecting, .Processing:
+            switch reason {
+            case .Initial:
+                serverCommunication.status = .Ready
+            case .Manual, .TimerInterrupt:
+                break
+            }
             break
         case .Idle(let remaining):
             switch reason {
@@ -57,6 +63,8 @@ public final class ServerCommunicator {
             case .Manual:
                 serverCommunication.status = .Ready
                 return self.advanceStateForServerCommunication(serverCommunication, reason: reason)
+            case .Initial:
+                serverCommunication.status = .Ready
             }
             
         case .Ready:
@@ -85,6 +93,7 @@ public final class ServerCommunicator {
     
     public func registerServerCommunication(serverCommunication: ServerCommunication) {
         self.serverCommunicationQueue.addOperationWithBlock {
+            self.advanceStateForServerCommunication(serverCommunication, reason: .Initial)
             self.identiferServerCommunicationMapping[serverCommunication.identifier] = serverCommunication
         }
     }
@@ -106,6 +115,7 @@ public final class ServerCommunicator {
     private enum AdvanceReason {
         case TimerInterrupt
         case Manual
+        case Initial
     }
     public enum ShouldSend {
         case Send

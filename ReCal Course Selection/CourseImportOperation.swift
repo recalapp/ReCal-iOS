@@ -57,7 +57,13 @@ class CourseImportOperation: NSOperation {
             self.completion(.Failure)
             return
         }
+        if self.cancelled {
+            return
+        }
         let course = self.fetchOrCreateEntityWithServerId("\(serverId)", entityName: "CDCourse") as CDCourse
+        if self.cancelled {
+            return
+        }
         let result = courseImporter.importAttributeFromDictionary(dict, intoManagedObject: course, inManagedObjectContext: self.managedObjectContext)
         switch result {
         case .Success:

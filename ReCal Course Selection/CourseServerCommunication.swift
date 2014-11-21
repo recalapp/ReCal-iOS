@@ -37,14 +37,4 @@ class CourseServerCommunication: ServerCommunicator.ServerCommunication {
             return .NoAction
         }
     }
-    
-    
-    override func shouldSendRequest()->ServerCommunicator.ShouldSend {
-        switch Settings.currentSettings.authenticator.state {
-        case .Authenticated(_), .Demo(_), .Cached(_), .PreviouslyAuthenticated(_):
-            return .Send
-        case .Unauthenticated:
-            return .NextInterrupt
-        }
-    }
 }

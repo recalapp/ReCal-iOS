@@ -11,7 +11,7 @@ import ReCalCommon
 
 class ActiveSemesterServerCommunication: ServerCommunicator.ServerCommunication {
     override var request: NSURLRequest {
-        // TODO get actual url
+        // get actual url
         let urlString = Urls.activeSemesters
         return NSURLRequest(URL: NSURL(string: urlString)!)
     }
@@ -32,16 +32,6 @@ class ActiveSemesterServerCommunication: ServerCommunicator.ServerCommunication 
         case .Failure(let error):
             println("Error downloading active semesters. Error: \(error)")
             return .NoAction
-        }
-    }
-    
-    
-    override func shouldSendRequest()->ServerCommunicator.ShouldSend {
-        switch Settings.currentSettings.authenticator.state {
-        case .Authenticated(_), .Demo(_), .Cached(_), .PreviouslyAuthenticated(_):
-            return .Send
-        case .Unauthenticated:
-            return .NextInterrupt
         }
     }
 }

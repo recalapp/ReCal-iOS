@@ -39,11 +39,13 @@ class EventsServerCommunication : ServerCommunicator.ServerCommunication {
         switch Settings.currentSettings.authenticator.state {
         case .Authenticated(_):
             return .Send
-        case .Unauthenticated:
+        case .Unauthenticated, .PreviouslyAuthenticated(_):
             return .NextInterrupt
-        case .Cached(_), .PreviouslyAuthenticated(_), .Demo(_):
+        case .Cached(_):
             Settings.currentSettings.authenticator.authenticate()
             return .NextInterrupt
+        case .Demo(_):
+            return .Cancel
         }
     }
 }

@@ -81,6 +81,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                                 result = .Success
                             default:
                                 result = .Failure
+                                courseImportOperationQueue.cancelAllOperations()
                             }
                         }
                     }
