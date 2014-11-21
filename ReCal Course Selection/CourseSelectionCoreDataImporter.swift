@@ -58,12 +58,15 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
         return managedObject!
     }
     
-    private func processCoursesData(data: NSData) -> ImportResult {
+    private func processCoursesData(data: NSData, withProgress progress: NSProgress) -> ImportResult {
         let revertChanges: ()->Void = {
             self.backgroundManagedObjectContext.performBlockAndWait {
                 self.backgroundManagedObjectContext.reset()
             }
         }
+        let initialUnitCount: Int64 = 1
+        progress.totalUnitCount = initialUnitCount
+        progress.completedUnitCount = 0
         if let downloadedDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Dictionary<String, AnyObject> {
             if let courseDictArray = downloadedDict["objects"] as? [Dictionary<String, AnyObject>] {
                 let courseImportOperationQueue = NSOperationQueue()
@@ -73,9 +76,11 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 let curQueue = NSOperationQueue.currentQueue()
                 var result: ImportResult = .Success
                 let courseImporter = CourseAttributeImporter()
+                progress.totalUnitCount = Int64(courseDictArray.count)
                 for courseDict in courseDictArray {
                     let courseImportOperation = CourseImportOperation(courseDictionary: courseDict, courseImporter: courseImporter, managedObjectContext: self.backgroundManagedObjectContext) { (newResult) -> Void in
                         let _ = curQueue?.addOperationWithBlock {
+                            progress.completedUnitCount += 1
                             switch (result, newResult) {
                             case (.Success, .Success):
                                 result = .Success
@@ -87,9 +92,8 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     }
                     courseImportOperationQueue.addOperation(courseImportOperation)
                 }
-                println("total: \(courseDictArray.count)")
                 courseImportOperationQueue.waitUntilAllOperationsAreFinished()
-                println("finished waiting")
+                progress.completedUnitCount = progress.totalUnitCount // in case we got cancelled along the way
                 switch result {
                 case .Success:
                     var errorOpt: NSError?
@@ -110,28 +114,35 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     return result
                 }
             } else {
+                progress.completedUnitCount = initialUnitCount
                 return .Failure
             }
         } else {
+            progress.completedUnitCount = initialUnitCount
             return .Failure
         }
     }
     
-    private func processActiveSemestersData(data: NSData)->ImportResult {
+    private func processActiveSemestersData(data: NSData, withProgress progress: NSProgress)->ImportResult {
         let revertChanges: ()->Void = {
             self.backgroundManagedObjectContext.performBlockAndWait {
                 self.backgroundManagedObjectContext.reset()
             }
         }
+        let initialUnitCount: Int64 = 1
+        progress.totalUnitCount = initialUnitCount
+        progress.completedUnitCount = 0
         if let outerDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Dictionary<String, AnyObject> {
             let processSemesterDict: Dictionary<String, AnyObject> -> (CDSemester?, ImportResult) = { (dict) in
                 let serverId: AnyObject? = dict["id"]
                 if serverId == nil {
+                    progress.completedUnitCount += 1
                     return (nil, .Failure)
                 }
                 let semester = self.fetchOrCreateEntityWithServerId("\(serverId)", entityName: "CDSemester") as CDSemester
                 let termCode = dict["term_code"] as? String
                 if termCode == nil {
+                    progress.completedUnitCount += 1
                     return (nil, .Failure)
                 }
                 
@@ -139,10 +150,12 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     semester.termCode = termCode!
                     semester.active = NSNumber(bool: true)
                 }
+                progress.completedUnitCount += 1
                 return (semester, .Success)
             }
             if let activeSemesterDictArray = outerDict["objects"] as? [Dictionary<String, AnyObject>] {
                 println("Importing active semesters")
+                progress.totalUnitCount = Int64(activeSemesterDictArray.count)
                 let (result, semesters) = activeSemesterDictArray.map(processSemesterDict).reduce((.Success, []), combine: { (cumulativePair, currentPair) -> (ImportResult, [CDSemester]) in
                     let (cumulativeResult, semesters) = cumulativePair
                     let (semesterOpt, result) = currentPair
@@ -195,19 +208,20 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     return result
                 }
             } else {
+                progress.completedUnitCount = initialUnitCount
                 return .Failure
             }
         } else {
+            progress.completedUnitCount = initialUnitCount
             return .Failure
         }
     }
-    
-    override func processData(data: NSData, fromTemporaryFileName fileName: String) -> ImportResult {
+    override func processData(data: NSData, fromTemporaryFileName fileName: String, withProgress progress: NSProgress) -> CoreDataImporter.ImportResult {
         switch fileName {
         case TemporaryFileNames.courses:
-            return self.processCoursesData(data)
+            return self.processCoursesData(data, withProgress: progress)
         case TemporaryFileNames.activeSemesters:
-            return self.processActiveSemestersData(data)
+            return self.processActiveSemestersData(data, withProgress: progress)
         default:
             assertionFailure("Unsupported file")
             return .Failure

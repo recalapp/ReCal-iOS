@@ -29,8 +29,10 @@ class CourseServerCommunication: ServerCommunicator.ServerCommunication {
         switch result {
         case .Success(_, let data):
             println("Successfully downloaded courses")
-            Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
-            Settings.currentSettings.coreDataImporter.importPendingItems()
+            Settings.currentSettings.coreDataImporter.performBlockAndWait {
+                Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+                Settings.currentSettings.coreDataImporter.importPendingItems()
+            }
             return .NoAction
         case .Failure(let error):
             println("Error downloading courses. Error: \(error)")

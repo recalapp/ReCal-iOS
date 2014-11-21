@@ -140,3 +140,10 @@ public extension String {
         }
     }
 }
+
+public func synchronize<T>(lockObj: AnyObject, closure: ()->T)->T {
+    objc_sync_enter(lockObj)
+    let answer = closure()
+    objc_sync_exit(lockObj)
+    return answer
+}

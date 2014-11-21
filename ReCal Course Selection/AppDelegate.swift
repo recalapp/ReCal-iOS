@@ -40,11 +40,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if let filePath = filePathOpt {
                     let initialDataOpt = NSData(contentsOfFile: filePath)
                     if let initialData = initialDataOpt {
-                        Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+                        let coreDataImporter = Settings.currentSettings.coreDataImporter
+                        coreDataImporter.performBlockAndWait {
+                            coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+                        }
                     }
                 }
             }
-            Settings.currentSettings.coreDataImporter.importPendingItems()
+            Settings.currentSettings.coreDataImporter.performBlockAndWait {
+                let _ = Settings.currentSettings.coreDataImporter.importPendingItems()
+            }
             Settings.currentSettings.serverCommunicator.registerServerCommunication(ActiveSemesterServerCommunication())
         }
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {

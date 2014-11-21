@@ -28,7 +28,9 @@ class UserProfileServerCommunicator : ServerCommunicator.ServerCommunication {
         switch result {
         case .Success(_, let data):
             println("Successfully downloaded user profile data")
-            Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CalendarCoreDataImporter.TemporaryFileNames.userProfile)
+            Settings.currentSettings.coreDataImporter.performBlockAndWait {
+                Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CalendarCoreDataImporter.TemporaryFileNames.userProfile)
+            }
             return .NoAction
         case .Failure(let error):
             println("Error downloading user profile data. Error: \(error)")

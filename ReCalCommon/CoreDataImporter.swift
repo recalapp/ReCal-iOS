@@ -18,6 +18,9 @@ public class CoreDataImporter {
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
+    private func assertPrivateQueue() {
+        assert(NSOperationQueue.currentQueue() == self.privateQueue)
+    }
     private let temporaryDirectory = "core_data_importer_temp"
     
     private var temporaryDirectoryPath: String? {
@@ -60,52 +63,67 @@ public class CoreDataImporter {
     }
     
     @objc public final func handleTimerInterrupt(_: NSTimer) {
-        self.importPendingItems()
+        self.performBlock {
+            let _ = self.importPendingItems()
+        }
     }
     
     public final func writeJSONDataToPendingItemsDirectory(data: NSData, withTemporaryFileName fileName: String) {
-        self.privateQueue.addOperationWithBlock {
-            var errorOpt: NSError?
-            let parsed: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &errorOpt)
-            if let error = errorOpt {
-                println("Error parsing json data. Aborting write. Error: \(error)")
-                return
-            }
-            let parsedData = NSKeyedArchiver.archivedDataWithRootObject(parsed!)
-            let fileManager = NSFileManager.defaultManager()
-            if let temporaryDirectoryPath = self.temporaryDirectoryPath {
-                if !fileManager.fileExistsAtPath(temporaryDirectoryPath) {
-                    fileManager.createDirectoryAtPath(temporaryDirectoryPath, withIntermediateDirectories: false, attributes: nil, error: &errorOpt)
-                    if let error = errorOpt {
-                        println("Error creating temporary directory. Aborting. Error: \(error)")
-                        return
-                    }
+        self.assertPrivateQueue()
+        var errorOpt: NSError?
+        let parsed: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &errorOpt)
+        if let error = errorOpt {
+            println("Error parsing json data. Aborting write. Error: \(error)")
+            return
+        }
+        let parsedData = NSKeyedArchiver.archivedDataWithRootObject(parsed!)
+        let fileManager = NSFileManager.defaultManager()
+        if let temporaryDirectoryPath = self.temporaryDirectoryPath {
+            if !fileManager.fileExistsAtPath(temporaryDirectoryPath) {
+                fileManager.createDirectoryAtPath(temporaryDirectoryPath, withIntermediateDirectories: false, attributes: nil, error: &errorOpt)
+                if let error = errorOpt {
+                    println("Error creating temporary directory. Aborting. Error: \(error)")
+                    return
                 }
-                let temporaryFilePath = temporaryDirectoryPath.stringByAppendingPathComponent(fileName)
-                if fileManager.fileExistsAtPath(temporaryFilePath) {
-                    fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
-                    if let error = errorOpt {
-                        println("Error deleting old temporary file. Aborting save. Error: \(error)")
-                        return
-                    }
-                }
-                fileManager.createFileAtPath(temporaryFilePath, contents: parsedData, attributes: nil)
-            } else {
-                println("Error getting directory path. Aborting save.")
             }
+            let temporaryFilePath = temporaryDirectoryPath.stringByAppendingPathComponent(fileName)
+            if fileManager.fileExistsAtPath(temporaryFilePath) {
+                fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
+                if let error = errorOpt {
+                    println("Error deleting old temporary file. Aborting save. Error: \(error)")
+                    return
+                }
+            }
+            fileManager.createFileAtPath(temporaryFilePath, contents: parsedData, attributes: nil)
+        } else {
+            println("Error getting directory path. Aborting save.")
         }
     }
-    public final func importPendingItems() {
-        self.privateQueue.addOperationWithBlock {
-            for fileName in self.temporaryFileNames {
-                if let temporaryFilePath = self.temporaryDirectoryPath?.stringByAppendingPathComponent(fileName) {
+    public final func importPendingItems() -> NSProgress {
+        self.assertPrivateQueue()
+        var progress = NSProgress(totalUnitCount: Int64(self.temporaryFileNames.count))
+        // progress is now set
+        progress.becomeCurrentWithPendingUnitCount(progress.totalUnitCount)
+        for fileName in self.temporaryFileNames {
+            self.importPendingItems(temporaryFileName: fileName)
+        }
+        progress.resignCurrent()
+        return progress
+    }
+    
+    public func importPendingItems(#temporaryFileName: String)-> NSProgress {
+        self.assertPrivateQueue()
+        let initialUnitCount: Int64 = 1
+        var progress = NSProgress(totalUnitCount: initialUnitCount)
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), { () -> Void in
+            self.performBlock {
+                if let temporaryFilePath = self.temporaryDirectoryPath?.stringByAppendingPathComponent(temporaryFileName) {
                     let fileManager = NSFileManager.defaultManager()
                     if fileManager.fileExistsAtPath(temporaryFilePath) {
                         let dataOpt = NSData(contentsOfFile: temporaryFilePath)
                         var errorOpt: NSError?
-                        
                         if let data = dataOpt {
-                            switch self.processData(data, fromTemporaryFileName: fileName) {
+                            switch self.processData(data, fromTemporaryFileName: temporaryFileName, withProgress: progress) {
                             case .Success:
                                 fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
                                 if let error = errorOpt {
@@ -119,15 +137,28 @@ public class CoreDataImporter {
                                     println("Error deleting old temporary file. Aborting save. Error: \(error)")
                                 }
                             }
-                            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.DidImport, object: self, userInfo: [NotificationUserInfo.ImportFileName: fileName])
+                            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.DidImport, object: self, userInfo: [NotificationUserInfo.ImportFileName: temporaryFileName])
                         }
+                    } else {
+                        // file does not exist
+                        progress.completedUnitCount = initialUnitCount
                     }
+                } else {
+                    // could not get file path
+                    progress.completedUnitCount = initialUnitCount
                 }
             }
-        }
+        })
+        return progress
     }
-    
-    public func processData(data: NSData, fromTemporaryFileName fileName: String) -> ImportResult {
+    public func performBlock(closure: ()->Void) {
+        self.privateQueue.addOperationWithBlock(closure)
+    }
+    public func performBlockAndWait(closure: ()->Void) {
+        self.privateQueue.addOperationWithBlock(closure)
+        self.privateQueue.waitUntilAllOperationsAreFinished()
+    }
+    public func processData(data: NSData, fromTemporaryFileName fileName: String, withProgress: NSProgress) -> ImportResult {
         return .Success
     }
     public enum ImportResult {

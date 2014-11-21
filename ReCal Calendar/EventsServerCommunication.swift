@@ -28,7 +28,9 @@ class EventsServerCommunication : ServerCommunicator.ServerCommunication {
         switch result {
         case .Success(_, let data):
             println("Successfully downloaded event data")
-            Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CalendarCoreDataImporter.TemporaryFileNames.events)
+            Settings.currentSettings.coreDataImporter.performBlockAndWait {
+                Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CalendarCoreDataImporter.TemporaryFileNames.events)
+            }
             return .NoAction
         case .Failure(let error):
             println("Error downloading event data. Error: \(error)")
