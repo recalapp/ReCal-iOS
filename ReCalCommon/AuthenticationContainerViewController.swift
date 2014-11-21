@@ -58,7 +58,6 @@ public class AuthenticationContainerViewController: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleStatusViewTap:")
         self.statusView.addGestureRecognizer(tapGestureRecognizer)
     }
-    
     deinit {
         for observer in self.notificationObservers {
             NSNotificationCenter.defaultCenter().removeObserver(observer)

@@ -23,7 +23,12 @@ public class Authenticator: AuthenticationViewControllerDelegate {
         self.authenticationUrl = NSURL(string: urlString)!
         self.logOutUrl = NSURL(string: logOutUrlString)!
         if let userSerialized = NSUserDefaults.standardUserDefaults().objectForKey(authenticationUserDefaultsKey) as? SerializedDictionary {
-            self.state = .Cached(User(serializedDictionary: userSerialized))
+            let user = User(serializedDictionary: userSerialized)
+            if user.isRealUser {
+                self.state = .Cached(user)
+            } else {
+                self.state = .Demo(user)
+            }
         } else {
             self.state = .Unauthenticated
         }
@@ -41,7 +46,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
                     NSUserDefaults.standardUserDefaults().setObject(user.serialize(), forKey: authenticationUserDefaultsKey)
                 case .PreviouslyAuthenticated(let user):
                     NSUserDefaults.standardUserDefaults().setObject(user.serialize(), forKey: authenticationUserDefaultsKey)
-                case .Demo(_):
+                case .Demo(let user):
+                    NSUserDefaults.standardUserDefaults().setObject(user.serialize(), forKey: authenticationUserDefaultsKey)
                     break
                 case .Unauthenticated:
                     NSUserDefaults.standardUserDefaults().removeObjectForKey(authenticationUserDefaultsKey)
@@ -169,7 +175,7 @@ public class Authenticator: AuthenticationViewControllerDelegate {
             case .Success(let username):
                 self.state = .Authenticated(User(username: username))
             case .SuccessDemo:
-                self.state = .Demo(User(username: "(demo)"))
+                self.state = .Demo(User(username: "(demo)", isRealUser: false))
             case .Failure, .LogOut:
                 break
             }
@@ -231,14 +237,21 @@ public func == (lhs: AuthenticationStatus, rhs: AuthenticationStatus) -> Bool {
 public struct User: Equatable, Serializable {
     let username: String
     private let serializedDictionaryKeyUser = "user"
+    private let serializedDictionaryKeyIsReal = "isReal"
+    private let isRealUser: Bool = true
     public init(username: String) {
         self.username = username
     }
+    public init(username: String, isRealUser: Bool) {
+        self.username = username
+        self.isRealUser = isRealUser
+    }
     public init(serializedDictionary: SerializedDictionary) {
         self.username = serializedDictionary[serializedDictionaryKeyUser]! as String
+        self.isRealUser = serializedDictionary[serializedDictionaryKeyIsReal]! as Bool
     }
     public func serialize() -> SerializedDictionary {
-        return [serializedDictionaryKeyUser: self.username]
+        return [serializedDictionaryKeyUser: self.username, serializedDictionaryKeyIsReal: self.isRealUser]
     }
 }
 

@@ -86,6 +86,8 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             }
         }
         let observer2 = NSNotificationCenter.defaultCenter().addObserverForName(authenticatorStateDidChangeNofication, object: nil, queue: nil) { (_) -> Void in
+            // delete all the schedules
+            
             let fetchRequest = NSFetchRequest(entityName: "CDSchedule")
             fetchRequest.includesPropertyValues = false
             var errorOpt: NSError?
