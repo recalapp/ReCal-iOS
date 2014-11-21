@@ -31,8 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let rootViewController = self.window?.rootViewController
             Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
             Settings.currentSettings.coreDataImporter = CalendarCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
-            Settings.currentSettings.serverCommunicator.registerServerCommunication(EventsServerCommunication())
-            Settings.currentSettings.serverCommunicator.registerServerCommunication(UserProfileServerCommunicator())
+            Settings.currentSettings.serverCommunicator.performBlockAndWait {
+                Settings.currentSettings.serverCommunicator.registerServerCommunication(EventsServerCommunication())
+                Settings.currentSettings.serverCommunicator.registerServerCommunication(UserProfileServerCommunicator())
+            }
         }
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
             if url.scheme == calendarUrlScheme {

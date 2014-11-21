@@ -128,6 +128,8 @@
 		81E50D671A0E50C30074F381 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E50D661A0E50C30074F381 /* CalendarViewController.swift */; };
 		81E50D681A0E52290074F381 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B6D3121A0DA81D00B883A6 /* Settings.swift */; };
 		81E50D691A0E53640074F381 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
+		81E586241A1FA6B600DE269B /* URLConnectionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E586231A1FA6B600DE269B /* URLConnectionObserver.swift */; };
+		81E586261A1FAA7200DE269B /* URLConnectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E586251A1FAA7200DE269B /* URLConnectionExtension.swift */; };
 		81E6406D19FACDCA003A49F8 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E6406C19FACDCA003A49F8 /* Set.swift */; };
 		81F76B001A13DAF9001B6233 /* CDSectionEnrollment.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76AFF1A13DAF9001B6233 /* CDSectionEnrollment.m */; };
 		81F76B031A13DAF9001B6233 /* CDSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B021A13DAF9001B6233 /* CDSection.m */; };
@@ -356,6 +358,8 @@
 		81E50D5C1A0DB5420074F381 /* ReCal_CalendarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReCal_CalendarTests.swift; sourceTree = "<group>"; };
 		81E50D641A0E503B0074F381 /* URLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		81E50D661A0E50C30074F381 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		81E586231A1FA6B600DE269B /* URLConnectionObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLConnectionObserver.swift; sourceTree = "<group>"; };
+		81E586251A1FAA7200DE269B /* URLConnectionExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLConnectionExtension.swift; sourceTree = "<group>"; };
 		81E6406C19FACDCA003A49F8 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		81F76AFE1A13DAF9001B6233 /* CDSectionEnrollment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSectionEnrollment.h; sourceTree = "<group>"; };
 		81F76AFF1A13DAF9001B6233 /* CDSectionEnrollment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSectionEnrollment.m; sourceTree = "<group>"; };
@@ -821,6 +825,7 @@
 		81D9F25C19EF4D9600F987B9 /* ReCalCommon */ = {
 			isa = PBXGroup;
 			children = (
+				81E586221A1FA69800DE269B /* URL Connection Observer */,
 				816987B71A1D86E300DD6A58 /* Loading Indicator Controller */,
 				814735071A1A3BEE004B3A34 /* Sidebar Overlay Presentation */,
 				81792B3C1A1928DD0035D062 /* Static Table View */,
@@ -913,6 +918,15 @@
 				81E50D5B1A0DB5420074F381 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		81E586221A1FA69800DE269B /* URL Connection Observer */ = {
+			isa = PBXGroup;
+			children = (
+				81E586231A1FA6B600DE269B /* URLConnectionObserver.swift */,
+				81E586251A1FAA7200DE269B /* URLConnectionExtension.swift */,
+			);
+			name = "URL Connection Observer";
 			sourceTree = "<group>";
 		};
 		81F76B0A1A1697D3001B6233 /* Core Data Import */ = {
@@ -1296,6 +1310,7 @@
 				81853EE91A102D28002E9B1A /* Serializable.swift in Sources */,
 				814735091A1A3C31004B3A34 /* SidebarOverlayPresentationController.swift in Sources */,
 				81F76B1B1A16E385001B6233 /* ToManyChildManagedObjectAttributeImporter.swift in Sources */,
+				81E586261A1FAA7200DE269B /* URLConnectionExtension.swift in Sources */,
 				81F76B0E1A16B290001B6233 /* CompositeManagedObjectAttributeImporter.swift in Sources */,
 				81F76B211A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift in Sources */,
 				8146ECB31A0AF132005FF4C2 /* ManagedObjectProxy.swift in Sources */,
@@ -1314,6 +1329,7 @@
 				81F76B191A16DFB0001B6233 /* ColorManagedObjectAttributeImporter.swift in Sources */,
 				81792B421A1929F00035D062 /* StaticTableViewDataSource.swift in Sources */,
 				81F9A4061A06BE3300083E55 /* ClosureSearchPredicate.swift in Sources */,
+				81E586241A1FA6B600DE269B /* URLConnectionObserver.swift in Sources */,
 				8172B96B19F562590070E7DF /* CollectionViewCalendarWeekLayout.swift in Sources */,
 				81BCA5461A0FE87600391608 /* AuthenticationNavigationController.swift in Sources */,
 				81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */,

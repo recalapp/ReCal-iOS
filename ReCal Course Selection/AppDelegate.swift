@@ -50,7 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Settings.currentSettings.coreDataImporter.performBlockAndWait {
                 let _ = Settings.currentSettings.coreDataImporter.importPendingItems()
             }
-            Settings.currentSettings.serverCommunicator.registerServerCommunication(ActiveSemesterServerCommunication())
+            Settings.currentSettings.serverCommunicator.performBlockAndWait {
+                let communication = ActiveSemesterServerCommunication()
+                Settings.currentSettings.serverCommunicator.registerServerCommunication(communication)
+            }
         }
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
             if url.scheme == Urls.courseSelectionUrlScheme {

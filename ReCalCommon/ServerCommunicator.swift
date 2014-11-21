@@ -12,6 +12,10 @@ public final class ServerCommunicator {
     
     private var identiferServerCommunicationMapping: [String: ServerCommunication] = Dictionary()
     
+    public subscript(identifier: String) -> ServerCommunication? {
+        return self.identiferServerCommunicationMapping[identifier]
+    }
+    
     private var serverCommunicationQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
         queue.name = "Server Communicator"
@@ -34,7 +38,7 @@ public final class ServerCommunicator {
     }
     
     @objc public func handleTimerInterrupt(_: NSTimer) {
-        self.serverCommunicationQueue.addOperationWithBlock {
+        self.performBlock {
             for (_, serverCommunication) in self.identiferServerCommunicationMapping {
                 self.advanceStateForServerCommunication(serverCommunication, reason: .TimerInterrupt)
             }
@@ -42,7 +46,7 @@ public final class ServerCommunicator {
     }
     
     private func advanceStateForServerCommunication(serverCommunication: ServerCommunication, reason: AdvanceReason) {
-        assert(NSOperationQueue.currentQueue() == self.serverCommunicationQueue, "Must be on the server communication queue")
+        self.assertPrivateQueue()
         switch serverCommunication.status {
         case .Connecting, .Processing:
             switch reason {
@@ -66,14 +70,12 @@ public final class ServerCommunicator {
             case .Initial:
                 serverCommunication.status = .Ready
             }
-            
         case .Ready:
             switch serverCommunication.shouldSendRequest() {
             case .Send:
-                serverCommunication.status = .Connecting
-                NSURLConnection.sendAsynchronousRequest(serverCommunication.request, queue: self.serverCommunicationQueue, completionHandler: { (response, data, error) -> Void in
+                let observer = NSURLConnection.sendObservedAsynchronousRequest(serverCommunication.request, queue: self.serverCommunicationQueue, completionHandler: { (response, data, error) -> Void in
                     serverCommunication.status = .Processing
-                    let result: Result = error != nil ? .Failure(error) : .Success(response, data)
+                    let result: Result = error != nil ? .Failure(error!) : .Success(response!, data)
                     switch serverCommunication.handleCommunicationResult(result) {
                     case .ConnectAgain:
                         serverCommunication.status = .Ready
@@ -82,34 +84,50 @@ public final class ServerCommunicator {
                         serverCommunication.status = .Idle(serverCommunication.idleInterval)
                     }
                 })
+                serverCommunication.status = .Connecting(observer)
             case .Cancel:
                 serverCommunication.status = .Idle(serverCommunication.idleInterval)
             case .NextInterrupt:
                 serverCommunication.status = .Ready
             }
-            
         }
     }
     
     public func registerServerCommunication(serverCommunication: ServerCommunication) {
-        self.serverCommunicationQueue.addOperationWithBlock {
-            self.advanceStateForServerCommunication(serverCommunication, reason: .Initial)
-            self.identiferServerCommunicationMapping[serverCommunication.identifier] = serverCommunication
-        }
+        self.assertPrivateQueue()
+        self.advanceStateForServerCommunication(serverCommunication, reason: .Initial)
+        self.identiferServerCommunicationMapping[serverCommunication.identifier] = serverCommunication
     }
     
     public func unregisterServerCommunicationWithIdentifier(identifier: String) {
-        assert(self.identiferServerCommunicationMapping[identifier] != nil, "Cannot unregister a communication that was never registered to begin with")
-        self.serverCommunicationQueue.addOperationWithBlock {
-            let _ = self.identiferServerCommunicationMapping.removeValueForKey(identifier)
+        self.assertPrivateQueue()
+        assert(self[identifier] != nil, "Cannot unregister a communication that was never registered to begin with")
+        self.identiferServerCommunicationMapping.removeValueForKey(identifier)
+    }
+    
+    public func startServerCommunicationWithIdentifier(identifier: String) -> URLConnectionObserver? {
+        self.assertPrivateQueue()
+        assert(self[identifier] != nil, "Server communication with identifier \(identifier) does not exist")
+        self.advanceStateForServerCommunication(self[identifier]!, reason: .Manual)
+        switch self[identifier]!.status {
+        case .Connecting(let observer):
+            return observer
+        case .Idle(_), .Processing, .Ready:
+            return nil
         }
     }
     
-    public func startServerCommunicationWithIdentifier(identifier: String) {
-        assert(self.identiferServerCommunicationMapping[identifier] != nil, "Server communication with identifier \(identifier) does not exist")
-        self.serverCommunicationQueue.addOperationWithBlock {
-            self.advanceStateForServerCommunication(self.identiferServerCommunicationMapping[identifier]!, reason: .Manual)
-        }
+    private func assertPrivateQueue() {
+        assert(NSOperationQueue.currentQueue() == self.serverCommunicationQueue, "All operations on Server Communicator must be performed on its private queue via the performBlock() method or the performBlockAndWait() method")
+    }
+    
+    public func performBlock(closure: ()->Void) {
+        self.serverCommunicationQueue.addOperationWithBlock(closure)
+    }
+    
+    public func performBlockAndWait(closure: ()->Void) {
+        self.serverCommunicationQueue.addOperationWithBlock(closure)
+        self.serverCommunicationQueue.waitUntilAllOperationsAreFinished()
     }
     
     private enum AdvanceReason {
@@ -134,7 +152,7 @@ public final class ServerCommunicator {
         // if the integer goes to 0, then transition to ready
         case Idle(Int)
         case Ready
-        case Connecting
+        case Connecting(URLConnectionObserver)
         case Processing
     }
 }
