@@ -57,7 +57,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         let processSemesters: [CDSemester] -> Void = { (semesters: [CDSemester]) in
             self.semesters = semesters
             let itemInfos = self.semesters.map { (semester: CDSemester) -> ItemInfo in
-                return ItemInfo(cellIdentifier: basicCellIdentifier, selected: semester.isEqual(self.selectedSemester), cellProcessBlock: { (cell) -> UITableViewCell in
+                return ItemInfo(cellIdentifier: basicCellIdentifier, selected: semester.termCode == self.selectedSemester?.termCode, cellProcessBlock: { (cell) -> UITableViewCell in
                     cell.textLabel.text = semester.termCode
                     return cell
                 })
@@ -65,8 +65,9 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
             let semestersSection = SectionInfo(name: self.dataSource[self.semestersSectionIndex].name, items: itemInfos)
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.dataSource[self.semestersSectionIndex] = semestersSection
-                self.tableView.reloadData()
+                self.tableView.reloadSections(NSIndexSet(index: self.semestersSectionIndex), withRowAnimation: .None)
             }
+            self.tableView.keyboardDismissMode = .OnDrag
         }
         self.fetchActiveSemesters(processSemesters)
         

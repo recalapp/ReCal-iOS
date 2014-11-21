@@ -45,6 +45,9 @@ public final class StaticTableViewDataSource : NSObject, UITableViewDataSource {
         cell.textLabel.textColor = Settings.currentSettings.colorScheme.textColor
         cell.detailTextLabel?.textColor = Settings.currentSettings.colorScheme.textColor
         cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
+        if itemInfo.selected && !cell.selected {
+            tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+        }
         return itemInfo.cellProcessBlock(cell)
     }
     public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
