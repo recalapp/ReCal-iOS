@@ -126,8 +126,9 @@ public final class ServerCommunicator {
     }
     
     public func performBlockAndWait(closure: ()->Void) {
-        self.serverCommunicationQueue.addOperationWithBlock(closure)
-        self.serverCommunicationQueue.waitUntilAllOperationsAreFinished()
+        let operation = NSBlockOperation(block: closure)
+        self.serverCommunicationQueue.addOperation(operation)
+        operation.waitUntilFinished()
     }
     
     private enum AdvanceReason {

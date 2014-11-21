@@ -157,8 +157,9 @@ public class CoreDataImporter {
         self.privateQueue.addOperationWithBlock(closure)
     }
     public func performBlockAndWait(closure: ()->Void) {
-        self.privateQueue.addOperationWithBlock(closure)
-        self.privateQueue.waitUntilAllOperationsAreFinished()
+        let operation = NSBlockOperation(block: closure)
+        self.privateQueue.addOperation(operation)
+        operation.waitUntilFinished()
     }
     public func processData(data: NSData, fromTemporaryFileName fileName: String, withProgress: NSProgress) -> ImportResult {
         return .Success
