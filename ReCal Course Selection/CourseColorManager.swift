@@ -9,7 +9,9 @@
 import Foundation
 import ReCalCommon
 
-class CourseColorManager {
+class CourseColorManager: NSObject, NSCoding, NSCopying {
+    
+    private let frequencyCountKey = "CourseColorManagerFrequencyCountKey"
     
     private var frequencyCount: Dictionary<CourseColor, Int> = Dictionary()
     
@@ -27,6 +29,14 @@ class CourseColorManager {
                 self.frequencyCount[color] = self.frequencyCount[color]! + 1
             }
         }
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        self.frequencyCount = aDecoder.decodeObjectForKey(frequencyCountKey) as Dictionary<CourseColor, Int>
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(self.frequencyCount, forKey: frequencyCountKey)
     }
     
     private var nextMinimum: (CourseColor, Int) {
@@ -48,5 +58,22 @@ class CourseColorManager {
         let (color, count) = self.nextMinimum
         self.frequencyCount[color] = count + 1
         return color
+    }
+    
+    func decrementColorOccurrence(color: CourseColor) {
+        assert(self.frequencyCount[color] != nil)
+        let dec = 1
+        self.frequencyCount[color] = self.frequencyCount[color]! - dec
+    }
+    
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        let availableColors = self.frequencyCount.keys.array
+        var occurrence = [CourseColor]()
+        for (color, count) in self.frequencyCount {
+            for i in 0..<count {
+                occurrence.append(color)
+            }
+        }
+        return CourseColorManager(availableColors: availableColors, occurrences: occurrence)
     }
 }

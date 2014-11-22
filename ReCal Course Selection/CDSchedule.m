@@ -17,6 +17,7 @@
 @dynamic enrolledCoursesOrder;
 @dynamic name;
 @dynamic courseColorMap;
+@dynamic courseColorManager;
 @dynamic enrolledCourses;
 @dynamic enrolledSections;
 @dynamic semester;

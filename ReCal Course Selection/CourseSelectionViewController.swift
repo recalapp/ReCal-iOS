@@ -311,6 +311,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         let alertController = UIAlertController(title: "Delete \(course)", message: "Are you sure you want to delete this course?", preferredStyle: .ActionSheet)
         let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
             self.schedule.enrolledCourses.remove(course)
+            self.schedule.updateColorUsageForDeletedCourse(course)
             self.schedule.updateCourseSectionTypeEnrollments()
             self.reloadEnrolledCoursesView()
             self.reloadScheduleView()
@@ -379,7 +380,13 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     // MARK: - Course Search Table View Controller Delegate
     func enrollmentsDidChangeForCourseSearchTableViewController(viewController: CourseSearchTableViewController) {
         assert(viewController == self.searchViewController, "Wrong view controller")
-        self.schedule.enrolledCourses = OrderedSet(initialValues: viewController.enrolledCourses)
+        // TODO check if this is ok, it creates a new enrolled courses list everytime. does this affect color map?
+        let newEnrolled = OrderedSet(initialValues: viewController.enrolledCourses)
+        let deletedCourses = self.schedule.enrolledCourses.toArray().filter { !newEnrolled.contains($0) }
+        self.schedule.enrolledCourses = newEnrolled
+        for deleted in deletedCourses {
+            self.schedule.updateColorUsageForDeletedCourse(deleted)
+        }
         self.schedule.updateCourseSectionTypeEnrollments()
         self.schedule.updateCourseColorMap()
         self.reloadScheduleView()

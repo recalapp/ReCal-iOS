@@ -15,6 +15,7 @@
         <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="courseListings" inverseEntity="CDCourse" syncable="YES"/>
     </entity>
     <entity name="CDSchedule" representedClassName="CDSchedule" parentEntity="CDServerObject" syncable="YES">
+        <attribute name="courseColorManager" attributeType="Transformable" syncable="YES"/>
         <attribute name="courseColorMap" attributeType="Transformable" syncable="YES"/>
         <attribute name="enrolledCoursesOrder" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
@@ -50,7 +51,7 @@
     <elements>
         <element name="CDCourse" positionX="-3296" positionY="-3843" width="128" height="133"/>
         <element name="CDCourseListing" positionX="-3294" positionY="-3613" width="128" height="103"/>
-        <element name="CDSchedule" positionX="-3717" positionY="-3852" width="128" height="133"/>
+        <element name="CDSchedule" positionX="-3717" positionY="-3852" width="128" height="148"/>
         <element name="CDSection" positionX="-3035" positionY="-3708" width="128" height="118"/>
         <element name="CDSectionMeeting" positionX="-3051" positionY="-3888" width="128" height="148"/>
         <element name="CDSemester" positionX="-3521" positionY="-3735" width="128" height="103"/>

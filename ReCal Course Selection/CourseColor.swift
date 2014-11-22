@@ -10,7 +10,7 @@ import UIKit
 
 private let hashPrimeMultiplier = 131071
 
-class CourseColor: NSObject, NSCoding, Hashable {
+class CourseColor: NSObject, NSCoding, Hashable, NSCopying {
     private let normalColorKey = "CourseColorNormalColor"
     private let highlightedColorKey = "CourseColorHighlightedColor"
     let normalColor: UIColor
@@ -37,6 +37,10 @@ class CourseColor: NSObject, NSCoding, Hashable {
         } else {
             return super.isEqual(object)
         }
+    }
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        let copy = CourseColor(normalColor: self.normalColor.copy() as UIColor, highlightedColor: self.highlightedColor.copy() as UIColor)
+        return copy
     }
 }
 

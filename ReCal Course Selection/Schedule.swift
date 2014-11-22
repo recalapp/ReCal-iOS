@@ -21,9 +21,10 @@ struct Schedule : ManagedObjectProxy {
     var courseSectionTypeEnrollments: Dictionary<Course, SectionTypeEnrollment>
     var courseColorMap: Dictionary<Course, CourseColor>
     private let colorManager: CourseColorManager
+    // TODO if we get these valeus from the web, must deal with inaccuracy of float when comparing
     private let availableColors = [
-        CourseColor(normalColor: UIColor(red: 190.0/255.0, green: 231/255.0, blue: 166/255.0, alpha: 1), highlightedColor: UIColor(red: 126/255.0, green: 207/255.0, blue: 81/255.0, alpha: 1)),
-        CourseColor(normalColor: UIColor(red: 165/255.0, green: 196/255.0, blue: 241/255.0, alpha: 1), highlightedColor: UIColor(red: 76/255.0, green: 136/255.0, blue: 228/255.0, alpha: 1))
+        CourseColor(normalColor: UIColor(red: 0.745, green: 0.906, blue: 0.651, alpha: 1), highlightedColor: UIColor(red: 0.494, green: 0.812, blue: 0.318, alpha: 1)),
+        CourseColor(normalColor: UIColor(red: 0.647, green: 0.769, blue: 0.945, alpha: 1), highlightedColor: UIColor(red: 0.298, green: 0.533, blue: 0.894, alpha: 1))
     ]
     
     var enrolledSections: [Section] {
@@ -97,11 +98,7 @@ struct Schedule : ManagedObjectProxy {
                 self.courseColorMap[course] = color
             }
         }
-        var occurrences = [CourseColor]()
-        for (_, color) in self.courseColorMap {
-            occurrences.append(color)
-        }
-        self.colorManager = CourseColorManager(availableColors: self.availableColors, occurrences: occurrences)
+        self.colorManager = managedObject.courseColorManager as CourseColorManager
         self.updateCourseColorMap()
     }
     init(name: String, termCode: String) {
@@ -144,6 +141,13 @@ struct Schedule : ManagedObjectProxy {
         }
     }
     
+    mutating func updateColorUsageForDeletedCourse(course: Course) {
+        assert(self.courseColorMap[course] != nil)
+        let color = self.courseColorMap[course]!
+        self.courseColorMap.removeValueForKey(course)
+        self.colorManager.decrementColorOccurrence(color)
+    }
+    
     mutating func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
         let updateManagedObject = { (schedule: CDSchedule) -> ManagedObjectProxyCommitResult in
             for course in schedule.enrolledCourses.allObjects {
@@ -184,6 +188,7 @@ struct Schedule : ManagedObjectProxy {
                 }
             }
             schedule.courseColorMap = colorMapRepresentation
+            schedule.courseColorManager = self.colorManager
             schedule.removeEnrolledSections(schedule.enrolledSections)
             for section in self.enrolledSections {
                 switch section.managedObjectProxyId {

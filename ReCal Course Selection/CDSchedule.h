@@ -17,6 +17,7 @@
 @property (nonatomic, retain) id enrolledCoursesOrder;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) id courseColorMap;
+@property (nonatomic, retain) id courseColorManager;
 @property (nonatomic, retain) NSSet *enrolledCourses;
 @property (nonatomic, retain) NSSet *enrolledSections;
 @property (nonatomic, retain) CDSemester *semester;
