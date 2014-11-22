@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -26,10 +26,18 @@
                             <constraint firstAttribute="width" constant="10" id="Dvo-di-nxq"/>
                         </constraints>
                     </view>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vm5-ys-zSp">
+                        <rect key="frame" x="260" y="0.0" width="52" height="34"/>
+                        <state key="normal" title="Delete"/>
+                        <connections>
+                            <action selector="deleteButtonTapped:" destination="k3o-C9-LzH" eventType="touchUpInside" id="IGY-vl-bxK"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <gestureRecognizers/>
                 <constraints>
+                    <constraint firstItem="Vm5-ys-zSp" firstAttribute="top" secondItem="vBk-bz-hDn" secondAttribute="top" id="CCn-21-fBc"/>
                     <constraint firstItem="f5W-gT-hN8" firstAttribute="leading" secondItem="vBk-bz-hDn" secondAttribute="leadingMargin" id="Xoi-ui-piV"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="f5W-gT-hN8" secondAttribute="bottom" constant="6.5" id="g4L-aE-40T"/>
                     <constraint firstItem="joP-DI-ShX" firstAttribute="height" secondItem="f5W-gT-hN8" secondAttribute="height" id="hnV-zM-66X"/>
@@ -37,12 +45,14 @@
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="joP-DI-ShX" secondAttribute="trailing" id="pIa-TA-bXg"/>
                     <constraint firstItem="f5W-gT-hN8" firstAttribute="top" secondItem="vBk-bz-hDn" secondAttribute="topMargin" id="sxb-a5-y6w"/>
                     <constraint firstItem="joP-DI-ShX" firstAttribute="leading" secondItem="f5W-gT-hN8" secondAttribute="trailing" constant="8" id="vSZ-1v-jX7"/>
+                    <constraint firstAttribute="trailing" secondItem="Vm5-ys-zSp" secondAttribute="trailing" constant="8" id="xUX-JK-bv7"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
             <connections>
                 <outlet property="colorTagView" destination="joP-DI-ShX" id="TVU-rM-9jn"/>
                 <outlet property="courseLabel" destination="f5W-gT-hN8" id="bqM-9Y-jTH"/>
+                <outlet property="deleteButton" destination="Vm5-ys-zSp" id="Nn8-dB-YWJ"/>
             </connections>
             <point key="canvasLocation" x="282" y="217"/>
         </tableViewCell>

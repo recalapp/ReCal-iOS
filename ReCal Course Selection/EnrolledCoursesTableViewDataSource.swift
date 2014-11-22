@@ -76,6 +76,12 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
         assert(self.enrollments[course!] != nil, "Invalid course found in cell")
         self.delegate?.enrollmentsDidStopChangingForEnrolledCoursesTableViewDataSource(self)
     }
+    func shouldDeleteCourseForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell) {
+        let course = cell.viewModel?.course
+        assert(course != nil, "Course is nil in cell")
+        assert(self.enrollments[course!] != nil, "Invalid course found in cell")
+        self.delegate?.enrolledCoursesTableViewDataSource(self, shouldDeleteCourse: course!)
+    }
     struct EnrolledCourseCellViewModelAdapter: EnrolledCourseCellViewModel {
         let color: UIColor
         let highlightedColor: UIColor
@@ -91,4 +97,5 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
 protocol EnrolledCoursesTableViewDataSourceDelegate: class {
     func enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource)
     func enrollmentsDidStopChangingForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource)
+    func enrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource, shouldDeleteCourse course: Course)
 }

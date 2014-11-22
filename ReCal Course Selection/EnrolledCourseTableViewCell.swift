@@ -17,6 +17,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
             self.refresh()
         }
     }
+    @IBOutlet weak var deleteButton: UIButton!
     private var colorTag: UIColor? {
         if let viewModel = self.viewModel {
             return self.allEnrolled ? self.viewModel!.highlightedColor : self.viewModel!.color
@@ -45,7 +46,11 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         return []
     }
     var sectionPickerControls = Dictionary<SectionType, SlidingSelectionControl>()
-    var expanded: Bool = false
+    var expanded: Bool = false {
+        didSet {
+            self.deleteButton?.hidden = !expanded
+        }
+    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -77,6 +82,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         
         let updateColorScheme: ()->Void = {
             self.courseLabel.textColor = Settings.currentSettings.colorScheme.textColor
+            self.deleteButton.setTitleColor(Settings.currentSettings.colorScheme.alertBackgroundColor, forState: UIControlState.Normal)
             self.refresh()
         }
         updateColorScheme()
@@ -182,10 +188,15 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     func handleTouchUp(sender: SlidingSelectionControl) {
         self.delegate?.touchUpForEnrolledCourseTableViewCell(self)
     }
+    @IBAction func deleteButtonTapped(sender: UIButton) {
+        assert(sender == self.deleteButton)
+        self.delegate?.shouldDeleteCourseForEnrolledCourseTableViewCell(self)
+    }
 }
 
 protocol EnrolledCourseTableViewCellDelegate: class {
     func enrollmentsDidChangeForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell)
+    func shouldDeleteCourseForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell)
     func touchUpForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell)
 }
 

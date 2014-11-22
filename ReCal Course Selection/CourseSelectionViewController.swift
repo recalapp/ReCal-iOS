@@ -360,6 +360,10 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.schedule.courseSectionTypeEnrollments = dataSource.enrollments
         self.reloadScheduleView()
     }
+    func enrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource, shouldDeleteCourse course: Course) {
+        assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
+        self.showCourseDeletePromptForCourse(course)
+    }
     
     // MARK: - Schedule Collection View Data Source Delegate
     func enrollmentDidChangeForScheduleCollectionViewDataSource(dataSource: ScheduleCollectionViewDataSource) {
