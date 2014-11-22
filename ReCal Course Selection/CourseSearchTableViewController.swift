@@ -61,11 +61,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         return queue
     }()
     
-    lazy private var searchManagedObjectContext: NSManagedObjectContext = {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
-        return managedObjectContext
-    }()
+    private var searchManagedObjectContext: NSManagedObjectContext!
     
     private var notificationObservers: [AnyObject] = []
     
@@ -76,6 +72,11 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.searchOperationQueue.addOperationWithBlock {
+            self.searchManagedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+            self.searchManagedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        }
+        self.searchOperationQueue.waitUntilAllOperationsAreFinished()
         self.definesPresentationContext = true
         self.tableView.keyboardDismissMode = .OnDrag
         self.searchController = {

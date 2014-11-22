@@ -35,14 +35,16 @@ public class CoreDataImporter {
     private var timer: NSTimer!
     public let persistentStoreCoordinator: NSPersistentStoreCoordinator
     
-    lazy public var backgroundManagedObjectContext: NSManagedObjectContext = {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
-        return managedObjectContext
-    }()
+    public var backgroundManagedObjectContext: NSManagedObjectContext!
     
     public convenience init(persistentStoreCoordinator: NSPersistentStoreCoordinator) {
         self.init(persistentStoreCoordinator: persistentStoreCoordinator, importInterval: 5)
+        var managedObjectContext: NSManagedObjectContext!
+        self.performBlockAndWait {
+            managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+            managedObjectContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        }
+        self.backgroundManagedObjectContext = managedObjectContext
     }
     public init(persistentStoreCoordinator: NSPersistentStoreCoordinator, importInterval: NSTimeInterval) {
         self.persistentStoreCoordinator = persistentStoreCoordinator
