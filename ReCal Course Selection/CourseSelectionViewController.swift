@@ -67,6 +67,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         scheduleSelectionViewController.delegate = self
         return navigationVC
     }()
+    private var courseDownloadViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     private var settingsViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     private var scheduleSelectionViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     private var loadingIndicatorViewController: LoadingIndicatorViewController?
@@ -402,6 +403,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                 let courseDownloadVC = self.storyboard?.instantiateViewControllerWithIdentifier(courseDownloadViewControllerStoryboardId) as CourseDownloadViewController
                 courseDownloadVC.termCode = schedule!.semester.termCode
                 courseDownloadVC.delegate = self
+                courseDownloadVC.modalPresentationStyle = .Custom
+                self.courseDownloadViewControllerTransitioningDelegate = FadeOverlayPresentation.TransitioningDelegate()
+                courseDownloadVC.transitioningDelegate = self.courseDownloadViewControllerTransitioningDelegate
                 self.presentViewController(courseDownloadVC, animated: true, completion: nil)
             }
         }
@@ -440,10 +444,14 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     // MARK: - Course Download Delegate
     func courseDownloadDidFinish(courseDownloadViewController: CourseDownloadViewController) {
         assert(self.presentedViewController == courseDownloadViewController)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true) {
+            self.courseDownloadViewControllerTransitioningDelegate = nil
+        }
     }
     func courseDownloadDidFail(courseDownloadViewController: CourseDownloadViewController) {
         assert(self.presentedViewController == courseDownloadViewController)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true) {
+            self.courseDownloadViewControllerTransitioningDelegate = nil
+        }
     }
 }

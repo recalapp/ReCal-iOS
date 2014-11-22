@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let rootViewController = self.window?.rootViewController
             Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: Urls.authentication, withLogOutUrlString: Urls.logOut)
             Settings.currentSettings.coreDataImporter = CourseSelectionCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
-            if !NSUserDefaults.standardUserDefaults().boolForKey(self.userDefaultsKeyNotFirstLaunch) {
+            if false && !NSUserDefaults.standardUserDefaults().boolForKey(self.userDefaultsKeyNotFirstLaunch) {
                 println("saving")
                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: self.userDefaultsKeyNotFirstLaunch)
                 let filePathOpt = NSBundle.mainBundle().pathForResource(self.initialCoursesFileName, ofType: "json")
@@ -94,7 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        self.saveContext()
     }
 
     // MARK: - Core Data stack

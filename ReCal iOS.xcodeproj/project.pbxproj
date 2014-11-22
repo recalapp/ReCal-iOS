@@ -158,6 +158,9 @@
 		81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */; };
 		81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */; };
 		81FE70DC1A1FF55E00934062 /* OneTimeServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70DB1A1FF55E00934062 /* OneTimeServerCommunication.swift */; };
+		81FE70E01A20E74900934062 /* FadeOverlayTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70DF1A20E74900934062 /* FadeOverlayTransitioningDelegate.swift */; };
+		81FE70E21A20E78F00934062 /* FadeOverlayPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70E11A20E78F00934062 /* FadeOverlayPresentationController.swift */; };
+		81FE70E41A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70E31A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -394,6 +397,9 @@
 		81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSidebarViewController.swift; sourceTree = "<group>"; };
 		81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayScrollView.swift; sourceTree = "<group>"; };
 		81FE70DB1A1FF55E00934062 /* OneTimeServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneTimeServerCommunication.swift; sourceTree = "<group>"; };
+		81FE70DF1A20E74900934062 /* FadeOverlayTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeOverlayTransitioningDelegate.swift; sourceTree = "<group>"; };
+		81FE70E11A20E78F00934062 /* FadeOverlayPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeOverlayPresentationController.swift; sourceTree = "<group>"; };
+		81FE70E31A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeOverlayAnimatedTransitioning.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -831,6 +837,7 @@
 		81D9F25C19EF4D9600F987B9 /* ReCalCommon */ = {
 			isa = PBXGroup;
 			children = (
+				81FE70DE1A20E70800934062 /* Fade Overlay Presentation */,
 				81E586221A1FA69800DE269B /* URL Connection Observer */,
 				816987B71A1D86E300DD6A58 /* Loading Indicator Controller */,
 				814735071A1A3BEE004B3A34 /* Sidebar Overlay Presentation */,
@@ -1009,6 +1016,16 @@
 				818B45EA1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift */,
 			);
 			name = SlidingSidebarViewController;
+			sourceTree = "<group>";
+		};
+		81FE70DE1A20E70800934062 /* Fade Overlay Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				81FE70DF1A20E74900934062 /* FadeOverlayTransitioningDelegate.swift */,
+				81FE70E11A20E78F00934062 /* FadeOverlayPresentationController.swift */,
+				81FE70E31A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift */,
+			);
+			name = "Fade Overlay Presentation";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1331,6 +1348,7 @@
 				811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */,
 				81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */,
 				81792B331A182BD80035D062 /* ServerCommunicator.swift in Sources */,
+				81FE70E41A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift in Sources */,
 				81E6406D19FACDCA003A49F8 /* Set.swift in Sources */,
 				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,
 				81F76B1F1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift in Sources */,
@@ -1353,10 +1371,12 @@
 				81F9A4021A06B47E00083E55 /* OrSearchPredicate.swift in Sources */,
 				8111F63619F4957F00A331E3 /* SlidingSelectionControl.swift in Sources */,
 				81F9A4041A06B4D100083E55 /* NotSearchPredicate.swift in Sources */,
+				81FE70E21A20E78F00934062 /* FadeOverlayPresentationController.swift in Sources */,
 				8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */,
 				81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */,
 				8111F63319F4947700A331E3 /* Util.swift in Sources */,
 				81792B481A194ECB0035D062 /* SettingsCenterTableViewCell.swift in Sources */,
+				81FE70E01A20E74900934062 /* FadeOverlayTransitioningDelegate.swift in Sources */,
 				8147350B1A1A3DEC004B3A34 /* SidebarOverlayAnimatedTransitioning.swift in Sources */,
 				81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */,
 				81BCA54A1A0FEB9500391608 /* AuthenticationPromptViewController.swift in Sources */,
