@@ -13,6 +13,7 @@ class EventCollectionViewCell: UICollectionViewCell {
 //    let selectedAlpha: CGFloat = 1.0
 //    let unselectedAlpha: CGFloat = 0.5
     
+    @IBOutlet weak var leftBorderView: UIView!
     var event: ScheduleCollectionViewDataSource.ScheduleEvent? = nil {
         didSet {
             if let event = self.event {
@@ -38,6 +39,7 @@ class EventCollectionViewCell: UICollectionViewCell {
     }
 
     private func updateColor() {
+        self.leftBorderView.backgroundColor = self.event?.courseColor.highlightedColor
         if selected {
             self.backgroundColor = self.event?.courseColor.highlightedColor
             self.eventTitleLabel.textColor = self.event?.courseColor.normalColor

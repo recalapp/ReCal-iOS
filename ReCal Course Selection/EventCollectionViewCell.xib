@@ -12,22 +12,33 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="162" height="124"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dy7-NI-zQf">
-                        <rect key="frame" x="60" y="8" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dy7-NI-zQf">
+                        <rect key="frame" x="63" y="4" width="35.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k0Q-Gd-VG6">
+                        <rect key="frame" x="0.0" y="0.0" width="2" height="124"/>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="2" id="Uqt-rd-qsJ"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
+                <constraint firstItem="k0Q-Gd-VG6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="D16-Zv-fnT"/>
                 <constraint firstItem="dy7-NI-zQf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="HZF-1W-8GG"/>
                 <constraint firstAttribute="centerX" secondItem="dy7-NI-zQf" secondAttribute="centerX" id="Mtq-xO-rUQ"/>
+                <constraint firstAttribute="bottom" secondItem="k0Q-Gd-VG6" secondAttribute="bottom" id="PEm-dE-OPf"/>
+                <constraint firstItem="k0Q-Gd-VG6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ocx-cw-uf6"/>
             </constraints>
             <size key="customSize" width="162" height="124"/>
             <connections>
                 <outlet property="eventTitleLabel" destination="dy7-NI-zQf" id="Myg-IA-fbq"/>
+                <outlet property="leftBorderView" destination="k0Q-Gd-VG6" id="MDU-eY-KRz"/>
             </connections>
             <point key="canvasLocation" x="369" y="441"/>
         </collectionViewCell>

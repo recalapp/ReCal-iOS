@@ -139,7 +139,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: initialSelection)
                 slidingSelectionControl.preferredMaxLayoutWidth = self.contentView.bounds.size.width
                 slidingSelectionControl.defaultBackgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
-                slidingSelectionControl.tintColor = self.viewModel?.color
+                slidingSelectionControl.tintColor = self.viewModel?.highlightedColor
                 slidingSelectionControl.layoutMargins = UIEdgeInsetsZero
                 self.contentView.addSubview(slidingSelectionControl)
                 let topConstraint = NSLayoutConstraint(item: slidingSelectionControl, attribute: .Top, relatedBy: .Equal, toItem: prev, attribute: .Bottom, multiplier: 1, constant: 8)

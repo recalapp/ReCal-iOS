@@ -27,6 +27,8 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     
     private let calendar: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     
+    private let eventCellPadding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 3)
+    
     public var daySectionWidth: CGFloat {
         var finalWidth: Float = 300.0 // TODO default value?
         if let sectionWidth = self.dataSource?.daySectionWidthForCollectionView(self.collectionView!, layout: self) {
@@ -270,7 +272,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             let maxY = self.offsetYForTime(endDate)
             
             let height = maxY - minY
-            return CGRect(x: minSectionX, y: minY, width: sectionWidth, height: height)
+            return CGRect(x: minSectionX + self.eventCellPadding.left, y: minY + self.eventCellPadding.top, width: sectionWidth - self.eventCellPadding.left - self.eventCellPadding.right, height: height - self.eventCellPadding.top - self.eventCellPadding.bottom)
         }
         var attributesStack = Stack<UICollectionViewLayoutAttributes>()
         for i in 0...itemsCount-1 {
@@ -296,7 +298,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             for (index, attributes) in enumerate(overlappingAttributes) {
                 var frame = attributes.frame
                 frame.origin.x += CGFloat(index) * adjustedWidth
-                frame.size.width = adjustedWidth
+                frame.size.width = adjustedWidth - self.eventCellPadding.left - self.eventCellPadding.right
                 attributes.frame = frame
             }
         }

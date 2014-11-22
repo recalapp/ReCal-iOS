@@ -128,7 +128,7 @@ struct Schedule : ManagedObjectProxy {
     mutating func updateCourseColorMap() {
         for course in self.enrolledCourses {
             if self.courseColorMap[course] == nil {
-                self.courseColorMap[course] = CourseColor(normalColor: UIColor.greenColor().darkerColor(), highlightedColor: UIColor.greenColor().lighterColor())
+                self.courseColorMap[course] = CourseColor(normalColor: UIColor(red: 190.0/255.0, green: 231/255.0, blue: 166/255.0, alpha: 1), highlightedColor: UIColor(red: 126/255.0, green: 207/255.0, blue: 81/255.0, alpha: 1))
             }
         }
     }
