@@ -29,7 +29,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
             self.preloadCache()
         }
     }
-    var courseColorMap: Dictionary<Course, UIColor> = Dictionary()
+    var courseColorMap: Dictionary<Course, CourseColor> = Dictionary()
     private var enrolledCourses: [Course] {
         return self.enrollments.keys.array
     }
@@ -74,6 +74,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         eventsForDayCache[.Thursday] = []
         eventsForDayCache[.Friday] = []
         for course in self.enrolledCourses {
+            let courseColor = self.courseColorMap[course]!
             let courseEnrollments = self.enrollments[course]!
             for section in course.sections {
                 let enrollment = courseEnrollments[section.type]!
@@ -92,7 +93,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
                     for meeting in section.sectionMeetings {
                         for day in meeting.days {
                             if var eventsInDays = self.eventsForDayCache[day] {
-                                eventsInDays.append(ScheduleEvent(course: course, section: section, sectionMeeting: meeting, enrolled: sectionIsEnrolled))
+                                eventsInDays.append(ScheduleEvent(course: course, section: section, sectionMeeting: meeting, enrolled: sectionIsEnrolled, courseColor: courseColor))
                                 self.eventsForDayCache[day] = eventsInDays
                             }
                         }
@@ -127,9 +128,6 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as EventCollectionViewCell
         let event = self.eventForIndexPath(indexPath)
         cell.event = event
-        if let color = self.courseColorMap[event.course] {
-            cell.color = color
-        }
         if event.enrolled {
             collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
             cell.selected = true
@@ -235,6 +233,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         let section: Section
         let sectionMeeting: SectionMeeting
         let enrolled: Bool
+        let courseColor: CourseColor
     }
 }
 

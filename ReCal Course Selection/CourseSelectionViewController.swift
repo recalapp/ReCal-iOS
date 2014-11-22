@@ -287,8 +287,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         if self.schedule == nil {
             return
         }
-        self.scheduleCollectionViewDataSource.enrollments = self.schedule.courseSectionTypeEnrollments
+        // must set color map first
         self.scheduleCollectionViewDataSource.courseColorMap = self.schedule.courseColorMap
+        self.scheduleCollectionViewDataSource.enrollments = self.schedule.courseSectionTypeEnrollments
         self.scheduleView.reloadData()
     }
     

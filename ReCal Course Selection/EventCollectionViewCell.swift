@@ -10,8 +10,8 @@ import UIKit
 
 class EventCollectionViewCell: UICollectionViewCell {
     
-    let selectedAlpha: CGFloat = 1.0
-    let unselectedAlpha: CGFloat = 0.5
+//    let selectedAlpha: CGFloat = 1.0
+//    let unselectedAlpha: CGFloat = 0.5
     
     var event: ScheduleCollectionViewDataSource.ScheduleEvent? = nil {
         didSet {
@@ -25,11 +25,6 @@ class EventCollectionViewCell: UICollectionViewCell {
     }
     
     @IBOutlet weak var eventTitleLabel: UILabel!
-    var color: UIColor = UIColor.greenColor() {
-        didSet {
-            self.updateColor()
-        }
-    }
     
     override var selected: Bool {
         didSet {
@@ -43,12 +38,12 @@ class EventCollectionViewCell: UICollectionViewCell {
     }
 
     private func updateColor() {
-        let alpha = self.selected ? selectedAlpha : unselectedAlpha
-        self.backgroundColor = self.color.colorWithAlphaComponent(alpha)
-        if self.selected {
-            self.eventTitleLabel.textColor = self.color.darkerColor().darkerColor()
+        if selected {
+            self.backgroundColor = self.event?.courseColor.highlightedColor
+            self.eventTitleLabel.textColor = self.event?.courseColor.normalColor
         } else {
-            self.eventTitleLabel.textColor = self.color.lighterColor().lighterColor()
+            self.backgroundColor = self.event?.courseColor.normalColor
+            self.eventTitleLabel.textColor = self.event?.courseColor.highlightedColor
         }
     }
 }

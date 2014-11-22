@@ -19,7 +19,7 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
             self.selectedIndexPath = nil
         }
     }
-    var courseColorMap: Dictionary<Course, UIColor> = Dictionary()
+    var courseColorMap: Dictionary<Course, CourseColor> = Dictionary()
     var enrolledCourses: [Course] {
         return self.enrollments.keys.array
     }
@@ -37,8 +37,7 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
         cell.enrollmentsBySectionType = self.enrollments[course]!
         cell.expanded = indexPath == self.selectedIndexPath
         // color must be set before course, as setting course forces a refresh
-        cell.color = self.courseColorMap[course]
-        cell.course = course
+        cell.viewModel = EnrolledCourseCellViewModelAdapter(course: course, courseColor: self.courseColorMap[course]!)
         cell.delegate = self
         return cell
     }
@@ -65,15 +64,27 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
     
     // MARK: - Enrolled Course Table View Cell Delegate
     func enrollmentsDidChangeForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell) {
-        assert(cell.course != nil, "Course is nil in cell")
-        assert(self.enrollments[cell.course!] != nil, "Invalid course found in cell")
-        self.enrollments[cell.course!] = cell.enrollmentsBySectionType
+        let course = cell.viewModel?.course
+        assert(course != nil, "Course is nil in cell")
+        assert(self.enrollments[course!] != nil, "Invalid course found in cell")
+        self.enrollments[course!] = cell.enrollmentsBySectionType
         self.delegate?.enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(self)
     }
     func touchUpForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell) {
-        assert(cell.course != nil, "Course is nil in cell")
-        assert(self.enrollments[cell.course!] != nil, "Invalid course found in cell")
+        let course = cell.viewModel?.course
+        assert(course != nil, "Course is nil in cell")
+        assert(self.enrollments[course!] != nil, "Invalid course found in cell")
         self.delegate?.enrollmentsDidStopChangingForEnrolledCoursesTableViewDataSource(self)
+    }
+    struct EnrolledCourseCellViewModelAdapter: EnrolledCourseCellViewModel {
+        let color: UIColor
+        let highlightedColor: UIColor
+        let course: Course
+        init(course: Course, courseColor: CourseColor) {
+            self.course = course
+            self.color = courseColor.normalColor
+            self.highlightedColor = courseColor.highlightedColor
+        }
     }
 }
 

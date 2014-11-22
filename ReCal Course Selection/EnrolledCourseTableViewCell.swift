@@ -12,14 +12,17 @@ import ReCalCommon
 class EnrolledCourseTableViewCell: UITableViewCell {
     weak var delegate: EnrolledCourseTableViewCellDelegate?
     var enrollmentsBySectionType = Dictionary<SectionType, SectionEnrollmentStatus>()
-    var course: Course? = nil {
+    var viewModel: EnrolledCourseCellViewModel? {
         didSet {
             self.refresh()
         }
     }
-    var color: UIColor? 
     private var colorTag: UIColor? {
-        return self.allEnrolled ? self.color? : self.color?.darkerColor().darkerColor()
+        if let viewModel = self.viewModel {
+            return self.allEnrolled ? self.viewModel!.highlightedColor : self.viewModel!.color
+        } else {
+            return UIColor.blackColor()
+        }
     }
     /// returns true if all possible sections have enrollment
     private var allEnrolled: Bool {
@@ -31,7 +34,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         return true
     }
     var sectionTypes: [SectionType] {
-        if let course = self.course {
+        if let course = self.viewModel?.course {
             return course.sections.reduce([], combine: { (var allSectionTypes, section) in
                 if !arrayContainsElement(array: allSectionTypes, element: section.type) {
                     allSectionTypes.append(section.type)
@@ -90,7 +93,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     
     /// return all sections with the specified section type
     private func sectionsWithType(sectionType: SectionType) -> [Section] {
-        if let course = self.course {
+        if let course = self.viewModel?.course {
             return course.sections.filter { $0.type == sectionType }
         }
         return []
@@ -99,7 +102,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     /// refresh the content of cell
     private func refresh() {
         // course title
-        if let course = self.course {
+        if let course = self.viewModel?.course {
             self.courseLabel.text = course.displayText
         } else {
             self.courseLabel.text = ""
@@ -136,7 +139,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 let slidingSelectionControl = SlidingSelectionControl(items: titles, initialSelection: initialSelection)
                 slidingSelectionControl.preferredMaxLayoutWidth = self.contentView.bounds.size.width
                 slidingSelectionControl.defaultBackgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
-                slidingSelectionControl.tintColor = self.color?
+                slidingSelectionControl.tintColor = self.viewModel?.color
                 slidingSelectionControl.layoutMargins = UIEdgeInsetsZero
                 self.contentView.addSubview(slidingSelectionControl)
                 let topConstraint = NSLayoutConstraint(item: slidingSelectionControl, attribute: .Top, relatedBy: .Equal, toItem: prev, attribute: .Bottom, multiplier: 1, constant: 8)
@@ -184,4 +187,10 @@ class EnrolledCourseTableViewCell: UITableViewCell {
 protocol EnrolledCourseTableViewCellDelegate: class {
     func enrollmentsDidChangeForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell)
     func touchUpForEnrolledCourseTableViewCell(cell: EnrolledCourseTableViewCell)
+}
+
+protocol EnrolledCourseCellViewModel {
+    var highlightedColor: UIColor { get }
+    var color: UIColor { get }
+    var course: Course { get }
 }

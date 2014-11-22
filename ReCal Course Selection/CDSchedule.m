@@ -2,7 +2,7 @@
 //  CDSchedule.m
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 11/7/14.
+//  Created by Naphat Sanguansin on 11/22/14.
 //  Copyright (c) 2014 ReCal. All rights reserved.
 //
 
@@ -14,10 +14,11 @@
 
 @implementation CDSchedule
 
-@dynamic name;
 @dynamic enrolledCoursesOrder;
+@dynamic name;
+@dynamic courseColorMap;
+@dynamic enrolledCourses;
 @dynamic enrolledSections;
 @dynamic semester;
-@dynamic enrolledCourses;
 
 @end

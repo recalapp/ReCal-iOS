@@ -19,7 +19,7 @@ struct Schedule : ManagedObjectProxy {
     let termCode: String
     var enrolledCourses: OrderedSet<Course>
     var courseSectionTypeEnrollments: Dictionary<Course, SectionTypeEnrollment>
-    var courseColorMap: Dictionary<Course, UIColor>
+    var courseColorMap: Dictionary<Course, CourseColor>
     
     var enrolledSections: [Section] {
         let sectionTypeEnrollments = self.courseSectionTypeEnrollments.values.array
@@ -77,7 +77,21 @@ struct Schedule : ManagedObjectProxy {
             }
             self.courseSectionTypeEnrollments[course] = sectionTypeEnrollment
         }
+        let colorMapRepresentation = managedObject.courseColorMap as Dictionary<NSURL,CourseColor>
         self.courseColorMap = Dictionary()
+        for (idUrl, color) in colorMapRepresentation {
+            let courseOpt = self.enrolledCourses.toArray().filter { (course) in
+                switch course.managedObjectProxyId {
+                case .NewObject:
+                    return false
+                case .Existing(let id):
+                    return id.URIRepresentation().isEqual(idUrl)
+                }
+            }.last
+            if let course = courseOpt {
+                self.courseColorMap[course] = color
+            }
+        }
         self.updateCourseColorMap()
     }
     init(name: String, termCode: String) {
@@ -114,7 +128,7 @@ struct Schedule : ManagedObjectProxy {
     mutating func updateCourseColorMap() {
         for course in self.enrolledCourses {
             if self.courseColorMap[course] == nil {
-                self.courseColorMap[course] = UIColor.greenColor()
+                self.courseColorMap[course] = CourseColor(normalColor: UIColor.greenColor().darkerColor(), highlightedColor: UIColor.greenColor().lighterColor())
             }
         }
     }
@@ -149,6 +163,16 @@ struct Schedule : ManagedObjectProxy {
                 }
             }
             schedule.enrolledCoursesOrder = courseIdsOrdered.map { $0!.URIRepresentation() as AnyObject }
+            var colorMapRepresentation = Dictionary<NSURL, CourseColor>()
+            for (course, color) in self.courseColorMap {
+                switch course.managedObjectProxyId {
+                case .NewObject:
+                    break
+                case .Existing(let id):
+                    colorMapRepresentation[id.URIRepresentation()] = color
+                }
+            }
+            schedule.courseColorMap = colorMapRepresentation
             schedule.removeEnrolledSections(schedule.enrolledSections)
             for section in self.enrolledSections {
                 switch section.managedObjectProxyId {
@@ -188,7 +212,11 @@ struct Schedule : ManagedObjectProxy {
             }()
             if let schedule = managedObject {
                 // NOTE assumes name and termcode doesn't change
-                return updateManagedObject(schedule)
+                var result = ManagedObjectProxyCommitResult.Failure
+                managedObjectContext.performBlockAndWait {
+                    result = updateManagedObject(schedule)
+                }
+                return result
             } else {
                 return .Failure
             }
@@ -202,9 +230,13 @@ struct Schedule : ManagedObjectProxy {
             }()
             if let schedule = managedObject {
                 // NOTE assumes name and termcode doesn't change
-                schedule.name = self.name
-                schedule.semester = self.semesterWithTermCode(self.termCode, inManagedObjectContext: managedObjectContext)
-                return updateManagedObject(schedule)
+                var result = ManagedObjectProxyCommitResult.Failure
+                managedObjectContext.performBlockAndWait {
+                    schedule.name = self.name
+                    schedule.semester = self.semesterWithTermCode(self.termCode, inManagedObjectContext: managedObjectContext)
+                    result = updateManagedObject(schedule)
+                }
+                return result
             } else {
                 return .Failure
             }
