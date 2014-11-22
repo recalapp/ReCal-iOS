@@ -336,7 +336,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading course data for this semester. May take a few minutes" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U1o-Nv-yRA">
-                                <rect key="frame" x="41" y="259.5" width="519" height="20.5"/>
+                                <rect key="frame" x="41" y="259" width="519" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -346,12 +346,17 @@
                                 <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="trackTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </progressView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="LPu-q9-B5F">
+                                <rect key="frame" x="281.5" y="338" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="U1o-Nv-yRA" secondAttribute="bottom" constant="20" id="5hN-0O-vNh"/>
+                            <constraint firstAttribute="centerX" secondItem="LPu-q9-B5F" secondAttribute="centerX" id="Ayp-dy-1hv"/>
                             <constraint firstItem="HmF-fD-Tv0" firstAttribute="leading" secondItem="NiZ-8c-0U7" secondAttribute="leadingMargin" constant="20" id="FMD-0Z-nWy"/>
                             <constraint firstAttribute="centerX" secondItem="HmF-fD-Tv0" secondAttribute="centerX" id="Gb6-p8-NZ7"/>
+                            <constraint firstItem="LPu-q9-B5F" firstAttribute="top" secondItem="HmF-fD-Tv0" secondAttribute="bottom" constant="16" id="PkW-Ja-oyA"/>
                             <constraint firstItem="U1o-Nv-yRA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NiZ-8c-0U7" secondAttribute="leadingMargin" constant="20" id="dn6-Oh-tU6"/>
                             <constraint firstAttribute="centerY" secondItem="HmF-fD-Tv0" secondAttribute="top" constant="-20" id="nPF-3I-UGl"/>
                             <constraint firstAttribute="centerX" secondItem="U1o-Nv-yRA" secondAttribute="centerX" constant="-0.5" id="zhg-7d-iCG"/>
