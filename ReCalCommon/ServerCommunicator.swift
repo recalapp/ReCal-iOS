@@ -82,6 +82,8 @@ public final class ServerCommunicator {
                         return self.advanceStateForServerCommunication(serverCommunication, reason: .Manual)
                     case .NoAction:
                         serverCommunication.status = .Idle(serverCommunication.idleInterval)
+                    case .Remove:
+                        self.unregisterServerCommunicationWithIdentifier(serverCommunication.identifier)
                     }
                 })
                 serverCommunication.status = .Connecting(observer)
@@ -148,6 +150,7 @@ public final class ServerCommunicator {
     public enum CompleteAction {
         case ConnectAgain
         case NoAction
+        case Remove
     }
     public enum CommunicationStatus {
         // if the integer goes to 0, then transition to ready

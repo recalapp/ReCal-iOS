@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KCU-oo-xeN">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -321,6 +322,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4iO-UA-KnB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1489" y="1142"/>
+        </scene>
+        <!--Course Download View Controller-->
+        <scene sceneID="Tgr-zf-5yh">
+            <objects>
+                <viewController storyboardIdentifier="CourseDownload" useStoryboardIdentifierAsRestorationIdentifier="YES" id="51p-0F-TvT" customClass="CourseDownloadViewController" customModule="ReCal_Course_Selection" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hgH-Kg-F9K"/>
+                        <viewControllerLayoutGuide type="bottom" id="nkj-CO-ODH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NiZ-8c-0U7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading course data for this semester. May take a few minutes" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U1o-Nv-yRA">
+                                <rect key="frame" x="41" y="259.5" width="519" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HmF-fD-Tv0">
+                                <rect key="frame" x="36" y="320" width="528" height="2"/>
+                                <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </progressView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="U1o-Nv-yRA" secondAttribute="bottom" constant="20" id="5hN-0O-vNh"/>
+                            <constraint firstItem="HmF-fD-Tv0" firstAttribute="leading" secondItem="NiZ-8c-0U7" secondAttribute="leadingMargin" constant="20" id="FMD-0Z-nWy"/>
+                            <constraint firstAttribute="centerX" secondItem="HmF-fD-Tv0" secondAttribute="centerX" id="Gb6-p8-NZ7"/>
+                            <constraint firstItem="U1o-Nv-yRA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NiZ-8c-0U7" secondAttribute="leadingMargin" constant="20" id="dn6-Oh-tU6"/>
+                            <constraint firstAttribute="centerY" secondItem="HmF-fD-Tv0" secondAttribute="top" constant="-20" id="nPF-3I-UGl"/>
+                            <constraint firstAttribute="centerX" secondItem="U1o-Nv-yRA" secondAttribute="centerX" constant="-0.5" id="zhg-7d-iCG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="progressView" destination="HmF-fD-Tv0" id="MUI-Ar-DYT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TRk-Sg-MvU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1312" y="1783"/>
         </scene>
         <!--Authentication Container View Controller-->
         <scene sceneID="Jx7-OC-fz1">

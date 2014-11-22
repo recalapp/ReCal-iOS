@@ -12,10 +12,11 @@ import ReCalCommon
 private let changeScheduleSegueId = "ChangeSchedule"
 private let courseCellIdentifier = "CourseCell"
 private let searchViewControllerStoryboardId = "CourseSearch"
+private let courseDownloadViewControllerStoryboardId = "CourseDownload"
 private let scheduleSelectionNavigationControllerStoryboardId = "ScheduleSelectionNavigation"
 
 class CourseSelectionViewController: DoubleSidebarViewController, UICollectionViewDelegate, UITableViewDelegate, ScheduleCollectionViewDataSourceDelegate, EnrolledCoursesTableViewDataSourceDelegate, CourseSearchTableViewControllerDelegate,
-    ScheduleSelectionDelegate, SettingsViewControllerDelegate, SidebarOverlayPresentationDelegate {
+    ScheduleSelectionDelegate, SettingsViewControllerDelegate, SidebarOverlayPresentationDelegate, CourseDownloadViewControllerDelegate {
     
     // MARK: - Variables
     private let enrolledCoursesTableViewDataSource = EnrolledCoursesTableViewDataSource()
@@ -387,13 +388,6 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }
         if schedule != nil {
             self.schedule = Schedule(managedObject: schedule!)
-            let courseServerCommunication = CourseServerCommunication(termCode: self.schedule.termCode)
-            Settings.currentSettings.serverCommunicator.performBlockAndWait {
-                Settings.currentSettings.serverCommunicator.registerServerCommunication(courseServerCommunication)
-                if schedule!.semester.courses.count == 0 {
-                    Settings.currentSettings.serverCommunicator.startServerCommunicationWithIdentifier(courseServerCommunication.identifier)
-                }
-            }
             self.reloadEnrolledCoursesView()
             self.reloadScheduleView()
             self.reloadSearchViewController()
@@ -403,10 +397,10 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.dismissViewControllerAnimated(true) {
             self.scheduleSelectionViewControllerTransitioningDelegate = nil
             if schedule!.semester.courses.count == 0 {
-                let loadingVC = LoadingIndicatorViewController.instantiateFromStoryboard()
-                loadingVC.textLabel.text = "Loading courses for semester \(schedule!.semester.termCode)"
-                loadingVC.modalTransitionStyle = .CrossDissolve
-                self.presentViewController(loadingVC, animated: true, completion: nil)
+                let courseDownloadVC = self.storyboard?.instantiateViewControllerWithIdentifier(courseDownloadViewControllerStoryboardId) as CourseDownloadViewController
+                courseDownloadVC.termCode = schedule!.semester.termCode
+                courseDownloadVC.delegate = self
+                self.presentViewController(courseDownloadVC, animated: true, completion: nil)
             }
         }
     }
@@ -439,5 +433,15 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                 self.scheduleSelectionViewControllerTransitioningDelegate = nil
             }
         }
+    }
+
+    // MARK: - Course Download Delegate
+    func courseDownloadDidFinish(courseDownloadViewController: CourseDownloadViewController) {
+        assert(self.presentedViewController == courseDownloadViewController)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    func courseDownloadDidFail(courseDownloadViewController: CourseDownloadViewController) {
+        assert(self.presentedViewController == courseDownloadViewController)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

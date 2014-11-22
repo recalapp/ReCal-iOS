@@ -42,7 +42,11 @@ public class ToOneChildManagedObjectAttributeImporter: ManagedObjectAttributeImp
         
         switch self.childSearchPattern {
         case .Reuse:
-            if let childManagedObject = managedObject.valueForKey(self.attributeKey) as? NSManagedObject {
+            var childManagedObjectOpt: NSManagedObject?
+            managedObjectContext.performBlockAndWait {
+                childManagedObjectOpt = managedObject.valueForKey(self.attributeKey) as? NSManagedObject
+            }
+            if let childManagedObject = childManagedObjectOpt {
                 self.childAttributeImporter.importAttributeFromDictionary(value!, intoManagedObject: childManagedObject, inManagedObjectContext: managedObjectContext)
             } else {
                 fallthrough
@@ -50,7 +54,11 @@ public class ToOneChildManagedObjectAttributeImporter: ManagedObjectAttributeImp
         case .NoSearch:
             switch self.deleteMode {
             case .Delete:
-                if let child = managedObject.valueForKey(self.attributeKey) as? NSManagedObject {
+                var childManagedObjectOpt: NSManagedObject?
+                managedObjectContext.performBlockAndWait {
+                    childManagedObjectOpt = managedObject.valueForKey(self.attributeKey) as? NSManagedObject
+                }
+                if let child = childManagedObjectOpt {
                     managedObjectContext.performBlockAndWait {
                         managedObjectContext.delete(child)
                     }
@@ -78,6 +86,7 @@ public class ToOneChildManagedObjectAttributeImporter: ManagedObjectAttributeImp
             }
             let fetchRequest = NSFetchRequest(entityName: self.childEntityName)
             fetchRequest.predicate = NSPredicate(format: "\(childAttributeKey) == %@", "\(childValue)")
+            fetchRequest.fetchLimit = 1
             var ret: ImportResult = .Success
             managedObjectContext.performBlockAndWait {
                 var error: NSError?

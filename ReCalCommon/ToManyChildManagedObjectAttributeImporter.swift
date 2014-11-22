@@ -39,12 +39,19 @@ public class ToManyChildManagedObjectAttributeImporter: ManagedObjectAttributeIm
             return .Error(.InvalidManagedObject)
         }
 
-        let childrenSet = managedObject.mutableSetValueForKey(self.attributeKey)
+        var childrenSet: NSMutableSet!
+        managedObjectContext.performBlockAndWait {
+            childrenSet = managedObject.mutableSetValueForKey(self.attributeKey)
+        }
         switch self.childSearchPattern {
         case .NoSearch:
             switch self.deleteMode {
             case .Delete:
-                childrenSet.removeAllObjects()
+                managedObjectContext.performBlockAndWait {
+                    for child in childrenSet {
+                        managedObjectContext.deleteObject(child as NSManagedObject)
+                    }
+                }
             case .NoDelete:
                 break
             }
@@ -57,10 +64,15 @@ public class ToManyChildManagedObjectAttributeImporter: ManagedObjectAttributeIm
                     return .Error(.InvalidManagedObject)
                 }
                 self.childAttributeImporter.importAttributeFromDictionary(childDict, intoManagedObject: childManagedObject, inManagedObjectContext: managedObjectContext)
-                childrenSet.addObject(childManagedObject)
+                managedObjectContext.performBlockAndWait {
+                    childrenSet.addObject(childManagedObject)
+                }
             }
         case .SearchStringEqual(let childDictionaryKey, let childAttributeKey):
-            let deleteSet = NSMutableSet(set: childrenSet)
+            var deleteSet: NSMutableSet!
+            managedObjectContext.performBlockAndWait {
+                deleteSet = childrenSet.mutableCopy() as NSMutableSet
+            }
             for childDict in value! {
                 var childManagedObject: NSManagedObject!
                 let childValue: AnyObject! = childDict[childDictionaryKey]
@@ -70,11 +82,12 @@ public class ToManyChildManagedObjectAttributeImporter: ManagedObjectAttributeIm
                 }
                 let fetchRequest = NSFetchRequest(entityName: self.childEntityName)
                 fetchRequest.predicate = NSPredicate(format: "\(childAttributeKey) == %@", "\(childValue)")
+                fetchRequest.fetchLimit = 1
                 var ret: ImportResult = .Success
                 managedObjectContext.performBlockAndWait {
                     var error: NSError?
                     childManagedObject = managedObjectContext.executeFetchRequest(fetchRequest, error: &error)?.last as? NSManagedObject
-                    if childManagedObject == nil {
+                    if childManagedObject == nil || !childrenSet.containsObject(childManagedObject) {
                         childManagedObject = NSEntityDescription.insertNewObjectForEntityForName(self.childEntityName, inManagedObjectContext: managedObjectContext) as? NSManagedObject
                         if childManagedObject.entity.propertiesByName[childAttributeKey] == nil {
                             ret = .Error(.InvalidManagedObject)
@@ -86,20 +99,21 @@ public class ToManyChildManagedObjectAttributeImporter: ManagedObjectAttributeIm
                 
                 switch ret {
                 case .Success:
-                    self.childAttributeImporter.importAttributeFromDictionary(childDict, intoManagedObject: childManagedObject, inManagedObjectContext: managedObjectContext)
-                    childrenSet.addObject(childManagedObject)
-                    
-                    if deleteSet.containsObject(childManagedObject) {
-                        deleteSet.removeObject(childManagedObject)
+                    managedObjectContext.performBlockAndWait {
+                        childrenSet.addObject(childManagedObject)
+                        if deleteSet.containsObject(childManagedObject) {
+                            deleteSet.removeObject(childManagedObject)
+                        }
                     }
+                    self.childAttributeImporter.importAttributeFromDictionary(childDict, intoManagedObject: childManagedObject, inManagedObjectContext: managedObjectContext)
                 case .Error(_):
                     return ret
                 }
             }
             switch self.deleteMode {
             case .Delete:
-                for toBeDeleted in deleteSet {
-                    managedObjectContext.performBlockAndWait {
+                managedObjectContext.performBlockAndWait {
+                    for toBeDeleted in deleteSet {
                         managedObjectContext.deleteObject(toBeDeleted as NSManagedObject)
                     }
                 }

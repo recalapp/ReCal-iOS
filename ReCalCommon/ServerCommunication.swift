@@ -27,7 +27,7 @@ extension ServerCommunicator {
         
         public func handleCommunicationResult(result: ServerCommunicator.Result) -> ServerCommunicator.CompleteAction {
             assertionFailure("Abstract method")
-            return .NoAction
+            return .Remove
         }
         
         public func shouldSendRequest()->ServerCommunicator.ShouldSend {

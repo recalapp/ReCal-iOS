@@ -130,6 +130,7 @@
 		81E50D691A0E53640074F381 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
 		81E586241A1FA6B600DE269B /* URLConnectionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E586231A1FA6B600DE269B /* URLConnectionObserver.swift */; };
 		81E586261A1FAA7200DE269B /* URLConnectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E586251A1FAA7200DE269B /* URLConnectionExtension.swift */; };
+		81E5862A1A1FC0DA00DE269B /* CourseDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E586291A1FC0DA00DE269B /* CourseDownloadViewController.swift */; };
 		81E6406D19FACDCA003A49F8 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E6406C19FACDCA003A49F8 /* Set.swift */; };
 		81F76B001A13DAF9001B6233 /* CDSectionEnrollment.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76AFF1A13DAF9001B6233 /* CDSectionEnrollment.m */; };
 		81F76B031A13DAF9001B6233 /* CDSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B021A13DAF9001B6233 /* CDSection.m */; };
@@ -156,6 +157,7 @@
 		81F9A40E1A070B1600083E55 /* CourseDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A40D1A070B1600083E55 /* CourseDetailsViewController.swift */; };
 		81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */; };
 		81FCD28219F7418F00B6DC2D /* OverlayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */; };
+		81FE70DC1A1FF55E00934062 /* OneTimeServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70DB1A1FF55E00934062 /* OneTimeServerCommunication.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -360,6 +362,7 @@
 		81E50D661A0E50C30074F381 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		81E586231A1FA6B600DE269B /* URLConnectionObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLConnectionObserver.swift; sourceTree = "<group>"; };
 		81E586251A1FAA7200DE269B /* URLConnectionExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLConnectionExtension.swift; sourceTree = "<group>"; };
+		81E586291A1FC0DA00DE269B /* CourseDownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDownloadViewController.swift; sourceTree = "<group>"; };
 		81E6406C19FACDCA003A49F8 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		81F76AFE1A13DAF9001B6233 /* CDSectionEnrollment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSectionEnrollment.h; sourceTree = "<group>"; };
 		81F76AFF1A13DAF9001B6233 /* CDSectionEnrollment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSectionEnrollment.m; sourceTree = "<group>"; };
@@ -390,6 +393,7 @@
 		81F9A40D1A070B1600083E55 /* CourseDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewController.swift; sourceTree = "<group>"; };
 		81FCD27F19F7416F00B6DC2D /* SlidingSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidingSidebarViewController.swift; sourceTree = "<group>"; };
 		81FCD28119F7418F00B6DC2D /* OverlayScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayScrollView.swift; sourceTree = "<group>"; };
+		81FE70DB1A1FF55E00934062 /* OneTimeServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneTimeServerCommunication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -612,6 +616,7 @@
 			isa = PBXGroup;
 			children = (
 				81A094D11A067DFD00A0C3CE /* CourseSelectionViewController.swift */,
+				81E586291A1FC0DA00DE269B /* CourseDownloadViewController.swift */,
 				81A095031A067E8800A0C3CE /* Course Search */,
 				81A095051A067EBB00A0C3CE /* Schedule Calendar */,
 				81A095061A067EC400A0C3CE /* Enrolled Courses */,
@@ -684,6 +689,7 @@
 			children = (
 				81792B321A182BD80035D062 /* ServerCommunicator.swift */,
 				81792B341A182BE10035D062 /* ServerCommunication.swift */,
+				81FE70DB1A1FF55E00934062 /* OneTimeServerCommunication.swift */,
 			);
 			name = "Server Communicator";
 			sourceTree = "<group>";
@@ -1274,6 +1280,7 @@
 				8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */,
 				813537571A1CF465002AB008 /* CDSemester.m in Sources */,
 				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
+				81E5862A1A1FC0DA00DE269B /* CourseDownloadViewController.swift in Sources */,
 				81792B461A194B690035D062 /* URLs.swift in Sources */,
 				816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */,
 				8135375A1A1D2296002AB008 /* CourseAttributeImporter.swift in Sources */,
@@ -1316,6 +1323,7 @@
 				8146ECB31A0AF132005FF4C2 /* ManagedObjectProxy.swift in Sources */,
 				81BCA54C1A0FF69000391608 /* URLs.swift in Sources */,
 				81000B1F1A0EA1E100246BD3 /* AuthenticationViewController.swift in Sources */,
+				81FE70DC1A1FF55E00934062 /* OneTimeServerCommunication.swift in Sources */,
 				81792B441A192E210035D062 /* SettingsViewController.swift in Sources */,
 				81792B4A1A1980C10035D062 /* Unicode.swift in Sources */,
 				81000B1C1A0E56B800246BD3 /* Authenticator.swift in Sources */,
