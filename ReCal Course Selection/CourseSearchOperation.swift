@@ -18,11 +18,13 @@ class CourseSearchOperation: NSOperation {
     let managedObjectContext: NSManagedObjectContext
     let searchQuery: String
     let successHandler: [CDCourse]->Void
+    let semesterTermCode: String
     
-    init(searchQuery: String, managedObjectContext: NSManagedObjectContext, successHandler: [CDCourse]->Void) {
+    init(searchQuery: String, semesterTermCode: String, managedObjectContext: NSManagedObjectContext, successHandler: [CDCourse]->Void) {
         self.managedObjectContext = managedObjectContext
         self.searchQuery = searchQuery
         self.successHandler = successHandler
+        self.semesterTermCode = semesterTermCode
         super.init()
     }
     
@@ -33,15 +35,18 @@ class CourseSearchOperation: NSOperation {
     }
     
     private func predicateForQuery(query: String) -> NSPredicate {
+        let termCodePredicate = NSPredicate(format: "semester.termCode LIKE[c] %@", self.semesterTermCode)!
+        var queryPredicate: NSPredicate
         switch query {
         case _ where query.isNumeric():
             let numberPredicate = NSPredicate(format: "ANY courseListings.courseNumber CONTAINS[c] %@", query)
-            return numberPredicate!
+            queryPredicate = numberPredicate!
         default:
             let deptPredicate = NSPredicate(format: "ANY courseListings.departmentCode CONTAINS[c] %@", argumentArray: [query])
             let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", argumentArray: [query])
-            return NSCompoundPredicate.orPredicateWithSubpredicates([deptPredicate, titlePredicate])
+            queryPredicate = NSCompoundPredicate.orPredicateWithSubpredicates([deptPredicate, titlePredicate])
         }
+        return NSCompoundPredicate.andPredicateWithSubpredicates([termCodePredicate, queryPredicate])
     }
     
     override func main() {

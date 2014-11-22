@@ -300,7 +300,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if searchController == self.searchController {
             let query = searchController.searchBar.text
-            let searchOperation = CourseSearchOperation(searchQuery: query, managedObjectContext: self.searchManagedObjectContext, successHandler: { (courses: [CDCourse]) in
+            let searchOperation = CourseSearchOperation(searchQuery: query, semesterTermCode: self.semesterTermCode, managedObjectContext: self.searchManagedObjectContext, successHandler: { (courses: [CDCourse]) in
                 let filtered = courses.sorted { $0.displayText < $1.displayText }.map { Course(managedObject:$0) }
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.filteredCourses = filtered
