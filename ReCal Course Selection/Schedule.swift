@@ -20,6 +20,11 @@ struct Schedule : ManagedObjectProxy {
     var enrolledCourses: OrderedSet<Course>
     var courseSectionTypeEnrollments: Dictionary<Course, SectionTypeEnrollment>
     var courseColorMap: Dictionary<Course, CourseColor>
+    private let colorManager: CourseColorManager
+    private let availableColors = [
+        CourseColor(normalColor: UIColor(red: 190.0/255.0, green: 231/255.0, blue: 166/255.0, alpha: 1), highlightedColor: UIColor(red: 126/255.0, green: 207/255.0, blue: 81/255.0, alpha: 1)),
+        CourseColor(normalColor: UIColor(red: 165/255.0, green: 196/255.0, blue: 241/255.0, alpha: 1), highlightedColor: UIColor(red: 76/255.0, green: 136/255.0, blue: 228/255.0, alpha: 1))
+    ]
     
     var enrolledSections: [Section] {
         let sectionTypeEnrollments = self.courseSectionTypeEnrollments.values.array
@@ -92,6 +97,11 @@ struct Schedule : ManagedObjectProxy {
                 self.courseColorMap[course] = color
             }
         }
+        var occurrences = [CourseColor]()
+        for (_, color) in self.courseColorMap {
+            occurrences.append(color)
+        }
+        self.colorManager = CourseColorManager(availableColors: self.availableColors, occurrences: occurrences)
         self.updateCourseColorMap()
     }
     init(name: String, termCode: String) {
@@ -101,6 +111,7 @@ struct Schedule : ManagedObjectProxy {
         self.enrolledCourses = OrderedSet()
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
         self.courseColorMap = Dictionary()
+        self.colorManager = CourseColorManager(availableColors: self.availableColors)
     }
     
     mutating func updateCourseSectionTypeEnrollments() {
@@ -128,7 +139,7 @@ struct Schedule : ManagedObjectProxy {
     mutating func updateCourseColorMap() {
         for course in self.enrolledCourses {
             if self.courseColorMap[course] == nil {
-                self.courseColorMap[course] = CourseColor(normalColor: UIColor(red: 190.0/255.0, green: 231/255.0, blue: 166/255.0, alpha: 1), highlightedColor: UIColor(red: 126/255.0, green: 207/255.0, blue: 81/255.0, alpha: 1))
+                self.courseColorMap[course] = self.colorManager.getNextColor()
             }
         }
     }

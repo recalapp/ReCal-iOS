@@ -8,7 +8,9 @@
 
 import UIKit
 
-class CourseColor: NSObject, NSCoding {
+private let hashPrimeMultiplier = 131071
+
+class CourseColor: NSObject, NSCoding, Hashable {
     private let normalColorKey = "CourseColorNormalColor"
     private let highlightedColorKey = "CourseColorHighlightedColor"
     let normalColor: UIColor
@@ -26,4 +28,18 @@ class CourseColor: NSObject, NSCoding {
         aCoder.encodeObject(self.normalColor, forKey: normalColorKey)
         aCoder.encodeObject(self.highlightedColor, forKey: highlightedColorKey)
     }
+    override var hashValue: Int {
+        return self.normalColor.hashValue &* hashPrimeMultiplier &+ self.highlightedColor.hashValue
+    }
+    override func isEqual(object: AnyObject?) -> Bool {
+        if let color = object as? CourseColor {
+            return color == self
+        } else {
+            return super.isEqual(object)
+        }
+    }
+}
+
+func == (lhs: CourseColor, rhs: CourseColor) -> Bool {
+    return lhs.normalColor.isEqual(rhs.normalColor) && lhs.highlightedColor.isEqual(rhs.highlightedColor)
 }

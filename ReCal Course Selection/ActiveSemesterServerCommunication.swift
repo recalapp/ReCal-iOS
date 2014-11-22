@@ -16,7 +16,7 @@ class ActiveSemesterServerCommunication: ServerCommunicator.ServerCommunication 
         return NSURLRequest(URL: NSURL(string: urlString)!)
     }
     override var idleInterval: Int {
-        return 5
+        return 100
     }
     
     init() {

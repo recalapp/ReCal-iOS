@@ -130,6 +130,11 @@ public func arrayFlatten<T>(array: [[T]]) -> [T] {
     return array.reduce([], combine: {(flattened, item) in flattened + item })
 }
 
+public func randomElement<T>(array: [T]) -> T {
+    let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
+    return array[randomIndex]
+}
+
 public extension String {
     public func pluralize() -> String {
         let last = self.substringFromIndex(self.endIndex.predecessor())
