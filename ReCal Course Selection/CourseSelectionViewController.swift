@@ -41,6 +41,8 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         didSet {
             if schedule != nil {
                 self.navigationItem.title = schedule.name
+            } else {
+                self.navigationItem.title = "(No schedule selected)"
             }
         }
     }
@@ -382,6 +384,18 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     // MARK: - Schedule Selection Delegate
+    func didDeleteScheduleWithObjectId(objectId: NSManagedObjectID) {
+        if let schedule = self.schedule {
+            switch schedule.managedObjectProxyId {
+            case .Existing(let id):
+                if id.isEqual(objectId) {
+                    self.schedule = nil
+                }
+            case .NewObject:
+                break
+            }
+        }
+    }
     func didSelectScheduleWithObjectId(objectId: NSManagedObjectID) {
         assert(self.presentedViewController == self.scheduleSelectionNavigationController)
         var schedule: CDSchedule?

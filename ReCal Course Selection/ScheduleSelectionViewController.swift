@@ -136,17 +136,34 @@ class ScheduleSelectionViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            let semester = self.visibleSemesters[indexPath.section]
+            var schedules = self.semesterToSchedulesMapping[semester]!
+            let deletedSchedule = schedules.removeAtIndex(indexPath.row)
+            if schedules.count == 0 {
+                self.semesterToSchedulesMapping.removeValueForKey(semester)
+                tableView.deleteSections(NSIndexSet(index: indexPath.section), withRowAnimation: .Fade)
+            } else {
+                self.semesterToSchedulesMapping[semester] = schedules
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
+            self.delegate?.didDeleteScheduleWithObjectId(deletedSchedule.objectID)
+            self.managedObjectContext.performBlock {
+                self.managedObjectContext.deleteObject(deletedSchedule)
+                var errorOpt: NSError?
+                self.managedObjectContext.save(&errorOpt)
+                if let error = errorOpt {
+                    println("Can't delete schedule. Error: \(error)")
+                }
+            }
+            
+            
+        }
     }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -179,6 +196,4 @@ class ScheduleSelectionViewController: UITableViewController {
             scheduleCreationViewController.managedObjectContext = self.managedObjectContext
         }
     }
-    
-
 }
