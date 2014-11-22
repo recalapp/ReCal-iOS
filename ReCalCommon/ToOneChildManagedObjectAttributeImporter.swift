@@ -97,7 +97,7 @@ public class ToOneChildManagedObjectAttributeImporter: ManagedObjectAttributeImp
                         ret = .Error(.InvalidManagedObject)
                         return
                     }
-                    childManagedObject.setValue("\(childValue)", forKey: childAttributeKey)
+                    childManagedObject.setValue("\(childValue!)", forKey: childAttributeKey)
                 }
             }
             

@@ -53,7 +53,6 @@ class CourseDownloadViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        println(Urls.courses(semesterTermCode: self.termCode))
         let courseServerCommunication = ServerCommunicator.OneTimeServerCommunication(identifier: "Courses", urlString: Urls.courses(semesterTermCode: self.termCode)) { (result: ServerCommunicator.Result) in
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 switch result {

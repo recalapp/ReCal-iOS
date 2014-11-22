@@ -93,7 +93,7 @@ public class ToManyChildManagedObjectAttributeImporter: ManagedObjectAttributeIm
                             ret = .Error(.InvalidManagedObject)
                             return
                         }
-                        childManagedObject.setValue("\(childValue)", forKey: childAttributeKey)
+                        childManagedObject.setValue("\(childValue!)", forKey: childAttributeKey)
                     }
                 }
                 

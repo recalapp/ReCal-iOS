@@ -140,7 +140,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     progress.completedUnitCount += 1
                     return (nil, .Failure)
                 }
-                let semester = self.fetchOrCreateEntityWithServerId("\(serverId)", entityName: "CDSemester") as CDSemester
+                let semester = self.fetchOrCreateEntityWithServerId("\(serverId!)", entityName: "CDSemester") as CDSemester
                 let termCode = dict["term_code"] as? String
                 if termCode == nil {
                     progress.completedUnitCount += 1
@@ -180,14 +180,15 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     var oldActive: [CDSemester]?
                     self.backgroundManagedObjectContext.performBlockAndWait {
                         oldActive = self.backgroundManagedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt) as? [CDSemester]
+                        
                     }
                     if let error = errorOpt {
                         println("Error getting old active semesters. Error: \(error)")
                         return .ShouldRetry
                     }
-                    oldActive = oldActive?.filter { !semestersSet.containsObject($0) }
-                    for toChange in oldActive! {
-                        self.backgroundManagedObjectContext.performBlockAndWait {
+                    self.backgroundManagedObjectContext.performBlockAndWait {
+                        oldActive = oldActive?.filter { !semestersSet.containsObject($0) }
+                        for toChange in oldActive! {
                             toChange.active = NSNumber(bool: false)
                         }
                     }

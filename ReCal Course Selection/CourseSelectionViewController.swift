@@ -383,8 +383,10 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     func didSelectScheduleWithObjectId(objectId: NSManagedObjectID) {
         assert(self.presentedViewController == self.scheduleSelectionNavigationController)
         var schedule: CDSchedule?
+        var coursesCount: Int = 0
         self.managedObjectContext.performBlockAndWait {
             schedule = self.managedObjectContext.objectWithID(objectId) as? CDSchedule
+            coursesCount = schedule!.semester.courses.count
         }
         if schedule != nil {
             self.schedule = Schedule(managedObject: schedule!)
@@ -396,7 +398,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }
         self.dismissViewControllerAnimated(true) {
             self.scheduleSelectionViewControllerTransitioningDelegate = nil
-            if schedule!.semester.courses.count == 0 {
+            if coursesCount == 0 {
                 let courseDownloadVC = self.storyboard?.instantiateViewControllerWithIdentifier(courseDownloadViewControllerStoryboardId) as CourseDownloadViewController
                 courseDownloadVC.termCode = schedule!.semester.termCode
                 courseDownloadVC.delegate = self

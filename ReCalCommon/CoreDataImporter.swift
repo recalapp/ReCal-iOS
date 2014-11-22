@@ -14,7 +14,7 @@ public class CoreDataImporter {
     private var privateQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
         queue.name = "Core Data Importer"
-        queue.qualityOfService = NSQualityOfService.Utility
+        queue.qualityOfService = NSQualityOfService.UserInitiated
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
