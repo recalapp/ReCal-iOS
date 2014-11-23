@@ -58,12 +58,6 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }()
     lazy private var scheduleSelectionNavigationController: UINavigationController = {
         let navigationVC = self.storyboard?.instantiateViewControllerWithIdentifier(scheduleSelectionNavigationControllerStoryboardId) as UINavigationController
-        switch Settings.currentSettings.theme {
-        case .Light:
-            navigationVC.navigationBar.barStyle = .Default
-        case .Dark:
-            navigationVC.navigationBar.barStyle = .Black
-        }
         
         let scheduleSelectionViewController = navigationVC.topViewController as ScheduleSelectionViewController
         scheduleSelectionViewController.delegate = self
@@ -129,6 +123,13 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             }
             self.rightSidebarBackgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
             self.leftSidebarBackgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+            switch Settings.currentSettings.theme {
+            case .Light:
+                self.scheduleSelectionNavigationController.navigationBar.barStyle = .Default
+            case .Dark:
+                self.scheduleSelectionNavigationController.navigationBar.barStyle = .Black
+            }
+            self.scheduleSelectionNavigationController.view.tintColor = Settings.currentSettings.colorScheme.actionableTextColor
         }
         let observer3 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
             updateWithColorScheme()
