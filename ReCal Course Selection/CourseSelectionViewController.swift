@@ -310,6 +310,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             self.reloadEnrolledCoursesView()
             self.reloadScheduleView()
             self.reloadSearchViewController()
+            self.saveSchedule()
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
             
