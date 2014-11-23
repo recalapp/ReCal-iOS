@@ -97,7 +97,9 @@ class CourseDownloadViewController: UIViewController {
             case "cancelled":
                 let cancelled = (change[NSKeyValueChangeNewKey] as? NSNumber)?.boolValue ?? false
                 if cancelled {
-                    self.delegate?.courseDownloadDidFail(self)
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        let _ = self.delegate?.courseDownloadDidFail(self)
+                    }
                 }
             default:
                 assertionFailure("KVO not supported")
@@ -108,9 +110,9 @@ class CourseDownloadViewController: UIViewController {
                 let fraction = (change[NSKeyValueChangeNewKey] as? NSNumber)?.floatValue ?? 0.0
                 NSOperationQueue.mainQueue().addOperationWithBlock {
                     self.progressView.setProgress(self.downloadState.progressFraction + fraction * self.downloadState.progressSize, animated: true)
-                }
-                if fraction >= 1.0 {
-                    self.downloadState = .Finished
+                    if fraction >= 1.0 {
+                        self.downloadState = .Finished
+                    }
                 }
             default:
                 assertionFailure("KVO not supported")
