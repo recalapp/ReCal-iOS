@@ -56,14 +56,18 @@ class CourseColorManager: NSObject, NSCoding, NSCopying {
     
     func getNextColor() -> CourseColor {
         let (color, count) = self.nextMinimum
-        self.frequencyCount[color] = count + 1
+        var frequencyCount = self.frequencyCount // protects against swift bug
+        frequencyCount[color] = count + 1
+        self.frequencyCount = frequencyCount
         return color
     }
     
     func decrementColorOccurrence(color: CourseColor) {
         assert(self.frequencyCount[color] != nil)
         let dec = 1
-        self.frequencyCount[color] = self.frequencyCount[color]! - dec
+        var frequencyCount = self.frequencyCount // protects against swift bug
+        frequencyCount[color] = frequencyCount[color]! - dec
+        self.frequencyCount = frequencyCount
     }
     
     func copyWithZone(zone: NSZone) -> AnyObject {

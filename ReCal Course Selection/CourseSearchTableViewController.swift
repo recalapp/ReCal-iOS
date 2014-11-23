@@ -58,6 +58,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     lazy private var searchOperationQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
         queue.maxConcurrentOperationCount = 1
+        queue.qualityOfService = .UserInteractive
         return queue
     }()
     
@@ -302,7 +303,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         if searchController == self.searchController {
             let query = searchController.searchBar.text
             let searchOperation = CourseSearchOperation(searchQuery: query, semesterTermCode: self.semesterTermCode, managedObjectContext: self.searchManagedObjectContext, successHandler: { (courses: [CDCourse]) in
-                let filtered = courses.sorted { $0.displayText < $1.displayText }.map { Course(managedObject:$0) }
+                let filtered = courses.sorted { $0.displayText > $1.displayText }.map { Course(managedObject:$0) }
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.filteredCourses = filtered
                     self.tableView.reloadData()

@@ -41,10 +41,14 @@ class CourseSearchOperation: NSOperation {
         case _ where query.isNumeric():
             let numberPredicate = NSPredicate(format: "ANY courseListings.courseNumber CONTAINS[c] %@", query)
             queryPredicate = numberPredicate!
+        case _ where countElements(query) == 3:
+            let deptPredicate = NSPredicate(format: "ANY courseListings.departmentCode LIKE[c] %@", query)
+            queryPredicate = deptPredicate!
         default:
             let deptPredicate = NSPredicate(format: "ANY courseListings.departmentCode CONTAINS[c] %@", argumentArray: [query])
             let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", argumentArray: [query])
-            queryPredicate = NSCompoundPredicate.orPredicateWithSubpredicates([deptPredicate, titlePredicate])
+            let descriptionPredicate = NSPredicate(format: "courseDescription CONTAINS[c] %@", query)!
+            queryPredicate = NSCompoundPredicate.orPredicateWithSubpredicates([deptPredicate, titlePredicate, descriptionPredicate])
         }
         return NSCompoundPredicate.andPredicateWithSubpredicates([termCodePredicate, queryPredicate])
     }
