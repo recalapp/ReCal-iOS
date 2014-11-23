@@ -24,7 +24,11 @@ struct Schedule : ManagedObjectProxy {
     // TODO if we get these valeus from the web, must deal with inaccuracy of float when comparing
     private let availableColors = [
         CourseColor(normalColor: UIColor(red: 0.745, green: 0.906, blue: 0.651, alpha: 1), highlightedColor: UIColor(red: 0.494, green: 0.812, blue: 0.318, alpha: 1)),
-        CourseColor(normalColor: UIColor(red: 0.647, green: 0.769, blue: 0.945, alpha: 1), highlightedColor: UIColor(red: 0.298, green: 0.533, blue: 0.894, alpha: 1))
+        CourseColor(normalColor: UIColor(red: 0.647, green: 0.769, blue: 0.945, alpha: 1), highlightedColor: UIColor(red: 0.298, green: 0.533, blue: 0.894, alpha: 1)),
+        CourseColor(normalColor: UIColor.fromHexString("bdd7ed")!, highlightedColor: UIColor.fromHexString("a0c6e6")!),
+        CourseColor(normalColor: UIColor.fromHexString("fec583")!, highlightedColor: UIColor.fromHexString("fdac51")!),
+        CourseColor(normalColor: UIColor.fromHexString("f87668")!, highlightedColor: UIColor.fromHexString("f53c2e")!),
+        CourseColor(normalColor: UIColor.fromHexString("cebafd")!, highlightedColor: UIColor.fromHexString("b99dfc")!)
     ]
     
     var enrolledSections: [Section] {

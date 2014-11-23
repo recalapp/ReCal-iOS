@@ -92,13 +92,13 @@ public extension UIColor {
         case 6: // #RRGGBB
             alpha = 1.0
             red = colorComponentFromString(hexString, 0, 2)
-            green = colorComponentFromString(hexString, 1, 2)
-            blue = colorComponentFromString(hexString, 2, 2)
+            green = colorComponentFromString(hexString, 2, 2)
+            blue = colorComponentFromString(hexString, 4, 2)
         case 8: // #AARRGGBB
             alpha = colorComponentFromString(hexString, 0, 2)
             red = colorComponentFromString(hexString, 1, 2)
-            green = colorComponentFromString(hexString, 2, 2)
-            blue = colorComponentFromString(hexString, 3, 2)
+            green = colorComponentFromString(hexString, 3, 2)
+            blue = colorComponentFromString(hexString, 5, 2)
         default:
             assertionFailure("Invalid color string")
         }
