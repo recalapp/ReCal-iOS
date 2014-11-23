@@ -51,7 +51,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Log In" id="FrF-Wl-NEi">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="bRd-F9-8Y8">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="bRd-F9-8Y8">
                             <connections>
                                 <action selector="cancelButtonTapped:" destination="mLm-bf-BUC" id="rl1-fa-dQC"/>
                             </connections>
