@@ -71,7 +71,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
             if let courseDictArray = downloadedDict["objects"] as? [Dictionary<String, AnyObject>] {
                 let courseImportOperationQueue = NSOperationQueue()
                 courseImportOperationQueue.name = "Course Import"
-                courseImportOperationQueue.qualityOfService = .Utility
+                courseImportOperationQueue.qualityOfService = NSOperationQueue.currentQueue()!.qualityOfService
                 courseImportOperationQueue.underlyingQueue = (NSOperationQueue.currentQueue()?.underlyingQueue)!
                 courseImportOperationQueue.maxConcurrentOperationCount = 2
                 let curQueue = NSOperationQueue.currentQueue()

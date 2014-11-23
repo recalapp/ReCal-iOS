@@ -123,6 +123,10 @@ class CourseDownloadViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     private enum DownloadState {
         case Preparing
         case Downloading(NSProgress)

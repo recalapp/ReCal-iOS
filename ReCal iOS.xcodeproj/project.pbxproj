@@ -56,7 +56,6 @@
 		816987AD1A1D6D8B00DD6A58 /* ActiveSemesterServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816987AC1A1D6D8B00DD6A58 /* ActiveSemesterServerCommunication.swift */; };
 		816987AF1A1D7DC500DD6A58 /* CourseServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816987AE1A1D7DC500DD6A58 /* CourseServerCommunication.swift */; };
 		816987B51A1D858700DD6A58 /* CDCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 816987B41A1D858700DD6A58 /* CDCourse.m */; };
-		816987B91A1D86FC00DD6A58 /* LoadingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816987B81A1D86FC00DD6A58 /* LoadingIndicatorViewController.swift */; };
 		816CBB521A092144002C610A /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB511A092144002C610A /* CoreDataExtensions.swift */; };
 		816CBB541A0926F9002C610A /* courses.json in Resources */ = {isa = PBXBuildFile; fileRef = 816CBB531A0926F9002C610A /* courses.json */; };
 		816CBB561A092909002C610A /* CourseSelectionCoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816CBB551A092909002C610A /* CourseSelectionCoreDataImporter.swift */; };
@@ -279,7 +278,6 @@
 		816987AE1A1D7DC500DD6A58 /* CourseServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseServerCommunication.swift; sourceTree = "<group>"; };
 		816987B31A1D858700DD6A58 /* CDCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCourse.h; sourceTree = "<group>"; };
 		816987B41A1D858700DD6A58 /* CDCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCourse.m; sourceTree = "<group>"; };
-		816987B81A1D86FC00DD6A58 /* LoadingIndicatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorViewController.swift; sourceTree = "<group>"; };
 		816CBB1D1A091D16002C610A /* ReCal Course Selection-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReCal Course Selection-Bridging-Header.h"; sourceTree = "<group>"; };
 		816CBB511A092144002C610A /* CoreDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtensions.swift; sourceTree = "<group>"; };
 		816CBB531A0926F9002C610A /* courses.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = courses.json; sourceTree = "<group>"; };
@@ -634,14 +632,6 @@
 			name = "Course Selection";
 			sourceTree = "<group>";
 		};
-		816987B71A1D86E300DD6A58 /* Loading Indicator Controller */ = {
-			isa = PBXGroup;
-			children = (
-				816987B81A1D86FC00DD6A58 /* LoadingIndicatorViewController.swift */,
-			);
-			name = "Loading Indicator Controller";
-			sourceTree = "<group>";
-		};
 		816CBB1C1A091CFB002C610A /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -845,7 +835,6 @@
 			children = (
 				81FE70DE1A20E70800934062 /* Fade Overlay Presentation */,
 				81E586221A1FA69800DE269B /* URL Connection Observer */,
-				816987B71A1D86E300DD6A58 /* Loading Indicator Controller */,
 				814735071A1A3BEE004B3A34 /* Sidebar Overlay Presentation */,
 				81792B3C1A1928DD0035D062 /* Static Table View */,
 				81792B3B1A1928A20035D062 /* Settings View Controller */,
@@ -1368,7 +1357,6 @@
 				81BCA5461A0FE87600391608 /* AuthenticationNavigationController.swift in Sources */,
 				81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */,
 				81F76B0C1A169812001B6233 /* ManagedObjectAttributeImporter.swift in Sources */,
-				816987B91A1D86FC00DD6A58 /* LoadingIndicatorViewController.swift in Sources */,
 				8172B96E19F562590070E7DF /* Stack.swift in Sources */,
 				8147350D1A1A40AD004B3A34 /* SidebarOverlayTransitioningDelegate.swift in Sources */,
 				818B45EB1A048A7B00FE0BC3 /* DoubleSidebarViewController.swift in Sources */,

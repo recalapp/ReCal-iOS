@@ -362,6 +362,7 @@
                             <constraint firstAttribute="centerX" secondItem="U1o-Nv-yRA" secondAttribute="centerX" constant="-0.5" id="zhg-7d-iCG"/>
                         </constraints>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="progressView" destination="HmF-fD-Tv0" id="MUI-Ar-DYT"/>
                     </connections>

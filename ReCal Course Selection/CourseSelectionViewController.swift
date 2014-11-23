@@ -72,7 +72,6 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     private var courseDownloadViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     private var settingsViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     private var scheduleSelectionViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
-    private var loadingIndicatorViewController: LoadingIndicatorViewController?
     
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     private var enrolledLabel: UILabel!
@@ -116,11 +115,6 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                     println("Error deleting schedule. Error: \(error)")
                     return
                 }
-            }
-        }
-        let obsever3 = NSNotificationCenter.defaultCenter().addObserverForName(CoreDataImporter.Notifications.DidImport, object: nil, queue: NSOperationQueue.mainQueue()) { (notification: NSNotification!) -> Void in
-            if self.loadingIndicatorViewController != nil && (notification.userInfo?[CoreDataImporter.NotificationUserInfo.ImportFileName] as? String) == CourseSelectionCoreDataImporter.TemporaryFileNames.courses {
-                self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
         let updateWithColorScheme: ()->Void = {
@@ -380,7 +374,6 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     // MARK: - Course Search Table View Controller Delegate
     func enrollmentsDidChangeForCourseSearchTableViewController(viewController: CourseSearchTableViewController) {
         assert(viewController == self.searchViewController, "Wrong view controller")
-        // TODO check if this is ok, it creates a new enrolled courses list everytime. does this affect color map?
         let newEnrolled = OrderedSet(initialValues: viewController.enrolledCourses)
         let deletedCourses = self.schedule.enrolledCourses.toArray().filter { !newEnrolled.contains($0) }
         self.schedule.enrolledCourses = newEnrolled

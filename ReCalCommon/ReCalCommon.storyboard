@@ -220,43 +220,5 @@
             </objects>
             <point key="canvasLocation" x="-169" y="1538"/>
         </scene>
-        <!--Loading Indicator View Controller-->
-        <scene sceneID="Z0Q-tp-9T4">
-            <objects>
-                <viewController storyboardIdentifier="LoadingIndicator" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NlG-d2-JVi" customClass="LoadingIndicatorViewController" customModule="ReCalCommon" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="2Pa-ya-EfT"/>
-                        <viewControllerLayoutGuide type="bottom" id="zug-b2-AuA"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ChK-dN-F8j">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Uit-Os-i5Y">
-                                <rect key="frame" x="282" y="263" width="37" height="37"/>
-                            </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fs2-VZ-4s7">
-                                <rect key="frame" x="279" y="308" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="centerY" secondItem="Uit-Os-i5Y" secondAttribute="bottom" id="ERt-Fk-KHr"/>
-                            <constraint firstAttribute="centerX" secondItem="Fs2-VZ-4s7" secondAttribute="centerX" id="lOw-2U-cpX"/>
-                            <constraint firstAttribute="centerX" secondItem="Uit-Os-i5Y" secondAttribute="centerX" constant="-0.5" id="niT-FW-1Kd"/>
-                            <constraint firstItem="Fs2-VZ-4s7" firstAttribute="top" secondItem="Uit-Os-i5Y" secondAttribute="bottom" constant="8" id="uXI-34-74c"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="textLabel" destination="Fs2-VZ-4s7" id="0Mb-GT-x6V"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="j6e-DW-UVm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="482" y="2275"/>
-        </scene>
     </scenes>
 </document>
