@@ -364,6 +364,7 @@
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="progressTextLabel" destination="U1o-Nv-yRA" id="xS7-Pm-SLL"/>
                         <outlet property="progressView" destination="HmF-fD-Tv0" id="MUI-Ar-DYT"/>
                     </connections>
                 </viewController>

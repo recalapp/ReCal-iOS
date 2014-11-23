@@ -16,6 +16,7 @@ class CourseDownloadViewController: UIViewController {
     var termCode: String = ""
     
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var progressTextLabel: UILabel!
     private var downloadState: DownloadState = .Preparing {
         willSet {
             switch downloadState {
@@ -48,6 +49,7 @@ class CourseDownloadViewController: UIViewController {
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.progressView.setProgress(self.downloadState.progressFraction, animated: true)
             }
+            self.progressTextLabel.text = downloadState.progressText
         }
     }
     
@@ -80,7 +82,7 @@ class CourseDownloadViewController: UIViewController {
                 observer!.progress.addObserver(self, forKeyPath: "cancelled", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
             }
         }
-        
+        self.progressTextLabel.text = self.downloadState.progressText
     }
 
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
@@ -159,6 +161,20 @@ class CourseDownloadViewController: UIViewController {
                 return DownloadState.Finished.progressFraction - self.progressFraction
             case .Finished:
                 return 0
+            }
+        }
+        var progressText: String {
+            switch self {
+            case .Preparing:
+                fallthrough
+            case .Downloading(_):
+                fallthrough
+            case .Writing:
+                return "Downloading courses data for this semester. May take a few minutes."
+            case .Importing(_):
+                return "Hang tight. Almost done!"
+            case .Finished:
+                return "Done!"
             }
         }
     }
