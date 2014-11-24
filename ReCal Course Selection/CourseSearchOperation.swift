@@ -29,7 +29,7 @@ class CourseSearchOperation: NSOperation {
     }
     
     private var searchPredicate: NSPredicate {
-        let queries = self.searchQuery.componentsSeparatedByString(" ").filter { countElements($0) > 0 }
+        let queries = self.searchQuery.componentsSeparatedByString(" ").filter { countElements($0) >= self.minimumQueryLength }
         let predicates = queries.map { self.predicateForQuery($0) }
         return NSCompoundPredicate.andPredicateWithSubpredicates(predicates)
     }

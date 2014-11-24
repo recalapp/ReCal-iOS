@@ -11,7 +11,7 @@ import ReCalCommon
 
 class CourseSearchResultTableViewCell: UITableViewCell {
 
-    var course: Course? {
+    var course: CDCourse? {
         didSet {
             self.refresh()
         }
@@ -53,5 +53,4 @@ class CourseSearchResultTableViewCell: UITableViewCell {
             self.detailTextLabel?.text = course.title
         }
     }
-
 }

@@ -9,8 +9,8 @@
         <relationship name="semester" maxCount="1" deletionRule="Nullify" destinationEntity="CDSemester" inverseName="courses" inverseEntity="CDSemester" syncable="YES"/>
     </entity>
     <entity name="CDCourseListing" representedClassName="CDCourseListing" syncable="YES">
-        <attribute name="courseNumber" attributeType="String" syncable="YES"/>
-        <attribute name="departmentCode" attributeType="String" syncable="YES"/>
+        <attribute name="courseNumber" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="departmentCode" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="isPrimary" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="courseListings" inverseEntity="CDCourse" syncable="YES"/>
     </entity>

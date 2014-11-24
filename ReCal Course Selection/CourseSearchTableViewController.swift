@@ -22,32 +22,45 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     var enrolledCourses: [Course] {
         set {
-            self.enrolledCoursesSet = Set<Course>(initialItems: newValue)
+            let courseManagedObjects = newValue.map { (course: Course)->CDCourse? in
+                switch course.managedObjectProxyId {
+                case .Existing(let id):
+                    var result: CDCourse?
+                    self.searchManagedObjectContext.performBlockAndWait {
+                        result = self.searchManagedObjectContext.objectWithID(id) as? CDCourse
+                    }
+                    return result
+                case .NewObject:
+                    assertionFailure("Cannot get here")
+                    return nil
+                }
+            }
+            self.enrolledCoursesSet = Set<CDCourse>(initialItems: courseManagedObjects.filter { $0 != nil }.map { $0! })
             self.clearVisibleCoursesStorageCache()
             self.tableView.reloadData()
         }
         get {
-            return self.enrolledCoursesSet.toArray()
+            return self.enrolledCoursesSet.toArray().map { Course(managedObject: $0) }
         }
     }
-    private var enrolledCoursesSet: Set<Course> = Set<Course>()
+    private var enrolledCoursesSet: Set<CDCourse> = Set<CDCourse>()
     
-    private var filteredCourses: [Course] = [] {
+    private var filteredCourses: [CDCourse] = [] {
         didSet {
             self.clearVisibleCoursesStorageCache()
         }
     }
     
-    private var visibleCourses: [Course] {
+    private var visibleCourses: [CDCourse] {
         if self.searchController != nil && self.searchController.searchBar.text == "" {
-            return self.enrolledCourses
+            return self.enrolledCoursesSet.toArray()
         }
         return self.filteredCourses
     }
     
-    private var visibleEnrolledCourses: [Course] = []
+    private var visibleEnrolledCourses: [CDCourse] = []
     
-    private var visibleUnenrolledCourses: [Course] = []
+    private var visibleUnenrolledCourses: [CDCourse] = []
     
     lazy private var courseDetailsViewController: CourseDetailsViewController = {
         return self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
@@ -127,7 +140,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         // Dispose of any resources that can be recreated.
     }
     
-    private func courseAtIndexPath(indexPath: NSIndexPath) -> Course {
+    private func courseAtIndexPath(indexPath: NSIndexPath) -> CDCourse {
         switch (indexPath.section, indexPath.row) {
         case (0, let row):
             assert(row < self.visibleUnenrolledCourses.count, "Invalid index path")
@@ -140,7 +153,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         }
     }
 
-    private func indexPathForCourse(course: Course) -> NSIndexPath? {
+    private func indexPathForCourse(course: CDCourse) -> NSIndexPath? {
         let toSearch = self.enrolledCoursesSet.contains(course) ? self.visibleEnrolledCourses : self.visibleUnenrolledCourses
         let indexes = arrayFindIndexesOfElement(array: toSearch, element: course)
         if indexes.count == 0 {
@@ -244,7 +257,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
 
     // MARK: Table View Delegate
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        let course = self.courseAtIndexPath(indexPath)
+        let course = Course(managedObject: self.courseAtIndexPath(indexPath))
         if course == self.courseDetailsViewController.course {
             return
         } else {
@@ -303,7 +316,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         if searchController == self.searchController {
             let query = searchController.searchBar.text
             let searchOperation = CourseSearchOperation(searchQuery: query, semesterTermCode: self.semesterTermCode, managedObjectContext: self.searchManagedObjectContext, successHandler: { (courses: [CDCourse]) in
-                let filtered = courses.sorted { $0.displayText < $1.displayText }.map { Course(managedObject:$0) }
+                let filtered = courses.sorted { $0.displayText < $1.displayText }
                 NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                     self.filteredCourses = filtered
                     self.tableView.reloadData()
