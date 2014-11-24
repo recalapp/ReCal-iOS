@@ -35,7 +35,7 @@ class CourseSearchOperation: NSOperation {
     }
     
     private func predicateForQuery(query: String) -> NSPredicate {
-        let termCodePredicate = NSPredicate(format: "semester.termCode LIKE[c] %@", self.semesterTermCode)!
+        let termCodePredicate = NSPredicate(format: "semester.termCode LIKE %@", self.semesterTermCode)!
         var queryPredicate: NSPredicate
         switch query {
         case _ where query.isNumeric():
