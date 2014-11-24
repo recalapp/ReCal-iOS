@@ -63,6 +63,7 @@ class CourseSearchOperation: NSOperation {
         }
         let fetchRequest = NSFetchRequest(entityName: "CDCourse")
         fetchRequest.predicate = self.searchPredicate
+        fetchRequest.relationshipKeyPathsForPrefetching = ["courseListings"]
         if self.cancelled {
             return
         }

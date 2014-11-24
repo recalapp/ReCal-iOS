@@ -163,6 +163,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
             return supplementaryView
         }
         assert(false, "Invalid supplementary view type")
+        return UICollectionReusableView()
     }
     
     func handleSelectionInCollectionView(collectionView: UICollectionView, forItemAtIndexPath indexPath: NSIndexPath) {

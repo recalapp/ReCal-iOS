@@ -458,6 +458,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             }
         }
         assert(false, "Invalid Decoration View Kind \(elementKind)")
+        return nil
     }
     
     override public func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
@@ -470,10 +471,12 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             case .DayColumnHeader:
                 return self.dayColumnHeaderLayoutAttributesCache[indexPath]
             case .TimeRowHeader:
+                
                 return self.timeRowHeaderLayoutAttributesCache[indexPath]
             }
         }
         assert(false, "Invalid Supplementary View Kind \(elementKind)")
+        return nil
     }
     
     override public func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {

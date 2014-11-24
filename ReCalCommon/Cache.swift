@@ -60,6 +60,7 @@ final public class Cache<Key: Hashable, Value>: SequenceType {
                 return computed
             }
             assert(false, "ItemConstructor must be provided before first call to cache")
+            return self.cacheDictionary.values.first!
         }
         set {
             self.cacheDictionary[key] = newValue
