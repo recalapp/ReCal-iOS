@@ -16,10 +16,13 @@ private let courseDetailsViewControllerStoryboardId = "CourseDetails"
 
 class CourseSearchTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     
+    // MARK: Variables
     weak var delegate: CourseSearchTableViewControllerDelegate?
     
+    /// The semester term code to search in
     var semesterTermCode: String = ""
     
+    /// Enrolled courses, represented as an Array<Course>
     var enrolledCourses: [Course] {
         set {
             let courseManagedObjects = newValue.map { (course: Course)->CDCourse? in
@@ -43,14 +46,18 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             return self.enrolledCoursesSet.toArray().map { Course(managedObject: $0) }
         }
     }
+    
+    /// Internal representation of enrolled courses, as a Set<CDCourse>
     private var enrolledCoursesSet: Set<CDCourse> = Set<CDCourse>()
     
+    /// Filtered set of courses
     private var filteredCourses: [CDCourse] = [] {
         didSet {
             self.clearVisibleCoursesStorageCache()
         }
     }
     
+    /// The visible courses. If there is a search term, then we display the filtered courses. Otherwise, we show the enrolled courses
     private var visibleCourses: [CDCourse] {
         if self.searchController != nil && self.searchController.searchBar.text == "" {
             return self.enrolledCoursesSet.toArray()
@@ -58,16 +65,21 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         return self.filteredCourses
     }
     
+    /// Visible courses that are also enrolled
     private var visibleEnrolledCourses: [CDCourse] = []
     
+    /// Visible courses that are not enrolled
     private var visibleUnenrolledCourses: [CDCourse] = []
     
+    /// View controller for displaying course details
     lazy private var courseDetailsViewController: CourseDetailsViewController = {
         return self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
     }()
     
+    /// The controller for search
     private var searchController: UISearchController!
     
+    /// Background operation queue for searching. We only allow one operation in this queue at a time (by cancelling before adding a new operation)
     lazy private var searchOperationQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
         queue.maxConcurrentOperationCount = 1
@@ -75,9 +87,12 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         return queue
     }()
     
+    /// Managed object context for searching
     private var searchManagedObjectContext: NSManagedObjectContext!
     
     private var notificationObservers: [AnyObject] = []
+    
+    // MARK: - Methods
     
     private func clearVisibleCoursesStorageCache() {
         self.visibleEnrolledCourses = self.visibleCourses.filter { self.enrolledCoursesSet.contains($0) }
@@ -86,13 +101,17 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // set up managed object context
         self.searchOperationQueue.addOperationWithBlock {
             self.searchManagedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
             self.searchManagedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
         }
         self.searchOperationQueue.waitUntilAllOperationsAreFinished()
+        
+        // UI setups
         self.definesPresentationContext = true
         self.tableView.keyboardDismissMode = .OnDrag
+        self.tableView.rowHeight = 66
         self.searchController = {
             let searchController = UISearchController(searchResultsController: nil)
             searchController.searchBar.frame = CGRect(origin: CGPointZero, size: CGSize(width: self.tableView.bounds.size.width, height: 44))
@@ -134,11 +153,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             NSNotificationCenter.defaultCenter().removeObserver(observer)
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     private func courseAtIndexPath(indexPath: NSIndexPath) -> CDCourse {
         switch (indexPath.section, indexPath.row) {
@@ -165,7 +179,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     }
     
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections.
         return 2
@@ -181,10 +195,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         default:
             assertionFailure("not implemented")
         }
-    }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 66
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -219,41 +229,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         
         return cell
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     // MARK: Table View Delegate
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
@@ -340,17 +315,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             self.courseDetailsViewController.course = nil
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 protocol CourseSearchTableViewControllerDelegate: class {

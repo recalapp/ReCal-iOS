@@ -70,6 +70,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     private var enrolledLabel: UILabel!
     private var enrolledLine: UIView!
+    
     // MARK: - Methods
     override func prefersStatusBarHidden() -> Bool {
         return false

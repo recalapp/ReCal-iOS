@@ -11,12 +11,19 @@ import ReCalCommon
 
 class CourseDownloadViewController: UIViewController {
 
+    // MARK: Variables
     weak var delegate: CourseDownloadViewControllerDelegate?
     
+    /// The semester term code
     var termCode: String = ""
-    
+
+    /// The UIProgressView used to display progress
     @IBOutlet weak var progressView: UIProgressView!
+    
+    /// The label for the progress view
     @IBOutlet weak var progressTextLabel: UILabel!
+    
+    /// DFA state
     private var downloadState: DownloadState = .Preparing {
         willSet {
             switch downloadState {
@@ -53,6 +60,7 @@ class CourseDownloadViewController: UIViewController {
         }
     }
     
+    // MARK: Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         let courseServerCommunication = ServerCommunicator.OneTimeServerCommunication(identifier: "Courses", urlString: Urls.courses(semesterTermCode: self.termCode)) { (result: ServerCommunicator.Result) in
@@ -122,15 +130,11 @@ class CourseDownloadViewController: UIViewController {
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
     
+    /// DFA State
     private enum DownloadState {
         case Preparing
         case Downloading(NSProgress)
@@ -181,7 +185,7 @@ class CourseDownloadViewController: UIViewController {
         }
     }
 }
-
+// MARK: - Delegate
 protocol CourseDownloadViewControllerDelegate: class {
     func courseDownloadDidFinish(courseDownloadViewController: CourseDownloadViewController)
     func courseDownloadDidFail(courseDownloadViewController: CourseDownloadViewController)
