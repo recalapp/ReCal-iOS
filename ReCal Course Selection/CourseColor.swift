@@ -7,29 +7,44 @@
 //
 
 import UIKit
+import ReCalCommon
 
 private let hashPrimeMultiplier = 131071
 
 class CourseColor: NSObject, NSCoding, Hashable, NSCopying {
-    private let normalColorKey = "CourseColorNormalColor"
-    private let highlightedColorKey = "CourseColorHighlightedColor"
-    let normalColor: UIColor
-    let highlightedColor: UIColor
-    init(normalColor: UIColor, highlightedColor: UIColor) {
-        self.normalColor = normalColor
-        self.highlightedColor = highlightedColor
+    private struct CodingKeys {
+        static let NormalColor = "CourseColorNormalColor"
+        static let HighlightedColor = "CourseColorHighlightedColor"
+    }
+    let normalColorRepresentation: ColorRepresentation
+    lazy var normalColor: UIColor = {
+        return UIColor(colorRepresentation: self.normalColorRepresentation)
+    }()
+    let highlightedColorRepresentation: ColorRepresentation
+    lazy var highlightedColor: UIColor = {
+        return UIColor(colorRepresentation: self.highlightedColorRepresentation)
+    }()
+    init(normalColorHexString: String, highlightedColorHexString: String) {
+        // TODO normalize hex string
+        self.normalColorRepresentation = ColorRepresentation(hexString: normalColorHexString)
+        self.highlightedColorRepresentation = ColorRepresentation(hexString: highlightedColorHexString)
+        super.init()
+    }
+    init(normalColorRepresentation: ColorRepresentation, highlightedColorRepresentation: ColorRepresentation) {
+        self.normalColorRepresentation = normalColorRepresentation
+        self.highlightedColorRepresentation = highlightedColorRepresentation
         super.init()
     }
     required init(coder aDecoder: NSCoder) {
-        self.normalColor = aDecoder.decodeObjectForKey(normalColorKey) as UIColor
-        self.highlightedColor = aDecoder.decodeObjectForKey(highlightedColorKey) as UIColor
+        self.normalColorRepresentation = aDecoder.decodeObjectForKey(CodingKeys.NormalColor) as ColorRepresentation
+        self.highlightedColorRepresentation = aDecoder.decodeObjectForKey(CodingKeys.HighlightedColor) as ColorRepresentation
     }
     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.normalColor, forKey: normalColorKey)
-        aCoder.encodeObject(self.highlightedColor, forKey: highlightedColorKey)
+        aCoder.encodeObject(self.normalColorRepresentation, forKey: CodingKeys.NormalColor)
+        aCoder.encodeObject(self.highlightedColorRepresentation, forKey: CodingKeys.HighlightedColor)
     }
     override var hashValue: Int {
-        return self.normalColor.hashValue &* hashPrimeMultiplier &+ self.highlightedColor.hashValue
+        return self.normalColorRepresentation.hashValue &* hashPrimeMultiplier &+ self.highlightedColorRepresentation.hashValue
     }
     override func isEqual(object: AnyObject?) -> Bool {
         if let color = object as? CourseColor {
@@ -39,11 +54,11 @@ class CourseColor: NSObject, NSCoding, Hashable, NSCopying {
         }
     }
     func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy = CourseColor(normalColor: self.normalColor.copy() as UIColor, highlightedColor: self.highlightedColor.copy() as UIColor)
+        let copy = CourseColor(normalColorRepresentation: self.normalColorRepresentation.copyWithZone(zone) as ColorRepresentation, highlightedColorRepresentation: self.highlightedColorRepresentation.copyWithZone(zone) as ColorRepresentation)
         return copy
     }
 }
 
 func == (lhs: CourseColor, rhs: CourseColor) -> Bool {
-    return lhs.normalColor.isEqual(rhs.normalColor) && lhs.highlightedColor.isEqual(rhs.highlightedColor)
+    return lhs.highlightedColorRepresentation == rhs.highlightedColorRepresentation && lhs.normalColorRepresentation == rhs.normalColorRepresentation
 }

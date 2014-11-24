@@ -29,13 +29,14 @@ public class ColorManagedObjectAttributeImporter : ManagedObjectAttributeImporte
             println("Invalid managed object. Does not contain specified key: \(self.attributeKey)")
             return .Error(.InvalidManagedObject)
         }
-        let processed = UIColor.fromHexString(value!)
-        if processed == nil {
-            println("Invalid color text format. String: \(value!)")
-            return .Error(.InvalidDictionary)
-        }
+        let processed = ColorRepresentation(hexString: value!)
+//        if processed == nil {
+//            println("Invalid color text format. String: \(value!)")
+//            return .Error(.InvalidDictionary)
+//        }
+        let color = UIColor(colorRepresentation: processed)
         managedObjectContext.performBlockAndWait {
-            managedObject.setValue(processed!, forKey: self.attributeKey)
+            managedObject.setValue(color, forKey: self.attributeKey)
         }
         return .Success
     }

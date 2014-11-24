@@ -105,6 +105,7 @@
 		81A094FC1A067DFD00A0C3CE /* TimeRowHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81A094E41A067DFD00A0C3CE /* TimeRowHeaderView.xib */; };
 		81A094FD1A067E2100A0C3CE /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
 		81A094FE1A067E2100A0C3CE /* ReCalCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		81A160661A2392AF00CE7618 /* ColorRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A160651A2392AF00CE7618 /* ColorRepresentation.swift */; };
 		81AA2C641A12F48800A31F61 /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AA2C631A12F48800A31F61 /* EventType.swift */; };
 		81B6D3111A0DA65900B883A6 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819E7F271A0D93E600D32D5A /* ColorScheme.swift */; };
 		81BCA5461A0FE87600391608 /* AuthenticationNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA5451A0FE87600391608 /* AuthenticationNavigationController.swift */; };
@@ -336,6 +337,7 @@
 		81A094E21A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderBackgroundView.swift; sourceTree = "<group>"; };
 		81A094E31A067DFD00A0C3CE /* TimeRowHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeRowHeaderView.swift; sourceTree = "<group>"; };
 		81A094E41A067DFD00A0C3CE /* TimeRowHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeRowHeaderView.xib; sourceTree = "<group>"; };
+		81A160651A2392AF00CE7618 /* ColorRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorRepresentation.swift; sourceTree = "<group>"; };
 		81AA2C631A12F48800A31F61 /* EventType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
 		81B6D3121A0DA81D00B883A6 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = "../ReCal Course Selection/Settings.swift"; sourceTree = "<group>"; };
 		81BCA5451A0FE87600391608 /* AuthenticationNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationNavigationController.swift; sourceTree = "<group>"; };
@@ -860,6 +862,7 @@
 				81BCA54B1A0FF69000391608 /* URLs.swift */,
 				81853EE81A102D28002E9B1A /* Serializable.swift */,
 				81792B491A1980C10035D062 /* Unicode.swift */,
+				81A160651A2392AF00CE7618 /* ColorRepresentation.swift */,
 			);
 			path = ReCalCommon;
 			sourceTree = "<group>";
@@ -1361,6 +1364,7 @@
 				811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */,
 				81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */,
 				81792B331A182BD80035D062 /* ServerCommunicator.swift in Sources */,
+				81A160661A2392AF00CE7618 /* ColorRepresentation.swift in Sources */,
 				81FE70E41A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift in Sources */,
 				81E6406D19FACDCA003A49F8 /* Set.swift in Sources */,
 				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,

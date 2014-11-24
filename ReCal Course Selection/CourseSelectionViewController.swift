@@ -362,17 +362,19 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
         self.showCourseDeletePromptForCourse(course)
     }
+    func enrollmentsDidStopChangingForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource) {
+        assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for schedule view")
+        self.saveSchedule()
+    }
     
     // MARK: - Schedule Collection View Data Source Delegate
     func enrollmentDidChangeForScheduleCollectionViewDataSource(dataSource: ScheduleCollectionViewDataSource) {
         assert(dataSource == self.scheduleCollectionViewDataSource, "Wrong data source object for schedule view")
         self.schedule.courseSectionTypeEnrollments = dataSource.enrollments
         self.reloadEnrolledCoursesView()
-    }
-    func enrollmentsDidStopChangingForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource) {
-        assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for schedule view")
         self.saveSchedule()
     }
+    
     
     // MARK: - Course Search Table View Controller Delegate
     func enrollmentsDidChangeForCourseSearchTableViewController(viewController: CourseSearchTableViewController) {
