@@ -58,7 +58,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     lazy private var searchOperationQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
         queue.maxConcurrentOperationCount = 1
-        queue.qualityOfService = .UserInteractive
+        queue.qualityOfService = .UserInitiated
         return queue
     }()
     

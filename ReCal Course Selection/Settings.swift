@@ -12,6 +12,9 @@ public class Settings {
     public struct Notifications {
         public static let ThemeDidChange = "SettingsNotificationsThemeDidChange"
     }
+    public struct UserDefaultsKeys {
+        public static let Theme = "SettingsUserDefaultsKeysTheme"
+    }
     private struct Static {
         static var instance: Settings?
         static var token: dispatch_once_t = 0
@@ -33,6 +36,7 @@ public class Settings {
             case .Light:
                 colorScheme = LightColorScheme()
             }
+            self.sharedUserDefaults.setInteger(theme.rawValue, forKey: UserDefaultsKeys.Theme)
             NSNotificationCenter.defaultCenter().postNotificationName(Notifications.ThemeDidChange, object: self)
         }
     }
@@ -45,8 +49,9 @@ public class Settings {
     
     public var serverCommunicator: ServerCommunicator = ServerCommunicator()
     
+    public let sharedUserDefaults = NSUserDefaults(suiteName: "group.io.recal.ReCalShared")!
 }
 
-public enum Theme {
+public enum Theme: Int {
     case Dark, Light
 }

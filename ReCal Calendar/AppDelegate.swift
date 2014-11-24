@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
-            if url.scheme == calendarUrlScheme {
+            if url.scheme == Urls.calendarUrlScheme {
                 return true
             }
             return false
@@ -27,9 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let launch: ()->Void = {
-            Settings.currentSettings.theme = .Light
+            Settings.currentSettings.theme = Theme(rawValue: Settings.currentSettings.sharedUserDefaults.integerForKey(Settings.UserDefaultsKeys.Theme)) ?? .Light
             let rootViewController = self.window?.rootViewController
-            Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: authenticationUrl, withLogOutUrlString: logOutUrl)
+            Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: Urls.authentication, withLogOutUrlString: Urls.logOut)
             Settings.currentSettings.coreDataImporter = CalendarCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
             Settings.currentSettings.serverCommunicator.performBlockAndWait {
                 Settings.currentSettings.serverCommunicator.registerServerCommunication(EventsServerCommunication())
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
-            if url.scheme == calendarUrlScheme {
+            if url.scheme == Urls.calendarUrlScheme {
                 launch()
                 return true
             }
@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        if url.scheme == calendarUrlScheme {
+        if url.scheme == Urls.calendarUrlScheme {
             return true
         }
         return false
@@ -70,12 +70,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        Settings.currentSettings.theme = Theme(rawValue: Settings.currentSettings.sharedUserDefaults.integerForKey(Settings.UserDefaultsKeys.Theme)) ?? .Light
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        self.saveContext()
     }
 
     // MARK: - Core Data stack

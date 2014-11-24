@@ -75,7 +75,7 @@ class CalendarCoreDataImporter: CoreDataImporter {
         }
         return managedObject!
     }
-    override func processData(data: NSData, fromTemporaryFileName fileName: String) -> ImportResult {
+    override func processData(data: NSData, fromTemporaryFileName fileName: String, withProgress: NSProgress) -> CoreDataImporter.ImportResult {
         switch fileName {
         case TemporaryFileNames.userProfile:
             return self.processUserProfileData(data)

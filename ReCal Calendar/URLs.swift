@@ -9,5 +9,7 @@
 import Foundation
 import ReCalCommon
 
-let eventsPullUrl = "\(baseUrl)/get"
-let userProfileUrl = "\(baseUrl)/get/user_profile_info"
+extension Urls {
+    static let eventsPullUrl = "\(base)/get"
+    static let userProfileUrl = "\(base)/get/user_profile_info"
+}

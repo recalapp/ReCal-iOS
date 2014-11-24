@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let launch: ()->Void = {
-            Settings.currentSettings.theme = .Light
+            Settings.currentSettings.theme = Theme(rawValue: Settings.currentSettings.sharedUserDefaults.integerForKey(Settings.UserDefaultsKeys.Theme)) ?? .Light
             let rootViewController = self.window?.rootViewController
             Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: Urls.authentication, withLogOutUrlString: Urls.logOut)
             Settings.currentSettings.coreDataImporter = CourseSelectionCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
@@ -89,6 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        Settings.currentSettings.theme = Theme(rawValue: Settings.currentSettings.sharedUserDefaults.integerForKey(Settings.UserDefaultsKeys.Theme)) ?? .Light
     }
 
     func applicationWillTerminate(application: UIApplication) {

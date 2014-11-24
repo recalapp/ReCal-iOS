@@ -258,6 +258,8 @@
 		811A0F721A125B0B0012030E /* CoreDataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataExtensions.swift; sourceTree = "<group>"; };
 		811A0F741A1299460012030E /* SectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionType.swift; sourceTree = "<group>"; };
 		811A0F761A12F1240012030E /* CoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataImporter.swift; sourceTree = "<group>"; };
+		81329ADB1A22F68C00FBD920 /* ReCal Course Selection.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "ReCal Course Selection.entitlements"; sourceTree = "<group>"; };
+		81329ADC1A22F72900FBD920 /* ReCal Calendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "ReCal Calendar.entitlements"; sourceTree = "<group>"; };
 		813537551A1CF465002AB008 /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
 		813537561A1CF465002AB008 /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
 		813537591A1D2296002AB008 /* CourseAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseAttributeImporter.swift; sourceTree = "<group>"; };
@@ -724,6 +726,7 @@
 		81A094A01A067D6200A0C3CE /* ReCal Course Selection */ = {
 			isa = PBXGroup;
 			children = (
+				81329ADB1A22F68C00FBD920 /* ReCal Course Selection.entitlements */,
 				816CBB531A0926F9002C610A /* courses.json */,
 				816CBB1D1A091D16002C610A /* ReCal Course Selection-Bridging-Header.h */,
 				81A095021A067E7E00A0C3CE /* Models */,
@@ -889,6 +892,7 @@
 		81E50D401A0DB5420074F381 /* ReCal Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				81329ADC1A22F72900FBD920 /* ReCal Calendar.entitlements */,
 				811A0F531A125AA30012030E /* ReCal Calendar-Bridging-Header.h */,
 				8107FD8D1A119C6C00296BBB /* Calendar */,
 				811E81731A11148D00407991 /* Models */,
@@ -1157,6 +1161,12 @@
 				TargetAttributes = {
 					81A0949E1A067D6200A0C3CE = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = JKWEABKQ7A;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					81A094B21A067D6200A0C3CE = {
 						CreatedOnToolsVersion = 6.1;
@@ -1171,6 +1181,12 @@
 					};
 					81E50D3E1A0DB5420074F381 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = JKWEABKQ7A;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					81E50D551A0DB5420074F381 = {
 						CreatedOnToolsVersion = 6.1;
@@ -1582,7 +1598,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "ReCal Course Selection/ReCal Course Selection.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1592,6 +1610,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ReCal Course Selection/ReCal Course Selection-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1602,12 +1621,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "ReCal Course Selection/ReCal Course Selection.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "ReCal Course Selection/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ReCal Course Selection/ReCal Course Selection-Bridging-Header.h";
 			};
 			name = Release;
@@ -1729,7 +1751,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "ReCal Calendar/ReCal Calendar.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1739,6 +1763,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ReCal Calendar/ReCal Calendar-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1749,12 +1774,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "ReCal Calendar/ReCal Calendar.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "ReCal Calendar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ReCal Calendar/ReCal Calendar-Bridging-Header.h";
 			};
 			name = Release;
