@@ -78,7 +78,13 @@ public class CoreDataImporter {
             println("Error parsing json data. Aborting write. Error: \(error)")
             return .Failure
         }
-        let parsedData = NSKeyedArchiver.archivedDataWithRootObject(parsed!)
+        return self.writeObjectDataToPendingItemsDirectory(parsed as NSCoding, withTemporaryFileName: fileName)
+    }
+    
+    public final func writeObjectDataToPendingItemsDirectory(object: NSCoding, withTemporaryFileName fileName: String) -> ImportWriteResult {
+        self.assertPrivateQueue()
+        var errorOpt: NSError?
+        let parsedData = NSKeyedArchiver.archivedDataWithRootObject(object)
         let fileManager = NSFileManager.defaultManager()
         if let temporaryDirectoryPath = self.temporaryDirectoryPath {
             if !fileManager.fileExistsAtPath(temporaryDirectoryPath) {
@@ -103,6 +109,7 @@ public class CoreDataImporter {
             return .Failure
         }
     }
+    
     public final func importPendingItems() -> NSProgress {
         self.assertPrivateQueue()
         var progress = NSProgress(totalUnitCount: Int64(self.temporaryFileNames.count))
