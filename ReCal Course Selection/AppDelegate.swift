@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     if let initialData = initialDataOpt {
                         let coreDataImporter = Settings.currentSettings.coreDataImporter
                         coreDataImporter.performBlockAndWait {
-                            coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+                            let _ = coreDataImporter.writeJSONDataToPendingItemsDirectory(initialData, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
                         }
                     }
                 }

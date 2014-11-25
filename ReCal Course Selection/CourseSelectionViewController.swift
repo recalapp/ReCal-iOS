@@ -476,6 +476,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         assert(self.presentedViewController == courseDownloadViewController)
         self.dismissViewControllerAnimated(true) {
             self.courseDownloadViewControllerTransitioningDelegate = nil
+            let alertController = UIAlertController(title: "Failed to download courses", message: "Please try again later.", preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
 }

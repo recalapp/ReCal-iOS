@@ -36,6 +36,7 @@ class CourseDownloadViewController: UIViewController {
                 break
             case .Importing(let progress):
                 progress.removeObserver(self, forKeyPath: "fractionCompleted")
+                progress.removeObserver(self, forKeyPath: "cancelled")
             case .Finished:
                 assertionFailure("Not allowed to leave Finished state")
             }
@@ -69,10 +70,18 @@ class CourseDownloadViewController: UIViewController {
                 case .Success(_, let data):
                     self.downloadState = .Writing
                     Settings.currentSettings.coreDataImporter.performBlock {
-                        Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
-                        let progress = Settings.currentSettings.coreDataImporter.importPendingItems(temporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
-                        self.downloadState = .Importing(progress)
-                        progress.addObserver(self, forKeyPath: "fractionCompleted", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
+                        let writeResult = Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+                        switch writeResult {
+                        case .Success:
+                            let progress = Settings.currentSettings.coreDataImporter.importPendingItems(temporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+                            self.downloadState = .Importing(progress)
+                            progress.addObserver(self, forKeyPath: "fractionCompleted", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
+                            progress.addObserver(self, forKeyPath: "cancelled", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
+                        case .Failure:
+                            NSOperationQueue.mainQueue().addOperationWithBlock {
+                                let _ = self.delegate?.courseDownloadDidFail(self)
+                            }
+                        }
                     }
                     
                 case .Failure(_):
@@ -120,6 +129,13 @@ class CourseDownloadViewController: UIViewController {
                     self.progressView.setProgress(self.downloadState.progressFraction + fraction * self.downloadState.progressSize, animated: true)
                     if fraction >= 1.0 {
                         self.downloadState = .Finished
+                    }
+                }
+            case "cancelled":
+                let cancelled = (change[NSKeyValueChangeNewKey] as? NSNumber)?.boolValue ?? false
+                if cancelled {
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        let _ = self.delegate?.courseDownloadDidFail(self)
                     }
                 }
             default:

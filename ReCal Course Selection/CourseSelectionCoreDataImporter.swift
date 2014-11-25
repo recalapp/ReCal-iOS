@@ -87,6 +87,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                                 result = .Success
                             default:
                                 result = .Failure
+                                progress.cancel()
                                 courseImportOperationQueue.cancelAllOperations()
                             }
                         }
@@ -94,7 +95,6 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     courseImportOperationQueue.addOperation(courseImportOperation)
                 }
                 courseImportOperationQueue.waitUntilAllOperationsAreFinished()
-                progress.completedUnitCount = progress.totalUnitCount // in case we got cancelled along the way
                 switch result {
                 case .Success:
                     var errorOpt: NSError?
@@ -115,11 +115,11 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     return result
                 }
             } else {
-                progress.completedUnitCount = initialUnitCount
+                progress.cancel()
                 return .Failure
             }
         } else {
-            progress.completedUnitCount = initialUnitCount
+            progress.cancel()
             return .Failure
         }
     }

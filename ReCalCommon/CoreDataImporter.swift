@@ -70,13 +70,13 @@ public class CoreDataImporter {
         }
     }
     
-    public final func writeJSONDataToPendingItemsDirectory(data: NSData, withTemporaryFileName fileName: String) {
+    public final func writeJSONDataToPendingItemsDirectory(data: NSData, withTemporaryFileName fileName: String) -> ImportWriteResult {
         self.assertPrivateQueue()
         var errorOpt: NSError?
         let parsed: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &errorOpt)
         if let error = errorOpt {
             println("Error parsing json data. Aborting write. Error: \(error)")
-            return
+            return .Failure
         }
         let parsedData = NSKeyedArchiver.archivedDataWithRootObject(parsed!)
         let fileManager = NSFileManager.defaultManager()
@@ -85,7 +85,7 @@ public class CoreDataImporter {
                 fileManager.createDirectoryAtPath(temporaryDirectoryPath, withIntermediateDirectories: false, attributes: nil, error: &errorOpt)
                 if let error = errorOpt {
                     println("Error creating temporary directory. Aborting. Error: \(error)")
-                    return
+                    return .Failure
                 }
             }
             let temporaryFilePath = temporaryDirectoryPath.stringByAppendingPathComponent(fileName)
@@ -93,12 +93,14 @@ public class CoreDataImporter {
                 fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
                 if let error = errorOpt {
                     println("Error deleting old temporary file. Aborting save. Error: \(error)")
-                    return
+                    return .Failure
                 }
             }
             fileManager.createFileAtPath(temporaryFilePath, contents: parsedData, attributes: nil)
+            return .Success
         } else {
             println("Error getting directory path. Aborting save.")
+            return .Failure
         }
     }
     public final func importPendingItems() -> NSProgress {
@@ -165,6 +167,10 @@ public class CoreDataImporter {
     }
     public func processData(data: NSData, fromTemporaryFileName fileName: String, withProgress: NSProgress) -> ImportResult {
         return .Success
+    }
+    public enum ImportWriteResult {
+        case Success
+        case Failure
     }
     public enum ImportResult {
         /// Import successful. Delete temporary file
