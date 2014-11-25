@@ -51,8 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let _ = Settings.currentSettings.coreDataImporter.importPendingItems()
             }
             Settings.currentSettings.serverCommunicator.performBlockAndWait {
-                let communication = ActiveSemesterServerCommunication()
-                Settings.currentSettings.serverCommunicator.registerServerCommunication(communication)
+                Settings.currentSettings.serverCommunicator.registerServerCommunication(ActiveSemesterServerCommunication())
+                Settings.currentSettings.serverCommunicator.registerServerCommunication(AvailableColorsServerCommunication())
             }
         }
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {

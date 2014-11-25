@@ -11,8 +11,10 @@ import ReCalCommon
 
 extension Urls {
     static let courseSelectionBase = "\(base)/course_selection"
-    static let activeSemesters = "\(courseSelectionBase)/api/v1/semester/?format=json"
+    static let courseSelectionApiBase = "\(courseSelectionBase)/api/v1"
+    static let activeSemesters = "\(courseSelectionApiBase)/semester/?format=json"
+    static let availableColors = "\(courseSelectionApiBase)/color_palette/?format=json"
     static func courses(#semesterTermCode: String) -> String {
-        return "\(courseSelectionBase)/api/v1/course/?semester__term_code=\(semesterTermCode)&format=json"
+        return "\(courseSelectionApiBase)/course/?semester__term_code=\(semesterTermCode)&format=json"
     }
 }
