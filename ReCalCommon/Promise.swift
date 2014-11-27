@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Promise<SuccessType: NSObject, ErrorType: NSObject> {
+public class Promise<SuccessType: AnyObject, ErrorType: AnyObject> {
     
     private var doneHandler: PromiseResult<SuccessType, ErrorType>->Void = {(_) in }
     private var state: PromiseState<SuccessType, ErrorType> = .Waiting
@@ -105,11 +105,11 @@ public class Promise<SuccessType: NSObject, ErrorType: NSObject> {
     }
 }
 
-public enum PromiseResult<SuccessType: NSObject, ErrorType: NSObject> {
+public enum PromiseResult<SuccessType: AnyObject, ErrorType: AnyObject> {
     case Success(SuccessType)
     case Failure(ErrorType)
 }
-private enum PromiseState<SuccessType: NSObject, ErrorType: NSObject> {
+private enum PromiseState<SuccessType: AnyObject, ErrorType: AnyObject> {
     case Waiting
     case Success(SuccessType)
     case Failure(ErrorType)
