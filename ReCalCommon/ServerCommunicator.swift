@@ -83,7 +83,9 @@ public final class ServerCommunicator {
                     case .NoAction:
                         serverCommunication.status = .Idle(serverCommunication.idleInterval)
                     case .Remove:
-                        self.unregisterServerCommunicationWithIdentifier(serverCommunication.identifier)
+                        if self.identiferServerCommunicationMapping[serverCommunication.identifier] === serverCommunication {
+                            self.unregisterServerCommunicationWithIdentifier(serverCommunication.identifier)
+                        }
                     }
                 })
                 serverCommunication.status = .Connecting(observer)

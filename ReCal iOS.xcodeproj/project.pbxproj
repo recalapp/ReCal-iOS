@@ -63,6 +63,8 @@
 		8172B96C19F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96419F562590070E7DF /* CollectionViewDataSourceCalendarWeekLayout.swift */; };
 		8172B96D19F562590070E7DF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96519F562590070E7DF /* Queue.swift */; };
 		8172B96E19F562590070E7DF /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B96619F562590070E7DF /* Stack.swift */; };
+		8173FB991A24FE8F003EF6FC /* SemesterDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8173FB981A24FE8F003EF6FC /* SemesterDownloadTask.swift */; };
+		8173FB9B1A2509B2003EF6FC /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8173FB9A1A2509B2003EF6FC /* Promise.swift */; };
 		81792B2E1A17F9F50035D062 /* EventTimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B2D1A17F9F50035D062 /* EventTimeTableViewCell.swift */; };
 		81792B301A17FD600035D062 /* EventDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B2F1A17FD600035D062 /* EventDescriptionTableViewCell.swift */; };
 		81792B331A182BD80035D062 /* ServerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81792B321A182BD80035D062 /* ServerCommunicator.swift */; };
@@ -293,6 +295,8 @@
 		8172B96519F562590070E7DF /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		8172B96619F562590070E7DF /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		8172B96719F562590070E7DF /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
+		8173FB981A24FE8F003EF6FC /* SemesterDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterDownloadTask.swift; sourceTree = "<group>"; };
+		8173FB9A1A2509B2003EF6FC /* Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
 		81792B2D1A17F9F50035D062 /* EventTimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTimeTableViewCell.swift; sourceTree = "<group>"; };
 		81792B2F1A17FD600035D062 /* EventDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		81792B321A182BD80035D062 /* ServerCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCommunicator.swift; sourceTree = "<group>"; };
@@ -787,6 +791,7 @@
 				8146ECAF1A0AB9F6005FF4C2 /* Schedule.swift */,
 				81FE70E51A20EC0200934062 /* CourseColor.swift */,
 				81F35A6B1A212E46001B3C32 /* CourseColorManager.swift */,
+				8173FB981A24FE8F003EF6FC /* SemesterDownloadTask.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -866,6 +871,7 @@
 				81792B491A1980C10035D062 /* Unicode.swift */,
 				81A160651A2392AF00CE7618 /* ColorRepresentation.swift */,
 				818485F81A24DC0800105512 /* GlobalUserDefaultsKeys.swift */,
+				8173FB9A1A2509B2003EF6FC /* Promise.swift */,
 			);
 			path = ReCalCommon;
 			sourceTree = "<group>";
@@ -1296,6 +1302,7 @@
 				8107FD791A11781100296BBB /* CDSection.m in Sources */,
 				81130BCE1A0C0D7D00F1F496 /* Day.swift in Sources */,
 				81A094FA1A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift in Sources */,
+				8173FB991A24FE8F003EF6FC /* SemesterDownloadTask.swift in Sources */,
 				81A094F31A067DFD00A0C3CE /* GridLineView.swift in Sources */,
 				81A094F11A067DFD00A0C3CE /* EventCollectionViewCell.swift in Sources */,
 				816987AD1A1D6D8B00DD6A58 /* ActiveSemesterServerCommunication.swift in Sources */,
@@ -1373,6 +1380,7 @@
 				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,
 				818485F91A24DC0800105512 /* GlobalUserDefaultsKeys.swift in Sources */,
 				81F76B1F1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift in Sources */,
+				8173FB9B1A2509B2003EF6FC /* Promise.swift in Sources */,
 				81F76B191A16DFB0001B6233 /* ColorManagedObjectAttributeImporter.swift in Sources */,
 				81792B421A1929F00035D062 /* StaticTableViewDataSource.swift in Sources */,
 				81F9A4061A06BE3300083E55 /* ClosureSearchPredicate.swift in Sources */,
