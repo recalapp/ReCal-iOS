@@ -26,7 +26,7 @@ class CourseDownloadViewController: UIViewController {
     // MARK: Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        let task = SemesterDownloadTask(termCode: termCode)
+        let task = SemesterDownloadTask(termCode: self.termCode, limit: 200, offset: 0)
         task.progress.addObserver(self, forKeyPath: "cancelled", options: NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Initial, context: nil)
         task.progress.addObserver(self, forKeyPath: "fractionCompleted", options: NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Initial, context: nil)
     }

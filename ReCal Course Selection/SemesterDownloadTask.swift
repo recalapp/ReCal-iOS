@@ -15,7 +15,12 @@ class SemesterDownloadTask : NSObject {
     let downloadPromise: Promise<NSDictionary, NSError>
     let importPromise: Promise<NSObject, NSError>
     let termCode: String
+    let limit: Int
+    let offset: Int
     
+    private var urlString: String {
+        return Urls.courses(semesterTermCode: self.termCode, limit: self.limit, offset: self.offset)
+    }
     
     private let granularity: Int64 = 100
     
@@ -54,11 +59,15 @@ class SemesterDownloadTask : NSObject {
         }
     }
     
-    init(termCode: String) {
+    init(termCode: String, limit: Int, offset: Int) {
+        assert(limit >= 0)
+        assert(offset >= 0)
         self.progress = NSProgress(totalUnitCount: self.granularity)
         self.downloadPromise = Promise()
         self.importPromise = Promise()
         self.termCode = termCode
+        self.limit = limit
+        self.offset = offset
         super.init()
         self.downloadPromise.onFailure {(_) in
             self.progress.cancel()
@@ -72,7 +81,7 @@ class SemesterDownloadTask : NSObject {
     private func initializeDownload() {
         switch self.downloadState {
         case .Preparing:
-            let courseServerCommunication = ServerCommunicator.OneTimeServerCommunication(identifier: "Courses", urlString: Urls.courses(semesterTermCode: self.termCode)) { (result: ServerCommunicator.Result) in
+            let courseServerCommunication = ServerCommunicator.OneTimeServerCommunication(identifier: "Courses", urlString: self.urlString) { (result: ServerCommunicator.Result) in
                 switch result {
                 case .Success(_, let data):
                     var errorOpt: NSError?

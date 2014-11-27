@@ -17,4 +17,7 @@ extension Urls {
     static func courses(#semesterTermCode: String) -> String {
         return "\(courseSelectionApiBase)/course/?semester__term_code=\(semesterTermCode)&format=json"
     }
+    static func courses(#semesterTermCode: String, limit: Int, offset: Int) -> String {
+        return "\(courses(semesterTermCode: semesterTermCode))&limit=\(limit)&offset=\(offset)"
+    }
 }
