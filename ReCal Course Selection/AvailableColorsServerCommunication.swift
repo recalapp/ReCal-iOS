@@ -36,7 +36,7 @@ class AvailableColorsServerCommunication: ServerCommunicator.ServerCommunication
             if let dict = dictOpt {
                 if let colorDictArray = dict["objects"] as? [Dictionary<String, AnyObject>] {
                     let courseColors = colorDictArray.map { CourseColor(normalColorHexString: $0["light"] as String, highlightedColorHexString: $0["dark"] as String) }
-                    NSUserDefaults.standardUserDefaults().setObject(courseColors, forKey: GlobalUserDefaultsKeys.AvailableColors)
+//                    NSUserDefaults.standardUserDefaults().setObject(courseColors, forKey: GlobalUserDefaultsKeys.AvailableColors)
                 }
             }
             return .NoAction
