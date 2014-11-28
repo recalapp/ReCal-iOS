@@ -21,13 +21,6 @@ struct Schedule : ManagedObjectProxy {
     var courseSectionTypeEnrollments: Dictionary<Course, SectionTypeEnrollment>
     var courseColorMap: Dictionary<Course, CourseColor>
     private let colorManager: CourseColorManager
-    // TODO if we get these valeus from the web, must deal with inaccuracy of float when comparing
-    private let availableColors = [
-        CourseColor(normalColorHexString: "bdd7ed", highlightedColorHexString: "a0c6e6"),
-        CourseColor(normalColorHexString: "cebafd", highlightedColorHexString: "b99dfc"),
-        CourseColor(normalColorHexString: "f87668", highlightedColorHexString: "f53c2e"),
-        CourseColor(normalColorHexString: "fec583", highlightedColorHexString: "fdac51"),
-    ]
     
     var enrolledSections: [Section] {
         let sectionTypeEnrollments = self.courseSectionTypeEnrollments.values.array
@@ -110,7 +103,7 @@ struct Schedule : ManagedObjectProxy {
         self.enrolledCourses = OrderedSet()
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
         self.courseColorMap = Dictionary()
-        self.colorManager = CourseColorManager(availableColors: self.availableColors)
+        self.colorManager = CourseColorManager(availableColors: Settings.currentSettings.availableColors)
     }
     
     mutating func updateCourseSectionTypeEnrollments() {

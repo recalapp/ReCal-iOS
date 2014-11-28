@@ -117,6 +117,8 @@
 		81BCA54C1A0FF69000391608 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BCA54B1A0FF69000391608 /* URLs.swift */; };
 		81C70E461A1A804C007F33F5 /* SettingsSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C70E451A1A804C007F33F5 /* SettingsSwitchTableViewCell.swift */; };
 		81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D016951A1003880020C9CC /* AuthenticationContainerViewController.swift */; };
+		81D11ACD1A280C7600A4851A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D11ACC1A280C7600A4851A /* Settings.swift */; };
+		81D11ACF1A280C9100A4851A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D11ACE1A280C9100A4851A /* Settings.swift */; };
 		81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D93B7F1A09A7E900914FB3 /* CourseSearchOperation.swift */; };
 		81D9F26019EF4D9600F987B9 /* ReCalCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81D9F26C19EF4D9600F987B9 /* ReCalCommonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D9F26B19EF4D9600F987B9 /* ReCalCommonTests.swift */; };
@@ -128,7 +130,6 @@
 		81E50D5D1A0DB5420074F381 /* ReCal_CalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E50D5C1A0DB5420074F381 /* ReCal_CalendarTests.swift */; };
 		81E50D651A0E503B0074F381 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E50D641A0E503B0074F381 /* URLs.swift */; };
 		81E50D671A0E50C30074F381 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E50D661A0E50C30074F381 /* CalendarViewController.swift */; };
-		81E50D681A0E52290074F381 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B6D3121A0DA81D00B883A6 /* Settings.swift */; };
 		81E50D691A0E53640074F381 /* ReCalCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */; };
 		81E586241A1FA6B600DE269B /* URLConnectionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E586231A1FA6B600DE269B /* URLConnectionObserver.swift */; };
 		81E586261A1FAA7200DE269B /* URLConnectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E586251A1FAA7200DE269B /* URLConnectionExtension.swift */; };
@@ -345,13 +346,14 @@
 		81A094E41A067DFD00A0C3CE /* TimeRowHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimeRowHeaderView.xib; sourceTree = "<group>"; };
 		81A160651A2392AF00CE7618 /* ColorRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorRepresentation.swift; sourceTree = "<group>"; };
 		81AA2C631A12F48800A31F61 /* EventType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
-		81B6D3121A0DA81D00B883A6 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = "../ReCal Course Selection/Settings.swift"; sourceTree = "<group>"; };
 		81BCA5451A0FE87600391608 /* AuthenticationNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationNavigationController.swift; sourceTree = "<group>"; };
 		81BCA5471A0FE94300391608 /* CourseSelectionNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSelectionNavigationController.swift; sourceTree = "<group>"; };
 		81BCA5491A0FEB9500391608 /* AuthenticationPromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationPromptViewController.swift; sourceTree = "<group>"; };
 		81BCA54B1A0FF69000391608 /* URLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		81C70E451A1A804C007F33F5 /* SettingsSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		81D016951A1003880020C9CC /* AuthenticationContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationContainerViewController.swift; sourceTree = "<group>"; };
+		81D11ACC1A280C7600A4851A /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		81D11ACE1A280C9100A4851A /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		81D93B7F1A09A7E900914FB3 /* CourseSearchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseSearchOperation.swift; sourceTree = "<group>"; };
 		81D9F25B19EF4D9600F987B9 /* ReCalCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReCalCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81D9F25E19EF4D9600F987B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -748,6 +750,7 @@
 				81A094C31A067DBB00A0C3CE /* Main.storyboard */,
 				81A094A11A067D6200A0C3CE /* Supporting Files */,
 				81792B451A194B690035D062 /* URLs.swift */,
+				81D11ACE1A280C9100A4851A /* Settings.swift */,
 			);
 			path = "ReCal Course Selection";
 			sourceTree = "<group>";
@@ -863,7 +866,6 @@
 				8146ECB11A0ADB68005FF4C2 /* ManagedObjectProxy.swift */,
 				819E7F271A0D93E600D32D5A /* ColorScheme.swift */,
 				81D9F25F19EF4D9600F987B9 /* ReCalCommon.h */,
-				81B6D3121A0DA81D00B883A6 /* Settings.swift */,
 				81D9F25D19EF4D9600F987B9 /* Supporting Files */,
 				81000B211A0EA6C200246BD3 /* ReCalCommon.storyboard */,
 				81BCA54B1A0FF69000391608 /* URLs.swift */,
@@ -872,6 +874,7 @@
 				81A160651A2392AF00CE7618 /* ColorRepresentation.swift */,
 				818485F81A24DC0800105512 /* GlobalUserDefaultsKeys.swift */,
 				8173FB9A1A2509B2003EF6FC /* Promise.swift */,
+				81D11ACC1A280C7600A4851A /* Settings.swift */,
 			);
 			path = ReCalCommon;
 			sourceTree = "<group>";
@@ -1340,6 +1343,7 @@
 				81F35A6F1A213EE3001B3C32 /* CDSchedule.m in Sources */,
 				81A094F91A067DFD00A0C3CE /* SectionTypeEnrollment.swift in Sources */,
 				814D4E741A0C815100C21848 /* ScheduleSelectionViewController.swift in Sources */,
+				81D11ACF1A280C9100A4851A /* Settings.swift in Sources */,
 				81A094C81A067DC200A0C3CE /* AppDelegate.swift in Sources */,
 				81A094F51A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld in Sources */,
 			);
@@ -1375,6 +1379,7 @@
 				81D016961A1003880020C9CC /* AuthenticationContainerViewController.swift in Sources */,
 				81792B331A182BD80035D062 /* ServerCommunicator.swift in Sources */,
 				81A160661A2392AF00CE7618 /* ColorRepresentation.swift in Sources */,
+				81D11ACD1A280C7600A4851A /* Settings.swift in Sources */,
 				81FE70E41A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift in Sources */,
 				81E6406D19FACDCA003A49F8 /* Set.swift in Sources */,
 				81FCD28019F7416F00B6DC2D /* SlidingSidebarViewController.swift in Sources */,
@@ -1412,7 +1417,6 @@
 				81B6D3111A0DA65900B883A6 /* ColorScheme.swift in Sources */,
 				81F76B121A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift in Sources */,
 				81130C011A0C168F00F1F496 /* OrderedSet.swift in Sources */,
-				81E50D681A0E52290074F381 /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
