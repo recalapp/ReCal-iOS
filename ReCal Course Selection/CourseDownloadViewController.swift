@@ -114,6 +114,20 @@ class CourseDownloadViewController: UIViewController {
         }
     }
     
+    private func progressTextForProgressFraction(progressFraction: Double) -> String {
+        switch progressFraction {
+        case _ where progressFraction <= 0.4:
+            return "Downloading course data. May take a few minutes."
+        case _ where progressFraction <= 0.7:
+            return "Please do not quit this app during download."
+        case _ where progressFraction > 0.7:
+            return "Hang tight, almost there!"
+        default:
+            assertionFailure("impossible")
+            break
+        }
+    }
+    
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         assert(object is NSProgress)
         func findProgressIndex(progress: NSProgress) -> Int? {
@@ -135,7 +149,9 @@ class CourseDownloadViewController: UIViewController {
                 }
             }
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.progressView.setProgress(Float(self.totalProgressFraction), animated: true)
+                let totalProgressFraction = self.totalProgressFraction
+                self.progressTextLabel.text = self.progressTextForProgressFraction(totalProgressFraction)
+                self.progressView.setProgress(Float(totalProgressFraction), animated: true)
                 if self.allFinished {
                     self.delegate?.courseDownloadDidFinish(self)
                 }

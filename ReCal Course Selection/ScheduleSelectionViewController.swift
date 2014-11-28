@@ -22,7 +22,7 @@ class ScheduleSelectionViewController: UITableViewController {
     private var visibleSemesters: [CDSemester] = []
     private var semesterToSchedulesMapping: Dictionary<CDSemester, [CDSchedule]> = Dictionary() {
         didSet {
-            self.visibleSemesters = self.semesterToSchedulesMapping.keys.array.sorted { $0.termCode < $1.termCode }
+            self.visibleSemesters = self.semesterToSchedulesMapping.keys.array.sorted { $0.termCode > $1.termCode }
         }
     }
     
@@ -73,11 +73,6 @@ class ScheduleSelectionViewController: UITableViewController {
         }
         self.notificationObservers.append(observer1)
         self.fetchSchedules()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     deinit {
