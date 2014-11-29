@@ -28,11 +28,11 @@ public class Promise<SuccessType: AnyObject, ErrorType: AnyObject> {
                         handler(result)
                     }
                 }
-            case .Success(let object):
+            case .Finished(.Success(let object)):
                 execute = {
                     handler(.Success(object))
                 }
-            case .Failure(let object):
+            case .Finished(.Failure(let object)):
                 execute = {
                     handler(.Failure(object))
                 }
@@ -58,13 +58,13 @@ public class Promise<SuccessType: AnyObject, ErrorType: AnyObject> {
         synchronize(self) { ()->Void in
             switch self.state {
             case .Waiting:
-                self.state = .Success(object)
+                self.state = .Finished(.Success(object))
                 let handler = self.doneHandler
                 self.doneHandler = {(_) in }
                 execute = {
                     handler(.Success(object))
                 }
-            case .Success(_), .Failure(_):
+            case .Finished(_):
                 assertionFailure("Promise already finished")
                 break
             }
@@ -89,13 +89,13 @@ public class Promise<SuccessType: AnyObject, ErrorType: AnyObject> {
         synchronize(self) { ()->Void in
             switch self.state {
             case .Waiting:
-                self.state = .Failure(object)
+                self.state = .Finished(.Failure(object))
                 let handler = self.doneHandler
                 self.doneHandler = {(_) in }
                 execute = {
                     handler(.Failure(object))
                 }
-            case .Success(_), .Failure(_):
+            case .Finished(_):
                 assertionFailure("Promise already finished")
                 break
             }
@@ -111,6 +111,5 @@ public enum PromiseResult<SuccessType: AnyObject, ErrorType: AnyObject> {
 }
 private enum PromiseState<SuccessType: AnyObject, ErrorType: AnyObject> {
     case Waiting
-    case Success(SuccessType)
-    case Failure(ErrorType)
+    case Finished(PromiseResult<SuccessType, ErrorType>)
 }
