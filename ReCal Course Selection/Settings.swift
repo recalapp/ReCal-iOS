@@ -12,7 +12,7 @@ import ReCalCommon
 extension Settings {
     var availableColors: [CourseColor] {
         get {
-            return self.persistentProperties["availableColors"] as? [CourseColor] ?? []
+            return self.persistentProperties["availableColors"] as? [CourseColor] ?? [CourseColor(normalColorHexString: "D0DECF", highlightedColorHexString: "2D6234")]
         }
         set {
             self.persistentProperties["availableColors"] = newValue
