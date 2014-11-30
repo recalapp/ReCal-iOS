@@ -1189,6 +1189,7 @@
 					};
 					81D9F25A19EF4D9600F987B9 = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = JKWEABKQ7A;
 					};
 					81D9F26419EF4D9600F987B9 = {
 						CreatedOnToolsVersion = 6.0.1;

@@ -81,7 +81,7 @@ class SemesterDownloadTask : NSObject {
     private func initializeDownload() {
         switch self.downloadState {
         case .Preparing:
-            let courseServerCommunication = ServerCommunicator.OneTimeServerCommunication(identifier: "Courses", urlString: self.urlString) { (result: ServerCommunicator.Result) in
+            let courseServerCommunication = ServerCommunicator.OneTimeServerCommunication(identifier: "Courses-\(self.termCode)-\(self.limit)-\(self.offset)", urlString: self.urlString) { (result: ServerCommunicator.Result) in
                 switch result {
                 case .Success(_, let data):
                     var errorOpt: NSError?
@@ -120,23 +120,26 @@ class SemesterDownloadTask : NSObject {
     
     private func advanceToWriteStateWithObject(object: NSCoding) {
         self.downloadState = .Writing
-        Settings.currentSettings.coreDataImporter.performBlock {
-            let writeResult = Settings.currentSettings.coreDataImporter.writeObjectDataToPendingItemsDirectory(object, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
-            switch writeResult {
-            case .Success:
-                self.advanceToImportState()
-            case .Failure:
-                let error = NSError(domain: "io.recal.ReCal-Course-Selection", code: 0, userInfo: nil)
-                self.importPromise.failWith(error)
-            }
+        var writeResult: CoreDataImporter.ImportWriteResult?
+        Settings.currentSettings.coreDataImporter.performBlockAndWait {
+            writeResult = Settings.currentSettings.coreDataImporter.writeObjectDataToPendingItemsDirectory(object, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+        }
+        switch writeResult! {
+        case .Success:
+            self.advanceToImportState()
+        case .Failure:
+            let error = NSError(domain: "io.recal.ReCal-Course-Selection", code: 0, userInfo: nil)
+            self.importPromise.failWith(error)
         }
     }
     
     private func advanceToImportState() {
-        let progress = Settings.currentSettings.coreDataImporter.importPendingItems(temporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
-        self.downloadState = .Importing(progress)
-        progress.addObserver(self, forKeyPath: "fractionCompleted", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
-        progress.addObserver(self, forKeyPath: "cancelled", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
+        Settings.currentSettings.coreDataImporter.performBlockAndWait {
+            let progress = Settings.currentSettings.coreDataImporter.importPendingItems(temporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+            self.downloadState = .Importing(progress)
+            progress.addObserver(self, forKeyPath: "fractionCompleted", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
+            progress.addObserver(self, forKeyPath: "cancelled", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
+        }
     }
     
     private func advanceToFinishedState() {

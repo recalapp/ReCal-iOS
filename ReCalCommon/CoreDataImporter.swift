@@ -127,41 +127,39 @@ public class CoreDataImporter {
         // ok to call this function many times. the second time, the file just wouldn't exist, which we handle
         self.assertPrivateQueue()
         let initialUnitCount: Int64 = 1
-        var progress = NSProgress(totalUnitCount: initialUnitCount)
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), { () -> Void in
-            self.performBlock {
-                if let temporaryFilePath = self.temporaryDirectoryPath?.stringByAppendingPathComponent(temporaryFileName) {
-                    let fileManager = NSFileManager.defaultManager()
-                    if fileManager.fileExistsAtPath(temporaryFilePath) {
-                        let dataOpt = NSData(contentsOfFile: temporaryFilePath)
-                        var errorOpt: NSError?
-                        if let data = dataOpt {
-                            switch self.processData(data, fromTemporaryFileName: temporaryFileName, withProgress: progress) {
-                            case .Success:
-                                fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
-                                if let error = errorOpt {
-                                    println("Error deleting old temporary file. Aborting save. Error: \(error)")
-                                }
-                            case .ShouldRetry:
-                                break // don't delete temp file. TODO change break to continue if this becomes a loop
-                            case .Failure:
-                                fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
-                                if let error = errorOpt {
-                                    println("Error deleting old temporary file. Aborting save. Error: \(error)")
-                                }
+        let progress = NSProgress(totalUnitCount: initialUnitCount)
+        self.performBlock {
+            if let temporaryFilePath = self.temporaryDirectoryPath?.stringByAppendingPathComponent(temporaryFileName) {
+                let fileManager = NSFileManager.defaultManager()
+                if fileManager.fileExistsAtPath(temporaryFilePath) {
+                    let dataOpt = NSData(contentsOfFile: temporaryFilePath)
+                    var errorOpt: NSError?
+                    if let data = dataOpt {
+                        switch self.processData(data, fromTemporaryFileName: temporaryFileName, withProgress: progress) {
+                        case .Success:
+                            fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
+                            if let error = errorOpt {
+                                println("Error deleting old temporary file. Aborting save. Error: \(error)")
                             }
-                            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.DidImport, object: self, userInfo: [NotificationUserInfo.ImportFileName: temporaryFileName])
+                        case .ShouldRetry:
+                            break // don't delete temp file. TODO change break to continue if this becomes a loop
+                        case .Failure:
+                            fileManager.removeItemAtPath(temporaryFilePath, error: &errorOpt)
+                            if let error = errorOpt {
+                                println("Error deleting old temporary file. Aborting save. Error: \(error)")
+                            }
                         }
-                    } else {
-                        // file does not exist
-                        progress.completedUnitCount = initialUnitCount
+                        NSNotificationCenter.defaultCenter().postNotificationName(Notifications.DidImport, object: self, userInfo: [NotificationUserInfo.ImportFileName: temporaryFileName])
                     }
                 } else {
-                    // could not get file path
+                    // file does not exist
                     progress.completedUnitCount = initialUnitCount
                 }
+            } else {
+                // could not get file path
+                progress.completedUnitCount = initialUnitCount
             }
-        })
+        }
         return progress
     }
     public func performBlock(closure: ()->Void) {

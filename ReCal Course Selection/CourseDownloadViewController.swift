@@ -92,6 +92,8 @@ class CourseDownloadViewController: UIViewController {
                     self.startDownloadTask(index: index + 1)
                 }
             }
+            
+            
         case .Active(_), .Finished:
             assertionFailure("Not allowed to restart a task")
             break
@@ -141,14 +143,15 @@ class CourseDownloadViewController: UIViewController {
         switch keyPath {
         case "fractionCompleted":
             let fraction = (change[NSKeyValueChangeNewKey] as? NSNumber)?.floatValue ?? 0.0
-            if fraction >= 1 {
-                if let index = findProgressIndex(object as NSProgress) {
-                    object.removeObserver(self, forKeyPath: "fractionCompleted")
-                    object.removeObserver(self, forKeyPath: "cancelled")
-                    self.downloadTasks[index] = .Finished
-                }
-            }
+            let indexOpt = findProgressIndex(object as NSProgress)
             NSOperationQueue.mainQueue().addOperationWithBlock {
+                if fraction >= 1 {
+                    if let index = indexOpt {
+                        object.removeObserver(self, forKeyPath: "fractionCompleted")
+                        object.removeObserver(self, forKeyPath: "cancelled")
+                        self.downloadTasks[index] = .Finished
+                    }
+                }
                 let totalProgressFraction = self.totalProgressFraction
                 self.progressTextLabel.text = self.progressTextForProgressFraction(totalProgressFraction)
                 self.progressView.setProgress(Float(totalProgressFraction), animated: true)
@@ -158,8 +161,10 @@ class CourseDownloadViewController: UIViewController {
             }
         case "cancelled":
             let cancelled = (change[NSKeyValueChangeNewKey] as? NSNumber)?.boolValue ?? false
-            if cancelled {
-                self.handleCancellation()
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                if cancelled {
+                    self.handleCancellation()
+                }
             }
         default:
             assertionFailure("KVO not supported")

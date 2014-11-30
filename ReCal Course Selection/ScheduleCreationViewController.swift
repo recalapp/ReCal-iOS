@@ -56,13 +56,17 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         self.tableView.dataSource = self.dataSource
         let processSemesters: [CDSemester] -> Void = { (semesters: [CDSemester]) in
             self.semesters = semesters
-            let itemInfos = self.semesters.map { (semester: CDSemester) -> ItemInfo in
-                return ItemInfo(cellIdentifier: basicCellIdentifier, selected: semester.termCode == self.selectedSemester?.termCode, cellProcessBlock: { (cell) -> UITableViewCell in
-                    cell.textLabel.text = semester.termCode
-                    return cell
-                })
+            var itemInfos: [ItemInfo]?
+            self.managedObjectContext.performBlockAndWait {
+                itemInfos = self.semesters.map { (semester: CDSemester) -> ItemInfo in
+                    var itemInfo = ItemInfo(cellIdentifier: basicCellIdentifier, selected: semester.termCode == self.selectedSemester?.termCode, cellProcessBlock: { (cell) -> UITableViewCell in
+                            cell.textLabel.text = semester.termCode
+                            return cell
+                        })
+                    return itemInfo
+                }
             }
-            let semestersSection = SectionInfo(name: self.dataSource[self.semestersSectionIndex].name, items: itemInfos)
+            let semestersSection = SectionInfo(name: self.dataSource[self.semestersSectionIndex].name, items: itemInfos!)
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 self.dataSource[self.semestersSectionIndex] = semestersSection
                 self.tableView.reloadSections(NSIndexSet(index: self.semestersSectionIndex), withRowAnimation: .None)
@@ -84,6 +88,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
             self.fetchActiveSemesters(processSemesters)
         }
         self.notificationObservers.append(observer1)
+        self.notificationObservers.append(observer2)
     }
     
     private func fetchActiveSemesters(callBack: (([CDSemester])->Void)?) {
@@ -93,7 +98,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "termCode", ascending: false)]
             return fetchRequest
         }()
-        let queue = NSOperationQueue.currentQueue()
+        let queue = NSOperationQueue.currentQueue() ?? NSOperationQueue.mainQueue()
         self.managedObjectContext.performBlock {
             var errorOpt: NSError?
             let fetched = self.managedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt)
@@ -102,7 +107,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
                 return
             }
             if let semesters = fetched as? [CDSemester] {
-                queue?.addOperationWithBlock {
+                queue.addOperationWithBlock {
                     let _ = callBack?(semesters)
                 }
             }
