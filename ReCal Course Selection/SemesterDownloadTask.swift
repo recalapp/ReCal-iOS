@@ -33,8 +33,6 @@ class SemesterDownloadTask : NSObject {
             case .Downloading(let progress):
                 progress.removeObserver(self, forKeyPath: "fractionCompleted")
                 progress.removeObserver(self, forKeyPath: "cancelled")
-            case .Writing:
-                break
             case .Importing(let progress):
                 progress.removeObserver(self, forKeyPath: "fractionCompleted")
                 progress.removeObserver(self, forKeyPath: "cancelled")
@@ -47,8 +45,6 @@ class SemesterDownloadTask : NSObject {
             case .Preparing:
                 assertionFailure("Not allowed to come back to preparing state")
             case .Downloading:
-                break
-            case .Writing:
                 break
             case .Importing:
                 break
@@ -95,7 +91,7 @@ class SemesterDownloadTask : NSObject {
                         }
                         if let downloadedDictionary = downloadedDictionaryOpt {
                             self.downloadPromise.succeedWith(downloadedDictionary)
-                            self.advanceToWriteStateWithObject(downloadedDictionary)
+                            self.advanceToImportState(data: NSKeyedArchiver.archivedDataWithRootObject(downloadedDictionary))
                         } else {
                             let error = NSError(domain: "io.recal.ReCal-Course-Selection", code: 0, userInfo: nil)
                             self.downloadPromise.failWith(error)
@@ -116,29 +112,14 @@ class SemesterDownloadTask : NSObject {
                     observer!.progress.addObserver(self, forKeyPath: "cancelled", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
                 }
             }
-        case .Downloading(_), .Writing, .Importing(_), .Finished:
+        case .Downloading(_), .Importing(_), .Finished:
             assertionFailure("Not allowed to start a download twice")
         }
     }
     
-    private func advanceToWriteStateWithObject(object: NSCoding) {
-        self.downloadState = .Writing
-        var writeResult: CoreDataImporter.ImportWriteResult?
+    private func advanceToImportState(#data: NSData) {
         Settings.currentSettings.coreDataImporter.performBlockAndWait {
-            writeResult = Settings.currentSettings.coreDataImporter.writeObjectDataToPendingItemsDirectory(object, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
-        }
-        switch writeResult! {
-        case .Success:
-            self.advanceToImportState()
-        case .Failure:
-            let error = NSError(domain: "io.recal.ReCal-Course-Selection", code: 0, userInfo: nil)
-            self.importPromise.failWith(error)
-        }
-    }
-    
-    private func advanceToImportState() {
-        Settings.currentSettings.coreDataImporter.performBlockAndWait {
-            let progress = Settings.currentSettings.coreDataImporter.importPendingItems(temporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses)
+            let progress = Settings.currentSettings.coreDataImporter.importPendingItems(temporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.courses, fileData: data)
             self.downloadState = .Importing(progress)
             progress.addObserver(self, forKeyPath: "fractionCompleted", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
             progress.addObserver(self, forKeyPath: "cancelled", options: NSKeyValueObservingOptions.Initial | NSKeyValueObservingOptions.New, context: nil)
@@ -193,7 +174,7 @@ class SemesterDownloadTask : NSObject {
             default:
                 assertionFailure("KVO not supported")
             }
-        case .Finished, .Preparing, .Writing:
+        case .Finished, .Preparing:
             assertionFailure("Should not be observing in these states")
         }
     }
@@ -202,7 +183,6 @@ class SemesterDownloadTask : NSObject {
     private enum DownloadState {
         case Preparing
         case Downloading(NSProgress)
-        case Writing
         case Importing(NSProgress)
         case Finished
         var progressFraction: Double {
@@ -211,8 +191,6 @@ class SemesterDownloadTask : NSObject {
                 return 0
             case .Downloading:
                 return 0.1
-            case .Writing:
-                return 0.5
             case .Importing:
                 return 0.6
             case .Finished:
@@ -224,8 +202,6 @@ class SemesterDownloadTask : NSObject {
             case .Preparing:
                 return 0.1 - self.progressFraction
             case .Downloading:
-                return DownloadState.Writing.progressFraction - self.progressFraction
-            case .Writing:
                 return 0.6 - self.progressFraction
             case .Importing:
                 return DownloadState.Finished.progressFraction - self.progressFraction

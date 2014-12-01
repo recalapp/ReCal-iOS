@@ -73,7 +73,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 courseImportOperationQueue.name = "Course Import"
                 courseImportOperationQueue.qualityOfService = NSOperationQueue.currentQueue()!.qualityOfService
                 courseImportOperationQueue.underlyingQueue = (NSOperationQueue.currentQueue()?.underlyingQueue)!
-                courseImportOperationQueue.maxConcurrentOperationCount = 1
+                courseImportOperationQueue.maxConcurrentOperationCount = 2
                 let curQueue = NSOperationQueue.currentQueue()
                 var result: ImportResult = .Success
                 let courseImporter = CourseAttributeImporter()

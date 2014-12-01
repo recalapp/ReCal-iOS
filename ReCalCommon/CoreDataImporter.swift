@@ -162,6 +162,17 @@ public class CoreDataImporter {
         }
         return progress
     }
+    public func importPendingItems(#temporaryFileName: String, fileData: NSData)-> NSProgress {
+        // ok to call this function many times. the second time, the file just wouldn't exist, which we handle
+        self.assertPrivateQueue()
+        let initialUnitCount: Int64 = 1
+        let progress = NSProgress(totalUnitCount: initialUnitCount)
+        self.performBlock {
+            self.processData(fileData, fromTemporaryFileName: temporaryFileName, withProgress: progress)
+            NSNotificationCenter.defaultCenter().postNotificationName(Notifications.DidImport, object: self, userInfo: [NotificationUserInfo.ImportFileName: temporaryFileName])
+        }
+        return progress
+    }
     private func assertNotPrivateQueue() {
         assert(NSOperationQueue.currentQueue() != self.privateQueue, "Prevents deadlock")
     }
