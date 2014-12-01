@@ -392,6 +392,11 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.saveSchedule()
     }
     
+    func courseSearchTableViewController(viewController: CourseSearchTableViewController, shouldDeleteCourse course: Course) {
+        assert(viewController == self.searchViewController, "Wrong view controller")
+        self.showCourseDeletePromptForCourse(course)
+    }
+    
     // MARK: - Schedule Selection Delegate
     func didDeleteScheduleWithObjectId(objectId: NSManagedObjectID) {
         if let schedule = self.schedule {

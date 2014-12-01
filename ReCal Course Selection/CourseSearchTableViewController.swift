@@ -57,14 +57,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         }
     }
     
-    /// The visible courses. If there is a search term, then we display the filtered courses. Otherwise, we show the enrolled courses
-    private var visibleCourses: [CDCourse] {
-        if self.searchController != nil && self.searchController.searchBar.text == "" {
-            return self.enrolledCoursesSet.toArray()
-        }
-        return self.filteredCourses
-    }
-    
     /// Visible courses that are also enrolled
     private var visibleEnrolledCourses: [CDCourse] = []
     
@@ -95,8 +87,8 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     // MARK: - Methods
     
     private func clearVisibleCoursesStorageCache() {
-        self.visibleEnrolledCourses = self.visibleCourses.filter { self.enrolledCoursesSet.contains($0) }
-        self.visibleUnenrolledCourses = self.visibleCourses.filter { !self.enrolledCoursesSet.contains($0) }
+        self.visibleEnrolledCourses = self.enrolledCoursesSet.toArray().sorted { $0.displayText < $1.displayText }
+        self.visibleUnenrolledCourses = self.filteredCourses.filter { !self.enrolledCoursesSet.contains($0) } // filtered courses already sorted
     }
     
     override func viewDidLoad() {
@@ -198,6 +190,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
         let headerView = UIView()
         headerView.backgroundColor = Settings.currentSettings.colorScheme.secondaryContentBackgroundColor
         let label = UILabel()
@@ -206,7 +199,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         headerView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(label, inParentView: headerView, withInsets: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)))
         switch section {
         case 0:
-            label.text = "Unenrolled"
+            label.text = "Search Results"
         case 1:
             label.text = "Enrolled"
         default:
@@ -214,6 +207,22 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         }
         label.textColor = Settings.currentSettings.colorScheme.textColor
         return headerView
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            if self.visibleUnenrolledCourses.count == 0 {
+                return 0
+            }
+        case 1:
+            if self.visibleEnrolledCourses.count == 0 {
+                return 0
+            }
+        default:
+            assertionFailure("not implemented")
+        }
+        return 22
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -262,15 +271,16 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let course = self.courseAtIndexPath(indexPath)
         assert(self.enrolledCoursesSet.contains(course), "Deselecting an unselected cell")
-        
-        self.enrolledCoursesSet.remove(course)
-        self.clearVisibleCoursesStorageCache()
-        if let newIndexPath = self.indexPathForCourse(course) {
-            tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
-        } else {
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        }
-        self.delegate?.enrollmentsDidChangeForCourseSearchTableViewController(self)
+        tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+        self.delegate?.courseSearchTableViewController(self, shouldDeleteCourse: Course(managedObject: course))
+//        self.enrolledCoursesSet.remove(course)
+//        self.clearVisibleCoursesStorageCache()
+//        if let newIndexPath = self.indexPathForCourse(course) {
+//            tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+//        } else {
+//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//        }
+//        self.delegate?.enrollmentsDidChangeForCourseSearchTableViewController(self)
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let course = self.courseAtIndexPath(indexPath)
@@ -319,5 +329,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
 
 protocol CourseSearchTableViewControllerDelegate: class {
     func enrollmentsDidChangeForCourseSearchTableViewController(viewController: CourseSearchTableViewController)
+    func courseSearchTableViewController(viewController: CourseSearchTableViewController, shouldDeleteCourse course: Course)
 }
 
