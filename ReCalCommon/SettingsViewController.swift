@@ -57,20 +57,20 @@ public class SettingsViewController: UITableViewController, SettingsSwitchTableV
             })
         ])
         let recalAppsSection = SectionInfo(name: .Empty, items: [
-            ItemInfo(cellIdentifier: basicCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
-                cell.textLabel.text = "Course Selection"
-                if NSBundle.mainBundle().bundleIdentifier == courseSelectionBundleIdentifier {
-                    cell.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
-                }
-                return cell
-            }),
-            ItemInfo(cellIdentifier: basicCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
-                cell.textLabel.text = "Calendar"
-                if NSBundle.mainBundle().bundleIdentifier == calendarBundleIdentifier {
-                    cell.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
-                }
-                return cell
-            })
+//            ItemInfo(cellIdentifier: basicCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
+//                cell.textLabel.text = "Course Selection"
+//                if NSBundle.mainBundle().bundleIdentifier == courseSelectionBundleIdentifier {
+//                    cell.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
+//                }
+//                return cell
+//            }),
+//            ItemInfo(cellIdentifier: basicCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
+//                cell.textLabel.text = "Calendar"
+//                if NSBundle.mainBundle().bundleIdentifier == calendarBundleIdentifier {
+//                    cell.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
+//                }
+//                return cell
+//            })
         ])
         let preferencesSection = SectionInfo(name: .Literal("Preferences"), items: [
             ItemInfo(cellIdentifier: switchCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
