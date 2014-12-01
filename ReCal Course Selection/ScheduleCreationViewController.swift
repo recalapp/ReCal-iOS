@@ -181,4 +181,10 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         itemInfo.selected = true
         self.dataSource[indexPath.section, indexPath.row] = itemInfo
     }
+    
+    /// MARK: - Text Field Delegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
