@@ -73,6 +73,7 @@ class CourseDownloadViewController: UIViewController {
     
     private func startDownloadTask(#index: Int) {
         self.adjustDownloadTasksArrayLength()
+        println("Starting task # \(index + 1) out of \(self.batchCount)")
         assert(index < self.downloadTasks.count, "Invalid download task index")
         switch self.downloadTasks[index] {
         case .NotStarted:
@@ -80,7 +81,12 @@ class CourseDownloadViewController: UIViewController {
             task.progress.addObserver(self, forKeyPath: "cancelled", options: NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Initial, context: nil)
             task.progress.addObserver(self, forKeyPath: "fractionCompleted", options: NSKeyValueObservingOptions.New | NSKeyValueObservingOptions.Initial, context: nil)
             self.downloadTasks[index] = .Active(task)
-            
+            task.downloadPromise.onDone { (_) in
+                println("Download completed for task # \(index + 1) out of \(self.batchCount)")
+            }
+            task.importPromise.onDone { (_) in
+                println("Import completed for task # \(index + 1) out of \(self.batchCount)")
+            }
             task.downloadPromise.onSuccess { (downloadedDictionary: NSDictionary) in
                 if let totalCount = downloadedDictionary["meta"]?["total_count"] as? NSNumber {
                     self.totalCountStorage = totalCount.integerValue

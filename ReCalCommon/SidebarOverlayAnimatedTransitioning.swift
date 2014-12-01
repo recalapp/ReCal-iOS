@@ -35,10 +35,11 @@ class SidebarOverlayPresentationAnimatedTransitioning: SidebarOverlayAnimatedTra
         let initialFrame = CGRect(origin: CGPoint(x: originX, y: finalFrame.origin.y), size: finalFrame.size)
         presentedView.frame = initialFrame
         containerView.addSubview(presentedView)
-        
+        presentedVC.viewWillAppear(true)
         UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.allZeros, animations: { () -> Void in
             presentedView.frame = finalFrame
         }) { (completed) -> Void in
+            presentedVC.viewDidAppear(true)
             transitionContext.completeTransition(completed)
         }
     }
@@ -55,10 +56,11 @@ class SidebarOverlayDismissalAnimatedTransitioning: SidebarOverlayAnimatedTransi
         let initialFrame = transitionContext.finalFrameForViewController(presentedVC)
         let originX = self.direction == .Left ? -initialFrame.size.width : containerView.bounds.size.width + initialFrame.size.width
         let finalFrame = CGRect(origin: CGPoint(x: originX, y: initialFrame.origin.y), size: initialFrame.size)
-        
+        presentedVC.viewWillDisappear(true)
         UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.allZeros, animations: { () -> Void in
             presentedView.frame = finalFrame
             }) { (completed) -> Void in
+                presentedVC.viewDidDisappear(true)
                 presentedView.removeFromSuperview()
                 transitionContext.completeTransition(completed)
         }

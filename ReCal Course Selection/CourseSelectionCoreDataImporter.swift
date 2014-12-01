@@ -73,7 +73,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 courseImportOperationQueue.name = "Course Import"
                 courseImportOperationQueue.qualityOfService = NSOperationQueue.currentQueue()!.qualityOfService
                 courseImportOperationQueue.underlyingQueue = (NSOperationQueue.currentQueue()?.underlyingQueue)!
-                courseImportOperationQueue.maxConcurrentOperationCount = 2
+                courseImportOperationQueue.maxConcurrentOperationCount = 1
                 let curQueue = NSOperationQueue.currentQueue()
                 var result: ImportResult = .Success
                 let courseImporter = CourseAttributeImporter()
@@ -87,7 +87,6 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                                 result = .Success
                             default:
                                 result = .Failure
-                                progress.cancel()
                                 courseImportOperationQueue.cancelAllOperations()
                             }
                         }
@@ -97,6 +96,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 courseImportOperationQueue.waitUntilAllOperationsAreFinished()
                 switch result {
                 case .Success:
+                    assert(progress.totalUnitCount == progress.completedUnitCount, "If success, this is a requirement")
                     var errorOpt: NSError?
                     println("Inserted item count: \(self.backgroundManagedObjectContext.insertedObjects.count)")
                     println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
@@ -112,6 +112,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     }
                 case .Failure, .ShouldRetry:
                     revertChanges()
+                    progress.cancel()
                     return result
                 }
             } else {

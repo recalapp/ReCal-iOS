@@ -81,26 +81,29 @@ class SemesterDownloadTask : NSObject {
     private func initializeDownload() {
         switch self.downloadState {
         case .Preparing:
+            let queue = NSOperationQueue.currentQueue() ?? NSOperationQueue.mainQueue()
             let courseServerCommunication = ServerCommunicator.OneTimeServerCommunication(identifier: "Courses-\(self.termCode)-\(self.limit)-\(self.offset)", urlString: self.urlString) { (result: ServerCommunicator.Result) in
-                switch result {
-                case .Success(_, let data):
-                    var errorOpt: NSError?
-                    let downloadedDictionaryOpt = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &errorOpt) as? NSDictionary
-                    if let error = errorOpt {
-                        println("Error parsing JSON data. Error: \(error)")
+                queue.addOperationWithBlock {
+                    switch result {
+                    case .Success(_, let data):
+                        var errorOpt: NSError?
+                        let downloadedDictionaryOpt = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &errorOpt) as? NSDictionary
+                        if let error = errorOpt {
+                            println("Error parsing JSON data. Error: \(error)")
+                            self.downloadPromise.failWith(error)
+                            return
+                        }
+                        if let downloadedDictionary = downloadedDictionaryOpt {
+                            self.downloadPromise.succeedWith(downloadedDictionary)
+                            self.advanceToWriteStateWithObject(downloadedDictionary)
+                        } else {
+                            let error = NSError(domain: "io.recal.ReCal-Course-Selection", code: 0, userInfo: nil)
+                            self.downloadPromise.failWith(error)
+                            return
+                        }
+                    case .Failure(let error):
                         self.downloadPromise.failWith(error)
-                        return
                     }
-                    if let downloadedDictionary = downloadedDictionaryOpt {
-                        self.downloadPromise.succeedWith(downloadedDictionary)
-                        self.advanceToWriteStateWithObject(downloadedDictionary)
-                    } else {
-                        let error = NSError(domain: "io.recal.ReCal-Course-Selection", code: 0, userInfo: nil)
-                        self.downloadPromise.failWith(error)
-                        return
-                    }
-                case .Failure(let error):
-                    self.downloadPromise.failWith(error)
                 }
             }
             let serverCommunicator = Settings.currentSettings.serverCommunicator
@@ -177,6 +180,7 @@ class SemesterDownloadTask : NSObject {
                     self.progress.completedUnitCount = newCount
                 }
                 if fraction >= 1.0 {
+                    println("about to succeed import promise")
                     self.importPromise.succeedWith(NSObject())
                     self.advanceToFinishedState()
                 }

@@ -10,35 +10,56 @@ import Foundation
 
 public class Promise<SuccessType: AnyObject, ErrorType: AnyObject> {
     
-    private var doneHandler: PromiseResult<SuccessType, ErrorType>->Void = {(_) in }
-    private var state: PromiseState<SuccessType, ErrorType> = .Waiting
+    private var doneHandler: PromiseResult<SuccessType, ErrorType>->Void
+    private var state: PromiseState<SuccessType, ErrorType>
+    private let privateQueue: NSOperationQueue
     public init() {
+        self.doneHandler = {(_) in }
+        self.state = .Waiting
+        self.privateQueue = {
+            let queue = NSOperationQueue()
+            queue.qualityOfService = .Utility
+            queue.name = "Promise"
+            queue.maxConcurrentOperationCount = 1;
+            return queue
+        }()
+    }
+    private func assertNotPrivateQueue() {
+        assert(NSOperationQueue.currentQueue() != self.privateQueue, "Prevents deadlock")
+    }
+    private func performBlock(closure: ()->Void) {
+        self.privateQueue.addOperationWithBlock(closure)
+    }
+    private func performBlockAndWait(closure: ()->Void) {
+        self.assertNotPrivateQueue()
+        let operation = NSBlockOperation(block: closure)
+        self.privateQueue.addOperation(operation)
+        operation.waitUntilFinished()
     }
     
     public func onDone(handler: PromiseResult<SuccessType, ErrorType>->Void) -> Promise<SuccessType, ErrorType> {
-        var execute: (Void->Void)?
-        synchronize(self) { ()->Void in
+        let queue = NSOperationQueue.currentQueue() ?? NSOperationQueue.mainQueue()
+        self.performBlockAndWait {
             switch self.state {
             case .Waiting:
                 let oldHandler = self.doneHandler
-                let queue = NSOperationQueue.currentQueue() ?? NSOperationQueue.mainQueue()
                 self.doneHandler = {(result) in
                     oldHandler(result)
+                    handler(result)
                     queue.addOperationWithBlock {
-                        handler(result)
+                        
                     }
                 }
             case .Finished(.Success(let object)):
-                execute = {
+                queue.addOperationWithBlock  {
                     handler(.Success(object))
                 }
             case .Finished(.Failure(let object)):
-                execute = {
+                queue.addOperationWithBlock {
                     handler(.Failure(object))
                 }
             }
         }
-        execute?()
         return self
     }
     
@@ -54,22 +75,19 @@ public class Promise<SuccessType: AnyObject, ErrorType: AnyObject> {
     }
     
     public func succeedWith(object: SuccessType) -> Promise<SuccessType, ErrorType> {
-        var execute: (Void->Void)?
-        synchronize(self) { ()->Void in
+        let queue = NSOperationQueue.currentQueue() ?? NSOperationQueue.mainQueue()
+        self.performBlockAndWait {
             switch self.state {
             case .Waiting:
                 self.state = .Finished(.Success(object))
-                let handler = self.doneHandler
+                self.doneHandler(.Success(object))
                 self.doneHandler = {(_) in }
-                execute = {
-                    handler(.Success(object))
-                }
+                
             case .Finished(_):
                 assertionFailure("Promise already finished")
                 break
             }
         }
-        execute?()
         return self
     }
     
@@ -85,22 +103,18 @@ public class Promise<SuccessType: AnyObject, ErrorType: AnyObject> {
     }
     
     public func failWith(object: ErrorType) -> Promise<SuccessType, ErrorType> {
-        var execute: (Void->Void)?
-        synchronize(self) { ()->Void in
+        let queue = NSOperationQueue.currentQueue() ?? NSOperationQueue.mainQueue()
+        self.performBlockAndWait {
             switch self.state {
             case .Waiting:
                 self.state = .Finished(.Failure(object))
-                let handler = self.doneHandler
+                self.doneHandler(.Failure(object))
                 self.doneHandler = {(_) in }
-                execute = {
-                    handler(.Failure(object))
-                }
             case .Finished(_):
                 assertionFailure("Promise already finished")
                 break
             }
         }
-        execute?()
         return self
     }
 }

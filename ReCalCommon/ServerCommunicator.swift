@@ -125,11 +125,16 @@ public final class ServerCommunicator {
         assert(NSOperationQueue.currentQueue() == self.serverCommunicationQueue, "All operations on Server Communicator must be performed on its private queue via the performBlock() method or the performBlockAndWait() method")
     }
     
+    private func assertNotPrivateQueue() {
+        assert(NSOperationQueue.currentQueue() != self.serverCommunicationQueue, "Prevents deadlock")
+    }
+    
     public func performBlock(closure: ()->Void) {
         self.serverCommunicationQueue.addOperationWithBlock(closure)
     }
     
     public func performBlockAndWait(closure: ()->Void) {
+        self.assertNotPrivateQueue()
         let operation = NSBlockOperation(block: closure)
         self.serverCommunicationQueue.addOperation(operation)
         operation.waitUntilFinished()

@@ -54,15 +54,19 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         let semestersSection = SectionInfo(name: .Literal("Semester:"), items: [])
         self.dataSource.setSectionInfos([nameSection, semestersSection])
         self.tableView.dataSource = self.dataSource
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         let processSemesters: [CDSemester] -> Void = { (semesters: [CDSemester]) in
             self.semesters = semesters
             var itemInfos: [ItemInfo]?
             self.managedObjectContext.performBlockAndWait {
                 itemInfos = self.semesters.map { (semester: CDSemester) -> ItemInfo in
                     var itemInfo = ItemInfo(cellIdentifier: basicCellIdentifier, selected: semester.termCode == self.selectedSemester?.termCode, cellProcessBlock: { (cell) -> UITableViewCell in
-                            cell.textLabel.text = semester.termCode
-                            return cell
-                        })
+                        cell.textLabel.text = semester.termCode
+                        return cell
+                    })
                     return itemInfo
                 }
             }
@@ -87,8 +91,13 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
             // no need to merge. We don't own the managed object context
             self.fetchActiveSemesters(processSemesters)
         }
-        self.notificationObservers.append(observer1)
-        self.notificationObservers.append(observer2)
+        self.notificationObservers = [observer1, observer2]
+    }
+    override func viewWillDisappear(animated: Bool) {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
+        self.notificationObservers = []
     }
     
     private func fetchActiveSemesters(callBack: (([CDSemester])->Void)?) {
@@ -111,12 +120,6 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
                     let _ = callBack?(semesters)
                 }
             }
-        }
-    }
-    
-    deinit {
-        for observer in self.notificationObservers {
-            NSNotificationCenter.defaultCenter().removeObserver(observer)
         }
     }
     

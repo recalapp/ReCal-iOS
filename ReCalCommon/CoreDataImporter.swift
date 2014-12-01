@@ -162,10 +162,14 @@ public class CoreDataImporter {
         }
         return progress
     }
+    private func assertNotPrivateQueue() {
+        assert(NSOperationQueue.currentQueue() != self.privateQueue, "Prevents deadlock")
+    }
     public func performBlock(closure: ()->Void) {
         self.privateQueue.addOperationWithBlock(closure)
     }
     public func performBlockAndWait(closure: ()->Void) {
+        self.assertNotPrivateQueue()
         let operation = NSBlockOperation(block: closure)
         self.privateQueue.addOperation(operation)
         operation.waitUntilFinished()
