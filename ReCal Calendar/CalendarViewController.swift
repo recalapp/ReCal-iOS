@@ -9,6 +9,7 @@
 import UIKit
 import ReCalCommon
 
+private let weekViewControllerStoryboardId = "WeekView"
 private let calendarViewContentViewSegueId = "CalendarEmbed"
 private let agendaViewControllerStoryboardId = "AgendaViewController"
 private let eventNavigationViewControllerStoryboardId = "eventNavigationViewController"
@@ -40,6 +41,11 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     lazy private var viewControllers: [UIViewController] = {
         return [self.agendaViewController, self.dayViewController]
     }()
+    lazy private var weekViewController: UIViewController = {
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier(weekViewControllerStoryboardId) as UIViewController
+        vc.view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        return vc
+    }()
     
     private var settingsViewControllerTransitioningDelegate: UIViewControllerTransitioningDelegate?
     
@@ -51,6 +57,8 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     @IBOutlet weak var pageViewContentView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.weekViewContentView.addSubview(self.weekViewController.view)
+        self.weekViewContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.weekViewController.view, inParentView: self.weekViewContentView, withInsets: UIEdgeInsetsZero))
         Settings.currentSettings.authenticator.authenticate()
         self.settingsButton.title = navigationThreeBars
         let updateColorScheme: ()->Void = {

@@ -34,28 +34,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZf-2e-IQi" userLabel="Week View Container">
-                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
-                                <connections>
-                                    <segue destination="6Ww-OZ-WuX" kind="embed" id="jGz-BH-TUT"/>
-                                </connections>
-                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mm3-Un-elg" userLabel="Page View Container">
                                 <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                                 <connections>
                                     <segue destination="xGl-yB-3OG" kind="embed" identifier="CalendarEmbed" id="cfv-bK-dEH"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8j5-Yw-vTK">
+                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="mm3-Un-elg" secondAttribute="trailing" id="9Ch-42-cil"/>
-                            <constraint firstAttribute="trailing" secondItem="UZf-2e-IQi" secondAttribute="trailing" id="HJG-Xg-f2N"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="UZf-2e-IQi" secondAttribute="bottom" id="RNg-hv-3Dm"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="8j5-Yw-vTK" secondAttribute="bottom" id="Owf-sc-IJx"/>
+                            <constraint firstItem="8j5-Yw-vTK" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="cBP-Qw-haw"/>
                             <constraint firstAttribute="bottom" secondItem="mm3-Un-elg" secondAttribute="bottom" id="gMf-Df-6el"/>
                             <constraint firstItem="mm3-Un-elg" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="hoB-3V-zij"/>
-                            <constraint firstItem="UZf-2e-IQi" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="o6K-mu-qlD"/>
-                            <constraint firstItem="UZf-2e-IQi" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="rtp-nR-nHK"/>
+                            <constraint firstItem="8j5-Yw-vTK" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="jHh-ON-KZK"/>
+                            <constraint firstAttribute="trailing" secondItem="8j5-Yw-vTK" secondAttribute="trailing" id="oLu-H5-1V4"/>
                             <constraint firstItem="mm3-Un-elg" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="uKx-yN-zAi"/>
                         </constraints>
                     </view>
@@ -82,7 +80,7 @@
                         <outlet property="pageViewContentView" destination="mm3-Un-elg" id="8Rb-ek-yo3"/>
                         <outlet property="settingsButton" destination="m5l-nN-o1a" id="MJr-30-gfS"/>
                         <outlet property="viewControllerSegmentedControl" destination="irs-6V-KPw" id="q4U-I7-HLa"/>
-                        <outlet property="weekViewContentView" destination="UZf-2e-IQi" id="JdF-zU-vRm"/>
+                        <outlet property="weekViewContentView" destination="8j5-Yw-vTK" id="MnB-xm-dWG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -91,9 +89,9 @@
         <!--Week View Controller-->
         <scene sceneID="xnY-qq-bAi">
             <objects>
-                <collectionViewController id="6Ww-OZ-WuX" customClass="WeekViewController" customModule="ReCal_Calendar" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="WeekView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6Ww-OZ-WuX" customClass="WeekViewController" customModule="ReCal_Calendar" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" dataMode="prototypes" id="Qnv-rD-4F5">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <collectionViewLayout key="collectionViewLayout" id="Pag-e9-xa7" customClass="CollectionViewCalendarWeekLayout" customModule="ReCalCommon"/>
