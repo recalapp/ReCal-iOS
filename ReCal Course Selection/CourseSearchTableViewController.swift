@@ -313,6 +313,9 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     }
     
     // MARK: - Search Controller Delegate
+    func didPresentSearchController(searchController: UISearchController) {
+        searchController.searchBar.setShowsCancelButton(false, animated: false)
+    }
     
     // MARK: - Adaptive Presentation Controller Delegate
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
