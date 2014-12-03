@@ -16,6 +16,7 @@ class DayColumnHeaderView: UICollectionReusableView {
         super.awakeFromNib()
         let updateColorScheme: ()->Void = {
             self.weekDayLabel.textColor = Settings.currentSettings.colorScheme.textColor
+            self.dateLabel.textColor = Settings.currentSettings.colorScheme.textColor
         }
         
         updateColorScheme()
