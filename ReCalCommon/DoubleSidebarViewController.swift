@@ -150,6 +150,13 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.updateSidebarUserInteraction()
         self.leftSidebarTapGestureRecognizer.enabled = sidebarState == .Unselected
         self.rightSidebarTapGestureRecognizer.enabled = sidebarState == .Unselected
+        
+        switch sidebarState {
+        case .Unselected:
+            self.sidebarContainerScrollView.addGestureRecognizer(self.sidebarContainerScrollView.panGestureRecognizer)
+        case .LeftSidebarShown, .RightSidebarShown:
+            self.primaryContentView.addGestureRecognizer(self.sidebarContainerScrollView.panGestureRecognizer)
+        }
     }
     
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
