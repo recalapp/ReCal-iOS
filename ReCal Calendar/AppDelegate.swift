@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let launch: ()->Void = {
-            Settings.currentSettings.theme = Theme(rawValue: Settings.currentSettings.sharedUserDefaults.integerForKey(Settings.UserDefaultsKeys.Theme)) ?? .Light
+            Settings.currentSettings.theme = Theme(rawValue: Settings.currentSettings.sharedUserDefaults.integerForKey(Settings.UserDefaultsKeys.Theme)) ?? .Dark
             let rootViewController = self.window?.rootViewController
             Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: Urls.authentication, withLogOutUrlString: Urls.logOut)
             Settings.currentSettings.coreDataImporter = CalendarCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
