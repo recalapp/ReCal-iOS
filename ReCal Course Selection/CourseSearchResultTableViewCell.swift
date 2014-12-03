@@ -22,7 +22,7 @@ class CourseSearchResultTableViewCell: UITableViewCell {
         let updateColorScheme: ()->Void = {
             let backgroundColor = self.selected ? Settings.currentSettings.colorScheme.selectedContentBackgroundColor : Settings.currentSettings.colorScheme.contentBackgroundColor
             self.backgroundColor = backgroundColor
-            self.textLabel.textColor = Settings.currentSettings.colorScheme.textColor
+            self.textLabel?.textColor = Settings.currentSettings.colorScheme.textColor
             self.detailTextLabel?.textColor = Settings.currentSettings.colorScheme.textColor
         }
         updateColorScheme()
@@ -49,7 +49,7 @@ class CourseSearchResultTableViewCell: UITableViewCell {
     
     private func refresh() {
         if let course = self.course {
-            self.textLabel.text = course.displayText
+            self.textLabel?.text = course.displayText
             self.detailTextLabel?.text = course.title
         }
     }

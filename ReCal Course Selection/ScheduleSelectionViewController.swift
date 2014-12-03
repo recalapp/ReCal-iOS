@@ -111,12 +111,12 @@ class ScheduleSelectionViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(scheduleCellIdentifier, forIndexPath: indexPath) as UITableViewCell
 
-        cell.textLabel.textColor = Settings.currentSettings.colorScheme.textColor
+        cell.textLabel?.textColor = Settings.currentSettings.colorScheme.textColor
         cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
         if let schedule = self.scheduleAtIndexPath(indexPath) {
-            cell.textLabel.text = schedule.name
+            cell.textLabel?.text = schedule.name
         } else {
-            cell.textLabel.text = "(Empty)"
+            cell.textLabel?.text = "(Empty)"
         }
 
         return cell
