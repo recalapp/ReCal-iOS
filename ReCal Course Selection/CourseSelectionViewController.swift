@@ -364,6 +364,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     func enrollmentsDidStopChangingForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource) {
         assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for schedule view")
+        // enrollments already set in enrollmentsDidChange
         self.saveSchedule()
     }
     

@@ -16,9 +16,13 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
     weak var delegate: EnrolledCoursesTableViewDataSourceDelegate?
     var enrollments: Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>> = Dictionary<Course, Dictionary<SectionType, SectionEnrollmentStatus>>() {
         didSet {
-            self.selectedIndexPath = nil
+            if (!arraysContainSameElements(oldValue.keys.array, enrollments.keys.array)) {
+                // enrolled courses changed. invalidate old selection
+                self.selectedIndexPath = nil
+            }
         }
     }
+    
     var courseColorMap: Dictionary<Course, CourseColor> = Dictionary()
     var enrolledCourses: [Course] {
         return self.enrollments.keys.array
