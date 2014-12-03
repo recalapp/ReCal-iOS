@@ -71,7 +71,7 @@ class EventViewController: UITableViewController {
         let dateSection = SectionInfo(name: .Empty, items: [
             ItemInfo(cellIdentifier: self.basicCellIdentifier, cellProcessBlock: { (cell:UITableViewCell) -> UITableViewCell in
                 if let event = self.event {
-                    cell.textLabel.text = dateFormatter.stringFromDate(event.eventStart)
+                    cell.textLabel?.text = dateFormatter.stringFromDate(event.eventStart)
                     
                 }
                 return cell

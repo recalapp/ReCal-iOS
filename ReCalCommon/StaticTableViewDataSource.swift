@@ -42,7 +42,7 @@ public final class StaticTableViewDataSource : NSObject, UITableViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let itemInfo = self[indexPath.section, indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(itemInfo.cellIdentifier, forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel.textColor = Settings.currentSettings.colorScheme.textColor
+        cell.textLabel?.textColor = Settings.currentSettings.colorScheme.textColor
         cell.detailTextLabel?.textColor = Settings.currentSettings.colorScheme.textColor
         cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
         if itemInfo.selected && !cell.selected {

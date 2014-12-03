@@ -21,21 +21,38 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     private let numberOfVisibleDays = 100
     
     // MARK: Variables
+    var centerDate: NSDate = NSDate() {
+        didSet {
+            // this does the right invalidation of layout
+            let contentOffset = self.layout.contentOffsetForSection(self.sectionForCenterDate)
+            self.collectionView?.setContentOffset(contentOffset, animated: false)
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    private var sectionForCenterDate: Int {
+        return self.numberOfVisibleDays / 2
+    }
+    
     lazy private var calendar: NSCalendar = {
         let calendarOpt = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
         assert(calendarOpt != nil, "Calendar cannot be nil")
         return calendarOpt!
     }()
     
-    lazy private var timeFormatter: NSDateFormatter = {
+    private var timeFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "h a"
         return formatter
     }()
     
-    private var notificationObservers: [AnyObject] = []
+    private var dateFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "MMM d"
+        return formatter
+    }()
     
-    private var centerVisibleDate = NSDate()
+    private var notificationObservers: [AnyObject] = []
     
     private weak var layout: CollectionViewCalendarWeekLayout!
     
@@ -44,15 +61,16 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
         
         self.layout = self.collectionViewLayout as CollectionViewCalendarWeekLayout
         layout.dataSource = self
-        self.collectionView.registerNib(UINib(nibName: "EventCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: eventCellIdentifier)
-        self.collectionView.registerNib(UINib(nibName: "TimeRowHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.TimeRowHeader.rawValue, withReuseIdentifier: timeRowHeaderViewIdentifier)
-        self.collectionView.registerNib(UINib(nibName: "DayColumnHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.rawValue, withReuseIdentifier: dayColumnHeaderViewIdentifier)
+        self.collectionView?.registerNib(UINib(nibName: "EventCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: eventCellIdentifier)
+        self.collectionView?.registerNib(UINib(nibName: "TimeRowHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.TimeRowHeader.rawValue, withReuseIdentifier: timeRowHeaderViewIdentifier)
+        self.collectionView?.registerNib(UINib(nibName: "DayColumnHeaderView", bundle: NSBundle.mainBundle()), forSupplementaryViewOfKind: CollectionViewCalendarWeekLayoutSupplementaryViewKind.DayColumnHeader.rawValue, withReuseIdentifier: dayColumnHeaderViewIdentifier)
         layout.registerClass(TimeRowHeaderBackgroundView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.TimeRowHeaderBackground.rawValue)
         layout.registerClass(DayColumnHeaderBackgroundView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.DayColumnHeaderBackground.rawValue)
         layout.registerClass(GridLineView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.HorizontalGridLine.rawValue)
         layout.registerClass(GridLineView.self, forDecorationViewOfKind: CollectionViewCalendarWeekLayoutDecorationViewKind.VerticalGridLine.rawValue)
+        
         let updateColorScheme: Void -> Void = {
-            self.collectionView.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
+            self.collectionView!.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
         }
         updateColorScheme()
         let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
@@ -64,6 +82,12 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
         for observer in self.notificationObservers {
             NSNotificationCenter.defaultCenter().removeObserver(observer)
         }
+    }
+    
+    func dateForSection(section: Int) -> NSDate {
+        let deltaSection = section - self.sectionForCenterDate
+        let date = self.calendar.dateByAddingUnit(NSCalendarUnit.DayCalendarUnit, value: deltaSection, toDate: self.centerDate, options: NSCalendarOptions.allZeros)!
+        return date
     }
     
     /*
@@ -114,10 +138,10 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
             let supplementaryView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: getViewIdentifier(viewType), forIndexPath: indexPath) as UICollectionReusableView
             switch viewType {
             case .DayColumnHeader:
-//                let day = Day(rawValue: indexPath.indexAtPosition(0))!
+                let date = self.dateForSection(indexPath.section)
                 let dayColumnHeaderView = supplementaryView as DayColumnHeaderView
                 dayColumnHeaderView.weekDayLabel.text = "Day"
-                dayColumnHeaderView.dateLabel.text = "Date"
+                dayColumnHeaderView.dateLabel.text = self.dateFormatter.stringFromDate(date)
             case .TimeRowHeader:
                 let hour = self.minimumHour + indexPath.indexAtPosition(0) * self.hourStep
                 let timeRowHeaderView = supplementaryView as TimeRowHeaderView
@@ -134,6 +158,20 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
 
     // MARK: UICollectionViewDelegate
 
+    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        assert(scrollView === self.collectionView)
+        if !decelerate {
+            // adjust data source so that the visible day become the center day again
+            self.centerDate = self.dateForSection(self.layout.firstVisibleSection)
+        }
+    }
+    
+    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        assert(scrollView === self.collectionView)
+        // adjust data source so that the visible day become the center day again
+        self.centerDate = self.dateForSection(self.layout.firstVisibleSection)
+    }
+    
     /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -162,10 +200,6 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     
     }
     */
-    
-    // MARK: Scroll View Delegate
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
-    }
     
     // MARK: - Calendar Week View Layout Data Source
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, endDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {

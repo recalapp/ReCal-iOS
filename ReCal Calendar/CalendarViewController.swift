@@ -41,9 +41,10 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     lazy private var viewControllers: [UIViewController] = {
         return [self.agendaViewController, self.dayViewController]
     }()
-    lazy private var weekViewController: UIViewController = {
-        let vc = self.storyboard?.instantiateViewControllerWithIdentifier(weekViewControllerStoryboardId) as UIViewController
+    lazy private var weekViewController: WeekViewController = {
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier(weekViewControllerStoryboardId) as WeekViewController
         vc.view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.addChildViewController(vc)
         return vc
     }()
     
@@ -57,8 +58,11 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     @IBOutlet weak var pageViewContentView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.weekViewContentView.addSubview(self.weekViewController.view)
-        self.weekViewContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.weekViewController.view, inParentView: self.weekViewContentView, withInsets: UIEdgeInsetsZero))
+        let setUpWeekView: Void->Void = {
+            self.weekViewContentView.addSubview(self.weekViewController.view)
+            self.weekViewContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.weekViewController.view, inParentView: self.weekViewContentView, withInsets: UIEdgeInsetsZero))
+        }
+        setUpWeekView()
         Settings.currentSettings.authenticator.authenticate()
         self.settingsButton.title = navigationThreeBars
         let updateColorScheme: ()->Void = {
@@ -101,6 +105,7 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
             }, completion: { (_: UIViewControllerTransitionCoordinatorContext!) -> Void in
                 completion()
         })
+        self.weekViewController.centerDate = NSDate() // TODO get the actual visible date
     }
     
     private func adjustAppearanceForTraitCollection(collection: UITraitCollection)->(Void->Void, Void->Void, Void->Void) {

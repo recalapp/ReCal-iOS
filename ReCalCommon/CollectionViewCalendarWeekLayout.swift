@@ -507,6 +507,14 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
     override public func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         return self.targetContentOffsetForProposedContentOffset(proposedContentOffset)
     }
+    
+    // MARK: - Custom Methods
+    public var firstVisibleSection: Int {
+        return self.nearestSectionForContentOffset(self.collectionView!.contentOffset)
+    }
+    public func contentOffsetForSection(section: Int) -> CGPoint {
+        return CGPoint(x: self.contentOffsetXForSection(section), y: self.collectionView?.contentOffset.y ?? 0)
+    }
 }
 public enum CollectionViewCalendarWeekLayoutSupplementaryViewKind: String {
     case DayColumnHeader = "DayColumnHeader"
