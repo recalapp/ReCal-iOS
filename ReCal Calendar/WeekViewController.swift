@@ -21,6 +21,7 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     private let numberOfVisibleDays = 100
     
     // MARK: Variables
+    weak var delegate: WeekViewControllerDelegate?
     private var centerDateStorage: NSDate = NSDate()
     
     var centerDate: NSDate {
@@ -234,6 +235,15 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
         self.centerDate = self.dateForSection(self.layout.firstVisibleSection)
     }
     
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+        let eventOpt = self.eventForIndexPath(indexPath)
+        assert(eventOpt != nil)
+        if let event = eventOpt {
+            self.delegate?.weekViewController(self, didSelectEventWithManagedObjectId: event.objectID)
+        }
+    }
+    
     /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -307,6 +317,10 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     func hourStepForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float {
         return Float(self.hourStep)
     }
+}
+
+protocol WeekViewControllerDelegate: class {
+    func weekViewController(weekViewController: WeekViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID)
 }
 
 struct EventCellViewModelAdapter: EventCellViewModel {

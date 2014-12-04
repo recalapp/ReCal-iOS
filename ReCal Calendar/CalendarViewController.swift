@@ -14,7 +14,7 @@ private let calendarViewContentViewSegueId = "CalendarEmbed"
 private let agendaViewControllerStoryboardId = "AgendaViewController"
 private let eventNavigationViewControllerStoryboardId = "eventNavigationViewController"
 
-class CalendarViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, AgendaViewControllerDelegate, EventViewControllerDelegate, SettingsViewControllerDelegate {
+class CalendarViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, AgendaViewControllerDelegate, WeekViewControllerDelegate, EventViewControllerDelegate, SettingsViewControllerDelegate {
     
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var viewControllerSegmentedControl: UISegmentedControl!
@@ -44,6 +44,7 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     lazy private var weekViewController: WeekViewController = {
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier(weekViewControllerStoryboardId) as WeekViewController
         vc.view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        vc.delegate = self
         self.addChildViewController(vc)
         return vc
     }()
@@ -217,6 +218,11 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
 
     // MARK: - Agenda View Controller Delegate
     func agendaViewController(agendaViewController: AgendaViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID) {
+        self.presentEventViewController(eventObjectId: managedObjectId)
+    }
+    
+    // MARK: - Week View Controller Delegate
+    func weekViewController(weekViewController: WeekViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID) {
         self.presentEventViewController(eventObjectId: managedObjectId)
     }
     
