@@ -12,11 +12,19 @@ import ReCalCommon
 class DayColumnHeaderView: UICollectionReusableView {
     @IBOutlet weak var weekDayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    
+    var type: Type = .Normal {
+        didSet {
+            self.updateColor()
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         let updateColorScheme: ()->Void = {
             self.weekDayLabel.textColor = Settings.currentSettings.colorScheme.textColor
             self.dateLabel.textColor = Settings.currentSettings.colorScheme.textColor
+            self.updateColor()
         }
         
         updateColorScheme()
@@ -32,5 +40,18 @@ class DayColumnHeaderView: UICollectionReusableView {
         for observer in self.notificationObservers {
             NSNotificationCenter.defaultCenter().removeObserver(observer)
         }
+    }
+    
+    private func updateColor() {
+        switch self.type {
+        case .Normal:
+            self.backgroundColor = UIColor.clearColor()
+        case .Today:
+            self.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
+        }
+    }
+    
+    enum Type {
+        case Normal, Today
     }
 }

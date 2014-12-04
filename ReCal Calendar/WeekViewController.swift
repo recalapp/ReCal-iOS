@@ -21,8 +21,14 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     private let numberOfVisibleDays = 100
     
     // MARK: Variables
-    var centerDate: NSDate = NSDate() {
-        didSet {
+    private var centerDateStorage: NSDate = NSDate()
+    
+    var centerDate: NSDate {
+        get {
+            return centerDateStorage
+        }
+        set {
+            centerDateStorage = self.zeroOutHourForDate(newValue)
             // this does the right invalidation of layout
             let contentOffset = self.layout.contentOffsetForSection(self.sectionForCenterDate)
             self.collectionView?.setContentOffset(contentOffset, animated: false)
@@ -30,8 +36,12 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
         }
     }
     
+    private var todayDate: NSDate {
+        return self.zeroOutHourForDate(NSDate())
+    }
+    
     private var sectionForCenterDate: Int {
-        return self.numberOfVisibleDays / 2
+        return self.sectionForDate(self.centerDate)
     }
     
     lazy private var calendar: NSCalendar = {
@@ -72,7 +82,6 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.eventsIdCache.itemConstructor = { (date: NSDate)->[NSManagedObjectID] in
             let fetchRequest: NSFetchRequest = {
                 let components = self.calendar.components(NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitYear, fromDate: date)
@@ -133,6 +142,11 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
         let date = self.calendar.dateByAddingUnit(NSCalendarUnit.DayCalendarUnit, value: deltaSection, toDate: self.centerDate, options: NSCalendarOptions.allZeros)!
         return date
     }
+    
+    func sectionForDate(date: NSDate) -> Int {
+        let dayDelta = self.calendar.components(NSCalendarUnit.DayCalendarUnit, fromDate: date, toDate: self.centerDate, options: NSCalendarOptions.allZeros).day
+        return self.numberOfVisibleDays / 2 - dayDelta
+    }
 
     private func eventForIndexPath(indexPath: NSIndexPath) -> CDEvent? {
         let objectIds = self.eventsIdCache[self.dateForSection(indexPath.section)]
@@ -181,6 +195,7 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
                 let dayColumnHeaderView = supplementaryView as DayColumnHeaderView
                 dayColumnHeaderView.weekDayLabel.text = self.dayFormatter.stringFromDate(date)
                 dayColumnHeaderView.dateLabel.text = self.dateFormatter.stringFromDate(date)
+                dayColumnHeaderView.type = indexPath.section == self.sectionForDate(todayDate)  ? .Today : .Normal
             case .TimeRowHeader:
                 let hour = self.minimumHour + indexPath.indexAtPosition(0) * self.hourStep
                 let timeRowHeaderView = supplementaryView as TimeRowHeaderView
@@ -193,6 +208,14 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
             return supplementaryView
         }
         assert(false, "Invalid supplementary view type")
+    }
+    
+    private func zeroOutHourForDate(date: NSDate) -> NSDate {
+        let component = self.calendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.DayCalendarUnit, fromDate: date)
+        component.minute = 0
+        component.hour = 0
+        component.second = 0
+        return self.calendar.dateFromComponents(component)!
     }
 
     // MARK: UICollectionViewDelegate
