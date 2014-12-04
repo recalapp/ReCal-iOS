@@ -242,6 +242,8 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             for section in visibleSections {
                 self.calculateVerticalGridLineForSection(section)
             }
+            let maxVisible = visibleSections.reduce(0) { max($0, $1) }
+            self.calculateVerticalGridLineForSection(maxVisible + 1)
         }
         if self.shouldRecalculateHorizontalGridLineLayoutAttributes {
             self.calculateHorizontalGridLineLayoutAttributes()
