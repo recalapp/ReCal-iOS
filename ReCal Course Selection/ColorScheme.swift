@@ -90,7 +90,7 @@ public class LightColorScheme: ColorScheme {
     
     /// The text color for content
     public override var textColor: UIColor {
-        return UIColor.darkTextColor()
+        return UIColor.lightGrayColor().darkerColor()
     }
     
     /// Color to indicate that a text is a button, or is actionable

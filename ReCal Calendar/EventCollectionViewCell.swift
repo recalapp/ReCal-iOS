@@ -24,6 +24,7 @@ class EventCollectionViewCell: UICollectionViewCell {
 //    }
     
     @IBOutlet weak var eventTitleLabel: UILabel!
+    @IBOutlet weak var alternativeEventTitleLabel: UILabel!
     var color: UIColor = UIColor.greenColor() {
         didSet {
             self.updateColor()

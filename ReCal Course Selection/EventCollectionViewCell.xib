@@ -25,6 +25,12 @@
                             <constraint firstAttribute="width" constant="2" id="Uqt-rd-qsJ"/>
                         </constraints>
                     </view>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5eS-WR-xCJ">
+                        <rect key="frame" x="63" y="4" width="35.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -34,11 +40,16 @@
                 <constraint firstItem="dy7-NI-zQf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="HZF-1W-8GG"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dy7-NI-zQf" secondAttribute="bottom" id="Kkb-IB-F57"/>
                 <constraint firstAttribute="centerX" secondItem="dy7-NI-zQf" secondAttribute="centerX" id="Mtq-xO-rUQ"/>
+                <constraint firstItem="5eS-WR-xCJ" firstAttribute="width" secondItem="dy7-NI-zQf" secondAttribute="width" id="Otq-CX-BYd"/>
                 <constraint firstAttribute="bottom" secondItem="k0Q-Gd-VG6" secondAttribute="bottom" id="PEm-dE-OPf"/>
+                <constraint firstItem="5eS-WR-xCJ" firstAttribute="height" secondItem="dy7-NI-zQf" secondAttribute="height" id="Qkn-XL-f3X"/>
+                <constraint firstItem="5eS-WR-xCJ" firstAttribute="centerX" secondItem="dy7-NI-zQf" secondAttribute="centerX" id="et3-pT-8bD"/>
                 <constraint firstItem="k0Q-Gd-VG6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ocx-cw-uf6"/>
+                <constraint firstItem="5eS-WR-xCJ" firstAttribute="centerY" secondItem="dy7-NI-zQf" secondAttribute="centerY" id="rfG-XQ-Pup"/>
             </constraints>
             <size key="customSize" width="162" height="124"/>
             <connections>
+                <outlet property="alternativeEventTitleLabel" destination="5eS-WR-xCJ" id="xQn-DZ-oTC"/>
                 <outlet property="eventTitleLabel" destination="dy7-NI-zQf" id="Myg-IA-fbq"/>
                 <outlet property="leftBorderView" destination="k0Q-Gd-VG6" id="MDU-eY-KRz"/>
             </connections>

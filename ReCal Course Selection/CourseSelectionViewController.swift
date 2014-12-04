@@ -40,19 +40,17 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             switch sidebarState {
             case .RightSidebarShown:
                 Settings.currentSettings.scheduleDisplayTextStyle = .SectionName
-                self.reloadScheduleView()
             case .LeftSidebarShown, .Unselected:
                 Settings.currentSettings.scheduleDisplayTextStyle = .CourseNumber
-                self.reloadScheduleView()
             }
         }
     }
     
     // MARK: Models
     // NOTE: didSet gets called on a struct even if we just assign one of its value, not the struct itself
-    var schedule: Schedule! {
+    var schedule: Schedule? {
         didSet {
-            if schedule != nil {
+            if let schedule = self.schedule {
                 self.navigationItem.title = schedule.name
                 switch schedule.managedObjectProxyId {
                 case .Existing(let id):
@@ -107,7 +105,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                 }
             }
         }
-        if self.schedule.enrolledCourses.count > 0 {
+        if self.schedule != nil && self.schedule!.enrolledCourses.count > 0 {
             self.setSidebarState(.RightSidebarShown, animated: false)
         }
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
@@ -205,7 +203,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     
     private func saveSchedule() {
         if self.schedule != nil {
-            self.schedule.commitToManagedObjectContext(self.managedObjectContext)
+            self.schedule!.commitToManagedObjectContext(self.managedObjectContext)
             var errorOpt: NSError?
             self.managedObjectContext.performBlock {
                 let _ = self.managedObjectContext.save(&errorOpt)
@@ -305,53 +303,50 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func reloadEnrolledCoursesView() {
-        if self.schedule == nil {
-            return
+        if let schedule = self.schedule {
+            self.enrolledCoursesTableViewDataSource.courseColorMap = schedule.courseColorMap
+            self.enrolledCoursesTableViewDataSource.enrollments = schedule.courseSectionTypeEnrollments
+            self.enrolledCoursesView?.reloadData()
         }
-        self.enrolledCoursesTableViewDataSource.courseColorMap = self.schedule.courseColorMap
-        self.enrolledCoursesTableViewDataSource.enrollments = self.schedule.courseSectionTypeEnrollments
-        self.enrolledCoursesView?.reloadData()
     }
     
     private func reloadScheduleView() {
-        if self.schedule == nil {
-            return
+        if let schedule = self.schedule {
+            // must set color map first
+            self.scheduleCollectionViewDataSource.courseColorMap = schedule.courseColorMap
+            self.scheduleCollectionViewDataSource.enrollments = schedule.courseSectionTypeEnrollments
+            self.scheduleView?.reloadData()
         }
-        // must set color map first
-        self.scheduleCollectionViewDataSource.courseColorMap = self.schedule.courseColorMap
-        self.scheduleCollectionViewDataSource.enrollments = self.schedule.courseSectionTypeEnrollments
-        self.scheduleView?.reloadData()
     }
     
     private func reloadSearchViewController() {
-        if self.schedule == nil {
-            return
+        if let schedule = self.schedule {
+            self.searchViewController.semesterTermCode = schedule.termCode
+            self.searchViewController.enrolledCourses = schedule.enrolledCourses.toArray()
         }
-        self.searchViewController.semesterTermCode = self.schedule.termCode
-        self.searchViewController.enrolledCourses = self.schedule.enrolledCourses.toArray()
     }
     
     private func showCourseDeletePromptForCourse(course: Course) {
-        if self.schedule == nil {
-            return
+        if self.schedule != nil {
+            assert(self.schedule!.enrolledCourses.contains(course), "Trying to delete a course that wasn't enrolled")
+            let alertController = UIAlertController(title: "Delete \(course)", message: "Are you sure you want to delete this course?", preferredStyle: .ActionSheet)
+            let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+                self.schedule!.enrolledCourses.remove(course)
+                self.schedule!.updateColorUsageForDeletedCourse(course)
+                self.schedule!.updateCourseSectionTypeEnrollments()
+                self.reloadEnrolledCoursesView()
+                self.reloadScheduleView()
+                self.reloadSearchViewController()
+                self.saveSchedule()
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
+                
+            })
+            alertController.addAction(deleteAction)
+            alertController.addAction(cancelAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-        assert(self.schedule.enrolledCourses.contains(course), "Trying to delete a course that wasn't enrolled")
-        let alertController = UIAlertController(title: "Delete \(course)", message: "Are you sure you want to delete this course?", preferredStyle: .ActionSheet)
-        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
-            self.schedule.enrolledCourses.remove(course)
-            self.schedule.updateColorUsageForDeletedCourse(course)
-            self.schedule.updateCourseSectionTypeEnrollments()
-            self.reloadEnrolledCoursesView()
-            self.reloadScheduleView()
-            self.reloadSearchViewController()
-            self.saveSchedule()
-        })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) -> Void in
-            
-        })
-        alertController.addAction(deleteAction)
-        alertController.addAction(cancelAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        
     }
     @IBAction func settingsButtonTapped(sender: UIBarButtonItem) {
         assert(self.presentedViewController == nil)
@@ -386,9 +381,11 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     
     // MARK: - Enrolled Courses Table View Data Source Delegate
     func enrollmentsDidChangeForEnrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource) {
-        assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
-        self.schedule.courseSectionTypeEnrollments = dataSource.enrollments
-        self.reloadScheduleView()
+        if self.schedule != nil {
+            assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
+            self.schedule!.courseSectionTypeEnrollments = dataSource.enrollments
+            self.reloadScheduleView()
+        }
     }
     func enrolledCoursesTableViewDataSource(dataSource: EnrolledCoursesTableViewDataSource, shouldDeleteCourse course: Course) {
         assert(dataSource == self.enrolledCoursesTableViewDataSource, "Wrong data source object for enrolled courses view")
@@ -402,27 +399,31 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     
     // MARK: - Schedule Collection View Data Source Delegate
     func enrollmentDidChangeForScheduleCollectionViewDataSource(dataSource: ScheduleCollectionViewDataSource) {
-        assert(dataSource == self.scheduleCollectionViewDataSource, "Wrong data source object for schedule view")
-        self.schedule.courseSectionTypeEnrollments = dataSource.enrollments
-        self.reloadEnrolledCoursesView()
-        self.saveSchedule()
+        if self.schedule != nil {
+            assert(dataSource == self.scheduleCollectionViewDataSource, "Wrong data source object for schedule view")
+            self.schedule!.courseSectionTypeEnrollments = dataSource.enrollments
+            self.reloadEnrolledCoursesView()
+            self.saveSchedule()
+        }
     }
     
     
     // MARK: - Course Search Table View Controller Delegate
     func enrollmentsDidChangeForCourseSearchTableViewController(viewController: CourseSearchTableViewController) {
-        assert(viewController == self.searchViewController, "Wrong view controller")
-        let newEnrolled = OrderedSet(initialValues: viewController.enrolledCourses)
-        let deletedCourses = self.schedule.enrolledCourses.toArray().filter { !newEnrolled.contains($0) }
-        self.schedule.enrolledCourses = newEnrolled
-        for deleted in deletedCourses {
-            self.schedule.updateColorUsageForDeletedCourse(deleted)
+        if self.schedule != nil {
+            assert(viewController == self.searchViewController, "Wrong view controller")
+            let newEnrolled = OrderedSet(initialValues: viewController.enrolledCourses)
+            let deletedCourses = self.schedule!.enrolledCourses.toArray().filter { !newEnrolled.contains($0) }
+            self.schedule!.enrolledCourses = newEnrolled
+            for deleted in deletedCourses {
+                self.schedule!.updateColorUsageForDeletedCourse(deleted)
+            }
+            self.schedule!.updateCourseSectionTypeEnrollments()
+            self.schedule!.updateCourseColorMap()
+            self.reloadScheduleView()
+            self.reloadEnrolledCoursesView()
+            self.saveSchedule()
         }
-        self.schedule.updateCourseSectionTypeEnrollments()
-        self.schedule.updateCourseColorMap()
-        self.reloadScheduleView()
-        self.reloadEnrolledCoursesView()
-        self.saveSchedule()
     }
     
     func courseSearchTableViewController(viewController: CourseSearchTableViewController, shouldDeleteCourse course: Course) {

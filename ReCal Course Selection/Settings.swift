@@ -34,11 +34,18 @@ extension Settings {
             return .CourseNumber
         }
         set {
+            let oldValue = self.volatileProperties["scheduleDisplayTextStyle"] as? Int
             self.volatileProperties["scheduleDisplayTextStyle"] = newValue.rawValue
+            if oldValue != newValue.rawValue {
+                NSNotificationCenter.defaultCenter().postNotificationName(Notifications.ScheduleDisplayTextStyleDidChange, object: self)
+            }
         }
     }
     enum ScheduleDisplayTextStyle: Int {
         case SectionName
         case CourseNumber
     }
+}
+extension Settings.Notifications {
+    static let ScheduleDisplayTextStyleDidChange = "ScheduleDisplayTextStyleDidChange"
 }
