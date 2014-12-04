@@ -167,6 +167,9 @@
 		81FE70E21A20E78F00934062 /* FadeOverlayPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70E11A20E78F00934062 /* FadeOverlayPresentationController.swift */; };
 		81FE70E41A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70E31A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift */; };
 		81FE70E61A20EC0200934062 /* CourseColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70E51A20EC0200934062 /* CourseColor.swift */; };
+		F48768961A30CAFD003EFFB4 /* SummaryDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48768951A30CAFD003EFFB4 /* SummaryDayView.swift */; };
+		F48768981A30CB32003EFFB4 /* SummaryDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48768971A30CB32003EFFB4 /* SummaryDayViewModel.swift */; };
+		F487689A1A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48768991A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -414,6 +417,9 @@
 		81FE70E11A20E78F00934062 /* FadeOverlayPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeOverlayPresentationController.swift; sourceTree = "<group>"; };
 		81FE70E31A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeOverlayAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		81FE70E51A20EC0200934062 /* CourseColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseColor.swift; sourceTree = "<group>"; };
+		F48768951A30CAFD003EFFB4 /* SummaryDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayView.swift; sourceTree = "<group>"; };
+		F48768971A30CB32003EFFB4 /* SummaryDayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayViewModel.swift; sourceTree = "<group>"; };
+		F48768991A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayViewLayoutAttributes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -848,6 +854,7 @@
 		81D9F25C19EF4D9600F987B9 /* ReCalCommon */ = {
 			isa = PBXGroup;
 			children = (
+				F48768901A30CAC9003EFFB4 /* Summary Day View */,
 				81FE70DE1A20E70800934062 /* Fade Overlay Presentation */,
 				81E586221A1FA69800DE269B /* URL Connection Observer */,
 				814735071A1A3BEE004B3A34 /* Sidebar Overlay Presentation */,
@@ -1040,6 +1047,16 @@
 				81FE70E31A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift */,
 			);
 			name = "Fade Overlay Presentation";
+			sourceTree = "<group>";
+		};
+		F48768901A30CAC9003EFFB4 /* Summary Day View */ = {
+			isa = PBXGroup;
+			children = (
+				F48768951A30CAFD003EFFB4 /* SummaryDayView.swift */,
+				F48768971A30CB32003EFFB4 /* SummaryDayViewModel.swift */,
+				F48768991A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift */,
+			);
+			name = "Summary Day View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1414,8 +1431,11 @@
 				8147350B1A1A3DEC004B3A34 /* SidebarOverlayAnimatedTransitioning.swift in Sources */,
 				81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */,
 				81BCA54A1A0FEB9500391608 /* AuthenticationPromptViewController.swift in Sources */,
+				F48768981A30CB32003EFFB4 /* SummaryDayViewModel.swift in Sources */,
 				81C70E461A1A804C007F33F5 /* SettingsSwitchTableViewCell.swift in Sources */,
 				81B6D3111A0DA65900B883A6 /* ColorScheme.swift in Sources */,
+				F48768961A30CAFD003EFFB4 /* SummaryDayView.swift in Sources */,
+				F487689A1A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift in Sources */,
 				81F76B121A16B2D3001B6233 /* DateManagedObjectAttributeImporter.swift in Sources */,
 				81130C011A0C168F00F1F496 /* OrderedSet.swift in Sources */,
 			);
@@ -1694,6 +1714,7 @@
 		81D9F27419EF4D9600F987B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1709,6 +1730,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1718,6 +1740,7 @@
 		81D9F27519EF4D9600F987B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
