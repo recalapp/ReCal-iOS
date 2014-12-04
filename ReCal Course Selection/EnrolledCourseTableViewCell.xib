@@ -20,10 +20,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="joP-DI-ShX">
-                        <rect key="frame" x="58" y="8" width="20" height="20.5"/>
+                        <rect key="frame" x="58" y="8" width="10" height="20.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="20" id="Dvo-di-nxq"/>
+                            <constraint firstAttribute="width" constant="10" id="Dvo-di-nxq"/>
                         </constraints>
                     </view>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vm5-ys-zSp">
