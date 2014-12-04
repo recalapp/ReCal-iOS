@@ -7,17 +7,21 @@
 //
 
 import UIKit
+import ReCalCommon
 
 class EventCollectionViewCell: UICollectionViewCell {
-    
-//    let selectedAlpha: CGFloat = 1.0
-//    let unselectedAlpha: CGFloat = 0.5
     
     @IBOutlet weak var leftBorderView: UIView!
     var event: ScheduleCollectionViewDataSource.ScheduleEvent? = nil {
         didSet {
             if let event = self.event {
-                self.eventTitleLabel.text = event.section.displayText
+                switch Settings.currentSettings.scheduleDisplayTextStyle {
+                case .CourseNumber:
+                    self.eventTitleLabel.text = event.course.displayText
+                case .SectionName:
+                    self.eventTitleLabel.text = event.section.displayText
+                }
+                
             } else {
                 self.eventTitleLabel.text = ""
             }

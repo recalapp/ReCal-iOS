@@ -110,7 +110,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     private(set) public var rightSidebarContentView: UIView!
     
     /// The state of the sidebars
-    private var sidebarState: DoubleSidebarState = .Unselected {
+    public var sidebarState: DoubleSidebarState = .Unselected {
         didSet {
             if oldValue != sidebarState {
                 self.updateInterfaceForState(self.sidebarState)

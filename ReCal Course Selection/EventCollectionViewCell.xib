@@ -12,7 +12,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="162" height="124"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dy7-NI-zQf">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dy7-NI-zQf">
                         <rect key="frame" x="63" y="4" width="35.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -29,6 +29,7 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
+                <constraint firstItem="dy7-NI-zQf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="leading" id="38M-1K-bBi"/>
                 <constraint firstItem="k0Q-Gd-VG6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="D16-Zv-fnT"/>
                 <constraint firstItem="dy7-NI-zQf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="HZF-1W-8GG"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dy7-NI-zQf" secondAttribute="bottom" id="Kkb-IB-F57"/>

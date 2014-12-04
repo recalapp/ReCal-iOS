@@ -61,6 +61,8 @@ public class Settings {
         }
     }
     
+    public var volatileProperties: Dictionary<String, Any> = Dictionary()
+    
     public init() {
         if let persistentProperties = NSKeyedUnarchiver.unarchiveObjectWithFile(persistentPropertiesFilePath) as? Dictionary<String, NSCoding> {
             self.persistentProperties = persistentProperties

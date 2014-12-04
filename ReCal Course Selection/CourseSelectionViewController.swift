@@ -35,6 +35,19 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }()
     private var notificationObservers: [AnyObject] = []
     
+    override var sidebarState: DoubleSidebarState {
+        didSet {
+            switch sidebarState {
+            case .RightSidebarShown:
+                Settings.currentSettings.scheduleDisplayTextStyle = .SectionName
+                self.reloadScheduleView()
+            case .LeftSidebarShown, .Unselected:
+                Settings.currentSettings.scheduleDisplayTextStyle = .CourseNumber
+                self.reloadScheduleView()
+            }
+        }
+    }
+    
     // MARK: Models
     // NOTE: didSet gets called on a struct even if we just assign one of its value, not the struct itself
     var schedule: Schedule! {
@@ -297,7 +310,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }
         self.enrolledCoursesTableViewDataSource.courseColorMap = self.schedule.courseColorMap
         self.enrolledCoursesTableViewDataSource.enrollments = self.schedule.courseSectionTypeEnrollments
-        self.enrolledCoursesView.reloadData()
+        self.enrolledCoursesView?.reloadData()
     }
     
     private func reloadScheduleView() {
@@ -307,7 +320,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         // must set color map first
         self.scheduleCollectionViewDataSource.courseColorMap = self.schedule.courseColorMap
         self.scheduleCollectionViewDataSource.enrollments = self.schedule.courseSectionTypeEnrollments
-        self.scheduleView.reloadData()
+        self.scheduleView?.reloadData()
     }
     
     private func reloadSearchViewController() {

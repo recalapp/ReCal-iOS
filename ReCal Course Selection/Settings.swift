@@ -26,4 +26,19 @@ extension Settings {
             self.persistentProperties["lastOpenedSchedule"] = newValue
         }
     }
+    var scheduleDisplayTextStyle: ScheduleDisplayTextStyle {
+        get {
+            if let rawValue = self.volatileProperties["scheduleDisplayTextStyle"] as? Int {
+                return ScheduleDisplayTextStyle(rawValue: rawValue) ?? .CourseNumber
+            }
+            return .CourseNumber
+        }
+        set {
+            self.volatileProperties["scheduleDisplayTextStyle"] = newValue.rawValue
+        }
+    }
+    enum ScheduleDisplayTextStyle: Int {
+        case SectionName
+        case CourseNumber
+    }
 }
