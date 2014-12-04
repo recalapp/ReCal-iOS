@@ -52,12 +52,50 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
         return formatter
     }()
     
+    lazy private var managedObjectContext: NSManagedObjectContext = {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        return managedObjectContext
+    }()
+    
+    private var eventsIdCache: Cache<NSDate, [NSManagedObjectID]> = Cache()
+    
     private var notificationObservers: [AnyObject] = []
     
     private weak var layout: CollectionViewCalendarWeekLayout!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.eventsIdCache.itemConstructor = { (date: NSDate)->[NSManagedObjectID] in
+            let fetchRequest: NSFetchRequest = {
+                let components = self.calendar.components(NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitYear, fromDate: date)
+                components.minute = 0
+                components.second = 0
+                components.hour = 0
+                let startDate = self.calendar.dateFromComponents(components)!
+                components.day += 1
+                let endDate = self.calendar.dateFromComponents(components)!
+                let fetchRequest = NSFetchRequest(entityName: "CDEvent")
+                fetchRequest.resultType = NSFetchRequestResultType.ManagedObjectIDResultType
+                fetchRequest.sortDescriptors = [NSSortDescriptor(key: "eventStart", ascending: true)]
+                fetchRequest.predicate = NSPredicate(format: "eventStart <= %@ AND eventStart >= %@", endDate, startDate)
+                return fetchRequest
+            }()
+            var errorOpt: NSError?
+            var fetched: [NSManagedObjectID]?
+            self.managedObjectContext.performBlockAndWait {
+                fetched = self.managedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt) as? [NSManagedObjectID]
+            }
+            if let error = errorOpt {
+                println("Error fetching IDs. error: \(error)")
+            }
+            if fetched != nil {
+                return fetched!
+            } else {
+                return []
+            }
+        }
         
         self.layout = self.collectionViewLayout as CollectionViewCalendarWeekLayout
         layout.dataSource = self
@@ -108,7 +146,7 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
 
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return self.eventsIdCache[self.dateForSection(section)].count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -203,11 +241,15 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     
     // MARK: - Calendar Week View Layout Data Source
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, endDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
-        return nil
+        let objectId = self.eventsIdCache[self.dateForSection(indexPath.section)][indexPath.item]
+        let event = self.managedObjectContext.objectWithID(objectId) as CDEvent
+        return event.eventStart
     }
     
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, startDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
-        return nil
+        let objectId = self.eventsIdCache[self.dateForSection(indexPath.section)][indexPath.item]
+        let event = self.managedObjectContext.objectWithID(objectId) as CDEvent
+        return event.eventEnd
     }
 
     /// Return the width for a day

@@ -118,3 +118,16 @@ public func synchronize<T>(lockObj: AnyObject, closure: ()->T)->T {
     objc_sync_exit(lockObj)
     return answer
 }
+
+private let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+
+public extension NSDate {
+    public var hour: Int {
+        let components = calendar.components(NSCalendarUnit.HourCalendarUnit, fromDate: self)
+        return components.hour
+    }
+    public var minute: Int {
+        let components = calendar.components(NSCalendarUnit.MinuteCalendarUnit, fromDate: self)
+        return components.minute
+    }
+}

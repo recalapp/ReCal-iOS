@@ -73,6 +73,7 @@ public class AuthenticationContainerViewController: UIViewController {
     }
     
     private func setNeedsAuthenticationStatusViewAppearanceUpdate() {
+        assert(NSOperationQueue.currentQueue() == NSOperationQueue.mainQueue())
         self.statusViewHeightConstraint?.constant = self.statusViewHeight
         switch self.statusViewState {
         case .NotShown:
