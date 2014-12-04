@@ -11,6 +11,16 @@ import ReCalCommon
 
 class EventCollectionViewCell: UICollectionViewCell {
     
+    override var highlighted: Bool {
+        didSet {
+            if highlighted {
+                self.alpha = 0.5
+            } else {
+                self.alpha = 1
+            }
+        }
+    }
+    
     @IBOutlet weak var leftBorderView: UIView!
     var event: ScheduleCollectionViewDataSource.ScheduleEvent? = nil {
         didSet {
