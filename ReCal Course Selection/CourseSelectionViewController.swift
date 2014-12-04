@@ -41,8 +41,17 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         didSet {
             if schedule != nil {
                 self.navigationItem.title = schedule.name
+                switch schedule.managedObjectProxyId {
+                case .Existing(let id):
+                    Settings.currentSettings.lastOpenedScheduleIdUri = id.URIRepresentation()
+                case .NewObject:
+                    // impossible
+                    break
+                }
+                
             } else {
                 self.navigationItem.title = "(No schedule selected)"
+                Settings.currentSettings.lastOpenedScheduleIdUri = nil
             }
         }
     }
@@ -78,6 +87,13 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let idUri = Settings.currentSettings.lastOpenedScheduleIdUri {
+            if let id = self.managedObjectContext.persistentStoreCoordinator?.managedObjectIDForURIRepresentation(idUri) {
+                if let scheduleManagedObject = self.managedObjectContext.objectWithID(id) as? CDSchedule {
+                    self.schedule = Schedule(managedObject: scheduleManagedObject)
+                }
+            }
+        }
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)

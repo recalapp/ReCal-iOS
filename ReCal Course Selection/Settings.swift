@@ -18,4 +18,12 @@ extension Settings {
             self.persistentProperties["availableColors"] = newValue
         }
     }
+    var lastOpenedScheduleIdUri: NSURL? {
+        get {
+            return self.persistentProperties["lastOpenedSchedule"] as? NSURL
+        }
+        set {
+            self.persistentProperties["lastOpenedSchedule"] = newValue
+        }
+    }
 }
