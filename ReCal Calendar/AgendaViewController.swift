@@ -46,8 +46,22 @@ class AgendaViewController: UITableViewController {
         return fetchedResultsController
         }()
     
-    var numberOfSections: Int {
+    private var numberOfSections: Int {
         return self.fetchedResultsController.sections?.count ?? 0
+    }
+    
+    private var topDateStorage = NSDate()
+    
+    var topDate: NSDate {
+        get {
+            return topDateStorage
+        }
+        set {
+            topDateStorage = newValue.dateWithZeroHour
+            if let index = self.nearestIndexPathForDate(topDateStorage) {
+                self.tableView.scrollToRowAtIndexPath(index, atScrollPosition: .Top, animated: false)
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -84,7 +98,27 @@ class AgendaViewController: UITableViewController {
         }
     }
     
-    
+    private func nearestIndexPathForDate(var date: NSDate)->NSIndexPath? {
+        date = date.dateWithZeroHour
+        var prev: NSIndexPath?
+        for section in 0..<self.numberOfSections {
+            for row in 0..<self.numberOfRowsInSection(section) {
+                let indexPath = NSIndexPath(forRow: row, inSection: section)
+                let event = self[indexPath]
+                let startDate = event.eventStart.dateWithZeroHour
+                switch date.compare(startDate) {
+                case .OrderedAscending:
+                    break
+                case .OrderedDescending:
+                    prev = indexPath
+                    continue
+                case .OrderedSame:
+                    return indexPath
+                }
+            }
+        }
+        return prev
+    }
     
     private func numberOfRowsInSection(section: Int) -> Int {
         return (self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo).numberOfObjects * 2
@@ -169,6 +203,31 @@ class AgendaViewController: UITableViewController {
         self.delegate?.agendaViewController(self, didSelectEventWithManagedObjectId: event.objectID)
     }
     
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView == self.tableView {
+            let indexesOpt = self.tableView.indexPathsForVisibleRows() as? [NSIndexPath]
+            if let indexes = indexesOpt {
+                let visibleIndexOpt = indexes.reduce(nil) { (previousMinOpt: NSIndexPath?, curIndexPath: NSIndexPath) -> NSIndexPath? in
+                    if let previousMin = previousMinOpt {
+                        if curIndexPath.section < previousMin.section {
+                            return curIndexPath
+                        } else if curIndexPath.section == previousMin.section && curIndexPath.row < previousMin.row {
+                            return curIndexPath
+                        }
+                        return previousMin
+                    } else {
+                        return curIndexPath
+                    }
+                }
+                if let visibleIndex = visibleIndexOpt {
+                    let event = self[visibleIndex]
+                    self.topDateStorage = event.eventStart.dateWithZeroHour // bypass the observer
+                    self.delegate?.agendaViewController(self, didScrollToVisibleDate: self.topDateStorage)
+                }
+            }
+        }
+    }
+    
     // MARK: - Declarations
     enum AgendaSection: String {
         case Yesterday = "Yesterday", Today = "Today", ThisWeek = "This Week", ThisMonth = "This Month"
@@ -198,6 +257,7 @@ class AgendaViewController: UITableViewController {
 
 protocol AgendaViewControllerDelegate: class {
     func agendaViewController(agendaViewController: AgendaViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID)
+    func agendaViewController(agendaViewController: AgendaViewController, didScrollToVisibleDate date: NSDate)
 }
 
 struct EventAgendaViewModelAdapter: AgendaTableViewCellViewModel {

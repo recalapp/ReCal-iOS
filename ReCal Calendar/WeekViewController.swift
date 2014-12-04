@@ -29,16 +29,17 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
             return centerDateStorage
         }
         set {
-            centerDateStorage = self.zeroOutHourForDate(newValue)
+            centerDateStorage = newValue.dateWithZeroHour
             // this does the right invalidation of layout
             let contentOffset = self.layout.contentOffsetForSection(self.sectionForCenterDate)
             self.collectionView?.setContentOffset(contentOffset, animated: false)
             self.collectionView?.reloadData()
+            self.delegate?.weekViewController(self, didScrollToVisibleDate: centerDateStorage)
         }
     }
     
     private var todayDate: NSDate {
-        return self.zeroOutHourForDate(NSDate())
+        return NSDate().dateWithZeroHour
     }
     
     private var sectionForCenterDate: Int {
@@ -211,14 +212,6 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
         assert(false, "Invalid supplementary view type")
     }
     
-    private func zeroOutHourForDate(date: NSDate) -> NSDate {
-        let component = self.calendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.DayCalendarUnit, fromDate: date)
-        component.minute = 0
-        component.hour = 0
-        component.second = 0
-        return self.calendar.dateFromComponents(component)!
-    }
-
     // MARK: UICollectionViewDelegate
 
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -321,6 +314,7 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
 
 protocol WeekViewControllerDelegate: class {
     func weekViewController(weekViewController: WeekViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID)
+    func weekViewController(weekViewController: WeekViewController, didScrollToVisibleDate date: NSDate)
 }
 
 struct EventCellViewModelAdapter: EventCellViewModel {

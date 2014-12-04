@@ -130,4 +130,11 @@ public extension NSDate {
         let components = calendar.components(NSCalendarUnit.MinuteCalendarUnit, fromDate: self)
         return components.minute
     }
+    public var dateWithZeroHour: NSDate {
+        let component = calendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.DayCalendarUnit, fromDate: self)
+        component.minute = 0
+        component.hour = 0
+        component.second = 0
+        return calendar.dateFromComponents(component)!
+    }
 }

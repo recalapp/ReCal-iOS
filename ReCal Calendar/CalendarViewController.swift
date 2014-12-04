@@ -55,6 +55,8 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     
     private var notificationObservers: [AnyObject] = []
     
+    private var visibleDate: NSDate = NSDate()
+    
     @IBOutlet weak var weekViewContentView: UIView!
     @IBOutlet weak var pageViewContentView: UIView!
     override func viewDidLoad() {
@@ -106,7 +108,8 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
             }, completion: { (_: UIViewControllerTransitionCoordinatorContext!) -> Void in
                 completion()
         })
-        self.weekViewController.centerDate = NSDate() // TODO get the actual visible date
+        self.weekViewController.centerDate = self.visibleDate
+        self.agendaViewController.topDate = self.visibleDate
     }
     
     private func adjustAppearanceForTraitCollection(collection: UITraitCollection)->(Void->Void, Void->Void, Void->Void) {
@@ -220,10 +223,17 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     func agendaViewController(agendaViewController: AgendaViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID) {
         self.presentEventViewController(eventObjectId: managedObjectId)
     }
+    func agendaViewController(agendaViewController: AgendaViewController, didScrollToVisibleDate date: NSDate) {
+        self.visibleDate = date
+    }
     
     // MARK: - Week View Controller Delegate
     func weekViewController(weekViewController: WeekViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID) {
         self.presentEventViewController(eventObjectId: managedObjectId)
+    }
+    
+    func weekViewController(weekViewController: WeekViewController, didScrollToVisibleDate date: NSDate) {
+        self.visibleDate = date
     }
     
     // MARK: - Event View Controller Delegate
