@@ -58,6 +58,7 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
         } else {
             let oldSelectedOpt = self.selectedIndexPath
             self.selectedIndexPath = indexPath
+            tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
         }
     }
     

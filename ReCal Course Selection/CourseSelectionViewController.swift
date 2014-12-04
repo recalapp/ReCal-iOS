@@ -94,6 +94,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                 }
             }
         }
+        if self.schedule.enrolledCourses.count > 0 {
+            self.setSidebarState(.RightSidebarShown, animated: false)
+        }
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)

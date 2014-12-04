@@ -124,6 +124,11 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     }
     
     // MARK: Methods
+    public func setSidebarState(state: DoubleSidebarState, animated: Bool) {
+        self.sidebarState = state
+        self.sidebarContainerScrollView.setContentOffset(self.calculatedContentOffset, animated: animated)
+    }
+    
     private func updateInterfaceForState(sidebarState: DoubleSidebarState) {
         var leftCoverHidden: Bool
         var rightCoverHidden: Bool
@@ -388,8 +393,8 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
             }
         }
     }
+    public enum DoubleSidebarState {
+        case Unselected, LeftSidebarShown, RightSidebarShown
+    }
 }
 
-enum DoubleSidebarState {
-    case Unselected, LeftSidebarShown, RightSidebarShown
-}
