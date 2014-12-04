@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,21 +12,34 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="172" height="174"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opa-2P-Fi1">
-                        <rect key="frame" x="65" y="8" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="opa-2P-Fi1">
+                        <rect key="frame" x="65" y="0.0" width="42" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TVw-rr-YIa">
+                        <rect key="frame" x="0.0" y="0.0" width="3" height="174"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="3" id="vBK-cO-bB5"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="opa-2P-Fi1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="C1h-t5-pio"/>
+                <constraint firstItem="opa-2P-Fi1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="C1h-t5-pio"/>
+                <constraint firstAttribute="bottom" secondItem="TVw-rr-YIa" secondAttribute="bottom" id="Oco-I6-lpE"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="opa-2P-Fi1" secondAttribute="bottom" id="P7P-Ji-apz"/>
+                <constraint firstItem="TVw-rr-YIa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="R2x-LL-Edr"/>
+                <constraint firstItem="TVw-rr-YIa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="fmv-7d-43b"/>
                 <constraint firstAttribute="centerX" secondItem="opa-2P-Fi1" secondAttribute="centerX" id="tu5-cT-Obv"/>
+                <constraint firstItem="opa-2P-Fi1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="leading" id="yfb-jn-gjU"/>
             </constraints>
             <size key="customSize" width="172" height="174"/>
             <connections>
+                <outlet property="colorTagView" destination="TVw-rr-YIa" id="X1Y-on-S8M"/>
                 <outlet property="eventTitleLabel" destination="opa-2P-Fi1" id="O0n-oV-2Yt"/>
             </connections>
             <point key="canvasLocation" x="364" y="480"/>

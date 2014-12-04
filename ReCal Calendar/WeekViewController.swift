@@ -17,7 +17,7 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     private let timeRowHeaderViewIdentifier = "TimeHeader"
     private let minimumHour = 6
     private let maximumHour = 23
-    private let hourStep = 2
+    private let hourStep = 1
     private let numberOfVisibleDays = 100
     
     // MARK: Variables
@@ -42,13 +42,19 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     
     private var timeFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "h a"
+        formatter.dateFormat = "h a" // 9 AM
         return formatter
     }()
     
     private var dateFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "MMM d"
+        formatter.dateFormat = "MMM d" // Dec 7
+        return formatter
+    }()
+    
+    private var dayFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "EEE" // Tues
         return formatter
     }()
     
@@ -127,16 +133,15 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
         let date = self.calendar.dateByAddingUnit(NSCalendarUnit.DayCalendarUnit, value: deltaSection, toDate: self.centerDate, options: NSCalendarOptions.allZeros)!
         return date
     }
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    private func eventForIndexPath(indexPath: NSIndexPath) -> CDEvent? {
+        let objectIds = self.eventsIdCache[self.dateForSection(indexPath.section)]
+        if indexPath.item < objectIds.count {
+            return self.managedObjectContext.objectWithID(objectIds[indexPath.item]) as? CDEvent
+        } else {
+            return nil
+        }
     }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -151,15 +156,11 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as EventCollectionViewCell
-//        let event = self.eventForIndexPath(indexPath)
-//        cell.event = event
-//        if let color = self.courseColorMap[event.course] {
-//            cell.color = color
-//        }
-//        if event.enrolled {
-//            collectionView.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: UICollectionViewScrollPosition.None)
-//            cell.selected = true
-//        }
+        if let event = self.eventForIndexPath(indexPath) {
+            cell.viewModel = EventCellViewModelAdapter(event: event)
+        } else {
+            cell.viewModel = nil
+        }
         return cell
     }
     
@@ -178,7 +179,7 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
             case .DayColumnHeader:
                 let date = self.dateForSection(indexPath.section)
                 let dayColumnHeaderView = supplementaryView as DayColumnHeaderView
-                dayColumnHeaderView.weekDayLabel.text = "Day"
+                dayColumnHeaderView.weekDayLabel.text = self.dayFormatter.stringFromDate(date)
                 dayColumnHeaderView.dateLabel.text = self.dateFormatter.stringFromDate(date)
             case .TimeRowHeader:
                 let hour = self.minimumHour + indexPath.indexAtPosition(0) * self.hourStep
@@ -241,15 +242,11 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     
     // MARK: - Calendar Week View Layout Data Source
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, endDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
-        let objectId = self.eventsIdCache[self.dateForSection(indexPath.section)][indexPath.item]
-        let event = self.managedObjectContext.objectWithID(objectId) as CDEvent
-        return event.eventStart
+        return self.eventForIndexPath(indexPath)?.eventStart
     }
     
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, startDateForItemAtIndexPath indexPath: NSIndexPath) -> NSDate? {
-        let objectId = self.eventsIdCache[self.dateForSection(indexPath.section)][indexPath.item]
-        let event = self.managedObjectContext.objectWithID(objectId) as CDEvent
-        return event.eventEnd
+        return self.eventForIndexPath(indexPath)?.eventEnd
     }
 
     /// Return the width for a day
@@ -259,7 +256,7 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     
     /// Return the height of the week view (scrollable height, not frame height)
     func heightForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->CollectionViewCalendarWeekLayoutHeight {
-        let height: Float = Float(collectionView.bounds.height) * 1.5
+        let height: Float = Float(collectionView.bounds.height) * 3
         return CollectionViewCalendarWeekLayoutHeight.Exact(height)
     }
     
@@ -287,5 +284,16 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     func hourStepForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout)->Float {
         return Float(self.hourStep)
     }
+}
+
+struct EventCellViewModelAdapter: EventCellViewModel {
+    let title: String
+    let highlightedColor: UIColor
+    let normalColor: UIColor
     
+    init(event: CDEvent) {
+        self.title = "\(event.section.course.primaryListing.displayText) \(event.eventTitle)"
+        self.highlightedColor = event.color!.darkerColor().darkerColor()
+        self.normalColor = event.color!.lighterColor().lighterColor()
+    }
 }

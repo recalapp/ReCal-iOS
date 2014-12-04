@@ -9,27 +9,16 @@
 import UIKit
 class EventCollectionViewCell: UICollectionViewCell {
     
-    let selectedAlpha: CGFloat = 1.0
-    let unselectedAlpha: CGFloat = 0.5
-    
-//    var event: ScheduleCollectionViewDataSource.ScheduleEvent? = nil {
-//        didSet {
-//            if let event = self.event {
-//                self.eventTitleLabel.text = event.section.displayText
-//            } else {
-//                self.eventTitleLabel.text = ""
-//            }
-//            self.updateColor()
-//        }
-//    }
-    
-    @IBOutlet weak var eventTitleLabel: UILabel!
-    @IBOutlet weak var alternativeEventTitleLabel: UILabel!
-    var color: UIColor = UIColor.greenColor() {
+    var viewModel: EventCellViewModel? {
         didSet {
+            self.updateText()
             self.updateColor()
         }
     }
+    
+    @IBOutlet weak var eventTitleLabel: UILabel!
+    
+    @IBOutlet weak var colorTagView: UIView!
     
     override var selected: Bool {
         didSet {
@@ -42,15 +31,30 @@ class EventCollectionViewCell: UICollectionViewCell {
         self.updateColor()
     }
     
-    private func updateColor() {
-        let alpha = self.selected ? selectedAlpha : unselectedAlpha
-        self.backgroundColor = self.color.colorWithAlphaComponent(alpha)
-        if self.selected {
-            self.eventTitleLabel.textColor = self.color.darkerColor().darkerColor()
+    private func updateText() {
+        if let viewModel = self.viewModel {
+            self.eventTitleLabel.text = viewModel.title
         } else {
-            self.eventTitleLabel.textColor = self.color.lighterColor().lighterColor()
+            self.eventTitleLabel.text = ""
         }
     }
     
-    
+    private func updateColor() {
+        if let viewModel = self.viewModel {
+            self.colorTagView.backgroundColor = viewModel.highlightedColor
+            if self.selected {
+                self.backgroundColor = viewModel.highlightedColor
+                self.eventTitleLabel.textColor = viewModel.normalColor
+            } else {
+                self.backgroundColor = viewModel.normalColor
+                self.eventTitleLabel.textColor = viewModel.highlightedColor
+            }
+        }
+    }
+}
+
+protocol EventCellViewModel {
+    var highlightedColor: UIColor { get }
+    var normalColor: UIColor { get }
+    var title: String { get }
 }
