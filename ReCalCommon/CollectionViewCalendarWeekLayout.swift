@@ -10,13 +10,13 @@ import UIKit
 
 private let debug = false
 
-let gridLineWidth: CGFloat = 0.5
-let gridLineZIndex = 1
-let eventsZIndex = gridLineZIndex + 1
-let timeRowHeaderBackgroundZIndex = eventsZIndex + 1
-let timeRowHeaderZIndex = timeRowHeaderBackgroundZIndex + 1
-let dayColumnHeaderBackgroundZIndex = timeRowHeaderZIndex + 1
-let dayColumnHeaderZIndex = dayColumnHeaderBackgroundZIndex + 1
+private let gridLineWidth: CGFloat = 0.5
+private let gridLineZIndex = 1
+private let eventsZIndex = gridLineZIndex + 1
+private let timeRowHeaderBackgroundZIndex = eventsZIndex + 1
+private let timeRowHeaderZIndex = timeRowHeaderBackgroundZIndex + 1
+private let dayColumnHeaderBackgroundZIndex = timeRowHeaderZIndex + 1
+private let dayColumnHeaderZIndex = dayColumnHeaderBackgroundZIndex + 1
 
 
 /// A subclass of UICollectionViewLayout that provides a week view-like interface. Each section shuold correspond to a day, and each item an event. Does not support multi-day events right now.
@@ -253,7 +253,6 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
                 self.calculateEventsLayoutAttributesForSection(section)
             }
         }
-        
     }
     private func calculateEventsLayoutAttributesForSection(section: Int) {
         let itemsCount = self.collectionView!.numberOfItemsInSection(section)

@@ -146,3 +146,9 @@ public extension NSDateFormatter {
         return formatter
     }
 }
+
+public extension NSBundle {
+    public class func commonBundle() -> NSBundle {
+        return NSBundle(identifier: "io.recal.ReCalCommon")!
+    }
+}

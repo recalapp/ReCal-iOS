@@ -14,6 +14,24 @@ public extension SummaryDayView {
         public let startMinute: Int
         public let endHour: Int
         public let endMinute: Int
+        
+        public init(startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) {
+            self.startHour = startHour
+            self.startMinute = startMinute
+            self.endHour = endHour
+            self.endMinute = endMinute
+        }
+        
+        public var startHourFractional: Double {
+            return Double(startHour) + Double(startMinute)/60.0
+        }
+        public var endHourFractional: Double {
+            return Double(endHour) + Double(endMinute)/60.0
+        }
+        
+        public var interval: Interval<Double> {
+            return Interval(start: startHourFractional, end: endHourFractional)
+        }
     }
 }
 
@@ -26,35 +44,9 @@ public protocol SummaryDayViewEvent {
 }
 
 public func == (lhs: SummaryDayView.EventTime, rhs: SummaryDayView.EventTime)->Bool {
-    return lhs.startHour == rhs.startHour && lhs.startMinute == rhs.startMinute && lhs.endHour == rhs.endHour && lhs.endMinute == rhs.endMinute
+    return lhs.interval == rhs.interval
 }
 
 public func < (lhs: SummaryDayView.EventTime, rhs: SummaryDayView.EventTime)->Bool {
-    if lhs.startHour < rhs.startHour {
-        return true
-    } else if lhs.startHour > rhs.startHour {
-        return false
-    }
-    // start hour equals
-    if lhs.startMinute < rhs.startMinute {
-        return true
-    } else if lhs.startMinute > rhs.startMinute {
-        return false
-    }
-    // start minute equals
-    if lhs.endHour < rhs.endHour {
-        return true
-    } else if lhs.endHour > rhs.endHour {
-        return false
-    }
-    // end hour equals
-    if lhs.endMinute < rhs.endMinute {
-        return true
-    } else if lhs.endMinute > rhs.endMinute {
-        return false
-    }
-    // end minute equals
-    
-    // times are equal
-    return false
+    return lhs.interval < rhs.interval
 }

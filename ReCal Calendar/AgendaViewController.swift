@@ -232,7 +232,7 @@ class AgendaViewController: UITableViewController {
     enum AgendaSection: String {
         case Yesterday = "Yesterday", Today = "Today", ThisWeek = "This Week", ThisMonth = "This Month"
         init?(date: NSDate) {
-            let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+            let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
             let today = NSDate()
             let interval = date.timeIntervalSinceDate(today)
             let unitFlags = NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth

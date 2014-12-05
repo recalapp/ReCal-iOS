@@ -12,6 +12,7 @@ import ReCalCommon
 private let weekViewControllerStoryboardId = "WeekView"
 private let calendarViewContentViewSegueId = "CalendarEmbed"
 private let agendaViewControllerStoryboardId = "AgendaViewController"
+private let summaryViewControllerStoryboardId = "SummaryViewController"
 private let eventNavigationViewControllerStoryboardId = "eventNavigationViewController"
 
 class CalendarViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, AgendaViewControllerDelegate, WeekViewControllerDelegate, EventViewControllerDelegate, SettingsViewControllerDelegate {
@@ -25,7 +26,8 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
         return agendaVC
     }()
     lazy private var dayViewController: UIViewController = {
-        return UIViewController()
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier(summaryViewControllerStoryboardId) as SummaryViewController
+        return vc
     }()
     lazy private var eventNavigationViewController: UINavigationController = {
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier(eventNavigationViewControllerStoryboardId) as UINavigationController

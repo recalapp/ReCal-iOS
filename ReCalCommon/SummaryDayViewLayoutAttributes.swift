@@ -11,7 +11,6 @@ import Foundation
 public extension SummaryDayView {
     public enum Height {
         case Fill(oneHourHeight: CGFloat)
-        case Fit
     }
     public enum SummarizationFactor {
         case Scale(Double)
