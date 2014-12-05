@@ -16,7 +16,7 @@ class AgendaTableViewCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     
     lazy private var timeFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+        let formatter = NSDateFormatter.formatterWithUSLocale()
         formatter.dateStyle = .ShortStyle
         formatter.timeStyle = .ShortStyle
         return formatter

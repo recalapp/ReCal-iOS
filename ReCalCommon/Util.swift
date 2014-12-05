@@ -138,3 +138,11 @@ public extension NSDate {
         return calendar.dateFromComponents(component)!
     }
 }
+
+public extension NSDateFormatter {
+    public class func formatterWithUSLocale() -> NSDateFormatter {
+        let formatter = NSDateFormatter()
+        formatter.locale = NSLocale(localeIdentifier: "en_US")
+        return formatter
+    }
+}

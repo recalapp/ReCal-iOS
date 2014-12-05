@@ -29,28 +29,34 @@ class SectionMeetingAttributeImporter: CompositeManagedObjectAttributeImporter {
         
         private override func importAttributeFromDictionary(dict: Dictionary<String, AnyObject>, intoManagedObject managedObject: NSManagedObject, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> ManagedObjectAttributeImporter.ImportResult {
             let timeFormatter: NSDateFormatter = {
-                let formatter = NSDateFormatter()
-                formatter.timeStyle = NSDateFormatterStyle.ShortStyle
+                let formatter = NSDateFormatter.formatterWithUSLocale()
+                formatter.dateFormat = "hh:mm a"
                 return formatter
             }()
             let calendar: NSCalendar = {
                 return NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
             }()
-            let getTimeComponents:(String)->NSDateComponents = {(timeString) in
-                let date = timeFormatter.dateFromString(timeString)!
-                let components = calendar.components(NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: date)
+            let getTimeComponents:(String)->NSDateComponents? = {(timeString) in
+                let date = timeFormatter.dateFromString(timeString)
+                if date == nil {
+                    return nil
+                }
+                let components = calendar.components(NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute, fromDate: date!)
                 return components
             }
             if dict[self.dictionaryKey] == nil {
                 return .Error(.InvalidDictionary)
             }
             let components = getTimeComponents(dict[self.dictionaryKey] as String)
+            if components == nil {
+                return .Error(.InvalidDictionary)
+            }
             if managedObject.entity.attributesByName[self.hourAttributeKey] == nil || managedObject.entity.attributesByName[self.minuteAttributeKey] == nil {
                 return .Error(.InvalidManagedObject)
             }
             managedObjectContext.performBlockAndWait {
-                managedObject.setValue(components.hour, forKey: self.hourAttributeKey)
-                managedObject.setValue(components.minute, forKey: self.minuteAttributeKey)
+                managedObject.setValue(components!.hour, forKey: self.hourAttributeKey)
+                managedObject.setValue(components!.minute, forKey: self.minuteAttributeKey)
             }
             return .Success
         }

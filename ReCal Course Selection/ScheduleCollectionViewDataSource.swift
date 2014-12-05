@@ -41,7 +41,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
     }()
     
     lazy private var timeFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+        let formatter = NSDateFormatter.formatterWithUSLocale()
         formatter.dateFormat = "h a"
         return formatter
     }()

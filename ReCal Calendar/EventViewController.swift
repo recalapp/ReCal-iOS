@@ -64,9 +64,9 @@ class EventViewController: UITableViewController {
         }
         self.notificationObservers.append(observer2)
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter.formatterWithUSLocale()
         dateFormatter.dateFormat = "EEEE, MMM d, y" // Tuesday, Nov 4, 2014
-        let timeFormatter = NSDateFormatter()
+        let timeFormatter = NSDateFormatter.formatterWithUSLocale()
         timeFormatter.timeStyle = .ShortStyle
         let dateSection = SectionInfo(name: .Empty, items: [
             ItemInfo(cellIdentifier: self.basicCellIdentifier, cellProcessBlock: { (cell:UITableViewCell) -> UITableViewCell in

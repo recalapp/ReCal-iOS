@@ -53,19 +53,19 @@ class WeekViewController: UICollectionViewController, CollectionViewDataSourceCa
     }()
     
     private var timeFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+        let formatter = NSDateFormatter.formatterWithUSLocale()
         formatter.dateFormat = "h a" // 9 AM
         return formatter
     }()
     
     private var dateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+        let formatter = NSDateFormatter.formatterWithUSLocale()
         formatter.dateFormat = "MMM d" // Dec 7
         return formatter
     }()
     
     private var dayFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+        let formatter = NSDateFormatter.formatterWithUSLocale()
         formatter.dateFormat = "EEE" // Tues
         return formatter
     }()

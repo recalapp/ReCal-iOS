@@ -13,7 +13,7 @@ import ReCalCommon
 class CourseSelectionCoreDataImporter : CoreDataImporter {
     
     lazy private var timeFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+        let formatter = NSDateFormatter.formatterWithUSLocale()
         formatter.timeStyle = NSDateFormatterStyle.ShortStyle
         return formatter
     }()
