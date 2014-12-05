@@ -14,6 +14,13 @@ private let summarizedViewIdentifier = "summarizedViewIdentifier"
 
 public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarizedLayout, UICollectionViewDataSource, UICollectionViewDelegate {
 
+    private var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
+    private var timeFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter.formatterWithUSLocale()
+        formatter.dateFormat = "h a" // 9 AM
+        return formatter
+    }()
+    
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.initialize()
@@ -49,10 +56,25 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
         return collectionView
     }()
     
+    private var notificationObservers: [AnyObject] = []
+    
     private func initialize() {
         let collectionView = self.collectionView
+        let updateColorScheme: Void->Void = {
+            self.collectionView.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
+        }
+        updateColorScheme()
         self.addSubview(collectionView)
         self.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(collectionView, inParentView: self, withInsets: UIEdgeInsetsZero))
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
+    }
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
     
     public override func awakeFromNib() {
@@ -67,7 +89,8 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
     /// MARK: - Collection View Data Source
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as UICollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as SummaryDayEventCollectionViewCell
+        cell.viewModel = self.viewModel?.events[indexPath.item]
         return cell
     }
     
@@ -79,7 +102,10 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
                 return view
             case .TimeRowHeader:
                 let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind.rawValue, withReuseIdentifier: timeRowHeaderIdentifier, forIndexPath: indexPath) as SummaryDayTimeRowHeaderView
-                view.timeLabel.text = "\(indexPath)"
+                let component = NSDateComponents()
+                component.hour = indexPath.section
+                let date = self.calendar.dateFromComponents(component)!
+                view.timeLabel.text = self.timeFormatter.stringFromDate(date)
                 return view
             }
         }

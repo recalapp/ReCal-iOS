@@ -37,7 +37,7 @@ public extension SummaryDayView {
         
         /// The width of a day
         private var daySectionWidth: CGFloat {
-            return self.collectionView?.bounds.width ?? 0.0 - self.timeRowHeaderWidth // ok, will not be negative. if collectionview does not exist, time row header width also returns 0
+            return (self.collectionView?.bounds.width ?? 0.0) - self.timeRowHeaderWidth // ok, will not be negative. if collectionview does not exist, time row header width also returns 0
         }
         
         /// The scrollable height

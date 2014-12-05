@@ -41,6 +41,8 @@ public protocol SummaryDayViewModel {
 public protocol SummaryDayViewEvent {
     var title: String { get }
     var time: SummaryDayView.EventTime { get }
+    var color: UIColor { get }
+    var highlightedColor: UIColor { get }
 }
 
 public func == (lhs: SummaryDayView.EventTime, rhs: SummaryDayView.EventTime)->Bool {

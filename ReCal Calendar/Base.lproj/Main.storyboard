@@ -330,15 +330,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KrL-Ge-sWI" customClass="SummaryDayView" customModule="ReCalCommon">
-                                <rect key="frame" x="64" y="39" width="449" height="100"/>
-                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KrL-Ge-sWI" customClass="SummaryDayView" customModule="ReCalCommon"/>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="KrL-Ge-sWI" secondAttribute="trailing" constant="71" id="82T-BO-RJz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KrL-Ge-sWI" secondAttribute="trailing" id="82T-BO-RJz"/>
                             <constraint firstItem="KrL-Ge-sWI" firstAttribute="top" secondItem="BU0-ro-4ba" secondAttribute="bottom" constant="19" id="A0U-h0-nHM"/>
-                            <constraint firstItem="KrL-Ge-sWI" firstAttribute="leading" secondItem="At7-i8-Wtp" secondAttribute="leadingMargin" constant="48" id="oQV-F4-tue"/>
+                            <constraint firstItem="KrL-Ge-sWI" firstAttribute="leading" secondItem="At7-i8-Wtp" secondAttribute="leadingMargin" id="oQV-F4-tue"/>
                         </constraints>
                     </view>
                     <connections>

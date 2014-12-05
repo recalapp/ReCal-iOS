@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -9,7 +10,46 @@
         <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U6b-Vx-4bR" customClass="SummaryDaySummarizedView" customModule="ReCalCommon" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
-            <color key="backgroundColor" red="1" green="0.010051519906342232" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TKi-OX-0sD">
+                    <rect key="frame" x="0.0" y="20.5" width="320" height="10"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="kyY-pH-ZRH"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZI-a5-chI">
+                    <rect key="frame" x="0.0" y="22" width="320" height="1"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="4DS-5A-uEW"/>
+                        <constraint firstAttribute="height" constant="1" id="FhX-8s-Znd"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0U8-2d-LQ8">
+                    <rect key="frame" x="0.0" y="27" width="320" height="1"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="lBc-ZV-Fwg"/>
+                        <constraint firstAttribute="height" constant="1" id="y8a-Qo-JQ7"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="TKi-OX-0sD" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="2Lj-Rx-MbM"/>
+                <constraint firstAttribute="centerX" secondItem="0U8-2d-LQ8" secondAttribute="centerX" id="DMg-Tq-y06"/>
+                <constraint firstAttribute="trailing" secondItem="TKi-OX-0sD" secondAttribute="trailing" id="G5F-qe-Jl2"/>
+                <constraint firstAttribute="centerY" secondItem="0U8-2d-LQ8" secondAttribute="top" constant="-2" id="LBO-lS-gfu"/>
+                <constraint firstAttribute="centerX" secondItem="eZI-a5-chI" secondAttribute="centerX" id="La9-Lt-H6B"/>
+                <constraint firstAttribute="centerY" secondItem="TKi-OX-0sD" secondAttribute="centerY" id="Pa7-vR-fbI"/>
+                <constraint firstAttribute="centerY" secondItem="eZI-a5-chI" secondAttribute="bottom" constant="2" id="T4q-Xz-5nr"/>
+            </constraints>
+            <connections>
+                <outlet property="backgroundLineView" destination="TKi-OX-0sD" id="cO3-pD-WwX"/>
+                <outletCollection property="gridLineViews" destination="0U8-2d-LQ8" collectionClass="NSMutableArray" id="ZAt-6B-aEy"/>
+                <outletCollection property="gridLineViews" destination="eZI-a5-chI" collectionClass="NSMutableArray" id="Ivc-n8-cw6"/>
+            </connections>
         </collectionReusableView>
     </objects>
 </document>
