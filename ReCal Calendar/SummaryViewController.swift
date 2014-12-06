@@ -199,7 +199,7 @@ class SummaryViewController: UITableViewController, SummaryDayTableViewCellDeleg
         let highlightedColor: UIColor
         let managedObjectId: NSManagedObjectID
         init(event: CDEvent) {
-            self.title = event.eventTitle
+            self.title = "\(event.section.course.displayText) \(event.eventTitle)"
             self.time = SummaryDayView.EventTime(startHour: event.eventStart.hour, startMinute: event.eventStart.minute, endHour: event.eventEnd.hour, endMinute: event.eventEnd.minute)
             self.highlightedColor = event.color!.darkerColor().darkerColor()
             self.color = event.color!.lighterColor().lighterColor()
