@@ -33,11 +33,15 @@ public extension SummaryDayView {
             return Interval(start: startHourFractional, end: endHourFractional)
         }
     }
+    public struct SummaryDayViewModel {
+        public let events: [SummaryDayViewEvent]
+        public init(events: [SummaryDayViewEvent]) {
+            self.events = events
+        }
+    }
 }
 
-public protocol SummaryDayViewModel {
-    var events: [SummaryDayViewEvent] { get }
-}
+
 public protocol SummaryDayViewEvent {
     var title: String { get }
     var time: SummaryDayView.EventTime { get }

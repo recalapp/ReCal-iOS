@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14B23" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CDCourse" representedClassName="CDCourse" parentEntity="CDServerObject" syncable="YES">
         <attribute name="courseDescription" attributeType="String" syncable="YES"/>
         <attribute name="courseTitle" attributeType="String" syncable="YES"/>
@@ -17,6 +17,7 @@
         <attribute name="eventDescription" attributeType="String" syncable="YES"/>
         <attribute name="eventEnd" attributeType="Date" syncable="YES"/>
         <attribute name="eventStart" attributeType="Date" syncable="YES"/>
+        <attribute name="eventStartWithZeroHour" optional="YES" transient="YES" attributeType="Date" syncable="YES"/>
         <attribute name="eventTitle" attributeType="String" syncable="YES"/>
         <attribute name="eventTypeCode" attributeType="String" regularExpressionString="(as|ex|la|le|oh|pr|st)" syncable="YES"/>
         <relationship name="section" maxCount="1" deletionRule="Nullify" destinationEntity="CDSection" inverseName="events" inverseEntity="CDSection" syncable="YES"/>
@@ -44,7 +45,7 @@
     <elements>
         <element name="CDCourse" positionX="-2655" positionY="-6372" width="128" height="103"/>
         <element name="CDCourseListing" positionX="-2583" positionY="-6111" width="128" height="103"/>
-        <element name="CDEvent" positionX="-2180" positionY="-6253" width="128" height="148"/>
+        <element name="CDEvent" positionX="-2180" positionY="-6253" width="128" height="165"/>
         <element name="CDSection" positionX="-2376" positionY="-6255" width="128" height="118"/>
         <element name="CDSectionEnrollment" positionX="-2180" positionY="-5965" width="128" height="88"/>
         <element name="CDServerObject" positionX="-2304" positionY="-6462" width="128" height="58"/>

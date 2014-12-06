@@ -9,13 +9,65 @@
 import UIKit
 import ReCalCommon
 
-class SummaryViewController: UIViewController {
+private let summaryDayCellIdentifier = "SummaryDayCell"
 
-    @IBOutlet weak var testSummaryView: SummaryDayView!
+class SummaryViewController: UITableViewController {
+    
+    lazy private var managedObjectContext: NSManagedObjectContext = {
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        return managedObjectContext
+        }()
+    
+    lazy private var fetchedResultsController: NSFetchedResultsController = {
+        let fetchRequest = NSFetchRequest(entityName: "CDEvent")
+        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let today = NSDate()
+        
+        let startDate: NSDate = {
+            let components = calendar.components(NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear, fromDate: today)
+            components.day -= 1
+            return calendar.dateFromComponents(components)!
+            }()
+        let startPredicate = NSPredicate(format: "eventStart > %@", startDate)!
+        fetchRequest.predicate = NSCompoundPredicate.andPredicateWithSubpredicates([startPredicate])
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "eventStart", ascending: true)]
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: "eventStartWithZeroHour", cacheName: "eventStartWithZeroHour")
+        return fetchedResultsController
+        }()
+    
+    lazy private var dateFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter.formatterWithUSLocale()
+        formatter.dateStyle = .MediumStyle
+        return formatter
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.testSummaryView.viewModel = TestViewModel()
-        // Do any additional setup after loading the view.
+        self.reloadTableViewData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
+    private func reloadTableViewData() {
+        var errorOpt: NSError?
+        NSFetchedResultsController.deleteCacheWithName("eventStartWithZeroHour")
+        self.managedObjectContext.performBlockAndWait {
+            let _ = self.fetchedResultsController.performFetch(&errorOpt)
+        }
+        if let error = errorOpt {
+            println("Error fetching event data. Error: \(error)")
+            return
+        }
+        NSOperationQueue.mainQueue().addOperationWithBlock {
+            self.tableView.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,6 +76,34 @@ class SummaryViewController: UIViewController {
     }
     
 
+    // MARK: - Table View Data Source
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return self.fetchedResultsController.sections?.count ?? 0
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(summaryDayCellIdentifier, forIndexPath: indexPath) as SummaryDayTableViewCell
+        if let events = (self.fetchedResultsController.sections?[indexPath.section] as? NSFetchedResultsSectionInfo)?.objects as? [CDEvent] {
+            cell.viewModel = SummaryDayView.SummaryDayViewModel(events: events.map{SummaryDayViewEventAdapter(event: $0)})
+        }
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = SummaryDayHeaderView()
+        if let event = (self.fetchedResultsController.sections?[section] as? NSFetchedResultsSectionInfo)?.objects.last as? CDEvent {
+            view.headerLabel.text = self.dateFormatter.stringFromDate(event.eventStart)
+        }
+        return view
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -33,39 +113,17 @@ class SummaryViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
-}
-
-private struct TestViewModel: SummaryDayViewModel {
-    let events: [SummaryDayViewEvent]
-    init() {
-        self.events = [Event1(), Event2(), Event3()]
-    }
-    private struct Event1: SummaryDayViewEvent {
+    
+    struct SummaryDayViewEventAdapter : SummaryDayViewEvent {
+        let title: String
         let time: SummaryDayView.EventTime
-        let title = "test"
-        let color = UIColor.redColor()
-        let highlightedColor = UIColor.redColor().darkerColor().darkerColor()
-        init() {
-            time = SummaryDayView.EventTime(startHour: 8, startMinute: 30, endHour: 10, endMinute: 0)
-        }
-    }
-    private struct Event2: SummaryDayViewEvent {
-        let time: SummaryDayView.EventTime
-        let title = "test"
-        let color = UIColor.redColor()
-        let highlightedColor = UIColor.redColor().darkerColor().darkerColor()
-        init() {
-            time = SummaryDayView.EventTime(startHour: 9, startMinute: 30, endHour: 11, endMinute: 0)
-        }
-    }
-    private struct Event3: SummaryDayViewEvent {
-        let time: SummaryDayView.EventTime
-        let title = "test"
-        let color = UIColor.redColor()
-        let highlightedColor = UIColor.redColor().darkerColor().darkerColor()
-        init() {
-            time = SummaryDayView.EventTime(startHour: 15, startMinute: 0, endHour: 16, endMinute: 20)
+        let color: UIColor
+        let highlightedColor: UIColor
+        init(event: CDEvent) {
+            self.title = event.eventTitle
+            self.time = SummaryDayView.EventTime(startHour: event.eventStart.hour, startMinute: event.eventStart.minute, endHour: event.eventEnd.hour, endMinute: event.eventEnd.minute)
+            self.highlightedColor = event.color!.darkerColor().darkerColor()
+            self.color = event.color!.lighterColor().lighterColor()
         }
     }
 }

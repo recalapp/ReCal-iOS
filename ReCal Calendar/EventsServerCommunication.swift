@@ -12,7 +12,7 @@ import ReCalCommon
 class EventsServerCommunication : ServerCommunicator.ServerCommunication {
     
     override var request: NSURLRequest {
-        let request = NSURLRequest(URL: NSURL(string: "\(Urls.eventsPullUrl)/0")!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10)
+        let request = NSURLRequest(URL: NSURL(string: "\(Urls.eventsPullUrl)/0")!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 100)
         return request
     }
     

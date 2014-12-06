@@ -151,7 +151,6 @@
 		81F76B1D1A16ED66001B6233 /* CourseAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B1C1A16ED66001B6233 /* CourseAttributeImporter.swift */; };
 		81F76B1F1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B1E1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift */; };
 		81F76B211A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B201A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift */; };
-		81F76B261A17A345001B6233 /* CDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F76B251A17A345001B6233 /* CDEvent.m */; };
 		81F9A3FB1A06B2C900083E55 /* SearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */; };
 		81F9A3FD1A06B34200083E55 /* CompositeSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */; };
 		81F9A4001A06B3EF00083E55 /* AndSearchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */; };
@@ -181,6 +180,9 @@
 		F48768981A30CB32003EFFB4 /* SummaryDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48768971A30CB32003EFFB4 /* SummaryDayViewModel.swift */; };
 		F487689A1A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48768991A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift */; };
 		F487689C1A314D3E003EFFB4 /* SummaryDayCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F487689B1A314D3E003EFFB4 /* SummaryDayCollectionViewLayout.swift */; };
+		F4EB32291A326E7B00984AF8 /* SummaryDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EB32281A326E7B00984AF8 /* SummaryDayTableViewCell.swift */; };
+		F4EB322C1A32704900984AF8 /* CDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EB322B1A32704900984AF8 /* CDEvent.m */; };
+		F4EB32301A32B90800984AF8 /* SummaryDayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EB322F1A32B90800984AF8 /* SummaryDayHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -411,8 +413,6 @@
 		81F76B1C1A16ED66001B6233 /* CourseAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseAttributeImporter.swift; sourceTree = "<group>"; };
 		81F76B1E1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToOneChildManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
 		81F76B201A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
-		81F76B241A17A345001B6233 /* CDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEvent.h; sourceTree = "<group>"; };
-		81F76B251A17A345001B6233 /* CDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEvent.m; sourceTree = "<group>"; };
 		81F9A3FA1A06B2C900083E55 /* SearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FC1A06B34200083E55 /* CompositeSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeSearchPredicate.swift; sourceTree = "<group>"; };
 		81F9A3FF1A06B3EF00083E55 /* AndSearchPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndSearchPredicate.swift; sourceTree = "<group>"; };
@@ -442,6 +442,10 @@
 		F48768971A30CB32003EFFB4 /* SummaryDayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayViewModel.swift; sourceTree = "<group>"; };
 		F48768991A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		F487689B1A314D3E003EFFB4 /* SummaryDayCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayCollectionViewLayout.swift; sourceTree = "<group>"; };
+		F4EB32281A326E7B00984AF8 /* SummaryDayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayTableViewCell.swift; sourceTree = "<group>"; };
+		F4EB322A1A32704900984AF8 /* CDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEvent.h; sourceTree = "<group>"; };
+		F4EB322B1A32704900984AF8 /* CDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEvent.m; sourceTree = "<group>"; };
+		F4EB322F1A32B90800984AF8 /* SummaryDayHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -573,8 +577,8 @@
 				81F76AFF1A13DAF9001B6233 /* CDSectionEnrollment.m */,
 				81F76B071A13E2AA001B6233 /* CDUser.h */,
 				81F76B081A13E2AA001B6233 /* CDUser.m */,
-				81F76B241A17A345001B6233 /* CDEvent.h */,
-				81F76B251A17A345001B6233 /* CDEvent.m */,
+				F4EB322A1A32704900984AF8 /* CDEvent.h */,
+				F4EB322B1A32704900984AF8 /* CDEvent.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1101,6 +1105,8 @@
 			isa = PBXGroup;
 			children = (
 				F469FB481A322E5800352D60 /* SummaryViewController.swift */,
+				F4EB32281A326E7B00984AF8 /* SummaryDayTableViewCell.swift */,
+				F4EB322F1A32B90800984AF8 /* SummaryDayHeaderView.swift */,
 			);
 			name = "Summary View";
 			sourceTree = "<group>";
@@ -1535,12 +1541,14 @@
 				81E50D441A0DB5420074F381 /* AppDelegate.swift in Sources */,
 				811A0F731A125B0B0012030E /* CoreDataExtensions.swift in Sources */,
 				8107FD8F1A11A56500296BBB /* AgendaViewController.swift in Sources */,
+				F4EB322C1A32704900984AF8 /* CDEvent.m in Sources */,
 				81F76B001A13DAF9001B6233 /* CDSectionEnrollment.m in Sources */,
 				81E50D651A0E503B0074F381 /* URLs.swift in Sources */,
 				81E50D471A0DB5420074F381 /* ReCal_Calendar.xcdatamodeld in Sources */,
 				811373EE1A1B9AEA00E9387A /* TimeRowHeaderBackgroundView.swift in Sources */,
-				81F76B261A17A345001B6233 /* CDEvent.m in Sources */,
 				813C00F01A13AEF900A3B769 /* CalendarCoreDataImporter.swift in Sources */,
+				F4EB32301A32B90800984AF8 /* SummaryDayHeaderView.swift in Sources */,
+				F4EB32291A326E7B00984AF8 /* SummaryDayTableViewCell.swift in Sources */,
 				81792B3A1A18823B0035D062 /* UserProfileServerCommunication.swift in Sources */,
 				811373F91A1B9BC100E9387A /* DayColumnHeaderView.swift in Sources */,
 				81AA2C641A12F48800A31F61 /* EventType.swift in Sources */,

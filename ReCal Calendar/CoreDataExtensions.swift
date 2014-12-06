@@ -67,6 +67,9 @@ extension CDEvent {
     var color: UIColor? {
         return (self.section.enrollments.anyObject() as? CDSectionEnrollment)?.color as? UIColor
     }
+    var eventStartWithZeroHour: NSDate {
+        return self.eventStart.dateWithZeroHour
+    }
 }
 extension CDUser {
     var enrolledSections: Set<CDSection> {

@@ -20,7 +20,14 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
         formatter.dateFormat = "h a" // 9 AM
         return formatter
     }()
-    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.initialize()
+    }
+    public override init() {
+        super.init()
+        self.initialize()
+    }
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.initialize()
@@ -28,7 +35,6 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
     public var state: State = .Summarized
     public var viewModel: SummaryDayViewModel? {
         didSet {
-            self.summarizedLayout.invalidateLayout()
             self.collectionView.reloadData()
             self.invalidateIntrinsicContentSize()
         }
@@ -47,6 +53,7 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
     }()
     lazy private var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: self.bounds, collectionViewLayout: self.summarizedLayout)
+        collectionView.scrollEnabled = false
         collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
         collectionView.dataSource = self
         collectionView.delegate = self

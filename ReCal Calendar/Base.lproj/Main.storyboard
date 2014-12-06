@@ -319,33 +319,46 @@
             <point key="canvasLocation" x="2193" y="1275"/>
         </scene>
         <!--Summary View Controller-->
-        <scene sceneID="xse-jb-7HD">
+        <scene sceneID="fdk-TW-m6c">
             <objects>
-                <viewController storyboardIdentifier="SummaryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Naa-nq-nEW" customClass="SummaryViewController" customModule="ReCal_Calendar" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="BU0-ro-4ba"/>
-                        <viewControllerLayoutGuide type="bottom" id="pIc-SO-gpS"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="At7-i8-Wtp">
+                <tableViewController storyboardIdentifier="SummaryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LmQ-Ud-PPT" customClass="SummaryViewController" customModule="ReCal_Calendar" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EVI-fU-9mW">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KrL-Ge-sWI" customClass="SummaryDayView" customModule="ReCalCommon"/>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="KrL-Ge-sWI" secondAttribute="trailing" id="82T-BO-RJz"/>
-                            <constraint firstItem="KrL-Ge-sWI" firstAttribute="top" secondItem="BU0-ro-4ba" secondAttribute="bottom" constant="19" id="A0U-h0-nHM"/>
-                            <constraint firstItem="KrL-Ge-sWI" firstAttribute="leading" secondItem="At7-i8-Wtp" secondAttribute="leadingMargin" id="oQV-F4-tue"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="testSummaryView" destination="KrL-Ge-sWI" id="5Gn-5b-ahd"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Aa8-2R-YF5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SummaryDayCell" id="TDh-Ks-Woa" customClass="SummaryDayTableViewCell" customModule="ReCal_Calendar" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TDh-Ks-Woa" id="biX-FV-EcF">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8pq-sK-wAF" customClass="SummaryDayView" customModule="ReCalCommon">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="34.5"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="8pq-sK-wAF" secondAttribute="trailing" id="2cG-1e-Z61"/>
+                                        <constraint firstItem="8pq-sK-wAF" firstAttribute="leading" secondItem="biX-FV-EcF" secondAttribute="leading" id="j2v-Se-erL"/>
+                                        <constraint firstAttribute="bottom" secondItem="8pq-sK-wAF" secondAttribute="bottom" id="oML-Ou-53e"/>
+                                        <constraint firstItem="8pq-sK-wAF" firstAttribute="top" secondItem="biX-FV-EcF" secondAttribute="top" id="ztm-lC-apl"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="summaryDayView" destination="8pq-sK-wAF" id="0yU-bF-vSp"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="LmQ-Ud-PPT" id="HX7-ZC-5Ka"/>
+                            <outlet property="delegate" destination="LmQ-Ud-PPT" id="8U5-dG-Ye4"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s2L-Pw-yxx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="609" y="1304"/>
+            <point key="canvasLocation" x="549" y="1356"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HJ5-16-pgL">
