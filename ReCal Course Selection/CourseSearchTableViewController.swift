@@ -20,7 +20,11 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     weak var delegate: CourseSearchTableViewControllerDelegate?
     
     /// The semester term code to search in
-    var semesterTermCode: String = ""
+    var semesterTermCode: String = "" {
+        didSet {
+            self.searchController.active = false
+        }
+    }
     
     /// Enrolled courses, represented as an Array<Course>
     var enrolledCourses: [Course] {
@@ -85,7 +89,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     private var notificationObservers: [AnyObject] = []
     
     // MARK: - Methods
-    
     private func clearVisibleCoursesStorageCache() {
         self.visibleEnrolledCourses = self.enrolledCoursesSet.toArray().sorted { $0.displayText < $1.displayText }
         self.visibleUnenrolledCourses = self.filteredCourses.filter { !self.enrolledCoursesSet.contains($0) } // filtered courses already sorted
@@ -108,8 +111,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             let searchController = UISearchController(searchResultsController: nil)
             searchController.searchBar.frame = CGRect(origin: CGPointZero, size: CGSize(width: self.tableView.bounds.size.width, height: 44))
             searchController.searchResultsUpdater = self
-            
-            
             searchController.delegate = self
             searchController.dimsBackgroundDuringPresentation = false
             searchController.hidesNavigationBarDuringPresentation = false
@@ -145,7 +146,6 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             NSNotificationCenter.defaultCenter().removeObserver(observer)
         }
     }
-    
     private func courseAtIndexPath(indexPath: NSIndexPath) -> CDCourse {
         switch (indexPath.section, indexPath.row) {
         case (0, let row):
@@ -311,12 +311,10 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             self.searchOperationQueue.addOperation(searchOperation)
         }
     }
-    
     // MARK: - Search Controller Delegate
     func didPresentSearchController(searchController: UISearchController) {
         searchController.searchBar.setShowsCancelButton(false, animated: false)
     }
-    
     // MARK: - Adaptive Presentation Controller Delegate
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return .None

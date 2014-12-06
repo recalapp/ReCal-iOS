@@ -36,12 +36,27 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     private var notificationObservers: [AnyObject] = []
     
     override var sidebarState: DoubleSidebarState {
+        willSet {
+            switch newValue {
+            case .LeftSidebarShown:
+                self.searchViewController.viewWillAppear(true)
+            case .RightSidebarShown, .Unselected:
+                self.searchViewController.viewWillDisappear(true)
+            }
+        }
         didSet {
             switch sidebarState {
             case .RightSidebarShown:
                 Settings.currentSettings.scheduleDisplayTextStyle = .SectionName
             case .LeftSidebarShown, .Unselected:
                 Settings.currentSettings.scheduleDisplayTextStyle = .CourseNumber
+            }
+            
+            switch sidebarState {
+            case .LeftSidebarShown:
+                self.searchViewController.viewDidAppear(true)
+            case .RightSidebarShown, .Unselected:
+                self.searchViewController.viewDidDisappear(true)
             }
         }
     }
