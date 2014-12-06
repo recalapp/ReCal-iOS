@@ -42,9 +42,27 @@ class SummaryViewController: UITableViewController {
         return formatter
     }()
     
+    private var notificationObservers: [AnyObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.reloadTableViewData()
+        
+        let updateColorScheme: Void->Void = {
+            self.view.backgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
+        }
+        updateColorScheme()
+        
+        let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
+            updateColorScheme()
+        }
+        self.notificationObservers.append(observer1)
+    }
+    
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
