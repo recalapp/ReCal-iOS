@@ -13,6 +13,9 @@ private let singleLabelCellReuseIdentifier = "SingleLabel"
 
 class CourseDetailsViewController: UITableViewController {
 
+    private typealias SectionInfo = StaticTableViewDataSource.SectionInfo
+    private typealias ItemInfo = StaticTableViewDataSource.ItemInfo
+    
     var course: Course? {
         didSet {
             self.tableView.reloadData()
@@ -20,6 +23,8 @@ class CourseDetailsViewController: UITableViewController {
     }
     
     private var notificationObservers: [AnyObject] = []
+    private let staticTableViewDataSource: StaticTableViewDataSource = StaticTableViewDataSource()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,39 +36,28 @@ class CourseDetailsViewController: UITableViewController {
             updateColorScheme()
             self.tableView.reloadData()
         }
-        self.notificationObservers.append(observer1)
-    }
-    
-    deinit {
-        for observer in self.notificationObservers {
-            NSNotificationCenter.defaultCenter().removeObserver(observer)
-        }
-    }
-    
-    // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // Return the number of sections.
-        return 2
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Return the number of rows in the section.
-        return 1
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        switch (indexPath.section, indexPath.row) {
-        case (0, 0):
-            let cell = tableView.dequeueReusableCellWithIdentifier(singleLabelCellReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
+        let nameSection = SectionInfo(name: .Empty, items: [
+            ItemInfo(cellIdentifier: singleLabelCellReuseIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
+                if let course = self.course {
+                    let label = cell.contentView.viewWithTag(1) as UILabel
+                    label.text = join("/", course.courseListings.map { $0.description } as [String])
+                    label.textColor = Settings.currentSettings.colorScheme.textColor
+                }
+                cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
+                return cell
+            }),
+            ItemInfo(cellIdentifier: singleLabelCellReuseIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
             if let course = self.course {
                 let label = cell.contentView.viewWithTag(1) as UILabel
-                label.text = "\(course) - \(course.title)"
+                label.text = course.title
                 label.textColor = Settings.currentSettings.colorScheme.textColor
             }
             cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
             return cell
-        case (1, 0):
-            let cell = tableView.dequeueReusableCellWithIdentifier(singleLabelCellReuseIdentifier, forIndexPath: indexPath) as UITableViewCell
+            })
+        ])
+        let descriptionSection = SectionInfo(name: .Literal("Description"), items: [
+            ItemInfo(cellIdentifier: singleLabelCellReuseIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
             if let course = self.course {
                 let label = cell.contentView.viewWithTag(1) as UILabel
                 label.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
@@ -72,19 +66,17 @@ class CourseDetailsViewController: UITableViewController {
             }
             cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
             return cell
-        default:
-            assertionFailure("not implemented")
-        }
+            })
+        ])
+        self.staticTableViewDataSource.setSectionInfos([nameSection, descriptionSection])
+        self.tableView.dataSource = self.staticTableViewDataSource
+        
+        self.notificationObservers.append(observer1)
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return nil
-        case 1:
-            return "Description"
-        default:
-            assertionFailure("not implemented")
+    deinit {
+        for observer in self.notificationObservers {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
         }
     }
 }
