@@ -143,13 +143,15 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 }
                 let semester = self.fetchOrCreateEntityWithServerId("\(serverId!)", entityName: "CDSemester") as CDSemester
                 let termCode = dict["term_code"] as? String
-                if termCode == nil {
+                let name = dict["name"] as? String
+                if termCode == nil || name == nil {
                     progress.completedUnitCount += 1
                     return (nil, .Failure)
                 }
                 
                 self.backgroundManagedObjectContext.performBlockAndWait {
                     semester.termCode = termCode!
+                    semester.name = name!
                     semester.active = NSNumber(bool: true)
                 }
                 progress.completedUnitCount += 1

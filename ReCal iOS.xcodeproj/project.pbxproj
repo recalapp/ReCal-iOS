@@ -37,7 +37,6 @@
 		811A0F731A125B0B0012030E /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F721A125B0B0012030E /* CoreDataExtensions.swift */; };
 		811A0F751A1299460012030E /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F741A1299460012030E /* SectionType.swift */; };
 		811A0F771A12F1240012030E /* CoreDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811A0F761A12F1240012030E /* CoreDataImporter.swift */; };
-		813537571A1CF465002AB008 /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = 813537561A1CF465002AB008 /* CDSemester.m */; };
 		8135375A1A1D2296002AB008 /* CourseAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813537591A1D2296002AB008 /* CourseAttributeImporter.swift */; };
 		8135375C1A1D2301002AB008 /* CourseListingAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8135375B1A1D2301002AB008 /* CourseListingAttributeImporter.swift */; };
 		8135375E1A1D2431002AB008 /* SectionAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8135375D1A1D2431002AB008 /* SectionAttributeImporter.swift */; };
@@ -166,6 +165,7 @@
 		81FE70E21A20E78F00934062 /* FadeOverlayPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70E11A20E78F00934062 /* FadeOverlayPresentationController.swift */; };
 		81FE70E41A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70E31A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift */; };
 		81FE70E61A20EC0200934062 /* CourseColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70E51A20EC0200934062 /* CourseColor.swift */; };
+		F43087161A338C4600F63759 /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = F43087151A338C4600F63759 /* CDSemester.m */; };
 		F469FB341A31EB6100352D60 /* Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = F469FB331A31EB6100352D60 /* Interval.swift */; };
 		F469FB391A322AE700352D60 /* SummaryDaySummarizedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F469FB371A322AE700352D60 /* SummaryDaySummarizedView.swift */; };
 		F469FB3A1A322AE700352D60 /* SummaryDaySummarizedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F469FB381A322AE700352D60 /* SummaryDaySummarizedView.xib */; };
@@ -281,8 +281,6 @@
 		811A0F761A12F1240012030E /* CoreDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataImporter.swift; sourceTree = "<group>"; };
 		81329ADB1A22F68C00FBD920 /* ReCal Course Selection.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "ReCal Course Selection.entitlements"; sourceTree = "<group>"; };
 		81329ADC1A22F72900FBD920 /* ReCal Calendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "ReCal Calendar.entitlements"; sourceTree = "<group>"; };
-		813537551A1CF465002AB008 /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
-		813537561A1CF465002AB008 /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
 		813537591A1D2296002AB008 /* CourseAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseAttributeImporter.swift; sourceTree = "<group>"; };
 		8135375B1A1D2301002AB008 /* CourseListingAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseListingAttributeImporter.swift; sourceTree = "<group>"; };
 		8135375D1A1D2431002AB008 /* SectionAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionAttributeImporter.swift; sourceTree = "<group>"; };
@@ -428,6 +426,9 @@
 		81FE70E11A20E78F00934062 /* FadeOverlayPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeOverlayPresentationController.swift; sourceTree = "<group>"; };
 		81FE70E31A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeOverlayAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		81FE70E51A20EC0200934062 /* CourseColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseColor.swift; sourceTree = "<group>"; };
+		F43087131A338B0C00F63759 /* ReCal_Course_Selection_v2__Semester_Name.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReCal_Course_Selection_v2__Semester_Name.xcdatamodel; sourceTree = "<group>"; };
+		F43087141A338C4600F63759 /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
+		F43087151A338C4600F63759 /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
 		F469FB331A31EB6100352D60 /* Interval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interval.swift; sourceTree = "<group>"; };
 		F469FB371A322AE700352D60 /* SummaryDaySummarizedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDaySummarizedView.swift; sourceTree = "<group>"; };
 		F469FB381A322AE700352D60 /* SummaryDaySummarizedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SummaryDaySummarizedView.xib; sourceTree = "<group>"; };
@@ -688,12 +689,12 @@
 				8107FD7B1A11781200296BBB /* CDServerObject.m */,
 				8107FD771A11781100296BBB /* CDSection.h */,
 				8107FD781A11781100296BBB /* CDSection.m */,
-				813537551A1CF465002AB008 /* CDSemester.h */,
-				813537561A1CF465002AB008 /* CDSemester.m */,
 				816987B31A1D858700DD6A58 /* CDCourse.h */,
 				816987B41A1D858700DD6A58 /* CDCourse.m */,
 				81F35A6D1A213EE3001B3C32 /* CDSchedule.h */,
 				81F35A6E1A213EE3001B3C32 /* CDSchedule.m */,
+				F43087141A338C4600F63759 /* CDSemester.h */,
+				F43087151A338C4600F63759 /* CDSemester.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1407,7 +1408,6 @@
 				816CBB561A092909002C610A /* CourseSelectionCoreDataImporter.swift in Sources */,
 				81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */,
 				8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */,
-				813537571A1CF465002AB008 /* CDSemester.m in Sources */,
 				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
 				81FE70E61A20EC0200934062 /* CourseColor.swift in Sources */,
 				81E5862A1A1FC0DA00DE269B /* CourseDownloadViewController.swift in Sources */,
@@ -1417,6 +1417,7 @@
 				81A094E71A067DFD00A0C3CE /* Course.swift in Sources */,
 				81A094EF1A067DFD00A0C3CE /* EnrolledCourseTableViewCell.swift in Sources */,
 				813537601A1D24A3002AB008 /* SectionMeetingAttributeImporter.swift in Sources */,
+				F43087161A338C4600F63759 /* CDSemester.m in Sources */,
 				814D4E761A0C880500C21848 /* ScheduleCreationViewController.swift in Sources */,
 				81BCA5481A0FE94300391608 /* CourseSelectionNavigationController.swift in Sources */,
 				81F9A40E1A070B1600083E55 /* CourseDetailsViewController.swift in Sources */,
@@ -2015,9 +2016,10 @@
 		81A094DC1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F43087131A338B0C00F63759 /* ReCal_Course_Selection_v2__Semester_Name.xcdatamodel */,
 				81A094DD1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodel */,
 			);
-			currentVersion = 81A094DD1A067DFD00A0C3CE /* ReCal_Course_Selection.xcdatamodel */;
+			currentVersion = F43087131A338B0C00F63759 /* ReCal_Course_Selection_v2__Semester_Name.xcdatamodel */;
 			path = ReCal_Course_Selection.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -104,7 +104,7 @@ class ScheduleSelectionViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.visibleSemesters[section].termCode
+        return self.visibleSemesters[section].name
     }
 
     

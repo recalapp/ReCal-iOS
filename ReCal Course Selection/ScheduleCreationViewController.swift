@@ -64,7 +64,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
             self.managedObjectContext.performBlockAndWait {
                 itemInfos = self.semesters.map { (semester: CDSemester) -> ItemInfo in
                     var itemInfo = ItemInfo(cellIdentifier: basicCellIdentifier, selected: semester.termCode == self.selectedSemester?.termCode, cellProcessBlock: { (cell) -> UITableViewCell in
-                        cell.textLabel?.text = semester.termCode
+                        cell.textLabel?.text = semester.name
                         return cell
                     })
                     return itemInfo

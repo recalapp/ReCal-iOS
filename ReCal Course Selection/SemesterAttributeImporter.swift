@@ -12,6 +12,7 @@ import ReCalCommon
 class SemesterAttributeImporter: CompositeManagedObjectAttributeImporter {
     init() {
         let termCodeImporter = StringManagedObjectAttributeImporter(dictionaryKey: "term_code", attributeKey: "termCode")
-        super.init(attributeImporters: [termCodeImporter])
+        let nameImporter = StringManagedObjectAttributeImporter(dictionaryKey: "name", attributeKey: "name")
+        super.init(attributeImporters: [termCodeImporter, nameImporter])
     }
 }
