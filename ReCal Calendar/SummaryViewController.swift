@@ -11,8 +11,8 @@ import ReCalCommon
 
 private let summaryDayCellIdentifier = "SummaryDayCell"
 
-class SummaryViewController: UITableViewController {
-    
+class SummaryViewController: UITableViewController, SummaryDayTableViewCellDelegate {
+    weak var delegate: SummaryViewControllerDelegate?
     lazy private var managedObjectContext: NSManagedObjectContext = {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
@@ -104,6 +104,7 @@ class SummaryViewController: UITableViewController {
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(summaryDayCellIdentifier, forIndexPath: indexPath) as SummaryDayTableViewCell
+        cell.delegate = self
         if let events = (self.fetchedResultsController.sections?[indexPath.section] as? NSFetchedResultsSectionInfo)?.objects as? [CDEvent] {
             cell.viewModel = SummaryDayView.SummaryDayViewModel(events: events.map{SummaryDayViewEventAdapter(event: $0)})
         }
@@ -122,26 +123,31 @@ class SummaryViewController: UITableViewController {
         return 44
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    // MARK: - Summary Day Table View Cell Delegate
     
+    func summaryDayTableViewCell(summaryDayTableViewCell: SummaryDayTableViewCell, didSelectEvent event: SummaryDayViewEvent) {
+        if let adapter = event as? SummaryDayViewEventAdapter {
+            self.delegate?.summaryViewController(self, didSelectEventWithManagedObjectId: adapter.managedObjectId)
+        }
+    }
+    
+    // MARK: - Declarations
     struct SummaryDayViewEventAdapter : SummaryDayViewEvent {
         let title: String
         let time: SummaryDayView.EventTime
         let color: UIColor
         let highlightedColor: UIColor
+        let managedObjectId: NSManagedObjectID
         init(event: CDEvent) {
             self.title = event.eventTitle
             self.time = SummaryDayView.EventTime(startHour: event.eventStart.hour, startMinute: event.eventStart.minute, endHour: event.eventEnd.hour, endMinute: event.eventEnd.minute)
             self.highlightedColor = event.color!.darkerColor().darkerColor()
             self.color = event.color!.lighterColor().lighterColor()
+            self.managedObjectId = event.objectID
         }
     }
+}
+
+protocol SummaryViewControllerDelegate: class {
+    func summaryViewController(summaryViewController: SummaryViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID)
 }

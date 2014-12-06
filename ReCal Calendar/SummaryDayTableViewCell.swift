@@ -9,7 +9,9 @@
 import UIKit
 import ReCalCommon
 
-class SummaryDayTableViewCell: UITableViewCell {
+class SummaryDayTableViewCell: UITableViewCell, SummaryDayViewDelegate {
+    
+    weak var delegate: SummaryDayTableViewCellDelegate?
 
     @IBOutlet weak var summaryDayView: SummaryDayView!
     
@@ -21,6 +23,7 @@ class SummaryDayTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        summaryDayView.delegate = self
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -28,4 +31,13 @@ class SummaryDayTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    // MARK: - Summary Day View Delegate
+    func summaryDayView(summaryDayView: SummaryDayView, didSelectEvent event: SummaryDayViewEvent) {
+        self.delegate?.summaryDayTableViewCell(self, didSelectEvent: event)
+    }
+}
+
+protocol SummaryDayTableViewCellDelegate: class {
+    func summaryDayTableViewCell(summaryDayTableViewCell: SummaryDayTableViewCell, didSelectEvent event: SummaryDayViewEvent)
 }

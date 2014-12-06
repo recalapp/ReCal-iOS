@@ -12,7 +12,7 @@ import ReCalCommon
 class UserProfileServerCommunicator : ServerCommunicator.ServerCommunication {
     
     override var request: NSURLRequest {
-        let request = NSURLRequest(URL: NSURL(string: Urls.userProfileUrl)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10)
+        let request = NSURLRequest(URL: NSURL(string: Urls.userProfileUrl)!, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 100)
         return request
     }
     

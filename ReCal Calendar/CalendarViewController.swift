@@ -15,7 +15,7 @@ private let agendaViewControllerStoryboardId = "AgendaViewController"
 private let summaryViewControllerStoryboardId = "SummaryViewController"
 private let eventNavigationViewControllerStoryboardId = "eventNavigationViewController"
 
-class CalendarViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, AgendaViewControllerDelegate, WeekViewControllerDelegate, EventViewControllerDelegate, SettingsViewControllerDelegate {
+class CalendarViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, AgendaViewControllerDelegate, SummaryViewControllerDelegate, WeekViewControllerDelegate, EventViewControllerDelegate, SettingsViewControllerDelegate {
     
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var viewControllerSegmentedControl: UISegmentedControl!
@@ -27,6 +27,7 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     }()
     lazy private var dayViewController: UIViewController = {
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier(summaryViewControllerStoryboardId) as SummaryViewController
+        vc.delegate = self
         return vc
     }()
     lazy private var eventNavigationViewController: UINavigationController = {
@@ -227,6 +228,11 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     }
     func agendaViewController(agendaViewController: AgendaViewController, didScrollToVisibleDate date: NSDate) {
         self.visibleDate = date
+    }
+    
+    // MARK: - Summary View Controller Delegate
+    func summaryViewController(summaryViewController: SummaryViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID) {
+        self.presentEventViewController(eventObjectId: managedObjectId)
     }
     
     // MARK: - Week View Controller Delegate

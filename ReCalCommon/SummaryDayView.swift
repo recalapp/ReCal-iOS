@@ -14,6 +14,7 @@ private let summarizedViewIdentifier = "summarizedViewIdentifier"
 
 public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarizedLayout, UICollectionViewDataSource, UICollectionViewDelegate {
 
+    public weak var delegate: SummaryDayViewDelegate?
     private var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)!
     private var timeFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter.formatterWithUSLocale()
@@ -132,6 +133,13 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
     
     /// MARK: Collection View Delegate
     
+    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+        if let event = self.viewModel?.events[indexPath.item] {
+            self.delegate?.summaryDayView(self, didSelectEvent: event)
+        }
+    }
+    
     /// MARK: - Summarized Layout DataSource
     /// Return the event time for the item at indexPath. nil if indexPath invalid
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, eventTimeForItemAtIndexPath indexPath: NSIndexPath) -> SummaryDayView.EventTime {
@@ -178,4 +186,7 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
         public let summarizedHeight: Height = .Fill(oneHourHeight:50)
         public let summarizationFactor: SummarizationFactor = .Constant(20)
     }
+}
+public protocol SummaryDayViewDelegate: class {
+    func summaryDayView(summaryDayView: SummaryDayView, didSelectEvent event: SummaryDayViewEvent)
 }
