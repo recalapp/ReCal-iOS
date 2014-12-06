@@ -128,10 +128,12 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
                 self.pageViewContentView.alpha = 0
                 self.weekViewContentView.alpha = 1
                 self.viewControllerSegmentedControl.alpha = 0
+                self.weekViewController.viewWillAppear(true)
             }
             let completion: Void->Void = {
                 self.pageViewContentView.hidden = true
                 self.viewControllerSegmentedControl.hidden = true
+                self.weekViewController.viewDidAppear(true)
             }
             return (beginning, animation, completion)
         case _:
@@ -139,9 +141,19 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
                 self.pageViewContentView.alpha = 1
                 self.weekViewContentView.alpha = 0
                 self.viewControllerSegmentedControl.alpha = 1
+                if let viewControllers = self.pageViewController.viewControllers as? [UIViewController] {
+                    for vc in viewControllers {
+                        vc.viewWillAppear(true)
+                    }
+                }
             }
             let completion: Void->Void = {
                 self.weekViewContentView.hidden = true
+                if let viewControllers = self.pageViewController.viewControllers as? [UIViewController] {
+                    for vc in viewControllers {
+                        vc.viewDidAppear(true)
+                    }
+                }
             }
             return (beginning, animation, completion)
         }
