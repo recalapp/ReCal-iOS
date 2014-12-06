@@ -39,9 +39,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         willSet {
             switch newValue {
             case .LeftSidebarShown:
-                self.searchViewController.viewWillAppear(true)
+                self.searchViewController?.viewWillAppear(true)
             case .RightSidebarShown, .Unselected:
-                self.searchViewController.viewWillDisappear(true)
+                self.searchViewController?.viewWillDisappear(true)
             }
         }
         didSet {
@@ -54,9 +54,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             
             switch sidebarState {
             case .LeftSidebarShown:
-                self.searchViewController.viewDidAppear(true)
+                self.searchViewController?.viewDidAppear(true)
             case .RightSidebarShown, .Unselected:
-                self.searchViewController.viewDidDisappear(true)
+                self.searchViewController?.viewDidDisappear(true)
             }
         }
     }

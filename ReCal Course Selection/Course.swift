@@ -24,7 +24,7 @@ struct Course: Printable, ManagedObjectProxy {
     init(managedObject: CDCourse) {
         self.title = managedObject.title
         self.courseDescription = managedObject.courseDescription
-        self.courseListings = managedObject.courseListings.allObjects.map { CourseListing(managedObject: $0 as CDCourseListing) }
+        self.courseListings = managedObject.courseListings.allObjects.map { CourseListing(managedObject: $0 as CDCourseListing) }.sorted { $0.departmentCode < $1.departmentCode }
         self.sections = managedObject.sections.allObjects.map { Section(managedObject: $0 as CDSection) }.sorted { $0.sectionName < $1.sectionName }
         self.managedObjectProxyId = .Existing(managedObject.objectID)
         self.allSectionTypes = self.sections.map { $0.type }.reduce(Set<SectionType>(), combine: {(var set, type) in
