@@ -32,6 +32,9 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
         super.init(coder: aDecoder)
         self.initialize()
     }
+    private var minimumHour: Int {
+        return self.viewModel?.events.first?.time.startHour ?? 0
+    }
     public var state: State = .Summarized
     public var viewModel: SummaryDayViewModel? {
         didSet {
@@ -110,7 +113,7 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
             case .TimeRowHeader:
                 let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind.rawValue, withReuseIdentifier: timeRowHeaderIdentifier, forIndexPath: indexPath) as SummaryDayTimeRowHeaderView
                 let component = NSDateComponents()
-                component.hour = indexPath.section
+                component.hour = indexPath.section + self.minimumHour
                 let date = self.calendar.dateFromComponents(component)!
                 view.timeLabel.text = self.timeFormatter.stringFromDate(date)
                 return view
@@ -152,12 +155,12 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
     
     /// Return the minimum hour, from 0 to 23
     func minimumHourForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout) -> Int {
-        return 0
+        return self.minimumHour
     }
     
     /// Return the maximum hour, from 1 to 24. This is the first hour not seen. For example, setting this to 10 means that you will see the hour 9-10, but not 10-11
     func maximumHourForCollectionView(collectionView: UICollectionView, layout: UICollectionViewLayout) -> Int {
-        return 24
+        return (self.viewModel?.events.last?.time.endHour ?? 23) + 1
     }
     
     /// Return how many hours (can be fractional) each vertical slot represent
