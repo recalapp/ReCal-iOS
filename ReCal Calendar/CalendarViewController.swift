@@ -25,7 +25,7 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
         agendaVC.delegate = self
         return agendaVC
     }()
-    lazy private var dayViewController: UIViewController = {
+    lazy private var dayViewController: SummaryViewController = {
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier(summaryViewControllerStoryboardId) as SummaryViewController
         vc.delegate = self
         return vc
@@ -113,6 +113,7 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
         })
         self.weekViewController.centerDate = self.visibleDate
         self.agendaViewController.topDate = self.visibleDate
+        self.dayViewController.topDate = self.visibleDate
     }
     
     private func adjustAppearanceForTraitCollection(collection: UITraitCollection)->(Void->Void, Void->Void, Void->Void) {
@@ -201,7 +202,16 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
             self.viewControllerSegmentedControl.selectedSegmentIndex = currentViewControllerIndex
         }
     }
-    
+    func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [AnyObject]) {
+        for viewController in pendingViewControllers {
+            if viewController === self.dayViewController {
+                self.dayViewController.topDate = self.visibleDate
+            }
+            if viewController === self.agendaViewController {
+                self.agendaViewController.topDate = self.visibleDate
+            }
+        }
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -233,6 +243,10 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
     // MARK: - Summary View Controller Delegate
     func summaryViewController(summaryViewController: SummaryViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID) {
         self.presentEventViewController(eventObjectId: managedObjectId)
+    }
+    
+    func summaryViewController(summaryViewController: SummaryViewController, didScrollToVisibleDate date: NSDate) {
+        self.visibleDate = date
     }
     
     // MARK: - Week View Controller Delegate

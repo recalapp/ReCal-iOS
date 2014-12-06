@@ -42,6 +42,20 @@ class SummaryViewController: UITableViewController, SummaryDayTableViewCellDeleg
         return formatter
     }()
     
+    private var topDateStorage = NSDate()
+    
+    var topDate: NSDate {
+        get {
+            return topDateStorage
+        }
+        set {
+            topDateStorage = newValue.dateWithZeroHour
+            if let index = self.nearestIndexPathForDate(topDateStorage) {
+                self.tableView.scrollToRowAtIndexPath(index, atScrollPosition: .Top, animated: false)
+            }
+        }
+    }
+    
     private var notificationObservers: [AnyObject] = []
     
     override func viewDidLoad() {
@@ -93,6 +107,25 @@ class SummaryViewController: UITableViewController, SummaryDayTableViewCellDeleg
         // Dispose of any resources that can be recreated.
     }
     
+    private func nearestIndexPathForDate(var date: NSDate)->NSIndexPath? {
+        date = date.dateWithZeroHour
+        var prev: NSIndexPath?
+        for (index, section) in enumerate(self.fetchedResultsController.sections!) {
+            if let event = (section as? NSFetchedResultsSectionInfo)?.objects.last as? CDEvent {
+                let startDate = event.eventStart.dateWithZeroHour
+                switch date.compare(startDate) {
+                case .OrderedAscending:
+                    break
+                case .OrderedDescending:
+                    prev = NSIndexPath(forItem: 0, inSection: index)
+                    continue
+                case .OrderedSame:
+                    return NSIndexPath(forItem: 0, inSection: index)
+                }
+            }
+        }
+        return prev
+    }
 
     // MARK: - Table View Data Source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -123,6 +156,33 @@ class SummaryViewController: UITableViewController, SummaryDayTableViewCellDeleg
         return 44
     }
     
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView == self.tableView {
+            let indexesOpt = self.tableView.indexPathsForVisibleRows() as? [NSIndexPath]
+            if let indexes = indexesOpt {
+                let visibleIndexOpt = indexes.reduce(nil) { (previousMinOpt: NSIndexPath?, curIndexPath: NSIndexPath) -> NSIndexPath? in
+                    if let previousMin = previousMinOpt {
+                        if curIndexPath.section < previousMin.section {
+                            return curIndexPath
+                        } else if curIndexPath.section == previousMin.section && curIndexPath.row < previousMin.row {
+                            return curIndexPath
+                        }
+                        return previousMin
+                    } else {
+                        return curIndexPath
+                    }
+                }
+                if let visibleIndex = visibleIndexOpt {
+                    if let event = (self.fetchedResultsController.sections?[visibleIndex.section] as? NSFetchedResultsSectionInfo)?.objects.last as? CDEvent {
+                        self.topDateStorage = event.eventStart.dateWithZeroHour // bypass the observer
+                        self.delegate?.summaryViewController(self, didScrollToVisibleDate: self.topDate)
+                    }
+                    
+                }
+            }
+        }
+    }
+    
     // MARK: - Summary Day Table View Cell Delegate
     
     func summaryDayTableViewCell(summaryDayTableViewCell: SummaryDayTableViewCell, didSelectEvent event: SummaryDayViewEvent) {
@@ -150,4 +210,5 @@ class SummaryViewController: UITableViewController, SummaryDayTableViewCellDeleg
 
 protocol SummaryViewControllerDelegate: class {
     func summaryViewController(summaryViewController: SummaryViewController, didSelectEventWithManagedObjectId managedObjectId: NSManagedObjectID)
+    func summaryViewController(summaryViewController: SummaryViewController, didScrollToVisibleDate date: NSDate)
 }
