@@ -102,17 +102,19 @@ class SummaryViewController: UITableViewController, SummaryDayTableViewCellDeleg
     private func nearestIndexPathForDate(var date: NSDate)->NSIndexPath? {
         date = date.dateWithZeroHour
         var prev: NSIndexPath?
-        for (index, section) in enumerate(self.fetchedResultsController.sections!) {
-            if let event = (section as? NSFetchedResultsSectionInfo)?.objects.last as? CDEvent {
-                let startDate = event.eventStart.dateWithZeroHour
-                switch date.compare(startDate) {
-                case .OrderedAscending:
-                    break
-                case .OrderedDescending:
-                    prev = NSIndexPath(forItem: 0, inSection: index)
-                    continue
-                case .OrderedSame:
-                    return NSIndexPath(forItem: 0, inSection: index)
+        if let sections = self.fetchedResultsController.sections {
+            for (index, section) in enumerate(sections) {
+                if let event = (section as? NSFetchedResultsSectionInfo)?.objects.last as? CDEvent {
+                    let startDate = event.eventStart.dateWithZeroHour
+                    switch date.compare(startDate) {
+                    case .OrderedAscending:
+                        break
+                    case .OrderedDescending:
+                        prev = NSIndexPath(forItem: 0, inSection: index)
+                        continue
+                    case .OrderedSame:
+                        return NSIndexPath(forItem: 0, inSection: index)
+                    }
                 }
             }
         }

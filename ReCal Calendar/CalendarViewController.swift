@@ -112,8 +112,14 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
                 completion()
         })
         self.weekViewController.centerDate = self.visibleDate
-        self.agendaViewController.topDate = self.visibleDate
-        self.dayViewController.topDate = self.visibleDate
+        for vc in self.pageViewController.viewControllers {
+            if vc === self.agendaViewController {
+                self.agendaViewController.topDate = self.visibleDate
+            }
+            if vc === self.dayViewController {
+                self.dayViewController.topDate = self.visibleDate
+            }
+        }
     }
     
     private func adjustAppearanceForTraitCollection(collection: UITraitCollection)->(Void->Void, Void->Void, Void->Void) {
