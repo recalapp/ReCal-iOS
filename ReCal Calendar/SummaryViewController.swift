@@ -79,14 +79,6 @@ class SummaryViewController: UITableViewController, SummaryDayTableViewCellDeleg
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.tableView.reloadData()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        self.tableView.reloadData()
-    }
-    
     private func reloadTableViewData() {
         var errorOpt: NSError?
         NSFetchedResultsController.deleteCacheWithName("eventStartWithZeroHour")
@@ -135,6 +127,7 @@ class SummaryViewController: UITableViewController, SummaryDayTableViewCellDeleg
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(summaryDayCellIdentifier, forIndexPath: indexPath) as SummaryDayTableViewCell
         cell.delegate = self
@@ -154,6 +147,14 @@ class SummaryViewController: UITableViewController, SummaryDayTableViewCellDeleg
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 44
+    }
+    
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if let section = self.fetchedResultsController.sections?[indexPath.section] as? NSFetchedResultsSectionInfo {
+            return CGFloat(section.numberOfObjects) * 100
+        } else {
+            return 100
+        }
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
