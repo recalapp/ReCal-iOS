@@ -14,9 +14,9 @@
 
 @interface CDSchedule : CDServerObject
 
-@property (nonatomic, retain) id courseColorManager;
 @property (nonatomic, retain) id courseColorMap;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) id availableColors;
 @property (nonatomic, retain) NSSet *enrolledCourses;
 @property (nonatomic, retain) NSSet *enrolledSections;
 @property (nonatomic, retain) CDSemester *semester;

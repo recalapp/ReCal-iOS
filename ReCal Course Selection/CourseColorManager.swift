@@ -15,6 +15,14 @@ class CourseColorManager: NSObject, NSCoding, NSCopying {
     
     private var frequencyCount: Dictionary<CourseColor, Int> = Dictionary()
     
+    var availableColors: [CourseColor] {
+        return self.frequencyCount.keys.array
+    }
+    
+    subscript(color: CourseColor)->Int? {
+        return frequencyCount[color]
+    }
+    
     convenience init(availableColors: [CourseColor]) {
         self.init(availableColors: availableColors, occurrences: [])
     }
@@ -29,14 +37,20 @@ class CourseColorManager: NSObject, NSCoding, NSCopying {
                 self.frequencyCount[color] = self.frequencyCount[color]! + 1
             }
         }
+        super.init()
     }
     
     required init(coder aDecoder: NSCoder) {
         self.frequencyCount = aDecoder.decodeObjectForKey(frequencyCountKey) as Dictionary<CourseColor, Int>
+        super.init()
+        println(self.frequencyCount)
+        assert(self.checkInvariants())
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(self.frequencyCount, forKey: frequencyCountKey)
+        println("encoding \(self.frequencyCount)")
+        assert(self.checkInvariants())
     }
     
     private var nextMinimum: (CourseColor, Int) {
@@ -59,6 +73,7 @@ class CourseColorManager: NSObject, NSCoding, NSCopying {
         var frequencyCount = self.frequencyCount // protects against swift bug
         frequencyCount[color] = count + 1
         self.frequencyCount = frequencyCount
+        assert(self.checkInvariants())
         return color
     }
     
@@ -68,6 +83,7 @@ class CourseColorManager: NSObject, NSCoding, NSCopying {
         var frequencyCount = self.frequencyCount // protects against swift bug
         frequencyCount[color] = frequencyCount[color]! - dec
         self.frequencyCount = frequencyCount
+        assert(self.checkInvariants())
     }
     
     func copyWithZone(zone: NSZone) -> AnyObject {
@@ -79,5 +95,14 @@ class CourseColorManager: NSObject, NSCoding, NSCopying {
             }
         }
         return CourseColorManager(availableColors: availableColors, occurrences: occurrence)
+    }
+    
+    private func checkInvariants() -> Bool {
+        for (_, count) in self.frequencyCount {
+            if count < 0 {
+                return false
+            }
+        }
+        return true
     }
 }

@@ -84,8 +84,17 @@ struct Schedule : ManagedObjectProxy {
                 self.courseColorMap[course] = color
             }
         }
-        self.colorManager = managedObject.courseColorManager as CourseColorManager
+        let courseColorMap = self.courseColorMap
+        let availableColors: [CourseColor] = (managedObject.availableColors as? [CourseColor]) ?? {
+            var colors = Set<CourseColor>()
+            for (_, color) in courseColorMap {
+                colors.add(color)
+            }
+            return colors.toArray()
+        }()
+        self.colorManager = CourseColorManager(availableColors: availableColors, occurrences: self.courseColorMap.values.array)
         self.updateCourseColorMap()
+        assert(self.checkInvariants())
     }
     init(name: String, termCode: String) {
         self.managedObjectProxyId = .NewObject
@@ -95,6 +104,7 @@ struct Schedule : ManagedObjectProxy {
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
         self.courseColorMap = Dictionary()
         self.colorManager = CourseColorManager(availableColors: Settings.currentSettings.availableColors)
+        assert(self.checkInvariants())
     }
     
     mutating func updateCourseSectionTypeEnrollments() {
@@ -117,6 +127,7 @@ struct Schedule : ManagedObjectProxy {
                 self.courseSectionTypeEnrollments[course] = sectionTypeEnrollment
             }
         }
+        assert(self.checkInvariants())
     }
     
     mutating func updateCourseColorMap() {
@@ -125,6 +136,7 @@ struct Schedule : ManagedObjectProxy {
                 self.courseColorMap[course] = self.colorManager.getNextColor()
             }
         }
+        assert(self.checkInvariants())
     }
     
     mutating func updateColorUsageForDeletedCourse(course: Course) {
@@ -132,6 +144,7 @@ struct Schedule : ManagedObjectProxy {
         let color = self.courseColorMap[course]!
         self.courseColorMap.removeValueForKey(course)
         self.colorManager.decrementColorOccurrence(color)
+        assert(self.checkInvariants())
     }
     
     mutating func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
@@ -165,7 +178,7 @@ struct Schedule : ManagedObjectProxy {
                 }
             }
             schedule.courseColorMap = colorMapRepresentation
-            schedule.courseColorManager = self.colorManager
+            schedule.availableColors = self.colorManager.availableColors
             schedule.removeEnrolledSections(schedule.enrolledSections)
             for section in self.enrolledSections {
                 switch section.managedObjectProxyId {
@@ -209,8 +222,10 @@ struct Schedule : ManagedObjectProxy {
                 managedObjectContext.performBlockAndWait {
                     result = updateManagedObject(schedule)
                 }
+                assert(self.checkInvariants())
                 return result
             } else {
+                assert(self.checkInvariants())
                 return .Failure
             }
         case .NewObject:
@@ -229,8 +244,10 @@ struct Schedule : ManagedObjectProxy {
                     schedule.semester = self.semesterWithTermCode(self.termCode, inManagedObjectContext: managedObjectContext)
                     result = updateManagedObject(schedule)
                 }
+                assert(self.checkInvariants())
                 return result
             } else {
+                assert(self.checkInvariants())
                 return .Failure
             }
         }
@@ -256,6 +273,26 @@ struct Schedule : ManagedObjectProxy {
             hash = hash &* hashPrimeMultiplier &+ course.hashValue
         }
         return hash
+    }
+    
+    private func checkInvariants() -> Bool {
+        let availableColors = self.colorManager.availableColors
+        var frequency = Dictionary<CourseColor, Int>()
+        for (course, color) in self.courseColorMap {
+            if !self.enrolledCourses.contains(course) {
+                return false
+            }
+            if !arrayContainsElement(array: availableColors, element: color) {
+                return false
+            }
+            frequency[color] = (frequency[color] ?? 0) + 1
+        }
+        for (color, count) in frequency {
+            if self.colorManager[color] != count {
+                return false
+            }
+        }
+        return true
     }
 }
 

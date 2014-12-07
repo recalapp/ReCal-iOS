@@ -14,9 +14,9 @@
 
 @implementation CDSchedule
 
-@dynamic courseColorManager;
 @dynamic courseColorMap;
 @dynamic name;
+@dynamic availableColors;
 @dynamic enrolledCourses;
 @dynamic enrolledSections;
 @dynamic semester;

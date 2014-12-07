@@ -15,7 +15,7 @@
         <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="courseListings" inverseEntity="CDCourse" syncable="YES"/>
     </entity>
     <entity name="CDSchedule" representedClassName="CDSchedule" parentEntity="CDServerObject" syncable="YES">
-        <attribute name="courseColorManager" attributeType="Transformable" syncable="YES"/>
+        <attribute name="availableColors" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="courseColorMap" attributeType="Transformable" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="enrolledCourses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="schedules" inverseEntity="CDCourse" syncable="YES"/>

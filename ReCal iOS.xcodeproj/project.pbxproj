@@ -165,7 +165,7 @@
 		81FE70E41A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70E31A20E89600934062 /* FadeOverlayAnimatedTransitioning.swift */; };
 		81FE70E61A20EC0200934062 /* CourseColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FE70E51A20EC0200934062 /* CourseColor.swift */; };
 		F43087161A338C4600F63759 /* CDSemester.m in Sources */ = {isa = PBXBuildFile; fileRef = F43087151A338C4600F63759 /* CDSemester.m */; };
-		F430871A1A34C2AF00F63759 /* CDSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = F43087191A34C2AF00F63759 /* CDSchedule.m */; };
+		F430871D1A34C8DF00F63759 /* CDSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = F430871C1A34C8DF00F63759 /* CDSchedule.m */; };
 		F469FB341A31EB6100352D60 /* Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = F469FB331A31EB6100352D60 /* Interval.swift */; };
 		F469FB391A322AE700352D60 /* SummaryDaySummarizedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F469FB371A322AE700352D60 /* SummaryDaySummarizedView.swift */; };
 		F469FB3A1A322AE700352D60 /* SummaryDaySummarizedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F469FB381A322AE700352D60 /* SummaryDaySummarizedView.xib */; };
@@ -428,8 +428,8 @@
 		F43087141A338C4600F63759 /* CDSemester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSemester.h; sourceTree = "<group>"; };
 		F43087151A338C4600F63759 /* CDSemester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSemester.m; sourceTree = "<group>"; };
 		F43087171A34C20600F63759 /* ReCal_Course_Selection_v3__Simplified_Schedule.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReCal_Course_Selection_v3__Simplified_Schedule.xcdatamodel; sourceTree = "<group>"; };
-		F43087181A34C2AF00F63759 /* CDSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSchedule.h; sourceTree = "<group>"; };
-		F43087191A34C2AF00F63759 /* CDSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSchedule.m; sourceTree = "<group>"; };
+		F430871B1A34C8DF00F63759 /* CDSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDSchedule.h; sourceTree = "<group>"; };
+		F430871C1A34C8DF00F63759 /* CDSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSchedule.m; sourceTree = "<group>"; };
 		F469FB331A31EB6100352D60 /* Interval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interval.swift; sourceTree = "<group>"; };
 		F469FB371A322AE700352D60 /* SummaryDaySummarizedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDaySummarizedView.swift; sourceTree = "<group>"; };
 		F469FB381A322AE700352D60 /* SummaryDaySummarizedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SummaryDaySummarizedView.xib; sourceTree = "<group>"; };
@@ -694,8 +694,8 @@
 				816987B41A1D858700DD6A58 /* CDCourse.m */,
 				F43087141A338C4600F63759 /* CDSemester.h */,
 				F43087151A338C4600F63759 /* CDSemester.m */,
-				F43087181A34C2AF00F63759 /* CDSchedule.h */,
-				F43087191A34C2AF00F63759 /* CDSchedule.m */,
+				F430871B1A34C8DF00F63759 /* CDSchedule.h */,
+				F430871C1A34C8DF00F63759 /* CDSchedule.m */,
 			);
 			name = "Core Data";
 			sourceTree = "<group>";
@@ -1384,7 +1384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8107FD881A11781200296BBB /* CDSectionMeeting.m in Sources */,
-				F430871A1A34C2AF00F63759 /* CDSchedule.m in Sources */,
+				F430871D1A34C8DF00F63759 /* CDSchedule.m in Sources */,
 				8107FD7C1A11781200296BBB /* CDServerObject.m in Sources */,
 				816987B51A1D858700DD6A58 /* CDCourse.m in Sources */,
 				81A094EB1A067DFD00A0C3CE /* DayColumnHeaderBackgroundView.swift in Sources */,
