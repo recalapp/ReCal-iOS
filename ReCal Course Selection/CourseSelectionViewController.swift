@@ -427,7 +427,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     func enrollmentsDidChangeForCourseSearchTableViewController(viewController: CourseSearchTableViewController) {
         if self.schedule != nil {
             assert(viewController == self.searchViewController, "Wrong view controller")
-            let newEnrolled = OrderedSet(initialValues: viewController.enrolledCourses)
+            let newEnrolled = Set(initialItems: viewController.enrolledCourses)
             let deletedCourses = self.schedule!.enrolledCourses.toArray().filter { !newEnrolled.contains($0) }
             self.schedule!.enrolledCourses = newEnrolled
             for deleted in deletedCourses {

@@ -17,7 +17,7 @@ struct Schedule : ManagedObjectProxy {
     private(set) internal var managedObjectProxyId: ManagedObjectProxyId
     let name: String
     let termCode: String
-    var enrolledCourses: OrderedSet<Course>
+    var enrolledCourses: Set<Course>
     var courseSectionTypeEnrollments: Dictionary<Course, SectionTypeEnrollment>
     var courseColorMap: Dictionary<Course, CourseColor>
     private let colorManager: CourseColorManager
@@ -46,17 +46,8 @@ struct Schedule : ManagedObjectProxy {
         self.managedObjectProxyId = .Existing(managedObject.objectID)
         self.name = managedObject.name
         self.termCode = managedObject.semester.termCode
-        let enrolledCourses: [CDCourse] = managedObject.enrolledCourses.allObjects.map { $0 as CDCourse }
-        let enrolledCoursesOrder = managedObject.enrolledCoursesOrder as [NSURL]
-        self.enrolledCourses = OrderedSet()
-        for courseId in enrolledCoursesOrder {
-            if let course = enrolledCourses.filter({ $0.objectID.URIRepresentation().isEqual(courseId) }).last {
-                let course = Course(managedObject: course)
-                if !self.enrolledCourses.contains(course) {
-                    self.enrolledCourses.append(course)
-                }
-            }
-        }
+        let enrolledCourses: [Course] = managedObject.enrolledCourses.allObjects.map { $0 as CDCourse }.map { Course(managedObject: $0) }
+        self.enrolledCourses = Set(initialItems: enrolledCourses)
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
         for course in self.enrolledCourses {
             var sectionTypeEnrollment = SectionTypeEnrollment()
@@ -100,7 +91,7 @@ struct Schedule : ManagedObjectProxy {
         self.managedObjectProxyId = .NewObject
         self.name = name
         self.termCode = termCode
-        self.enrolledCourses = OrderedSet()
+        self.enrolledCourses = Set()
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
         self.courseColorMap = Dictionary()
         self.colorManager = CourseColorManager(availableColors: Settings.currentSettings.availableColors)
@@ -164,15 +155,6 @@ struct Schedule : ManagedObjectProxy {
                     return .Failure
                 }
             }
-            let courseIdsOrdered: [NSManagedObjectID?] = self.enrolledCourses.toArray().map { (course) -> NSManagedObjectID? in
-                switch course.managedObjectProxyId {
-                case .Existing(let objectId):
-                    return objectId
-                case .NewObject:
-                    return nil
-                }
-            }
-            schedule.enrolledCoursesOrder = courseIdsOrdered.map { $0!.URIRepresentation() as AnyObject }
             var colorMapRepresentation = Dictionary<NSURL, CourseColor>()
             for (course, color) in self.courseColorMap {
                 switch course.managedObjectProxyId {

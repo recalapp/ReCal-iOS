@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="CDCourse" representedClassName="CDCourse" parentEntity="CDServerObject" syncable="YES">
+        <attribute name="courseDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="courseListings" toMany="YES" deletionRule="Cascade" destinationEntity="CDCourseListing" inverseName="course" inverseEntity="CDCourseListing" syncable="YES"/>
+        <relationship name="schedules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDSchedule" inverseName="enrolledCourses" inverseEntity="CDSchedule" syncable="YES"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSection" inverseName="course" inverseEntity="CDSection" syncable="YES"/>
+        <relationship name="semester" maxCount="1" deletionRule="Nullify" destinationEntity="CDSemester" inverseName="courses" inverseEntity="CDSemester" syncable="YES"/>
+    </entity>
+    <entity name="CDCourseListing" representedClassName="CDCourseListing" syncable="YES">
+        <attribute name="courseNumber" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="departmentCode" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="isPrimary" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="courseListings" inverseEntity="CDCourse" syncable="YES"/>
+    </entity>
+    <entity name="CDSchedule" representedClassName="CDSchedule" parentEntity="CDServerObject" syncable="YES">
+        <attribute name="courseColorManager" attributeType="Transformable" syncable="YES"/>
+        <attribute name="courseColorMap" attributeType="Transformable" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="enrolledCourses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="schedules" inverseEntity="CDCourse" syncable="YES"/>
+        <relationship name="enrolledSections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDSection" inverseName="schedules" inverseEntity="CDSection" syncable="YES"/>
+        <relationship name="semester" maxCount="1" deletionRule="Nullify" destinationEntity="CDSemester" inverseName="schedules" inverseEntity="CDSemester" syncable="YES"/>
+    </entity>
+    <entity name="CDSection" representedClassName="CDSection" parentEntity="CDServerObject" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="sectionTypeCode" attributeType="String" regularExpressionString="(lab|cla|dri|lec|pre|sem|stu|ear|fil)" syncable="YES"/>
+        <relationship name="course" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="sections" inverseEntity="CDCourse" syncable="YES"/>
+        <relationship name="meetings" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSectionMeeting" inverseName="section" inverseEntity="CDSectionMeeting" syncable="YES"/>
+        <relationship name="schedules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDSchedule" inverseName="enrolledSections" inverseEntity="CDSchedule" syncable="YES"/>
+    </entity>
+    <entity name="CDSectionMeeting" representedClassName="CDSectionMeeting" parentEntity="CDServerObject" syncable="YES">
+        <attribute name="daysStorage" attributeType="String" regularExpressionString="((su|m|t|w|th|f|sa)\s)*(su|m|t|w|th|f|sa)?" syncable="YES"/>
+        <attribute name="endHour" attributeType="Integer 32" minValueString="0" maxValueString="23" defaultValueString="9" syncable="YES"/>
+        <attribute name="endMinute" attributeType="Integer 32" minValueString="0" maxValueString="59" defaultValueString="50" syncable="YES"/>
+        <attribute name="location" attributeType="String" defaultValueString="TBA" syncable="YES"/>
+        <attribute name="startHour" attributeType="Integer 32" minValueString="0" maxValueString="23" defaultValueString="8" syncable="YES"/>
+        <attribute name="startMinute" attributeType="Integer 32" minValueString="0" maxValueString="59" defaultValueString="0" syncable="YES"/>
+        <relationship name="section" maxCount="1" deletionRule="Nullify" destinationEntity="CDSection" inverseName="meetings" inverseEntity="CDSection" syncable="YES"/>
+    </entity>
+    <entity name="CDSemester" representedClassName="CDSemester" parentEntity="CDServerObject" syncable="YES">
+        <attribute name="active" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" defaultValueString="(Semester Name)" syncable="YES"/>
+        <attribute name="termCode" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="courses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDCourse" inverseName="semester" inverseEntity="CDCourse" syncable="YES"/>
+        <relationship name="schedules" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDSchedule" inverseName="semester" inverseEntity="CDSchedule" syncable="YES"/>
+    </entity>
+    <entity name="CDServerObject" representedClassName="CDServerObject" isAbstract="YES" syncable="YES">
+        <attribute name="serverId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CDCourse" positionX="-3296" positionY="-3843" width="128" height="133"/>
+        <element name="CDCourseListing" positionX="-3294" positionY="-3613" width="128" height="103"/>
+        <element name="CDSchedule" positionX="-3717" positionY="-3852" width="128" height="133"/>
+        <element name="CDSection" positionX="-3035" positionY="-3708" width="128" height="118"/>
+        <element name="CDSectionMeeting" positionX="-3051" positionY="-3888" width="128" height="148"/>
+        <element name="CDSemester" positionX="-3521" positionY="-3735" width="128" height="120"/>
+        <element name="CDServerObject" positionX="-3377" positionY="-3996" width="128" height="58"/>
+    </elements>
+</model>
