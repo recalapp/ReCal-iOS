@@ -56,22 +56,26 @@ public class SettingsViewController: UITableViewController, SettingsSwitchTableV
                 return centerCell
             })
         ])
-        let recalAppsSection = SectionInfo(name: .Empty, items: [
-//            ItemInfo(cellIdentifier: basicCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
-//                cell.textLabel.text = "Course Selection"
-//                if NSBundle.mainBundle().bundleIdentifier == courseSelectionBundleIdentifier {
-//                    cell.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
-//                }
-//                return cell
-//            }),
-//            ItemInfo(cellIdentifier: basicCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
-//                cell.textLabel.text = "Calendar"
-//                if NSBundle.mainBundle().bundleIdentifier == calendarBundleIdentifier {
-//                    cell.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
-//                }
-//                return cell
-//            })
-        ])
+        var appItems: [ItemInfo] = []
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: Urls.courseSelection)!) {
+            appItems.append(ItemInfo(cellIdentifier: basicCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
+                cell.textLabel?.text = "Course Selection"
+                if NSBundle.mainBundle().bundleIdentifier == courseSelectionBundleIdentifier {
+                    cell.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
+                }
+                return cell
+            }))
+        }
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: Urls.calendar)!) {
+            appItems.append(ItemInfo(cellIdentifier: basicCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
+                cell.textLabel?.text = "Calendar"
+                if NSBundle.mainBundle().bundleIdentifier == calendarBundleIdentifier {
+                    cell.backgroundColor = Settings.currentSettings.colorScheme.selectedContentBackgroundColor
+                }
+                return cell
+            }))
+        }
+        let recalAppsSection = SectionInfo(name: .Literal("Installed ReCal Apps"), items: appItems)
         let preferencesSection = SectionInfo(name: .Literal("Preferences"), items: [
             ItemInfo(cellIdentifier: switchCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
                 let switchCell = cell as SettingsSwitchTableViewCell

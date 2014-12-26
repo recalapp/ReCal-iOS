@@ -69,7 +69,6 @@ class CalendarViewController: UIViewController, UIPageViewControllerDataSource, 
             self.weekViewContentView.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(self.weekViewController.view, inParentView: self.weekViewContentView, withInsets: UIEdgeInsetsZero))
         }
         setUpWeekView()
-        Settings.currentSettings.authenticator.authenticate()
         self.settingsButton.title = navigationThreeBars
         let updateColorScheme: ()->Void = {
             switch Settings.currentSettings.theme {
