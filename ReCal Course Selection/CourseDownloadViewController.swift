@@ -14,7 +14,7 @@ class CourseDownloadViewController: UIViewController {
     // MARK: Constants
     
     /// The number of courses to download in one connection
-    private let batchSize = 200
+    private let batchSize = 700
     
     /// The estimated total number of courses, used in the inital download
     private let estimatedTotalCount = 1200

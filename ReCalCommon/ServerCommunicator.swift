@@ -7,6 +7,7 @@
 //
 
 import Foundation
+private let disabled = false
 
 public final class ServerCommunicator {
     
@@ -38,6 +39,9 @@ public final class ServerCommunicator {
     }
     
     @objc public func handleTimerInterrupt(_: NSTimer) {
+        if disabled {
+            return
+        }
         self.performBlock {
             for (_, serverCommunication) in self.identiferServerCommunicationMapping {
                 self.advanceStateForServerCommunication(serverCommunication, reason: .TimerInterrupt)
@@ -46,6 +50,9 @@ public final class ServerCommunicator {
     }
     
     private func advanceStateForServerCommunication(serverCommunication: ServerCommunication, reason: AdvanceReason) {
+        if disabled {
+            return
+        }
         self.assertPrivateQueue()
         switch serverCommunication.status {
         case .Connecting, .Processing:
