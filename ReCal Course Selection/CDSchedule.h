@@ -2,8 +2,8 @@
 //  CDSchedule.h
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 12/7/14.
-//  Copyright (c) 2014 ReCal. All rights reserved.
+//  Created by Naphat Sanguansin on 1/28/15.
+//  Copyright (c) 2015 ReCal. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,9 +14,10 @@
 
 @interface CDSchedule : CDServerObject
 
+@property (nonatomic, retain) id availableColors;
 @property (nonatomic, retain) id courseColorMap;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) id availableColors;
+@property (nonatomic, retain) NSDate * lastModified;
 @property (nonatomic, retain) NSSet *enrolledCourses;
 @property (nonatomic, retain) NSSet *enrolledSections;
 @property (nonatomic, retain) CDSemester *semester;

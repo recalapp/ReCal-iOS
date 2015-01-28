@@ -180,6 +180,8 @@ struct Schedule : ManagedObjectProxy {
             schedule.courseColorMap = colorMapRepresentation
             schedule.availableColors = self.colorManager.availableColors
             schedule.removeEnrolledSections(schedule.enrolledSections)
+            schedule.modified = true
+            schedule.lastModified = NSDate()
             for section in self.enrolledSections {
                 switch section.managedObjectProxyId {
                 case .Existing(let objectId):
