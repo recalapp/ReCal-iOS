@@ -14,6 +14,7 @@ extension Urls {
     static let courseSelectionApiBase = "\(courseSelectionBase)/api/v1"
     static let activeSemesters = "\(courseSelectionApiBase)/semester/?format=json"
     static let availableColors = "\(courseSelectionApiBase)/color_palette/?format=json"
+    static let schedules = "\(courseSelectionApiBase)/schedule/?format=json"
     static func courses(#semesterTermCode: String) -> String {
         return "\(courseSelectionApiBase)/course/?semester__term_code=\(semesterTermCode)&format=json"
     }

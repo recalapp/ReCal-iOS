@@ -180,6 +180,9 @@
 		F48768981A30CB32003EFFB4 /* SummaryDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48768971A30CB32003EFFB4 /* SummaryDayViewModel.swift */; };
 		F487689A1A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48768991A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift */; };
 		F487689C1A314D3E003EFFB4 /* SummaryDayCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F487689B1A314D3E003EFFB4 /* SummaryDayCollectionViewLayout.swift */; };
+		F4D855CE1AC32B9400ACF4FB /* ToOneChildLookUpManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D855CD1AC32B9400ACF4FB /* ToOneChildLookUpManagedObjectAttributeImporter.swift */; };
+		F4E323D11AA226DB00308D8D /* AllSchedulesServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E323D01AA226DB00308D8D /* AllSchedulesServerCommunication.swift */; };
+		F4E323D31AA229F800308D8D /* ScheduleAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E323D21AA229F800308D8D /* ScheduleAttributeImporter.swift */; };
 		F4EB32291A326E7B00984AF8 /* SummaryDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EB32281A326E7B00984AF8 /* SummaryDayTableViewCell.swift */; };
 		F4EB322C1A32704900984AF8 /* CDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EB322B1A32704900984AF8 /* CDEvent.m */; };
 		F4EB32301A32B90800984AF8 /* SummaryDayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EB322F1A32B90800984AF8 /* SummaryDayHeaderView.swift */; };
@@ -445,6 +448,9 @@
 		F48768991A30D73A003EFFB4 /* SummaryDayViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		F487689B1A314D3E003EFFB4 /* SummaryDayCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayCollectionViewLayout.swift; sourceTree = "<group>"; };
 		F4D62FCB1A79707300F06E13 /* ReCal_Course_Selection_v4__Syncing_Schedule.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReCal_Course_Selection_v4__Syncing_Schedule.xcdatamodel; sourceTree = "<group>"; };
+		F4D855CD1AC32B9400ACF4FB /* ToOneChildLookUpManagedObjectAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToOneChildLookUpManagedObjectAttributeImporter.swift; sourceTree = "<group>"; };
+		F4E323D01AA226DB00308D8D /* AllSchedulesServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllSchedulesServerCommunication.swift; sourceTree = "<group>"; };
+		F4E323D21AA229F800308D8D /* ScheduleAttributeImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleAttributeImporter.swift; sourceTree = "<group>"; };
 		F4EB32281A326E7B00984AF8 /* SummaryDayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDayTableViewCell.swift; sourceTree = "<group>"; };
 		F4EB322A1A32704900984AF8 /* CDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEvent.h; sourceTree = "<group>"; };
 		F4EB322B1A32704900984AF8 /* CDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEvent.m; sourceTree = "<group>"; };
@@ -635,6 +641,7 @@
 				8135375F1A1D24A3002AB008 /* SectionMeetingAttributeImporter.swift */,
 				813537611A1D2849002AB008 /* SemesterAttributeImporter.swift */,
 				8192C0F01A1E665800FEB0B4 /* CourseImportOperation.swift */,
+				F4E323D21AA229F800308D8D /* ScheduleAttributeImporter.swift */,
 			);
 			name = "Core Data Import";
 			sourceTree = "<group>";
@@ -644,6 +651,7 @@
 			children = (
 				816987AC1A1D6D8B00DD6A58 /* ActiveSemesterServerCommunication.swift */,
 				818485F61A24D90300105512 /* AvailableColorsServerCommunication.swift */,
+				F4E323D01AA226DB00308D8D /* AllSchedulesServerCommunication.swift */,
 			);
 			name = "Server Communication";
 			sourceTree = "<group>";
@@ -1006,6 +1014,7 @@
 				81F76B1A1A16E385001B6233 /* ToManyChildManagedObjectAttributeImporter.swift */,
 				81F76B1E1A17092A001B6233 /* ToOneChildManagedObjectAttributeImporter.swift */,
 				81F76B201A170F10001B6233 /* NumberManagedObjectAttributeImporter.swift */,
+				F4D855CD1AC32B9400ACF4FB /* ToOneChildLookUpManagedObjectAttributeImporter.swift */,
 			);
 			name = "Core Data Import";
 			sourceTree = "<group>";
@@ -1392,6 +1401,7 @@
 				81130BCE1A0C0D7D00F1F496 /* Day.swift in Sources */,
 				81A094FA1A067DFD00A0C3CE /* TimeRowHeaderBackgroundView.swift in Sources */,
 				8173FB991A24FE8F003EF6FC /* SemesterDownloadTask.swift in Sources */,
+				F4E323D31AA229F800308D8D /* ScheduleAttributeImporter.swift in Sources */,
 				81A094F31A067DFD00A0C3CE /* GridLineView.swift in Sources */,
 				81A094F11A067DFD00A0C3CE /* EventCollectionViewCell.swift in Sources */,
 				816987AD1A1D6D8B00DD6A58 /* ActiveSemesterServerCommunication.swift in Sources */,
@@ -1412,6 +1422,7 @@
 				81D93B801A09A7E900914FB3 /* CourseSearchOperation.swift in Sources */,
 				8146ECB01A0AB9F6005FF4C2 /* Schedule.swift in Sources */,
 				81A094F61A067DFD00A0C3CE /* ScheduleCollectionViewDataSource.swift in Sources */,
+				F4E323D11AA226DB00308D8D /* AllSchedulesServerCommunication.swift in Sources */,
 				81FE70E61A20EC0200934062 /* CourseColor.swift in Sources */,
 				81E5862A1A1FC0DA00DE269B /* CourseDownloadViewController.swift in Sources */,
 				81792B461A194B690035D062 /* URLs.swift in Sources */,
@@ -1450,6 +1461,7 @@
 			files = (
 				81853EE91A102D28002E9B1A /* Serializable.swift in Sources */,
 				814735091A1A3C31004B3A34 /* SidebarOverlayPresentationController.swift in Sources */,
+				F4D855CE1AC32B9400ACF4FB /* ToOneChildLookUpManagedObjectAttributeImporter.swift in Sources */,
 				81F76B1B1A16E385001B6233 /* ToManyChildManagedObjectAttributeImporter.swift in Sources */,
 				81E586261A1FAA7200DE269B /* URLConnectionExtension.swift in Sources */,
 				81F76B0E1A16B290001B6233 /* CompositeManagedObjectAttributeImporter.swift in Sources */,
