@@ -60,7 +60,14 @@ class AuthenticationViewController: UIViewController, UIWebViewDelegate {
         if self.authenticationUrl.isEqual(webView.request?.URL) {
             // if we got to this page, then we are done
             let username = webView.stringByEvaluatingJavaScriptFromString("document.body.innerText")
-            self.delegate?.authentication(self, didAuthenticateWithUsername: username!)
+            if username?.rangeOfCharacterFromSet(NSCharacterSet.whitespaceCharacterSet()) == nil {
+                // verified no white space
+                self.delegate?.authentication(self, didAuthenticateWithUsername: username!)
+            } else {
+                // white space. might be a formatting error. Let's be sure and fail for now.
+                
+                self.delegate?.authenticationDidFail(self)
+            }
         }
     }
     

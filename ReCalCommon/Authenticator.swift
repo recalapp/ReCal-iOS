@@ -18,6 +18,20 @@ public class Authenticator: AuthenticationViewControllerDelegate {
     public let rootViewController: UIViewController
     public let authenticationUrl: NSURL
     public let logOutUrl: NSURL
+    
+    public var user: User? {
+        switch self.state {
+        case .Unauthenticated, .Demo(_):
+            return nil
+        case .PreviouslyAuthenticated(let user):
+            return user
+        case .Authenticated(let user):
+            return user
+        case .Cached(let user):
+            return user
+        }
+    }
+    
     public init(rootViewController: UIViewController, forAuthenticationUrlString urlString: String, withLogOutUrlString logOutUrlString: String) {
         self.rootViewController = rootViewController
         self.authenticationUrl = NSURL(string: urlString)!
@@ -195,6 +209,11 @@ public class Authenticator: AuthenticationViewControllerDelegate {
     }
     func authenticationDidFail(authenticationViewController: AuthenticationViewController) {
         self.rootViewController.dismissViewControllerAnimated(true, completion: {
+            let alertVC = UIAlertController(title: "Error authenticating", message: "We are having some trouble logging you in right now. Please try again later.", preferredStyle:.Alert)
+            alertVC.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (_) in
+                self.rootViewController.dismissViewControllerAnimated(true, completion: nil)
+            }))
+            self.rootViewController.presentViewController(alertVC, animated: true, completion: nil)
             self.advanceStateWithAuthenticationResult(.Failure)
         })
     }
@@ -235,7 +254,7 @@ public func == (lhs: AuthenticationStatus, rhs: AuthenticationStatus) -> Bool {
 }
 
 public struct User: Equatable, Serializable {
-    let username: String
+    public let username: String
     private let serializedDictionaryKeyUser = "user"
     private let serializedDictionaryKeyIsReal = "isReal"
     private let isRealUser: Bool = true

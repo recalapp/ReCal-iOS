@@ -53,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Settings.currentSettings.serverCommunicator.performBlockAndWait {
                 Settings.currentSettings.serverCommunicator.registerServerCommunication(ActiveSemesterServerCommunication())
                 Settings.currentSettings.serverCommunicator.registerServerCommunication(AvailableColorsServerCommunication())
+                Settings.currentSettings.serverCommunicator.registerServerCommunication(AllSchedulesServerCommunication())
             }
         }
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {

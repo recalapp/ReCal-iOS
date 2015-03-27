@@ -39,7 +39,6 @@ class ScheduleAttributeImporter: CompositeManagedObjectAttributeImporter {
             ]
             }
         ]
-        // TODO courses and sections and color map
     }
     */
     init() {

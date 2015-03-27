@@ -12,8 +12,12 @@ import ReCalCommon
 class AllSchedulesServerCommunication : ServerCommunicator.ServerCommunication {
     override var request: NSURLRequest {
         // get actual url
-        let urlString = Urls.schedules
-        return NSURLRequest(URL: NSURL(string: urlString)!)
+        if let user = Settings.currentSettings.authenticator.user {
+            let urlString = Urls.schedulesForUser(username: user.username)
+            return NSURLRequest(URL: NSURL(string: urlString)!)
+        }
+        assert(false, "Trying to create a schedules request when the ServerCommunication object says not to do so.")
+        return NSURLRequest()
     }
     override var idleInterval: Int {
         return 100
@@ -35,12 +39,19 @@ class AllSchedulesServerCommunication : ServerCommunicator.ServerCommunication {
             }
             if let dict = dictOpt {
                 // call schedule importer
-                
+                println(dict)
             }
             return .NoAction
         case .Failure(let error):
             println("Error downloading schedules. Error: \(error)")
             return .NoAction
+        }
+    }
+    override func shouldSendRequest() -> ServerCommunicator.ShouldSend {
+        if let _ = Settings.currentSettings.authenticator.user {
+            return .Send
+        } else {
+            return .NextInterrupt
         }
     }
 }
