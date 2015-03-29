@@ -31,15 +31,8 @@ class AllSchedulesServerCommunication : ServerCommunicator.ServerCommunication {
         switch result {
         case .Success(_, let data):
             println("Successfully downloaded all schedules")
-            var errorOpt: NSError?
-            let dictOpt = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &errorOpt) as? Dictionary<String, AnyObject>
-            if let error = errorOpt {
-                println("Error parsing json for all schedules. Error: \(error)")
-                return .NoAction
-            }
-            if let dict = dictOpt {
-                // call schedule importer
-                println(dict)
+            Settings.currentSettings.coreDataImporter.performBlockAndWait {
+                let _ = Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.allSchedules)
             }
             return .NoAction
         case .Failure(let error):

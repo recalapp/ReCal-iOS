@@ -159,6 +159,7 @@ class ScheduleAttributeImporter: CompositeManagedObjectAttributeImporter {
                     if let colorMap = colorMapOpt {
                         managedObjectContext.performBlockAndWait {
                             scheduleManagedObject.courseColorMap = colorMap
+                            scheduleManagedObject.lastModified = NSDate()
                         }
                         return .Success
                     }

@@ -23,7 +23,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
     }()
     
     override var temporaryFileNames: [String] {
-        return [TemporaryFileNames.activeSemesters, TemporaryFileNames.courses]
+        return [TemporaryFileNames.activeSemesters, TemporaryFileNames.courses, TemporaryFileNames.allSchedules]
     }
     
     private func fetchOrCreateEntityWithServerId(serverId: String, entityName: String) -> CDServerObject {
@@ -123,6 +123,51 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
             progress.cancel()
             return .Failure
         }
+    }
+    
+    private func processAllSchedulesData(data: NSData, withProgress progress: NSProgress) -> ImportResult {
+        let revertChanges: ()->Void = {
+            self.backgroundManagedObjectContext.performBlockAndWait {
+                self.backgroundManagedObjectContext.reset()
+            }
+        }
+        if let downloadedDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [String: AnyObject] {
+            if let scheduleDictArray = downloadedDict["objects"] as? [[String: AnyObject]] {
+                println("Importing \(scheduleDictArray.count) schedules")
+                progress.totalUnitCount = Int64(scheduleDictArray.count)
+                progress.completedUnitCount = 0
+                let scheduleImporter = ScheduleAttributeImporter()
+                for scheduleDict in scheduleDictArray {
+                    if let id: AnyObject = scheduleDict["id"] {
+                        let scheduleObject = self.fetchOrCreateEntityWithServerId("\(id)", entityName: "CDSchedule") as CDSchedule
+                        let result = scheduleImporter.importAttributeFromDictionary(scheduleDict, intoManagedObject: scheduleObject, inManagedObjectContext: self.backgroundManagedObjectContext)
+                        switch result {
+                        case .Success:
+                            break
+                        case .Error(_):
+                            println("Error during schedule import")
+                            revertChanges()
+                            progress.completedUnitCount = progress.totalUnitCount
+                            return .Failure
+                        }
+                        progress.completedUnitCount++
+                    } else {
+                        progress.completedUnitCount = progress.totalUnitCount
+                        return .Failure
+                    }
+                }
+                var errorOpt: NSError?
+                self.backgroundManagedObjectContext.performBlockAndWait {
+                    let _ = self.backgroundManagedObjectContext.save(&errorOpt)
+                }
+                if let error = errorOpt {
+                    println("Error importing all schedules. Error: \(error)")
+                    return .Failure
+                }
+                return .Success
+            }
+        }
+        return .Failure
     }
     
     private func processActiveSemestersData(data: NSData, withProgress progress: NSProgress)->ImportResult {
@@ -227,6 +272,8 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
             return self.processCoursesData(data, withProgress: progress)
         case TemporaryFileNames.activeSemesters:
             return self.processActiveSemestersData(data, withProgress: progress)
+        case TemporaryFileNames.allSchedules:
+            return self.processAllSchedulesData(data, withProgress: progress)
         default:
             assertionFailure("Unsupported file")
             return .Failure
@@ -235,5 +282,6 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
     struct TemporaryFileNames {
         static let activeSemesters = "activeSemesters"
         static let courses = "courses"
+        static let allSchedules = "allSchedules"
     }
 }
