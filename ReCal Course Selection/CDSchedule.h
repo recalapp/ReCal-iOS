@@ -2,7 +2,7 @@
 //  CDSchedule.h
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 1/28/15.
+//  Created by Naphat Sanguansin on 3/29/15.
 //  Copyright (c) 2015 ReCal. All rights reserved.
 //
 
@@ -10,29 +10,16 @@
 #import <CoreData/CoreData.h>
 #import "CDServerObject.h"
 
-@class CDCourse, CDSection, CDSemester;
+@class CDSemester;
 
 @interface CDSchedule : CDServerObject
 
 @property (nonatomic, retain) id availableColors;
 @property (nonatomic, retain) id courseColorMap;
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSDate * lastModified;
-@property (nonatomic, retain) NSSet *enrolledCourses;
-@property (nonatomic, retain) NSSet *enrolledSections;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) id enrolledCoursesIds;
+@property (nonatomic, retain) id enrolledSectionsIds;
 @property (nonatomic, retain) CDSemester *semester;
-@end
-
-@interface CDSchedule (CoreDataGeneratedAccessors)
-
-- (void)addEnrolledCoursesObject:(CDCourse *)value;
-- (void)removeEnrolledCoursesObject:(CDCourse *)value;
-- (void)addEnrolledCourses:(NSSet *)values;
-- (void)removeEnrolledCourses:(NSSet *)values;
-
-- (void)addEnrolledSectionsObject:(CDSection *)value;
-- (void)removeEnrolledSectionsObject:(CDSection *)value;
-- (void)addEnrolledSections:(NSSet *)values;
-- (void)removeEnrolledSections:(NSSet *)values;
 
 @end

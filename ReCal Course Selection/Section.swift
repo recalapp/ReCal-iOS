@@ -11,11 +11,12 @@ import CoreData
 import ReCalCommon
 
 private let hashPrimeMultiplier = 65599
-struct Section: Printable, ManagedObjectProxy {
+struct Section: Printable, ManagedObjectProxy, ServerObject {
     typealias ManagedObject = CDSection
     let type: SectionType
     let sectionName: String
     let sectionMeetings: [SectionMeeting]
+    let serverId: String
     
     let managedObjectProxyId: ManagedObjectProxyId
     
@@ -24,6 +25,8 @@ struct Section: Printable, ManagedObjectProxy {
         self.type = managedObject.sectionType
         self.sectionMeetings = managedObject.meetings.allObjects.map { SectionMeeting(managedObject: $0 as CDSectionMeeting) }.sorted { $0.hashValue < $1.hashValue }
         self.managedObjectProxyId = .Existing(managedObject.objectID)
+        assert(managedObject.serverId != nil)
+        self.serverId = managedObject.serverId
     }
     
     func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {

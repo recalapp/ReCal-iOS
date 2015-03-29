@@ -16,6 +16,10 @@ public protocol ManagedObjectProxy: Hashable {
     mutating func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext)->ManagedObjectProxyCommitResult
 }
 
+public protocol ServerObject {
+    var serverId: String { get }
+}
+
 public enum ManagedObjectProxyId: Hashable {
     case NewObject
     case Existing(NSManagedObjectID)

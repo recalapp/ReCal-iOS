@@ -46,8 +46,45 @@ struct Schedule : ManagedObjectProxy {
         self.managedObjectProxyId = .Existing(managedObject.objectID)
         self.name = managedObject.name
         self.termCode = managedObject.semester.termCode
-        let enrolledCourses: [Course] = managedObject.enrolledCourses.allObjects.map { $0 as CDCourse }.map { Course(managedObject: $0) }
-        self.enrolledCourses = Set(initialItems: enrolledCourses)
+        let enrolledCourses: [CDCourse] = {
+            if let enrolledCoursesIds = managedObject.enrolledCoursesIds as? [String] {
+                if let managedObjectContext = managedObject.managedObjectContext {
+                    let fetchRequest = NSFetchRequest(entityName: "CDCourse")
+                    fetchRequest.fetchLimit = 1
+                    let enrolledCourses: [CDCourse] = enrolledCoursesIds.map { (courseId:String) -> CDCourse? in
+                        var errorOpt: NSError?
+                        var fetchedCourses: [CDCourse]?
+                        fetchRequest.predicate = NSPredicate(format: "serverId = %@", courseId)
+                        managedObjectContext.performBlockAndWait {
+                            fetchedCourses = managedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt) as? [CDCourse]
+                        }
+                        return fetchedCourses?.first
+                        }.filter { $0 != nil }.map { $0! }
+                    return enrolledCourses
+                }
+            }
+            return []
+        }()
+        let enrolledSections: [CDSection] = {
+            if let enrolledSectionIds = managedObject.enrolledSectionsIds as? [String] {
+                if let managedObjectContext = managedObject.managedObjectContext {
+                    let fetchRequest = NSFetchRequest(entityName: "CDSection")
+                    fetchRequest.fetchLimit = 1
+                    let enrolledSections: [CDSection] = enrolledSectionIds.map { (sectionId:String) -> CDSection? in
+                        var errorOpt: NSError?
+                        var fetchedSections: [CDSection]?
+                        fetchRequest.predicate = NSPredicate(format: "serverId = %@", sectionId)
+                        managedObjectContext.performBlockAndWait {
+                            fetchedSections = managedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt) as? [CDSection]
+                        }
+                        return fetchedSections?.first
+                    }.filter { $0 != nil }.map { $0! }
+                    return enrolledSections
+                }
+            }
+            return []
+        }()
+        self.enrolledCourses = Set(initialItems: enrolledCourses.map { Course(managedObject: $0) })
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
         for course in self.enrolledCourses {
             var sectionTypeEnrollment = SectionTypeEnrollment()
@@ -60,7 +97,7 @@ struct Schedule : ManagedObjectProxy {
                 }
             }()
             for sectionType in course.allSectionTypes {
-                var sectionOpt = (managedObject.enrolledSections.allObjects as [CDSection]).filter { $0.course.objectID == courseId && $0.sectionType == sectionType }.last
+                var sectionOpt = enrolledSections.filter { $0.course.objectID == courseId && $0.sectionType == sectionType }.last
                 if let section = sectionOpt {
                     sectionTypeEnrollment[sectionType] = .Enrolled(Section(managedObject: section))
                 } else {
@@ -69,17 +106,10 @@ struct Schedule : ManagedObjectProxy {
             }
             self.courseSectionTypeEnrollments[course] = sectionTypeEnrollment
         }
-        let colorMapRepresentation = managedObject.courseColorMap as Dictionary<NSURL,CourseColor>
+        let colorMapRepresentation = managedObject.courseColorMap as Dictionary<String,CourseColor>
         self.courseColorMap = Dictionary()
-        for (idUrl, color) in colorMapRepresentation {
-            let courseOpt = self.enrolledCourses.toArray().filter { (course) in
-                switch course.managedObjectProxyId {
-                case .NewObject:
-                    return false
-                case .Existing(let id):
-                    return id.URIRepresentation().isEqual(idUrl)
-                }
-            }.last
+        for (id, color) in colorMapRepresentation {
+            let courseOpt = self.enrolledCourses.toArray().filter { $0.serverId == id }.last
             if let course = courseOpt {
                 self.courseColorMap[course] = color
             }
@@ -149,63 +179,21 @@ struct Schedule : ManagedObjectProxy {
     
     mutating func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
         let updateManagedObject = { (schedule: CDSchedule) -> ManagedObjectProxyCommitResult in
-            for course in schedule.enrolledCourses.allObjects {
-                schedule.removeEnrolledCoursesObject(course as CDCourse)
-            }
-            for course in self.enrolledCourses {
-                switch course.commitToManagedObjectContext(managedObjectContext) {
-                case .Success(let objectId):
-                    var courseOpt: CDCourse?
-                    managedObjectContext.performBlockAndWait {
-                        courseOpt = managedObjectContext.objectWithID(objectId) as? CDCourse
-                    }
-                    if let courseManagedObject: CDCourse = courseOpt {
-                        schedule.addEnrolledCoursesObject(courseManagedObject)
-                    } else {
-                        return .Failure
-                    }
-                case .Failure:
-                    return .Failure
-                }
-            }
-            var colorMapRepresentation = Dictionary<NSURL, CourseColor>()
+            var enrolledCoursesIds: [String] = self.enrolledCourses.toArray().map { $0.serverId }
+            var enrolledSectionsIds: [String] = self.enrolledSections.map { $0.serverId }
+            var colorMapRepresentation = Dictionary<String, CourseColor>()
             for (course, color) in self.courseColorMap {
-                switch course.managedObjectProxyId {
-                case .NewObject:
-                    break
-                case .Existing(let id):
-                    colorMapRepresentation[id.URIRepresentation()] = color
-                }
+                colorMapRepresentation[course.serverId] = color
             }
-            schedule.courseColorMap = colorMapRepresentation
-            schedule.availableColors = self.colorManager.availableColors
-            schedule.removeEnrolledSections(schedule.enrolledSections)
-            schedule.modified = true
-            schedule.lastModified = NSDate()
-            for section in self.enrolledSections {
-                switch section.managedObjectProxyId {
-                case .Existing(let objectId):
-                    var sectionOpt: CDSection?
-                    managedObjectContext.performBlockAndWait {
-                        sectionOpt = managedObjectContext.objectWithID(objectId) as? CDSection
-                    }
-                    if let section = sectionOpt {
-                        schedule.addEnrolledSectionsObject(section)
-                    } else {
-                        return .Failure
-                    }
-                case .NewObject:
-                    return .Failure
-                }
-                switch section.commitToManagedObjectContext(managedObjectContext) {
-                case .Success(let objectId):
-                    managedObjectContext.performBlockAndWait {
-                        schedule.addEnrolledSectionsObject(managedObjectContext.objectWithID(objectId) as CDSection)
-                    }
-                case .Failure:
-                    return .Failure
-                }
+            managedObjectContext.performBlockAndWait {
+                schedule.enrolledCoursesIds = enrolledCoursesIds
+                schedule.courseColorMap = colorMapRepresentation
+                schedule.availableColors = self.colorManager.availableColors
+                schedule.modified = true
+                schedule.lastModified = NSDate()
+                schedule.enrolledSectionsIds = enrolledSectionsIds
             }
+            
             self.managedObjectProxyId = .Existing(schedule.objectID)
             return .Success(schedule.objectID)
         }

@@ -60,7 +60,7 @@ class CourseImportOperation: NSOperation {
         if self.cancelled {
             return
         }
-        let course = self.fetchOrCreateEntityWithServerId("\(serverId)", entityName: "CDCourse") as CDCourse
+        let course = self.fetchOrCreateEntityWithServerId("\(serverId!)", entityName: "CDCourse") as CDCourse
         if self.cancelled {
             return
         }

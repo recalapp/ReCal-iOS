@@ -11,7 +11,7 @@ import CoreData
 import ReCalCommon
 
 private let hashPrimeMultipler = 32771
-struct Course: Printable, ManagedObjectProxy {
+struct Course: Printable, ManagedObjectProxy, ServerObject {
     typealias ManagedObject = CDCourse
     let courseListings: [CourseListing]
     let title: String
@@ -20,6 +20,7 @@ struct Course: Printable, ManagedObjectProxy {
     let managedObjectProxyId: ManagedObjectProxyId
     let allSectionTypes: [SectionType]
     let hashValue: Int
+    let serverId: String
     
     init(managedObject: CDCourse) {
         self.title = managedObject.title
@@ -42,6 +43,8 @@ struct Course: Printable, ManagedObjectProxy {
             hash = hash &* hashPrimeMultipler &+ section.hashValue
         }
         self.hashValue = hash
+        assert(managedObject.serverId != nil)
+        self.serverId = managedObject.serverId
     }
     
     func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {

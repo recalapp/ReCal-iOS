@@ -64,23 +64,8 @@ class ScheduleAttributeImporter: CompositeManagedObjectAttributeImporter {
         }
         return arrayOpt
     }
-    private func importEnrollment(enrollmentDict: Dictionary<String, AnyObject>, scheduleManagedObject: CDSchedule, managedObjectContext: NSManagedObjectContext) -> EnrollmentImportResult {
+    private func processEnrollment(enrollmentDict: Dictionary<String, AnyObject>) -> EnrollmentProcessResult {
         // CAREFUL managedobjectid changes if this is a new object. but we never save a new course object here, so it's fine
-        func tryFetch(#entityName: String, #serverId: AnyObject, #managedObjectContext: NSManagedObjectContext) -> NSManagedObject? {
-            var errorOpt: NSError?
-            let fetchRequest = NSFetchRequest(entityName: entityName)
-            fetchRequest.predicate = NSPredicate(format: "serverId = %@", "\(serverId)")
-            fetchRequest.fetchLimit = 1
-            var fetched: [NSManagedObject]?
-            managedObjectContext.performBlockAndWait {
-                fetched = managedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt) as? [NSManagedObject]
-            }
-            if let error = errorOpt {
-                println("Error fetching in schedule enrollment import. Error: \(error)")
-                return nil
-            }
-            return fetched?.first
-        }
         func tryParseColor(#dictionary: [String: AnyObject]?) -> CourseColor? {
             if let lightHex = dictionary?[lightDictionaryKey] as? String {
                 if let darkHex = dictionary?[darkDictionaryKey] as? String {
@@ -93,37 +78,16 @@ class ScheduleAttributeImporter: CompositeManagedObjectAttributeImporter {
         if courseIdOpt == nil {
             return .Failure
         }
-        let courseId: AnyObject = courseIdOpt!
+        let courseId = "\(courseIdOpt!)"
         let sectionIdsOpt = enrollmentDict["sections"] as? [AnyObject]
         if sectionIdsOpt == nil {
             return .Failure
         }
-        let sectionIds: [AnyObject] = sectionIdsOpt!
-        if let courseManagedObject = tryFetch(entityName: "CDCourse", serverId: "\(courseId)", managedObjectContext: managedObjectContext) as? CDCourse {
-            managedObjectContext.performBlockAndWait {
-                let coursesSet = scheduleManagedObject.mutableSetValueForKey("enrolledCourses")
-                coursesSet.addObject(courseManagedObject)
-            }
-            for id in sectionIds {
-                if let section = tryFetch(entityName: "CDSection", serverId: id, managedObjectContext: managedObjectContext) as? CDSection {
-                    if section.course != courseManagedObject {
-                        return .Failure
-                    }
-                    managedObjectContext.performBlockAndWait {
-                        let sectionsSet = scheduleManagedObject.mutableSetValueForKey("enrolledSections")
-                        sectionsSet.addObject(section)
-                    }
-                } else {
-                    return .Failure
-                }
-            }
-            if let color = tryParseColor(dictionary: enrollmentDict["color"] as? [String:AnyObject]) {
-                return .Success(courseManagedObject.objectID, color)
-            }
-            return .Failure
-        } else {
-            return .Failure
+        let sectionIds: [String] = sectionIdsOpt!.map {"\($0)"}
+        if let color = tryParseColor(dictionary: enrollmentDict["color"] as? [String:AnyObject]) {
+            return .Success(courseId: courseId, sectionIds: sectionIds, color: color)
         }
+        return .Failure
     }
     
     override func importAttributeFromDictionary(dict: Dictionary<String, AnyObject>, intoManagedObject managedObject: NSManagedObject, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> ManagedObjectAttributeImporter.ImportResult {
@@ -138,32 +102,27 @@ class ScheduleAttributeImporter: CompositeManagedObjectAttributeImporter {
                     return .Error(.InvalidDictionary)
                 }
                 if let enrollments = self.parseEnrollments(enrollmentsJson!) {
-                    scheduleManagedObject.removeEnrolledCourses(scheduleManagedObject.enrolledCourses)
-                    scheduleManagedObject.removeEnrolledSections(scheduleManagedObject.enrolledSections)
-                    let colorMapOpt = enrollments.map { self.importEnrollment($0, scheduleManagedObject: scheduleManagedObject, managedObjectContext: managedObjectContext) }.reduce([NSURL: CourseColor]()) { (colorMap: [NSURL: CourseColor]?, result) -> [NSURL:CourseColor]? in
-                        if colorMap == nil {
-                            return nil
-                        }
-                        switch result {
+                    let (coursesIds, sectionsIds, colorMap) = enrollments.map(self.processEnrollment).reduce(([String](), [String](), [String:CourseColor]()), combine: { (finalResult, processResult) in
+                        
+                        switch processResult {
                         case .Failure:
-                            return nil
-                        case .Success(let id, let color):
-                            if var map = colorMap {
-                                let key = id.URIRepresentation()
-                                map[key] = color
-                                return map
-                            }
-                            return nil
+                            return finalResult
+                        case let .Success(courseId: processedCourseId, sectionIds: processedSectionIds, color: processedCourseColor):
+                            var (courseIds, sectionsIds, colorMap) = finalResult
+                            courseIds.append(processedCourseId)
+                            sectionsIds += processedSectionIds
+                            colorMap[processedCourseId] = processedCourseColor
+                            return (courseIds, sectionsIds, colorMap)
                         }
+                    })
+                    managedObjectContext.performBlockAndWait {
+                        scheduleManagedObject.courseColorMap = colorMap
+                        scheduleManagedObject.lastModified = NSDate()
+                        scheduleManagedObject.enrolledCoursesIds = coursesIds
+                        scheduleManagedObject.enrolledSectionsIds = sectionsIds
+                        scheduleManagedObject.courseColorMap = colorMap
                     }
-                    if let colorMap = colorMapOpt {
-                        managedObjectContext.performBlockAndWait {
-                            scheduleManagedObject.courseColorMap = colorMap
-                            scheduleManagedObject.lastModified = NSDate()
-                        }
-                        return .Success
-                    }
-                    return .Error(.InvalidDictionary)
+                    return .Success
                 } else {
                     return .Error(.InvalidDictionary)
                 }
@@ -173,9 +132,9 @@ class ScheduleAttributeImporter: CompositeManagedObjectAttributeImporter {
         }
     }
     
-    private enum EnrollmentImportResult {
+    private enum EnrollmentProcessResult {
         case Failure
-        case Success(NSManagedObjectID, CourseColor)
+        case Success(courseId: String, sectionIds: [String], color: CourseColor)
     }
 }
 
