@@ -136,7 +136,18 @@ struct Schedule : ManagedObjectProxy {
         self.colorManager = CourseColorManager(availableColors: Settings.currentSettings.availableColors)
         assert(self.checkInvariants())
     }
-    
+    static func updatedCopy(schedule: Schedule, managedObjectContext: NSManagedObjectContext) -> Schedule {
+        switch schedule.managedObjectProxyId {
+        case .NewObject:
+            return schedule
+        case .Existing(let objectId):
+            if let object = managedObjectContext.objectWithID(objectId) as? CDSchedule {
+                return Schedule(managedObject: object)
+            } else {
+                return schedule
+            }
+        }
+    }
     mutating func updateCourseSectionTypeEnrollments() {
         for course in self.courseSectionTypeEnrollments.keys {
             if !self.enrolledCourses.contains(course) {

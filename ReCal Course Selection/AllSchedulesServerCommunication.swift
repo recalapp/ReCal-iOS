@@ -22,9 +22,11 @@ class AllSchedulesServerCommunication : ServerCommunicator.ServerCommunication {
     override var idleInterval: Int {
         return 100
     }
-    
+    class func identifier() -> String {
+        return "allSchedules"
+    }
     init() {
-        super.init(identifier: "allSchedules")
+        super.init(identifier: AllSchedulesServerCommunication.identifier())
     }
     
     override func handleCommunicationResult(result: ServerCommunicator.Result) -> ServerCommunicator.CompleteAction {

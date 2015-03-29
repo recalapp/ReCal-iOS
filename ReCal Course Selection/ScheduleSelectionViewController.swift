@@ -66,6 +66,7 @@ class ScheduleSelectionViewController: UITableViewController {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification    (notification)
             }
             self.fetchSchedules()
+            self.refreshControl?.endRefreshing()
         }
         self.notificationObservers.append(observer)
         let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in
@@ -73,6 +74,8 @@ class ScheduleSelectionViewController: UITableViewController {
         }
         self.notificationObservers.append(observer1)
         self.fetchSchedules()
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.addTarget(self, action: "reloadSchedules:", forControlEvents: UIControlEvents.ValueChanged)
     }
     
     deinit {
@@ -85,7 +88,11 @@ class ScheduleSelectionViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    func reloadSchedules(sender: UIRefreshControl) {
+        Settings.currentSettings.serverCommunicator.performBlockAndWait {
+            let _ = Settings.currentSettings.serverCommunicator.startServerCommunicationWithIdentifier(AllSchedulesServerCommunication.identifier())
+        }
+    }
     private func scheduleAtIndexPath(indexPath: NSIndexPath) -> CDSchedule? {
         return self.semesterToSchedulesMapping[self.visibleSemesters[indexPath.section]]?[indexPath.row]
     }

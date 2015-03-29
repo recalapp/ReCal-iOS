@@ -91,6 +91,13 @@ class ScheduleAttributeImporter: CompositeManagedObjectAttributeImporter {
     }
     
     override func importAttributeFromDictionary(dict: Dictionary<String, AnyObject>, intoManagedObject managedObject: NSManagedObject, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> ManagedObjectAttributeImporter.ImportResult {
+        if let scheduleManagedObject = managedObject as? CDSchedule {
+            if scheduleManagedObject.modified.boolValue {
+                return .Success // refuse to update if modified
+            }
+        } else {
+            return .Error(.InvalidManagedObject)
+        }
         let superResult = super.importAttributeFromDictionary(dict, intoManagedObject: managedObject, inManagedObjectContext: managedObjectContext)
         switch superResult {
         case .Error(_):

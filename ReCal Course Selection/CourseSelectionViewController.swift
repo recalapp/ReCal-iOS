@@ -477,7 +477,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }
         self.dismissViewControllerAnimated(true) {
             self.scheduleSelectionViewControllerTransitioningDelegate = nil
-            if coursesCount == 0 {
+            if coursesCount < 1000 /* TODO safe? */ {
                 let courseDownloadVC = self.storyboard?.instantiateViewControllerWithIdentifier(courseDownloadViewControllerStoryboardId) as CourseDownloadViewController
                 courseDownloadVC.termCode = schedule!.semester.termCode
                 courseDownloadVC.delegate = self
@@ -524,6 +524,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         assert(self.presentedViewController == courseDownloadViewController)
         self.dismissViewControllerAnimated(true) {
             self.courseDownloadViewControllerTransitioningDelegate = nil
+            if let schedule = self.schedule {
+                self.schedule = Schedule.updatedCopy(schedule, managedObjectContext: self.managedObjectContext)
+                self.reloadEnrolledCoursesView()
+                self.reloadScheduleView()
+                self.reloadSearchViewController()
+            }
         }
     }
     func courseDownloadDidFail(courseDownloadViewController: CourseDownloadViewController) {
