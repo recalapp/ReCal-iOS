@@ -167,10 +167,10 @@ class SchedulesSyncService {
                 return [
                     "title": self.schedule.name,
                     "id": self.schedule.serverId,
-                    "semester": "api/v1/semester/\(self.schedule.semester.serverId)",
+                    "semester": "/api/v1/semester/\(self.schedule.semester.serverId)/",
                     "available_colors": colorsString!,
                     "enrollments": courseString!,
-                    "user": "/api/v1/user/\(user.userId)"
+                    "user": "/api/v1/user/\(user.userId)/"
                 ]
             }
             return nil

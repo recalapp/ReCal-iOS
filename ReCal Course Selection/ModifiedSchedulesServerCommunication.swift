@@ -19,10 +19,11 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
         let urlString = Urls.scheduleWithId(scheduleId: self.scheduleId)
 //        let urlString = "http://localhost:8000/testing_post"
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: urlString)!)
-        request.HTTPMethod = "POST"
+        request.HTTPMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPShouldHandleCookies = true
         request.allHTTPHeaderFields = NSHTTPCookie.requestHeaderFieldsWithCookies(NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(NSURL(string: Urls.base)!)!)
-        let body = UrlEncoding.encodeParameters(parameters: self.scheduleDictionary, encoding: NSUTF8StringEncoding)
+        let body = Json.serializeToData(self.scheduleDictionary)
         request.HTTPBody = body
         let csrfToken = tryGetCsrfToken(NSHTTPCookieStorage.sharedHTTPCookieStorage()) ?? ""
         request.addValue(csrfToken, forHTTPHeaderField: "X_CSRFTOKEN")
@@ -40,9 +41,10 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
     
     override func handleCommunicationResult(result: ServerCommunicator.Result) -> ServerCommunicator.CompleteAction {
         switch result {
-        case .Success(_, let data):
+        case .Success(let response, let data):
             println("Successfully uploaded one modified schedule with id \(self.scheduleId)")
             // TODO mark as not modified
+            println(response)
             println(NSString(data: data, encoding: NSUTF8StringEncoding))
             if let scheduleObject = tryGetManagedObjectObject(managedObjectContext: self.managedObjectContext, entityName: "CDSchedule", attributeName: "serverId", attributeValue: "\(self.scheduleId)") as? CDSchedule {
                 var errorOpt: NSError?
@@ -57,7 +59,7 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
             return .Remove
         case .Failure(let error):
             println("Error uploading schedule. Error: \(error)")
-            return .NoAction
+            return .Remove
         }
     }
     override func shouldSendRequest() -> ServerCommunicator.ShouldSend {
