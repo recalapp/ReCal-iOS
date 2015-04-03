@@ -24,4 +24,7 @@ extension Urls {
     static func courses(#semesterTermCode: String, limit: Int, offset: Int) -> String {
         return "\(courses(semesterTermCode: semesterTermCode))&limit=\(limit)&offset=\(offset)"
     }
+    static func scheduleWithId(#scheduleId: Int) -> String {
+        return "\(courseSelectionApiBase)/schedule/\(scheduleId)"
+    }
 }

@@ -34,15 +34,6 @@ public extension NSLayoutConstraint {
     }
 }
 
-public extension String {
-    public func contains(other: String, caseSensitive: Bool = true) -> Bool {
-        return self.rangeOfString(other, options: caseSensitive ? NSStringCompareOptions.allZeros : NSStringCompareOptions.CaseInsensitiveSearch) != nil
-    }
-    public func isNumeric() -> Bool {
-        return self.toInt() != nil
-    }
-}
-
 public extension UIColor {
     public func darkerColor() -> UIColor {
         return self.colorWithBrightness(scale: 0.75)
@@ -152,3 +143,10 @@ public extension NSBundle {
         return NSBundle(identifier: "io.recal.ReCalCommon")!
     }
 }
+
+public extension NSMutableURLRequest {
+    public func setHTTPPostBody(#parameters: [String: String]) {
+        self.HTTPBody = UrlEncoding.encodeParameters(parameters: parameters, encoding: NSUTF8StringEncoding)
+    }
+}
+

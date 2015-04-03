@@ -9,10 +9,16 @@
 import Foundation
 import ReCalCommon
 
+private let schedulesSyncServiceObject = SchedulesSyncService(serverCommunicator: Settings.currentSettings.serverCommunicator)
 extension Settings {
+    var schedulesSyncService: SchedulesSyncService {
+        get {
+            return schedulesSyncServiceObject
+        }
+    }
     var availableColors: [CourseColor] {
         get {
-            return self.persistentProperties["availableColors"] as? [CourseColor] ?? [CourseColor(normalColorHexString: "D0DECF", highlightedColorHexString: "2D6234")]
+            return self.persistentProperties["availableColors"] as? [CourseColor] ?? [CourseColor(normalColorHexString: "D0DECF", highlightedColorHexString: "2D6234", serverId: "0")]
         }
         set {
             self.persistentProperties["availableColors"] = newValue
@@ -45,6 +51,7 @@ extension Settings {
         case SectionName
         case CourseNumber
     }
+
 }
 extension Settings.Notifications {
     static let ScheduleDisplayTextStyleDidChange = "ScheduleDisplayTextStyleDidChange"

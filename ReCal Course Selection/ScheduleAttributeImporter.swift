@@ -11,6 +11,7 @@ import ReCalCommon
 
 private let lightDictionaryKey = "light"
 private let darkDictionaryKey = "dark"
+private let colorIdDictionaryKey = "id"
 
 class ScheduleAttributeImporter: CompositeManagedObjectAttributeImporter {
     private let enrollmentsDictionaryKey = "enrollments"
@@ -69,7 +70,9 @@ class ScheduleAttributeImporter: CompositeManagedObjectAttributeImporter {
         func tryParseColor(#dictionary: [String: AnyObject]?) -> CourseColor? {
             if let lightHex = dictionary?[lightDictionaryKey] as? String {
                 if let darkHex = dictionary?[darkDictionaryKey] as? String {
-                    return CourseColor(normalColorHexString: lightHex, highlightedColorHexString: darkHex)
+                    if let id: AnyObject = dictionary?[colorIdDictionaryKey] {
+                        return CourseColor(normalColorHexString: lightHex, highlightedColorHexString: darkHex, serverId: "\(id)")
+                    }
                 }
             }
             return nil
@@ -155,7 +158,7 @@ private class AvailableColorAttributeImporter: ManagedObjectAttributeImporter {
         self.attributeKey = attributeKey
     }
     private func checkArray(array: [Dictionary<String, AnyObject>])->Bool {
-        return array.map { dict in dict[lightDictionaryKey] as? String != nil && dict[darkDictionaryKey] as? String != nil}.reduce(true) {$0 && $1}
+        return array.map { dict in dict[lightDictionaryKey] as? String != nil && dict[darkDictionaryKey] as? String != nil && dict[colorIdDictionaryKey] != nil}.reduce(true) {$0 && $1}
     }
     private func parseArray(json: String) -> [Dictionary<String, AnyObject>]? {
         var errorOpt: NSError?
@@ -176,7 +179,7 @@ private class AvailableColorAttributeImporter: ManagedObjectAttributeImporter {
                     println("Error, invalid available color array in schedule")
                     return .Error(.InvalidDictionary)
                 }
-                let colors = array.map { CourseColor(normalColorHexString: $0[lightDictionaryKey]! as String, highlightedColorHexString: $0[darkDictionaryKey]! as String) }
+                let colors = array.map { CourseColor(normalColorHexString: $0[lightDictionaryKey]! as String, highlightedColorHexString: $0[darkDictionaryKey]! as String, serverId: "\($0[colorIdDictionaryKey])") }
                 managedObjectContext.performBlockAndWait {
                     managedObject.setValue(colors, forKey: self.attributeKey)
                 }

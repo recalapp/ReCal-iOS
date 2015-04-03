@@ -15,6 +15,7 @@ class CourseColor: NSObject, NSCoding, Hashable, NSCopying {
     private struct CodingKeys {
         static let NormalColor = "CourseColorNormalColor"
         static let HighlightedColor = "CourseColorHighlightedColor"
+        static let ServerId = "ServerId"
     }
     let normalColorRepresentation: ColorRepresentation
     lazy var normalColor: UIColor = {
@@ -24,22 +25,27 @@ class CourseColor: NSObject, NSCoding, Hashable, NSCopying {
     lazy var highlightedColor: UIColor = {
         return UIColor(colorRepresentation: self.highlightedColorRepresentation)
     }()
-    init(normalColorHexString: String, highlightedColorHexString: String) {
+    let serverId: String
+    init(normalColorHexString: String, highlightedColorHexString: String, serverId: String) {
         // TODO normalize hex string
         self.normalColorRepresentation = ColorRepresentation(hexString: normalColorHexString)
         self.highlightedColorRepresentation = ColorRepresentation(hexString: highlightedColorHexString)
+        self.serverId = serverId
         super.init()
     }
-    init(normalColorRepresentation: ColorRepresentation, highlightedColorRepresentation: ColorRepresentation) {
+    init(normalColorRepresentation: ColorRepresentation, highlightedColorRepresentation: ColorRepresentation, serverId: String) {
         self.normalColorRepresentation = normalColorRepresentation
         self.highlightedColorRepresentation = highlightedColorRepresentation
+        self.serverId = serverId
         super.init()
     }
     required init(coder aDecoder: NSCoder) {
+        self.serverId = aDecoder.decodeObjectForKey(CodingKeys.ServerId) as String
         self.normalColorRepresentation = aDecoder.decodeObjectForKey(CodingKeys.NormalColor) as ColorRepresentation
         self.highlightedColorRepresentation = aDecoder.decodeObjectForKey(CodingKeys.HighlightedColor) as ColorRepresentation
     }
     func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(self.serverId, forKey: CodingKeys.ServerId)
         aCoder.encodeObject(self.normalColorRepresentation, forKey: CodingKeys.NormalColor)
         aCoder.encodeObject(self.highlightedColorRepresentation, forKey: CodingKeys.HighlightedColor)
     }
@@ -54,7 +60,8 @@ class CourseColor: NSObject, NSCoding, Hashable, NSCopying {
         }
     }
     func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy = CourseColor(normalColorRepresentation: self.normalColorRepresentation.copyWithZone(zone) as ColorRepresentation, highlightedColorRepresentation: self.highlightedColorRepresentation.copyWithZone(zone) as ColorRepresentation)
+        let copy = CourseColor(normalColorRepresentation: self.normalColorRepresentation.copyWithZone(zone) as ColorRepresentation, highlightedColorRepresentation: self.highlightedColorRepresentation.copyWithZone(zone) as ColorRepresentation,
+            serverId: self.serverId)
         return copy
     }
 }

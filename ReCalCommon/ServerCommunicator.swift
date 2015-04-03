@@ -78,34 +78,44 @@ public final class ServerCommunicator {
                 serverCommunication.status = .Ready
             }
         case .Ready:
-            switch serverCommunication.shouldSendRequest() {
-            case .Send:
-                let observer = NSURLConnection.sendObservedAsynchronousRequest(serverCommunication.request, queue: self.serverCommunicationQueue, completionHandler: { (response, data, error) -> Void in
-                    serverCommunication.status = .Processing
-                    let result: Result = error != nil ? .Failure(error!) : .Success(response!, data)
-                    switch serverCommunication.handleCommunicationResult(result) {
-                    case .ConnectAgain:
-                        serverCommunication.status = .Ready
-                        return self.advanceStateForServerCommunication(serverCommunication, reason: .Manual)
-                    case .NoAction:
-                        serverCommunication.status = .Idle(serverCommunication.idleInterval)
-                    case .Remove:
-                        if self.identiferServerCommunicationMapping[serverCommunication.identifier] === serverCommunication {
-                            self.unregisterServerCommunicationWithIdentifier(serverCommunication.identifier)
+            switch reason {
+            case .Initial:
+                break
+            case .Manual, .TimerInterrupt:
+                switch serverCommunication.shouldSendRequest() {
+                case .Send:
+                    let observer = NSURLConnection.sendObservedAsynchronousRequest(serverCommunication.request, queue: self.serverCommunicationQueue, completionHandler: { (response, data, error) -> Void in
+                        serverCommunication.status = .Processing
+                        let result: Result = error != nil ? .Failure(error!) : .Success(response!, data)
+                        switch serverCommunication.handleCommunicationResult(result) {
+                        case .ConnectAgain:
+                            serverCommunication.status = .Ready
+                            return self.advanceStateForServerCommunication(serverCommunication, reason: .Manual)
+                        case .NoAction:
+                            serverCommunication.status = .Idle(serverCommunication.idleInterval)
+                        case .Remove:
+                            if self.identiferServerCommunicationMapping[serverCommunication.identifier] === serverCommunication {
+                                self.unregisterServerCommunicationWithIdentifier(serverCommunication.identifier)
+                            }
                         }
-                    }
-                })
-                serverCommunication.status = .Connecting(observer)
-            case .Cancel:
-                serverCommunication.status = .Idle(serverCommunication.idleInterval)
-            case .NextInterrupt:
-                serverCommunication.status = .Ready
+                    })
+                    serverCommunication.status = .Connecting(observer)
+                case .Cancel:
+                    serverCommunication.status = .Idle(serverCommunication.idleInterval)
+                case .NextInterrupt:
+                    serverCommunication.status = .Ready
+                }
             }
+            
         }
     }
     
     public func registerServerCommunication(serverCommunication: ServerCommunication) {
         self.assertPrivateQueue()
+        if self.identiferServerCommunicationMapping[serverCommunication.identifier] != nil {
+            println("Attempting to add a server communication with duplicate identifier")
+            return
+        }
         self.advanceStateForServerCommunication(serverCommunication, reason: .Initial)
         self.identiferServerCommunicationMapping[serverCommunication.identifier] = serverCommunication
     }

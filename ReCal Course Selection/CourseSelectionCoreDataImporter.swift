@@ -28,24 +28,10 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
     
     private func fetchOrCreateEntityWithServerId(serverId: String, entityName: String) -> CDServerObject {
         var errorOpt: NSError?
-        let fetchRequest = NSFetchRequest(entityName: entityName)
-        let serverIdPredicate = NSPredicate(format: "serverId = %@", argumentArray: [serverId])
-        fetchRequest.predicate = serverIdPredicate
-        fetchRequest.fetchLimit = 1
-        var managedObject: CDServerObject?
-        self.backgroundManagedObjectContext.performBlockAndWait {
-            let fetched = self.backgroundManagedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt)
-            if let error = errorOpt {
-                println("Error fetching for entity name: \(entityName), with server id: \(serverId). Error: \(error)")
-                abort()
-            }
-            //println("\(entityName) fetched \(fetched) for server id \(serverId)")
-            if let last = fetched?.last as? CDServerObject {
-                managedObject = last
-            }
-        }
-        if managedObject == nil {
-            // must create, as it does not exist
+        if let managedObject = tryGetManagedObjectObject(managedObjectContext: self.backgroundManagedObjectContext, entityName: entityName, attributeName: "serverId", attributeValue: serverId) as? CDServerObject {
+            return managedObject
+        } else {
+            var managedObject: CDServerObject?
             self.backgroundManagedObjectContext.performBlockAndWait{
                 managedObject = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: self.backgroundManagedObjectContext) as? CDServerObject
                 if managedObject == nil {
@@ -54,8 +40,8 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 }
                 managedObject!.serverId = serverId
             }
+            return managedObject!
         }
-        return managedObject!
     }
     
     private func processCoursesData(data: NSData, withProgress progress: NSProgress) -> ImportResult {

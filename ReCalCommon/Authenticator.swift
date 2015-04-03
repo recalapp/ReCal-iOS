@@ -100,14 +100,21 @@ public class Authenticator: AuthenticationViewControllerDelegate {
                 if let response = responseOpt as? NSHTTPURLResponse {
                     if self.authenticationUrl.isEqual(response.URL) && response.statusCode == 200 {
                         // no redirection, and connection was successful, meaning data returned is the username
-                        let username = NSString(data: data!, encoding: NSASCIIStringEncoding) as String
-                        self.advanceStateWithAuthenticationResult(.Success(username))
+                        let content = NSString(data: data!, encoding: NSASCIIStringEncoding) as String
+                        let components = split(content, { $0 == " " }, allowEmptySlices:false)
+                        if components.count == 2 {
+                            self.advanceStateWithAuthenticationResult(.Success(components[0], components[1]))
+                        } else {
+                            self.advanceStateWithAuthenticationResult(.Failure)
+                        }
                     } else {
                         // redirection occurred. Present a view controller to let the user log in
                         self.advanceStateWithAuthenticationResult(.Failure)
                         NSOperationQueue.mainQueue().addOperationWithBlock {
                             if self.rootViewController.presentedViewController != self.authenticationNavigationController {
-                                self.rootViewController.presentViewController(self.authenticationNavigationController, animated: true, completion: nil)
+                                self.rootViewController.presentViewController(self.authenticationNavigationController, animated: true, completion: {(_) in
+                                    println("here")
+                                })
                             }
                         }
                     }
@@ -141,8 +148,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
         switch self.state {
         case .Authenticated(let user):
             switch result {
-            case .Success(let username):
-                self.state = .Authenticated(User(username: username))
+            case .Success(let username, let userId):
+                self.state = .Authenticated(User(username: username, userId: userId))
             case .LogOut:
                 self.state = .Unauthenticated
             case .Failure:
@@ -152,8 +159,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
             }
         case .Cached(let user):
             switch result {
-            case .Success(let username):
-                self.state = .Authenticated(User(username: username))
+            case .Success(let username, let userId):
+                self.state = .Authenticated(User(username: username, userId: userId))
             case .LogOut:
                 self.state = .Unauthenticated
             case .Failure:
@@ -163,8 +170,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
             }
         case .PreviouslyAuthenticated(_):
             switch result {
-            case .Success(let username):
-                self.state = .Authenticated(User(username: username))
+            case .Success(let username, let userId):
+                self.state = .Authenticated(User(username: username, userId: userId))
             case .LogOut:
                 self.state = .Unauthenticated
             case .Failure:
@@ -174,9 +181,9 @@ public class Authenticator: AuthenticationViewControllerDelegate {
             }
         case .Demo(_):
             switch result {
-            case .Success(let username):
+            case .Success(let username, let userId):
                 assertionFailure("Should never get here")
-                self.state = .Demo(User(username: username))
+                self.state = .Demo(User(username: username, userId: userId))
             case .Failure:
                 assertionFailure("Should never get here")
             case .LogOut:
@@ -186,8 +193,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
             }
         case .Unauthenticated:
             switch result {
-            case .Success(let username):
-                self.state = .Authenticated(User(username: username))
+            case .Success(let username, let userId):
+                self.state = .Authenticated(User(username: username, userId: userId))
             case .SuccessDemo:
                 self.state = .Demo(User(username: "(demo)", isRealUser: false))
             case .Failure, .LogOut:
@@ -202,9 +209,9 @@ public class Authenticator: AuthenticationViewControllerDelegate {
             self.advanceStateWithAuthenticationResult(.Failure)
         })
     }
-    func authentication(authenticationViewController: AuthenticationViewController, didAuthenticateWithUsername username: String) {
+    func authentication(authenticationViewController: AuthenticationViewController, didAuthenticateWithUsername username: String, userId: String) {
         self.rootViewController.dismissViewControllerAnimated(true, completion: {
-            self.advanceStateWithAuthenticationResult(.Success(username))
+            self.advanceStateWithAuthenticationResult(.Success(username, userId))
         })
     }
     func authenticationDidFail(authenticationViewController: AuthenticationViewController) {
@@ -221,7 +228,7 @@ public class Authenticator: AuthenticationViewControllerDelegate {
 
 /// used as input to DFA
 private enum AuthenticationResult {
-    case Success(String)
+    case Success(String, String)
     case SuccessDemo
     case Failure
     case LogOut
@@ -255,22 +262,27 @@ public func == (lhs: AuthenticationStatus, rhs: AuthenticationStatus) -> Bool {
 
 public struct User: Equatable, Serializable {
     public let username: String
+    public let userId: String
     private let serializedDictionaryKeyUser = "user"
+    private let serializedDictionaryKeyUserId = "userId"
     private let serializedDictionaryKeyIsReal = "isReal"
     private let isRealUser: Bool = true
-    public init(username: String) {
+    public init(username: String, userId: String) {
         self.username = username
+        self.userId = userId
     }
     public init(username: String, isRealUser: Bool) {
         self.username = username
+        self.userId = ""
         self.isRealUser = isRealUser
     }
     public init(serializedDictionary: SerializedDictionary) {
         self.username = serializedDictionary[serializedDictionaryKeyUser]! as String
         self.isRealUser = serializedDictionary[serializedDictionaryKeyIsReal]! as Bool
+        self.userId = serializedDictionary[serializedDictionaryKeyUserId]! as String
     }
     public func serialize() -> SerializedDictionary {
-        return [serializedDictionaryKeyUser: self.username, serializedDictionaryKeyIsReal: self.isRealUser]
+        return [serializedDictionaryKeyUser: self.username, serializedDictionaryKeyIsReal: self.isRealUser, serializedDictionaryKeyUserId: self.userId]
     }
 }
 

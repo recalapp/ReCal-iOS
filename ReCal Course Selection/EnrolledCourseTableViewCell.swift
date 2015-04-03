@@ -128,7 +128,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 let sections = self.sectionsWithType(sectionType)
                 var titles = sections.map { $0.displayText }
                 var initialSelection = 0
-                if sections.count > 1 {
+                if true || sections.count > 1 {
                     // there is more than one section,
                     titles = ["All \(sectionType.displayText.pluralize())"] + titles
                     let enrollmentOpt = self.enrollmentsBySectionType[sectionType]

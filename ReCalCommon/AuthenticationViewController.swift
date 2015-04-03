@@ -59,15 +59,14 @@ class AuthenticationViewController: UIViewController, UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
         if self.authenticationUrl.isEqual(webView.request?.URL) {
             // if we got to this page, then we are done
-            let username = webView.stringByEvaluatingJavaScriptFromString("document.body.innerText")
-            if username?.rangeOfCharacterFromSet(NSCharacterSet.whitespaceCharacterSet()) == nil {
-                // verified no white space
-                self.delegate?.authentication(self, didAuthenticateWithUsername: username!)
-            } else {
-                // white space. might be a formatting error. Let's be sure and fail for now.
-                
-                self.delegate?.authenticationDidFail(self)
+            if let content = webView.stringByEvaluatingJavaScriptFromString("document.body.innerText") {
+                let components = split(content, { $0 == " " }, allowEmptySlices:false)
+                if components.count == 2 {
+                    self.delegate?.authentication(self, didAuthenticateWithUsername: components[0], userId: components[1])
+                    return
+                }
             }
+            self.delegate?.authenticationDidFail(self)
         }
     }
     
@@ -80,5 +79,5 @@ class AuthenticationViewController: UIViewController, UIWebViewDelegate {
 protocol AuthenticationViewControllerDelegate: class {
     func authenticationDidFail(authenticationViewController: AuthenticationViewController)
     func authenticationDidCancel(authenticationViewController: AuthenticationViewController)
-    func authentication(authenticationViewController: AuthenticationViewController, didAuthenticateWithUsername username: String)
+    func authentication(authenticationViewController: AuthenticationViewController, didAuthenticateWithUsername username: String, userId: String)
 }

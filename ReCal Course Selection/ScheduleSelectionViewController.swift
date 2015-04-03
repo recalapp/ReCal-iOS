@@ -89,8 +89,8 @@ class ScheduleSelectionViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     func reloadSchedules(sender: UIRefreshControl) {
-        Settings.currentSettings.serverCommunicator.performBlockAndWait {
-            let _ = Settings.currentSettings.serverCommunicator.startServerCommunicationWithIdentifier(AllSchedulesServerCommunication.identifier())
+        Settings.currentSettings.schedulesSyncService.performBlockAndWait {
+            Settings.currentSettings.schedulesSyncService.sync()
         }
     }
     private func scheduleAtIndexPath(indexPath: NSIndexPath) -> CDSchedule? {

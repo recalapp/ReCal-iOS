@@ -29,8 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let launch: ()->Void = {
-            Settings.currentSettings.theme = Theme(rawValue: Settings.currentSettings.sharedUserDefaults.integerForKey(Settings.UserDefaultsKeys.Theme)) ?? .Dark
             let rootViewController = self.window?.rootViewController
+            Settings.currentSettings.theme = Theme(rawValue: Settings.currentSettings.sharedUserDefaults.integerForKey(Settings.UserDefaultsKeys.Theme)) ?? .Dark
             Settings.currentSettings.authenticator = Authenticator(rootViewController: rootViewController!, forAuthenticationUrlString: Urls.authentication, withLogOutUrlString: Urls.logOut)
             Settings.currentSettings.coreDataImporter = CourseSelectionCoreDataImporter(persistentStoreCoordinator: self.persistentStoreCoordinator!)
             if false && !NSUserDefaults.standardUserDefaults().boolForKey(self.userDefaultsKeyNotFirstLaunch) {
@@ -53,7 +53,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Settings.currentSettings.serverCommunicator.performBlockAndWait {
                 Settings.currentSettings.serverCommunicator.registerServerCommunication(ActiveSemesterServerCommunication())
                 Settings.currentSettings.serverCommunicator.registerServerCommunication(AvailableColorsServerCommunication())
-                Settings.currentSettings.serverCommunicator.registerServerCommunication(AllSchedulesServerCommunication())
+            }
+            Settings.currentSettings.schedulesSyncService.performBlockAndWait {
+                let _ = Settings.currentSettings.schedulesSyncService.sync()
             }
         }
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
