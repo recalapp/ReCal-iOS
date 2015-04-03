@@ -17,7 +17,6 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
     override var request: NSURLRequest {
         // get actual url
         let urlString = Urls.scheduleWithId(scheduleId: self.scheduleId)
-//        let urlString = "http://localhost:8000/testing_post"
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: urlString)!)
         request.HTTPMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -27,6 +26,7 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
         request.HTTPBody = body
         let csrfToken = tryGetCsrfToken(NSHTTPCookieStorage.sharedHTTPCookieStorage()) ?? ""
         request.addValue(csrfToken, forHTTPHeaderField: "X_CSRFTOKEN")
+        println(self.scheduleDictionary)
         return request
     }
     override var idleInterval: Int {

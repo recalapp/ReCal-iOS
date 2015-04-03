@@ -9,7 +9,7 @@
 import Foundation
 
 public struct Urls {
-    public static let base = "http://localhost:8000"
+    public static let base = "http://recal.io"
     public static let authentication = "\(base)/mobile_logged_in"
     public static let logOut = "\(base)/logout"
     

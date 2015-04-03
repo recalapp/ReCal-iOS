@@ -123,8 +123,8 @@ class SchedulesSyncService {
         
         private func deserializeCourseColor(color: CourseColor)->[String:AnyObject] {
             return [
-                "light": color.normalColorRepresentation.normalizedHexString,
-                "dark": color.highlightedColorRepresentation.normalizedHexString,
+                "light": "#\(color.normalColorRepresentation.rgbHexString)",
+                "dark": "#\(color.highlightedColorRepresentation.rgbHexString)",
                 "id": color.serverId.toInt() ?? 0
             ]
         }

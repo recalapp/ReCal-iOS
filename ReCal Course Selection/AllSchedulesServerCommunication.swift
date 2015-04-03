@@ -33,7 +33,7 @@ class AllSchedulesServerCommunication : ServerCommunicator.ServerCommunication {
         switch result {
         case .Success(_, let data):
             println("Successfully downloaded all schedules")
-            Settings.currentSettings.coreDataImporter.performBlockAndWait {
+            Settings.currentSettings.coreDataImporter.performBlock {
                 let _ = Settings.currentSettings.coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.allSchedules)
             }
             return .NoAction

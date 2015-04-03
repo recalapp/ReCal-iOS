@@ -25,6 +25,9 @@ public class ColorRepresentation : NSObject, NSCoding, NSCopying, Hashable {
     public lazy var blueComponent: CGFloat = {
         return self.colorComponentFromString(self.normalizedHexString, start: 6, length: 2)
     }()
+    public var rgbHexString: String {
+        return self.normalizedHexString.substringFromIndex(self.normalizedHexString.startIndex.successor().successor())
+    }
     
     public init(var hexString: String) {
         hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
