@@ -16,10 +16,16 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
     private let scheduleDictionary: [String:String]
     override var request: NSURLRequest {
         // get actual url
-        let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: Urls.scheduleWithId(scheduleId: self.scheduleId))!)
+        let urlString = Urls.scheduleWithId(scheduleId: self.scheduleId)
+//        let urlString = "http://localhost:8000/testing_post"
+        let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: urlString)!)
         request.HTTPMethod = "POST"
+        request.HTTPShouldHandleCookies = true
+        request.allHTTPHeaderFields = NSHTTPCookie.requestHeaderFieldsWithCookies(NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(NSURL(string: Urls.base)!)!)
         let body = UrlEncoding.encodeParameters(parameters: self.scheduleDictionary, encoding: NSUTF8StringEncoding)
         request.HTTPBody = body
+        let csrfToken = tryGetCsrfToken(NSHTTPCookieStorage.sharedHTTPCookieStorage()) ?? ""
+        request.addValue(csrfToken, forHTTPHeaderField: "X_CSRFTOKEN")
         return request
     }
     override var idleInterval: Int {

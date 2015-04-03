@@ -150,3 +150,9 @@ public extension NSMutableURLRequest {
     }
 }
 
+public func tryGetCsrfToken(cookieStorage: NSHTTPCookieStorage) -> String? {
+    if let cookies = cookieStorage.cookies as? [NSHTTPCookie] {
+        return cookies.filter { $0.name == "csrftoken" }.last?.value
+    }
+    return nil
+}

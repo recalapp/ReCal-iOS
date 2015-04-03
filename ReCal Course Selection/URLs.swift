@@ -25,6 +25,6 @@ extension Urls {
         return "\(courses(semesterTermCode: semesterTermCode))&limit=\(limit)&offset=\(offset)"
     }
     static func scheduleWithId(#scheduleId: Int) -> String {
-        return "\(courseSelectionApiBase)/schedule/\(scheduleId)"
+        return "\(courseSelectionApiBase)/schedule/\(scheduleId)/" // trailing slash necessary for POST
     }
 }

@@ -47,7 +47,7 @@ class ScheduleSelectionViewController: UITableViewController {
             }
             self.semesterToSchedulesMapping = newMapping
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.tableView.reloadData()
+                let _ = self.tableView?.reloadData()
             }
         }
         

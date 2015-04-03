@@ -129,6 +129,9 @@ public final class ServerCommunicator {
     public func startServerCommunicationWithIdentifier(identifier: String) -> URLConnectionObserver? {
         self.assertPrivateQueue()
         assert(self[identifier] != nil, "Server communication with identifier \(identifier) does not exist")
+        if self[identifier] == nil {
+            return nil
+        }
         self.advanceStateForServerCommunication(self[identifier]!, reason: .Manual)
         switch self[identifier]!.status {
         case .Connecting(let observer):
