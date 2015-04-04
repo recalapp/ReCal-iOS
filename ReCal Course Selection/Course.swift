@@ -98,8 +98,9 @@ struct CourseListing: Printable, ManagedObjectProxy {
         switch self.managedObjectProxyId {
         case .Existing(let objectId):
             var courseListingOpt: CDCourseListing?
+            var errorOpt: NSError?
             managedObjectContext.performBlockAndWait {
-                courseListingOpt = managedObjectContext.objectWithID(objectId) as? CDCourseListing
+                courseListingOpt = managedObjectContext.existingObjectWithID(objectId, error: &errorOpt) as? CDCourseListing
             }
             if let courseListing = courseListingOpt {
                 courseListing.courseNumber = self.courseNumber

@@ -76,8 +76,9 @@ struct SectionMeeting: Hashable, ManagedObjectProxy {
         switch self.managedObjectProxyId {
         case .Existing(let objectId):
             var sectionMeetingOpt: CDSectionMeeting?
+            var errorOpt: NSError?
             managedObjectContext.performBlockAndWait {
-                sectionMeetingOpt = managedObjectContext.objectWithID(objectId) as? CDSectionMeeting
+                sectionMeetingOpt = managedObjectContext.existingObjectWithID(objectId, error: &errorOpt) as? CDSectionMeeting
             }
             if let sectionMeeting = sectionMeetingOpt {
                 sectionMeeting.startHour = self.startTime.hour

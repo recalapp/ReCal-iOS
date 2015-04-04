@@ -112,6 +112,16 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
     }
     
     private func processAllSchedulesData(data: NSData, withProgress progress: NSProgress) -> ImportResult {
+        func fetchAllOldSchedules() -> [CDSchedule] {
+            let fetchRequest = NSFetchRequest(entityName: "CDSchedule")
+            fetchRequest.predicate = NSPredicate(format:"isNew = 0 AND modified = 0")
+            var fetched: [CDSchedule]?
+            var errorOpt: NSError?
+            self.backgroundManagedObjectContext.performBlockAndWait {
+                fetched = self.backgroundManagedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt) as? [CDSchedule]
+            }
+            return fetched ?? []
+        }
         let revertChanges: ()->Void = {
             self.backgroundManagedObjectContext.performBlockAndWait {
                 self.backgroundManagedObjectContext.reset()
@@ -123,13 +133,14 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 progress.totalUnitCount = Int64(scheduleDictArray.count)
                 progress.completedUnitCount = 0
                 let scheduleImporter = ScheduleAttributeImporter()
+                var importedSchedules = Set<String>()
                 for scheduleDict in scheduleDictArray {
                     if let id: AnyObject = scheduleDict["id"] {
                         let scheduleObject = self.fetchOrCreateEntityWithServerId("\(id)", entityName: "CDSchedule") as CDSchedule
                         let result = scheduleImporter.importAttributeFromDictionary(scheduleDict, intoManagedObject: scheduleObject, inManagedObjectContext: self.backgroundManagedObjectContext)
                         switch result {
                         case .Success:
-                            break
+                            importedSchedules.add("\(id)")
                         case .Error(_):
                             println("Error during schedule import")
                             revertChanges()
@@ -143,6 +154,11 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     }
                 }
                 var errorOpt: NSError?
+                fetchAllOldSchedules().filter { !importedSchedules.contains($0.serverId) }.map { (schedule) in
+                    self.backgroundManagedObjectContext.performBlockAndWait {
+                        let _ = self.backgroundManagedObjectContext.deleteObject(schedule)
+                    }
+                }
                 self.backgroundManagedObjectContext.performBlockAndWait {
                     let _ = self.backgroundManagedObjectContext.save(&errorOpt)
                 }

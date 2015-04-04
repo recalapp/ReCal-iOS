@@ -64,8 +64,9 @@ class SectionAttributeImporter : CompositeManagedObjectAttributeImporter {
             case .Success:
                 if let enrollment = managedObject as? CDSectionEnrollment {
                     var ret: ImportResult = .Success
+                    var errorOpt: NSError?
                     managedObjectContext.performBlockAndWait {
-                        if let user = managedObjectContext.objectWithID(self.userObjectId) as? CDUser {
+                        if let user = managedObjectContext.existingObjectWithID(self.userObjectId, error: &errorOpt) as? CDUser {
                             enrollment.user = user
                             ret = .Success
                         } else {

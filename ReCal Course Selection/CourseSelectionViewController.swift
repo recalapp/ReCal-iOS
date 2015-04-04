@@ -78,6 +78,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             } else {
                 self.navigationItem.title = "(No schedule selected)"
                 Settings.currentSettings.lastOpenedScheduleIdUri = nil
+                self.presentScheduleSelection()
             }
         }
     }
@@ -115,7 +116,8 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         super.viewDidLoad()
         if let idUri = Settings.currentSettings.lastOpenedScheduleIdUri {
             if let id = self.managedObjectContext.persistentStoreCoordinator?.managedObjectIDForURIRepresentation(idUri) {
-                if let scheduleManagedObject = self.managedObjectContext.objectWithID(id) as? CDSchedule {
+                var errorOpt: NSError?
+                if let scheduleManagedObject = self.managedObjectContext.existingObjectWithID(id, error: &errorOpt) as? CDSchedule {
                     self.schedule = Schedule(managedObject: scheduleManagedObject)
                 }
             }
@@ -126,6 +128,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+            }
+            if let schedule = self.schedule {
+                self.schedule = Schedule.updatedCopy(schedule, managedObjectContext: self.managedObjectContext)
             }
         }
         let observer2 = NSNotificationCenter.defaultCenter().addObserverForName(authenticatorStateDidChangeNofication, object: nil, queue: nil) { (_) -> Void in
@@ -463,8 +468,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         assert(self.presentedViewController == self.scheduleSelectionNavigationController)
         var schedule: CDSchedule?
         var coursesCount: Int = 0
+        var errorOpt: NSError?
         self.managedObjectContext.performBlockAndWait {
-            schedule = self.managedObjectContext.objectWithID(objectId) as? CDSchedule
+            schedule = self.managedObjectContext.existingObjectWithID(objectId, error: &errorOpt) as? CDSchedule
             coursesCount = schedule!.semester.courses.count
         }
         if schedule != nil {

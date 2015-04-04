@@ -33,8 +33,9 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
                 switch course.managedObjectProxyId {
                 case .Existing(let id):
                     var result: CDCourse?
+                    var errorOpt: NSError?
                     self.searchManagedObjectContext.performBlockAndWait {
-                        result = self.searchManagedObjectContext.objectWithID(id) as? CDCourse
+                        result = self.searchManagedObjectContext.existingObjectWithID(id, error: &errorOpt) as? CDCourse
                     }
                     return result
                 case .NewObject:

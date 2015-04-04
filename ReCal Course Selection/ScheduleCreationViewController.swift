@@ -135,7 +135,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
             case .Success(let tempObjectId):
                 var success = false
                 var error: NSError?
-                var schedule = self.managedObjectContext.objectWithID(tempObjectId) as CDSchedule
+                var schedule = self.managedObjectContext.existingObjectWithID(tempObjectId, error: &error) as CDSchedule
                 self.managedObjectContext.performBlockAndWait {
                     success = self.managedObjectContext.save(&error)
                 }

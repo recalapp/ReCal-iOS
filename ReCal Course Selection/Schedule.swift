@@ -136,15 +136,19 @@ struct Schedule : ManagedObjectProxy {
         self.colorManager = CourseColorManager(availableColors: Settings.currentSettings.availableColors)
         assert(self.checkInvariants())
     }
-    static func updatedCopy(schedule: Schedule, managedObjectContext: NSManagedObjectContext) -> Schedule {
+    static func updatedCopy(schedule: Schedule, managedObjectContext: NSManagedObjectContext) -> Schedule? {
         switch schedule.managedObjectProxyId {
         case .NewObject:
             return schedule
         case .Existing(let objectId):
-            if let object = managedObjectContext.objectWithID(objectId) as? CDSchedule {
-                return Schedule(managedObject: object)
+            var errorOpt: NSError?
+            if let object = managedObjectContext.existingObjectWithID(objectId, error: &errorOpt) as? CDSchedule {
+                if object.managedObjectContext != nil && !managedObjectContext.deletedObjects.containsObject(object) {
+                    return Schedule(managedObject: object)
+                }
+                return nil
             } else {
-                return schedule
+                return nil
             }
         }
     }
@@ -212,8 +216,9 @@ struct Schedule : ManagedObjectProxy {
         case .Existing(let objectId):
             let managedObject: CDSchedule? = {
                 var managedObject: CDSchedule?
+                var errorOpt: NSError?
                 managedObjectContext.performBlockAndWait {
-                    managedObject = managedObjectContext.objectWithID(objectId) as? CDSchedule
+                    managedObject = managedObjectContext.existingObjectWithID(objectId, error: &errorOpt) as? CDSchedule
                 }
                 return managedObject
             }()
