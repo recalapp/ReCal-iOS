@@ -88,7 +88,9 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
                     println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
                     self.backgroundManagedObjectContext.performBlockAndWait {
-                        let _ = self.backgroundManagedObjectContext.save(&errorOpt)
+                        self.backgroundManagedObjectContext.persistentStoreCoordinator!.lock()
+                        self.backgroundManagedObjectContext.save(&errorOpt)
+                        self.backgroundManagedObjectContext.persistentStoreCoordinator!.unlock()
                     }
                     if let error = errorOpt {
                         println("Error saving. Aborting. Error: \(error)")
@@ -160,7 +162,9 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     }
                 }
                 self.backgroundManagedObjectContext.performBlockAndWait {
-                    let _ = self.backgroundManagedObjectContext.save(&errorOpt)
+                    self.backgroundManagedObjectContext.persistentStoreCoordinator!.lock()
+                    self.backgroundManagedObjectContext.save(&errorOpt)
+                    self.backgroundManagedObjectContext.persistentStoreCoordinator!.unlock()
                 }
                 if let error = errorOpt {
                     println("Error importing all schedules. Error: \(error)")
@@ -246,7 +250,9 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
                     println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
                     self.backgroundManagedObjectContext.performBlockAndWait {
+                        self.backgroundManagedObjectContext.persistentStoreCoordinator!.lock()
                         let _ = self.backgroundManagedObjectContext.save(&errorOpt)
+                        self.backgroundManagedObjectContext.persistentStoreCoordinator!.unlock()
                     }
                     if let error = errorOpt {
                         println("Could not save active semesters. Error: \(error)")

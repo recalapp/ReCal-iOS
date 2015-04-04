@@ -49,6 +49,9 @@ class EventViewController: UITableViewController {
         super.viewDidLoad()
 
         let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+            if self.managedObjectContext.isEqual(notification.object) {
+                return
+            }
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }

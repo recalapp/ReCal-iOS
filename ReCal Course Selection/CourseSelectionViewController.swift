@@ -126,6 +126,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             self.setSidebarState(.RightSidebarShown, animated: false)
         }
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+            if self.managedObjectContext.isEqual(notification.object) {
+                return
+            }
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }
@@ -154,7 +157,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                     }
                 }
                 self.managedObjectContext.performBlockAndWait {
-                    let _ = self.managedObjectContext.save(&errorOpt)
+                    self.managedObjectContext.persistentStoreCoordinator!.lock()
+                    self.managedObjectContext.save(&errorOpt)
+                    self.managedObjectContext.persistentStoreCoordinator!.unlock()
                 }
                 if let error = errorOpt {
                     println("Error deleting schedule. Error: \(error)")
@@ -226,7 +231,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             self.schedule!.commitToManagedObjectContext(self.managedObjectContext)
             var errorOpt: NSError?
             self.managedObjectContext.performBlock {
-                let _ = self.managedObjectContext.save(&errorOpt)
+                self.managedObjectContext.persistentStoreCoordinator!.lock()
+                self.managedObjectContext.save(&errorOpt)
+                self.managedObjectContext.persistentStoreCoordinator!.unlock()
                 if let error = errorOpt {
                     println("Error saving. Error: \(error)")
                 }

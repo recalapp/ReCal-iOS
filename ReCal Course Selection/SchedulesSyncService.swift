@@ -22,7 +22,7 @@ class SchedulesSyncService {
         let fetchRequest = NSFetchRequest(entityName: "CDSchedule")
         fetchRequest.predicate = NSPredicate(format: "modified = 1")
         return fetchRequest
-        }()
+    }()
     
     private var notificationObservers: [AnyObject] = []
     
@@ -32,6 +32,9 @@ class SchedulesSyncService {
             self.serverCommunicator.registerServerCommunication(AllSchedulesServerCommunication())
         }
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: NSOperationQueue.mainQueue()) { (notification) -> Void in
+            if self.managedObjectContext.isEqual(notification.object) {
+                return
+            }
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }
@@ -58,6 +61,21 @@ class SchedulesSyncService {
                 return nil
             }
         }.filter { (comm: NewScheduleServerCommunication?) in if let _ = comm { return true } else { return false } }.map { $0! }
+        
+        fetched.map { (schedule) in
+            schedule.modifiedLogicalValue = .Uploading
+        }
+        var errorOpt: NSError?
+        self.managedObjectContext.performBlock {
+            self.managedObjectContext.persistentStoreCoordinator!.lock()
+            self.managedObjectContext.save(&errorOpt)
+            self.managedObjectContext.persistentStoreCoordinator!.unlock()
+        }
+        if let error = errorOpt {
+            println("Error marking item as uploading. Error: \(error)")
+            return
+        }
+        
         for communication in modifiedScheduleServerCommunications {
             self.serverCommunicator.performBlockAndWait {
                 self.serverCommunicator.registerServerCommunication(communication)

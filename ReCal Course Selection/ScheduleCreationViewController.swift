@@ -137,7 +137,9 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
                 var error: NSError?
                 var schedule = self.managedObjectContext.existingObjectWithID(tempObjectId, error: &error) as CDSchedule
                 self.managedObjectContext.performBlockAndWait {
+                    self.managedObjectContext.persistentStoreCoordinator!.lock()
                     success = self.managedObjectContext.save(&error)
+                    self.managedObjectContext.persistentStoreCoordinator!.unlock()
                 }
                 if success {
                     self.navigationController?.popViewControllerAnimated(true)

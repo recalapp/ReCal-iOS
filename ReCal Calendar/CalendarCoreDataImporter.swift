@@ -142,7 +142,9 @@ class CalendarCoreDataImporter: CoreDataImporter {
                         println("Inserted item count: \(self.backgroundManagedObjectContext.insertedObjects.count)")
                         println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
                         println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
+                        self.backgroundManagedObjectContext.persistentStoreCoordinator!.lock()
                         success = self.backgroundManagedObjectContext.save(&errorOpt)
+                        self.backgroundManagedObjectContext.persistentStoreCoordinator!.unlock()
                         if let error = errorOpt {
                             println("Error saving. Error: \(error)")
                         }

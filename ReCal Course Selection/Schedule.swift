@@ -204,7 +204,7 @@ struct Schedule : ManagedObjectProxy {
                 schedule.enrolledCoursesIds = enrolledCoursesIds
                 schedule.courseColorMap = colorMapRepresentation
                 schedule.availableColors = self.colorManager.availableColors
-                schedule.modified = true
+                schedule.modifiedLogicalValue = .Modified
                 schedule.lastModified = NSDate()
                 schedule.enrolledSectionsIds = enrolledSectionsIds
             }

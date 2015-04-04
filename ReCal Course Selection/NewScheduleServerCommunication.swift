@@ -49,8 +49,12 @@ class NewScheduleServerCommunication : ServerCommunicator.ServerCommunication {
                 var errorOpt: NSError?
                 managedObject.serverId = "\(scheduleId)"
                 managedObject.isNew = false
-                managedObject.modified = false
-                managedObjectContext.save(&errorOpt)
+                if managedObject.modifiedLogicalValue == .Uploading {
+                    managedObject.modifiedLogicalValue = .NotModified
+                }
+                self.managedObjectContext.persistentStoreCoordinator!.lock()
+                self.managedObjectContext.save(&errorOpt)
+                self.managedObjectContext.persistentStoreCoordinator!.unlock()
                 if let error = errorOpt {
                     println("Error saving modified schedule. Error: \(error)")
                 }

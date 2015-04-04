@@ -51,6 +51,9 @@ public class CoreDataImporter {
         self.timer = NSTimer.scheduledTimerWithTimeInterval(importInterval, target: self, selector: Selector("handleTimerInterrupt:"), userInfo: nil, repeats: true)
         
         let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+            if self.backgroundManagedObjectContext.isEqual(notification.object) {
+                return
+            }
             self.backgroundManagedObjectContext.performBlockAndWait {
                 self.backgroundManagedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }

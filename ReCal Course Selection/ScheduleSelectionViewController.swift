@@ -62,6 +62,9 @@ class ScheduleSelectionViewController: UITableViewController {
         }
         updateColorScheme()
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+            if self.managedObjectContext.isEqual(notification.object) {
+                return
+            }
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification    (notification)
             }
@@ -155,7 +158,9 @@ class ScheduleSelectionViewController: UITableViewController {
             self.managedObjectContext.performBlock {
                 self.managedObjectContext.deleteObject(deletedSchedule)
                 var errorOpt: NSError?
+                self.managedObjectContext.persistentStoreCoordinator!.lock()
                 self.managedObjectContext.save(&errorOpt)
+                self.managedObjectContext.persistentStoreCoordinator!.unlock()
                 if let error = errorOpt {
                     println("Can't delete schedule. Error: \(error)")
                 }

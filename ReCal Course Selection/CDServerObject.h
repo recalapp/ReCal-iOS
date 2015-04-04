@@ -12,8 +12,9 @@
 
 @interface CDServerObject : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * isNew;
 @property (nonatomic, retain) NSNumber * modified;
 @property (nonatomic, retain) NSString * serverId;
-@property (nonatomic, retain) NSNumber * isNew;
+@property (nonatomic, retain) NSNumber * markedDeleted;
 
 @end

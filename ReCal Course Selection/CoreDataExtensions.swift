@@ -57,3 +57,31 @@ extension CDSectionMeeting {
         return component
     }
 }
+
+enum ModificationLogicalValue {
+    case NotModified, Modified, Uploading
+}
+
+extension CDSchedule {
+    var modifiedLogicalValue: ModificationLogicalValue {
+        get {
+            if self.modified == 1 {
+                return .Modified
+            } else if self.modified == 2 {
+                return .Uploading
+            } else {
+                return .NotModified
+            }
+        }
+        set {
+            switch newValue {
+            case .NotModified:
+                self.modified = 0
+            case .Modified:
+                self.modified = 1
+            case .Uploading:
+                self.modified = 2
+            }
+        }
+    }
+}

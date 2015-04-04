@@ -120,6 +120,9 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         }()
         
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+            if self.searchManagedObjectContext.isEqual(notification.object) {
+                return
+            }
             self.searchManagedObjectContext.performBlockAndWait {
                 self.searchManagedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }

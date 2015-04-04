@@ -11,8 +11,9 @@
 
 @implementation CDServerObject
 
+@dynamic isNew;
 @dynamic modified;
 @dynamic serverId;
-@dynamic isNew;
+@dynamic markedDeleted;
 
 @end
