@@ -133,9 +133,11 @@ class SchedulesSyncService {
     }
     
     func sync() {
-        self.pushDeletedSchedules()
-        self.pushModifiedSchedules()
-        self.pullSchedules()
+        if let _ = Settings.currentSettings.authenticator.user {
+            self.pushDeletedSchedules()
+            self.pushModifiedSchedules()
+            self.pullSchedules()
+        }
     }
     
     private class ScheduleDeserializer {

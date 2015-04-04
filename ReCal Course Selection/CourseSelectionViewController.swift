@@ -78,7 +78,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             } else {
                 self.navigationItem.title = "(No schedule selected)"
                 Settings.currentSettings.lastOpenedScheduleIdUri = nil
-                self.presentScheduleSelection()
+                if Settings.currentSettings.authenticator.isAuthenticated {
+                    self.presentScheduleSelection()
+                }
             }
         }
     }

@@ -32,6 +32,15 @@ public class Authenticator: AuthenticationViewControllerDelegate {
         }
     }
     
+    public var isAuthenticated: Bool {
+        switch self.state {
+        case .Unauthenticated:
+            return false
+        case .Demo(_), .PreviouslyAuthenticated(_), .Authenticated(_), .Cached(_):
+            return true
+        }
+    }
+    
     public init(rootViewController: UIViewController, forAuthenticationUrlString urlString: String, withLogOutUrlString logOutUrlString: String) {
         self.rootViewController = rootViewController
         self.authenticationUrl = NSURL(string: urlString)!
