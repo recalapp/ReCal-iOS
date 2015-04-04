@@ -477,7 +477,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }
         self.dismissViewControllerAnimated(true) {
             self.scheduleSelectionViewControllerTransitioningDelegate = nil
-            if coursesCount < 1000 /* TODO safe? */ {
+            if coursesCount < 800 /* TODO safe? */ {
                 let courseDownloadVC = self.storyboard?.instantiateViewControllerWithIdentifier(courseDownloadViewControllerStoryboardId) as CourseDownloadViewController
                 courseDownloadVC.termCode = schedule!.semester.termCode
                 courseDownloadVC.delegate = self
@@ -515,6 +515,10 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         } else {
             self.dismissViewControllerAnimated(true) {
                 self.scheduleSelectionViewControllerTransitioningDelegate = nil
+                self.schedule = Schedule.updatedCopy(self.schedule!, managedObjectContext: self.managedObjectContext)
+                self.reloadEnrolledCoursesView()
+                self.reloadScheduleView()
+                self.reloadSearchViewController()
             }
         }
     }

@@ -20,7 +20,7 @@ class AllSchedulesServerCommunication : ServerCommunicator.ServerCommunication {
         return NSURLRequest()
     }
     override var idleInterval: Int {
-        return 100
+        return 10
     }
     class func identifier() -> String {
         return "allSchedules"

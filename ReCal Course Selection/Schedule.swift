@@ -220,9 +220,7 @@ struct Schedule : ManagedObjectProxy {
             if let schedule = managedObject {
                 // NOTE assumes name and termcode doesn't change
                 var result = ManagedObjectProxyCommitResult.Failure
-                managedObjectContext.performBlockAndWait {
-                    result = updateManagedObject(schedule)
-                }
+                result = updateManagedObject(schedule)
                 assert(self.checkInvariants())
                 return result
             } else {
@@ -243,8 +241,10 @@ struct Schedule : ManagedObjectProxy {
                 managedObjectContext.performBlockAndWait {
                     schedule.name = self.name
                     schedule.semester = self.semesterWithTermCode(self.termCode, inManagedObjectContext: managedObjectContext)
-                    result = updateManagedObject(schedule)
+                    schedule.serverId = ""
+                    schedule.isNew = true
                 }
+                result = updateManagedObject(schedule)
                 assert(self.checkInvariants())
                 return result
             } else {

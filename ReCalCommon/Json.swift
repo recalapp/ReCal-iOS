@@ -34,4 +34,9 @@ public class Json {
     public class func serializeToString(array: [AnyObject]) -> String? {
         return self.serializeToString(array as AnyObject)
     }
+    public class func parse(jsonData: NSData) -> [String: AnyObject]? {
+        var errorOpt: NSError?
+        let result = NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.allZeros, error: &errorOpt) as? [String:AnyObject]
+        return result
+    }
 }

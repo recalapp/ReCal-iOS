@@ -45,10 +45,25 @@ class SchedulesSyncService {
     }
     
     private func pushModifiedSchedules() {
-        let modifiedScheduleServerCommunications = self.fetchModifiedSchedules().map { ScheduleDeserializer(schedule: $0).deserialize() }.filter {
+        let fetched = self.fetchModifiedSchedules()
+        let modifiedSchedules = fetched.filter { !$0.isNew.boolValue }
+        let newSchedules = fetched.filter { $0.isNew.boolValue }
+        let modifiedScheduleServerCommunications = modifiedSchedules.map { ScheduleDeserializer(schedule: $0).deserialize() }.filter {
             (dict: [String:String]?) in if let _ = dict { return true } else { return false }
             }.map { $0! }.map { (dict: [String:String]) in ModifiedSchedulesServerCommunication(scheduleDictionary: dict, scheduleId: dict["id"]?.toInt() ?? 0, managedObjectContext: self.managedObjectContext) }
+        let newScheduleServerCommunications = newSchedules.map {
+            if let dict = ScheduleDeserializer(schedule: $0).deserialize() {
+                return NewScheduleServerCommunication(scheduleDictionary: dict, managedObject: $0, managedObjectContext: self.managedObjectContext)
+            } else {
+                return nil
+            }
+        }.filter { (comm: NewScheduleServerCommunication?) in if let _ = comm { return true } else { return false } }.map { $0! }
         for communication in modifiedScheduleServerCommunications {
+            self.serverCommunicator.performBlockAndWait {
+                self.serverCommunicator.registerServerCommunication(communication)
+            }
+        }
+        for communication in newScheduleServerCommunications {
             self.serverCommunicator.performBlockAndWait {
                 self.serverCommunicator.registerServerCommunication(communication)
             }
@@ -134,14 +149,24 @@ class SchedulesSyncService {
                 if courseString == nil {
                     return nil
                 }
-                return [
-                    "title": self.schedule.name,
-                    "id": self.schedule.serverId,
-                    "semester": "/api/v1/semester/\(self.schedule.semester.serverId)/",
-                    "available_colors": colorsString!,
-                    "enrollments": courseString!,
-                    "user": "/api/v1/user/\(user.userId)/"
-                ]
+                if self.schedule.isNew.boolValue {
+                    return [
+                        "title": self.schedule.name,
+                        "semester": "/api/v1/semester/\(self.schedule.semester.serverId)/",
+                        "available_colors": colorsString!,
+                        "enrollments": courseString!,
+                        "user": "/api/v1/user/\(user.userId)/"
+                    ]
+                } else {
+                    return [
+                        "title": self.schedule.name,
+                        "id": self.schedule.serverId,
+                        "semester": "/api/v1/semester/\(self.schedule.semester.serverId)/",
+                        "available_colors": colorsString!,
+                        "enrollments": courseString!,
+                        "user": "/api/v1/user/\(user.userId)/"
+                    ]
+                }
             }
             return nil
         }

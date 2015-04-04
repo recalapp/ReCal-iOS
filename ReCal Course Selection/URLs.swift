@@ -27,4 +27,5 @@ extension Urls {
     static func scheduleWithId(#scheduleId: Int) -> String {
         return "\(courseSelectionApiBase)/schedule/\(scheduleId)/" // trailing slash necessary for POST
     }
+    static let newSchedule = "\(courseSelectionApiBase)/schedule/"
 }
