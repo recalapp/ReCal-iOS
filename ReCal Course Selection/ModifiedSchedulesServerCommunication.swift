@@ -64,6 +64,10 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
         }
     }
     override func shouldSendRequest() -> ServerCommunicator.ShouldSend {
-        return .Send
+        if let _ = Settings.currentSettings.authenticator.user {
+            return .Send
+        } else {
+            return .NextInterrupt
+        }
     }
 }

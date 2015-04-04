@@ -222,6 +222,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func presentScheduleSelection() {
+        Settings.currentSettings.schedulesSyncService.sync()
         if self.scheduleSelectionViewControllerTransitioningDelegate != nil {
             return
         }
