@@ -44,18 +44,17 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
             println("Successfully uploaded one modified schedule with id \(self.scheduleId)")
             if let scheduleObject = tryGetManagedObjectObject(managedObjectContext: self.managedObjectContext, entityName: "CDSchedule", attributeName: "serverId", attributeValue: "\(self.scheduleId)") as? CDSchedule {
                 var errorOpt: NSError?
-                self.managedObjectContext.performBlockAndWait {
+                self.managedObjectContext.performBlock {
                     if scheduleObject.modifiedLogicalValue == .Uploading {
                         scheduleObject.modifiedLogicalValue = .NotModified
                     }
                     self.managedObjectContext.persistentStoreCoordinator!.lock()
                     self.managedObjectContext.save(&errorOpt)
                     self.managedObjectContext.persistentStoreCoordinator!.unlock()
+                    if let error = errorOpt {
+                        println("Error saving modified schedule. Error: \(error)")
+                    }
                 }
-                if let error = errorOpt {
-                    println("Error saving modified schedule. Error: \(error)")
-                }
-                
             }
             return .Remove
         case .Failure(let error):

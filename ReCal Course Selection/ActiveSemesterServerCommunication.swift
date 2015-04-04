@@ -28,7 +28,7 @@ class ActiveSemesterServerCommunication: ServerCommunicator.ServerCommunication 
         case .Success(_, let data):
             println("Successfully downloaded active semesters")
             let coreDataImporter = Settings.currentSettings.coreDataImporter
-            coreDataImporter.performBlockAndWait {
+            coreDataImporter.performBlock {
                 let _ = coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.activeSemesters)
             }
             return .NoAction

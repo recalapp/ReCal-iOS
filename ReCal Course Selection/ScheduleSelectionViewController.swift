@@ -33,24 +33,23 @@ class ScheduleSelectionViewController: UITableViewController {
         fetchRequest.predicate = NSPredicate(format: "schedules.@count > 0")
         var fetched: [CDSemester]?
         var errorOpt: NSError?
-        self.managedObjectContext.performBlockAndWait {
+        self.managedObjectContext.performBlock {
             fetched = self.managedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt) as? [CDSemester]
-        }
-        if let error = errorOpt {
-            println("Error fetching schedules. Error: \(error)")
-            return
-        }
-        if let semesters = fetched {
-            var newMapping: Dictionary<CDSemester, [CDSchedule]> = Dictionary()
-            for semester in semesters {
-                newMapping[semester] = (semester.schedules.allObjects as [CDSchedule]).sorted { $0.name < $1.name }
-            }
-            self.semesterToSchedulesMapping = newMapping
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                let _ = self.tableView?.reloadData()
+                if let error = errorOpt {
+                    println("Error fetching schedules. Error: \(error)")
+                    return
+                }
+                if let semesters = fetched {
+                    var newMapping: Dictionary<CDSemester, [CDSchedule]> = Dictionary()
+                    for semester in semesters {
+                        newMapping[semester] = (semester.schedules.allObjects as [CDSchedule]).sorted { $0.name < $1.name }
+                    }
+                    self.semesterToSchedulesMapping = newMapping
+                    self.tableView?.reloadData()
+                }
             }
         }
-        
     }
     
     override func viewDidLoad() {
@@ -61,15 +60,17 @@ class ScheduleSelectionViewController: UITableViewController {
             self.tableView.reloadData()
         }
         updateColorScheme()
-        let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { (notification) -> Void in
+        let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: NSOperationQueue.mainQueue()) { (notification) -> Void in
             if self.managedObjectContext.isEqual(notification.object) {
                 return
             }
-            self.managedObjectContext.performBlockAndWait {
+            self.managedObjectContext.performBlock {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification    (notification)
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    self.fetchSchedules()
+                    self.refreshControl?.endRefreshing()
+                }
             }
-            self.fetchSchedules()
-            self.refreshControl?.endRefreshing()
         }
         self.notificationObservers.append(observer)
         let observer1 = NSNotificationCenter.defaultCenter().addObserverForName(Settings.Notifications.ThemeDidChange, object: nil, queue: NSOperationQueue.mainQueue()) { (_) -> Void in

@@ -123,7 +123,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             if self.searchManagedObjectContext.isEqual(notification.object) {
                 return
             }
-            self.searchManagedObjectContext.performBlockAndWait {
+            self.searchManagedObjectContext.performBlock {
                 self.searchManagedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }
         }

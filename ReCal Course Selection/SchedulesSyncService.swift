@@ -34,19 +34,21 @@ class SchedulesSyncService {
     
     init(serverCommunicator: ServerCommunicator) {
         self.serverCommunicator = serverCommunicator
-        self.serverCommunicator.performBlockAndWait {
+        self.serverCommunicator.performBlock {
             self.serverCommunicator.registerServerCommunication(AllSchedulesServerCommunication())
         }
         let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: NSOperationQueue.mainQueue()) { (notification) -> Void in
             if self.managedObjectContext.isEqual(notification.object) {
                 return
             }
-            self.managedObjectContext.performBlockAndWait {
+            self.managedObjectContext.performBlock {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
-            }
-            if let _ = Settings.currentSettings.authenticator.user {
-                self.pushDeletedSchedules()
-                self.pushModifiedSchedules()
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    if let _ = Settings.currentSettings.authenticator.user {
+                        self.pushDeletedSchedules()
+                        self.pushModifiedSchedules()
+                    }
+                }
             }
         }
         self.notificationObservers.append(observer)
@@ -62,7 +64,7 @@ class SchedulesSyncService {
             return DeletedScheduleServerCommunication(managedObject: schedule, scheduleId: id, managedObjectContext: self.managedObjectContext)
         }
         for communication in serverCommunications {
-            self.serverCommunicator.performBlockAndWait {
+            self.serverCommunicator.performBlock {
                 self.serverCommunicator.registerServerCommunication(communication)
             }
         }
@@ -98,18 +100,18 @@ class SchedulesSyncService {
         }
         
         for communication in modifiedScheduleServerCommunications {
-            self.serverCommunicator.performBlockAndWait {
+            self.serverCommunicator.performBlock {
                 self.serverCommunicator.registerServerCommunication(communication)
             }
         }
         for communication in newScheduleServerCommunications {
-            self.serverCommunicator.performBlockAndWait {
+            self.serverCommunicator.performBlock {
                 self.serverCommunicator.registerServerCommunication(communication)
             }
         }
     }
     private func pullSchedules() {
-        self.serverCommunicator.performBlockAndWait {
+        self.serverCommunicator.performBlock {
             let _ = self.serverCommunicator.startServerCommunicationWithIdentifier(AllSchedulesServerCommunication.identifier())
         }
     }

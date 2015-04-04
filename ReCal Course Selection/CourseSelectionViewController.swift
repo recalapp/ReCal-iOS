@@ -131,12 +131,15 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             if self.managedObjectContext.isEqual(notification.object) {
                 return
             }
-            self.managedObjectContext.performBlockAndWait {
+            self.managedObjectContext.performBlock {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    if let schedule = self.schedule {
+                        self.schedule = Schedule.updatedCopy(schedule, managedObjectContext: self.managedObjectContext)
+                    }
+                }
             }
-            if let schedule = self.schedule {
-                self.schedule = Schedule.updatedCopy(schedule, managedObjectContext: self.managedObjectContext)
-            }
+            
         }
         let observer2 = NSNotificationCenter.defaultCenter().addObserverForName(authenticatorStateDidChangeNofication, object: nil, queue: nil) { (_) -> Void in
             // delete all the schedules
@@ -145,29 +148,32 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             fetchRequest.includesPropertyValues = false
             var errorOpt: NSError?
             var fetched: [CDSchedule]?
-            self.managedObjectContext.performBlockAndWait {
+            self.managedObjectContext.performBlock {
                 fetched = self.managedObjectContext.executeFetchRequest(fetchRequest, error: &errorOpt) as? [CDSchedule]
-            }
-            if let error = errorOpt {
-                println("Error fetching schedules. Error: \(error)")
-                return
-            }
-            if let schedules = fetched {
-                for schedule in schedules {
-                    self.managedObjectContext.performBlockAndWait {
-                        self.managedObjectContext.deleteObject(schedule)
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    if let error = errorOpt {
+                        println("Error fetching schedules. Error: \(error)")
+                        return
+                    }
+                    if let schedules = fetched {
+                        for schedule in schedules {
+                            self.managedObjectContext.performBlockAndWait {
+                                self.managedObjectContext.deleteObject(schedule)
+                            }
+                        }
+                        self.managedObjectContext.performBlock {
+                            self.managedObjectContext.persistentStoreCoordinator!.lock()
+                            self.managedObjectContext.save(&errorOpt)
+                            self.managedObjectContext.persistentStoreCoordinator!.unlock()
+                            if let error = errorOpt {
+                                println("Error deleting schedule. Error: \(error)")
+                                return
+                            }
+                        }
                     }
                 }
-                self.managedObjectContext.performBlockAndWait {
-                    self.managedObjectContext.persistentStoreCoordinator!.lock()
-                    self.managedObjectContext.save(&errorOpt)
-                    self.managedObjectContext.persistentStoreCoordinator!.unlock()
-                }
-                if let error = errorOpt {
-                    println("Error deleting schedule. Error: \(error)")
-                    return
-                }
             }
+            
         }
         let updateWithColorScheme: ()->Void = {
             if let scheduleView = self.scheduleView {
@@ -489,19 +495,21 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.managedObjectContext.performBlockAndWait {
             schedule = self.managedObjectContext.existingObjectWithID(objectId, error: &errorOpt) as? CDSchedule
             coursesCount = schedule!.semester.courses.count
-        }
-        if schedule != nil {
-            self.schedule = Schedule(managedObject: schedule!)
-            self.reloadEnrolledCoursesView()
-            self.reloadScheduleView()
-            self.reloadSearchViewController()
-        } else {
-            assertionFailure("Failed to get schedule")
-        }
-        self.dismissViewControllerAnimated(true) {
-            self.scheduleSelectionViewControllerTransitioningDelegate = nil
-            if let termCode = self.shouldDownloadCourses() {
-                self.presentCourseDownload(termCode: termCode)
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                if schedule != nil {
+                    self.schedule = Schedule(managedObject: schedule!)
+                    self.reloadEnrolledCoursesView()
+                    self.reloadScheduleView()
+                    self.reloadSearchViewController()
+                } else {
+                    assertionFailure("Failed to get schedule")
+                }
+                self.dismissViewControllerAnimated(true) {
+                    self.scheduleSelectionViewControllerTransitioningDelegate = nil
+                    if let termCode = self.shouldDownloadCourses() {
+                        self.presentCourseDownload(termCode: termCode)
+                    }
+                }
             }
         }
     }

@@ -47,7 +47,7 @@ class NewScheduleServerCommunication : ServerCommunicator.ServerCommunication {
             // get new schedule id
             if let scheduleId: AnyObject = Json.parse(data)?["id"] {
                 var errorOpt: NSError?
-                self.managedObjectContext.performBlockAndWait {
+                self.managedObjectContext.performBlock {
                     self.managedObject.serverId = "\(scheduleId)"
                     self.managedObject.isNew = false
                     if self.managedObject.modifiedLogicalValue == .Uploading {
@@ -56,10 +56,11 @@ class NewScheduleServerCommunication : ServerCommunicator.ServerCommunication {
                     self.managedObjectContext.persistentStoreCoordinator!.lock()
                     self.managedObjectContext.save(&errorOpt)
                     self.managedObjectContext.persistentStoreCoordinator!.unlock()
+                    if let error = errorOpt {
+                        println("Error saving modified schedule. Error: \(error)")
+                    }
                 }
-                if let error = errorOpt {
-                    println("Error saving modified schedule. Error: \(error)")
-                }
+                
             }
             return .Remove
         case .Failure(let error):

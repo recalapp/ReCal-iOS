@@ -30,7 +30,7 @@ class CoursesServerCommunication: ServerCommunicator.ServerCommunication {
         case .Success(_, let data):
             println("Successfully downloaded courses for semester \(self.semesterTermCode)")
             let coreDataImporter = Settings.currentSettings.coreDataImporter
-            coreDataImporter.performBlockAndWait {
+            coreDataImporter.performBlock {
                 let _ = coreDataImporter.writeJSONDataToPendingItemsDirectory(data, withTemporaryFileName: CourseSelectionCoreDataImporter.TemporaryFileNames.activeSemesters)
             }
             return .NoAction
