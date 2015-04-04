@@ -46,12 +46,14 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
             if let scheduleObject = tryGetManagedObjectObject(managedObjectContext: self.managedObjectContext, entityName: "CDSchedule", attributeName: "serverId", attributeValue: "\(self.scheduleId)") as? CDSchedule {
                 // TODO why does this code freezes when we use performBlockAndWait ?
                 var errorOpt: NSError?
-                if scheduleObject.modifiedLogicalValue == .Uploading {
-                    scheduleObject.modifiedLogicalValue = .NotModified
+                self.managedObjectContext.performBlockAndWait {
+                    if scheduleObject.modifiedLogicalValue == .Uploading {
+                        scheduleObject.modifiedLogicalValue = .NotModified
+                    }
+                    self.managedObjectContext.persistentStoreCoordinator!.lock()
+                    self.managedObjectContext.save(&errorOpt)
+                    self.managedObjectContext.persistentStoreCoordinator!.unlock()
                 }
-                self.managedObjectContext.persistentStoreCoordinator!.lock()
-                self.managedObjectContext.save(&errorOpt)
-                self.managedObjectContext.persistentStoreCoordinator!.unlock()
                 if let error = errorOpt {
                     println("Error saving modified schedule. Error: \(error)")
                 }
