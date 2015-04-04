@@ -218,6 +218,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     }
     
     private func presentScheduleSelection() {
+        if self.scheduleSelectionNavigationController.presentingViewController == self {
+            return
+        }
         let delegate = SidebarOverlayTransitioningDelegate(direction: .Right)
         delegate.delegate = self
         self.scheduleSelectionViewControllerTransitioningDelegate = delegate

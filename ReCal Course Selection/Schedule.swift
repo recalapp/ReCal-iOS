@@ -143,7 +143,7 @@ struct Schedule : ManagedObjectProxy {
         case .Existing(let objectId):
             var errorOpt: NSError?
             if let object = managedObjectContext.existingObjectWithID(objectId, error: &errorOpt) as? CDSchedule {
-                if object.managedObjectContext != nil && !managedObjectContext.deletedObjects.containsObject(object) {
+                if object.managedObjectContext != nil && !managedObjectContext.deletedObjects.containsObject(object) && !object.markedDeleted.boolValue {
                     return Schedule(managedObject: object)
                 }
                 return nil

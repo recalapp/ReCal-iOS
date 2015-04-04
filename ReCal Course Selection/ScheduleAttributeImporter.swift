@@ -95,7 +95,7 @@ class ScheduleAttributeImporter: CompositeManagedObjectAttributeImporter {
     
     override func importAttributeFromDictionary(dict: Dictionary<String, AnyObject>, intoManagedObject managedObject: NSManagedObject, inManagedObjectContext managedObjectContext: NSManagedObjectContext) -> ManagedObjectAttributeImporter.ImportResult {
         if let scheduleManagedObject = managedObject as? CDSchedule {
-            if scheduleManagedObject.modified.boolValue {
+            if scheduleManagedObject.modified.boolValue || scheduleManagedObject.markedDeleted.boolValue {
                 return .Success // refuse to update if modified
             }
         } else {

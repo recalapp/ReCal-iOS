@@ -156,7 +156,9 @@ class ScheduleSelectionViewController: UITableViewController {
             }
             self.delegate?.didDeleteScheduleWithObjectId(deletedSchedule.objectID)
             self.managedObjectContext.performBlock {
-                self.managedObjectContext.deleteObject(deletedSchedule)
+                deletedSchedule.semester = nil
+                deletedSchedule.markedDeleted = true
+//                self.managedObjectContext.deleteObject(deletedSchedule)
                 var errorOpt: NSError?
                 self.managedObjectContext.persistentStoreCoordinator!.lock()
                 self.managedObjectContext.save(&errorOpt)
