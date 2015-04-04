@@ -54,9 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Settings.currentSettings.serverCommunicator.registerServerCommunication(ActiveSemesterServerCommunication())
                 Settings.currentSettings.serverCommunicator.registerServerCommunication(AvailableColorsServerCommunication())
             }
-            Settings.currentSettings.schedulesSyncService.performBlockAndWait {
-                let _ = Settings.currentSettings.schedulesSyncService.sync()
-            }
+            Settings.currentSettings.schedulesSyncService.sync()
         }
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
             if url.scheme == Urls.courseSelectionUrlScheme {

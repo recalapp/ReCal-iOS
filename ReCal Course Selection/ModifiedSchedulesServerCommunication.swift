@@ -47,14 +47,14 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
             println(response)
             println(NSString(data: data, encoding: NSUTF8StringEncoding))
             if let scheduleObject = tryGetManagedObjectObject(managedObjectContext: self.managedObjectContext, entityName: "CDSchedule", attributeName: "serverId", attributeValue: "\(self.scheduleId)") as? CDSchedule {
+                // TODO why does this code freezes when we use performBlockAndWait ?
                 var errorOpt: NSError?
-                self.managedObjectContext.performBlockAndWait {
-                    scheduleObject.modified = false
-                    self.managedObjectContext.save(&errorOpt)
-                }
+                scheduleObject.modified = false
+                self.managedObjectContext.save(&errorOpt)
                 if let error = errorOpt {
                     println("Error saving modified schedule. Error: \(error)")
                 }
+                
             }
             return .Remove
         case .Failure(let error):

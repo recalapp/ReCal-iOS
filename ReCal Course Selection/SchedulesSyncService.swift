@@ -18,14 +18,6 @@ class SchedulesSyncService {
         return managedObjectContext
         }()
     
-    private let privateQueue: NSOperationQueue = {
-        let queue = NSOperationQueue()
-        queue.name = "Schedules Sync Service"
-        queue.qualityOfService = NSQualityOfService.Utility
-        queue.maxConcurrentOperationCount = 1
-        return queue
-        }()
-    
     private let modifiedScheduleFetchRequest: NSFetchRequest = {
         let fetchRequest = NSFetchRequest(entityName: "CDSchedule")
         fetchRequest.predicate = NSPredicate(format: "modified = 1")
@@ -39,7 +31,7 @@ class SchedulesSyncService {
         self.serverCommunicator.performBlockAndWait {
             self.serverCommunicator.registerServerCommunication(AllSchedulesServerCommunication())
         }
-        let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: self.privateQueue) { (notification) -> Void in
+        let observer = NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: NSOperationQueue.mainQueue()) { (notification) -> Void in
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }
@@ -53,7 +45,6 @@ class SchedulesSyncService {
     }
     
     private func pushModifiedSchedules() {
-        self.assertPrivateQueue()
         let modifiedScheduleServerCommunications = self.fetchModifiedSchedules().map { ScheduleDeserializer(schedule: $0).deserialize() }.filter {
             (dict: [String:String]?) in if let _ = dict { return true } else { return false }
             }.map { $0! }.map { (dict: [String:String]) in ModifiedSchedulesServerCommunication(scheduleDictionary: dict, scheduleId: dict["id"]?.toInt() ?? 0, managedObjectContext: self.managedObjectContext) }
@@ -64,14 +55,12 @@ class SchedulesSyncService {
         }
     }
     private func pullSchedules() {
-        self.assertPrivateQueue()
         self.serverCommunicator.performBlockAndWait {
             let _ = self.serverCommunicator.startServerCommunicationWithIdentifier(AllSchedulesServerCommunication.identifier())
         }
     }
     
     private func fetchModifiedSchedules() -> [CDSchedule] {
-        self.assertPrivateQueue()
         var fetched: [CDSchedule]?
         var error: NSError?
         
@@ -81,26 +70,7 @@ class SchedulesSyncService {
         return fetched ?? []
     }
     
-    private func assertPrivateQueue() {
-        assert(NSOperationQueue.currentQueue() == self.privateQueue, "All operations on Server Communicator must be performed on its private queue via the performBlock() method or the performBlockAndWait() method")
-    }
-    
-    private func assertNotPrivateQueue() {
-        assert(NSOperationQueue.currentQueue() != self.privateQueue, "Prevents deadlock")
-    }
-    
-    func performBlock(closure: ()->Void) {
-        self.privateQueue.addOperationWithBlock(closure)
-    }
-    func performBlockAndWait(closure: ()->Void) {
-        self.assertNotPrivateQueue()
-        let operation = NSBlockOperation(block: closure)
-        self.privateQueue.addOperation(operation)
-        operation.waitUntilFinished()
-    }
-    
     func sync() {
-        self.assertPrivateQueue()
         self.pushModifiedSchedules()
         self.pullSchedules()
     }

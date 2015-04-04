@@ -89,9 +89,7 @@ class ScheduleSelectionViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     func reloadSchedules(sender: UIRefreshControl) {
-        Settings.currentSettings.schedulesSyncService.performBlockAndWait {
-            Settings.currentSettings.schedulesSyncService.sync()
-        }
+        Settings.currentSettings.schedulesSyncService.sync()
     }
     private func scheduleAtIndexPath(indexPath: NSIndexPath) -> CDSchedule? {
         return self.semesterToSchedulesMapping[self.visibleSemesters[indexPath.section]]?[indexPath.row]
