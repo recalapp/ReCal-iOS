@@ -20,7 +20,13 @@ class SchedulesSyncService {
     
     private let modifiedScheduleFetchRequest: NSFetchRequest = {
         let fetchRequest = NSFetchRequest(entityName: "CDSchedule")
-        fetchRequest.predicate = NSPredicate(format: "modified = 1")
+        fetchRequest.predicate = NSPredicate(format: "modified = 1 AND markedDeleted = 0")
+        return fetchRequest
+    }()
+    
+    private let deletedScheduleFetchRequest: NSFetchRequest = {
+        let fetchRequest = NSFetchRequest(entityName: "CDSchedule")
+        fetchRequest.predicate = NSPredicate(format: "markedDeleted = 1")
         return fetchRequest
     }()
     
@@ -38,6 +44,7 @@ class SchedulesSyncService {
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }
+            self.pushDeletedSchedules()
             self.pushModifiedSchedules()
         }
         self.notificationObservers.append(observer)
@@ -45,6 +52,18 @@ class SchedulesSyncService {
     
     deinit {
         self.notificationObservers.map { NSNotificationCenter.defaultCenter().removeObserver($0) }
+    }
+    
+    private func pushDeletedSchedules() {
+        let serverCommunications = self.fetchDeletedSchedules().map { (schedule: CDSchedule) -> DeletedScheduleServerCommunication in
+            let id = schedule.serverId.toInt() ?? 0
+            return DeletedScheduleServerCommunication(managedObject: schedule, scheduleId: id, managedObjectContext: self.managedObjectContext)
+        }
+        for communication in serverCommunications {
+            self.serverCommunicator.performBlockAndWait {
+                self.serverCommunicator.registerServerCommunication(communication)
+            }
+        }
     }
     
     private func pushModifiedSchedules() {
@@ -103,7 +122,18 @@ class SchedulesSyncService {
         return fetched ?? []
     }
     
+    private func fetchDeletedSchedules() -> [CDSchedule] {
+        var fetched: [CDSchedule]?
+        var error: NSError?
+        
+        managedObjectContext.performBlockAndWait {
+            fetched = self.managedObjectContext.executeFetchRequest(self.deletedScheduleFetchRequest, error: &error) as? [CDSchedule]
+        }
+        return fetched ?? []
+    }
+    
     func sync() {
+        self.pushDeletedSchedules()
         self.pushModifiedSchedules()
         self.pullSchedules()
     }

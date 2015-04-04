@@ -185,6 +185,7 @@
 		F497620A1AC86F9700E347B3 /* ModifiedSchedulesServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49762091AC86F9700E347B3 /* ModifiedSchedulesServerCommunication.swift */; };
 		F4C0F7D51ACF807300874F33 /* CDSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0F7D41ACF807300874F33 /* CDSchedule.m */; };
 		F4C0F7D81ACF808F00874F33 /* CDServerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C0F7D71ACF808F00874F33 /* CDServerObject.m */; };
+		F4C0F7DA1ACF8E3C00874F33 /* DeletedScheduleServerCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C0F7D91ACF8E3C00874F33 /* DeletedScheduleServerCommunication.swift */; };
 		F4CD63201ACC85D900F3AA6F /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CD631F1ACC85D900F3AA6F /* Json.swift */; };
 		F4CD63221ACC8CE500F3AA6F /* UrlEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CD63211ACC8CE500F3AA6F /* UrlEncoding.swift */; };
 		F4D855CE1AC32B9400ACF4FB /* ToOneChildLookUpManagedObjectAttributeImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D855CD1AC32B9400ACF4FB /* ToOneChildLookUpManagedObjectAttributeImporter.swift */; };
@@ -463,6 +464,7 @@
 		F4C0F7D41ACF807300874F33 /* CDSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDSchedule.m; sourceTree = "<group>"; };
 		F4C0F7D61ACF808F00874F33 /* CDServerObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDServerObject.h; sourceTree = "<group>"; };
 		F4C0F7D71ACF808F00874F33 /* CDServerObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDServerObject.m; sourceTree = "<group>"; };
+		F4C0F7D91ACF8E3C00874F33 /* DeletedScheduleServerCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeletedScheduleServerCommunication.swift; sourceTree = "<group>"; };
 		F4CD631F1ACC85D900F3AA6F /* Json.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
 		F4CD63211ACC8CE500F3AA6F /* UrlEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlEncoding.swift; sourceTree = "<group>"; };
 		F4D62FCB1A79707300F06E13 /* ReCal_Course_Selection_v4__Syncing_Schedule.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReCal_Course_Selection_v4__Syncing_Schedule.xcdatamodel; sourceTree = "<group>"; };
@@ -673,6 +675,7 @@
 				F4E323D01AA226DB00308D8D /* AllSchedulesServerCommunication.swift */,
 				F43CCD8A1AC5F56100042759 /* CoursesServerCommunication.swift */,
 				F49762091AC86F9700E347B3 /* ModifiedSchedulesServerCommunication.swift */,
+				F4C0F7D91ACF8E3C00874F33 /* DeletedScheduleServerCommunication.swift */,
 				F460C19B1ACF67B0003EBFE9 /* NewScheduleServerCommunication.swift */,
 			);
 			name = "Server Communication";
@@ -1480,6 +1483,7 @@
 				813537601A1D24A3002AB008 /* SectionMeetingAttributeImporter.swift in Sources */,
 				F43087161A338C4600F63759 /* CDSemester.m in Sources */,
 				814D4E761A0C880500C21848 /* ScheduleCreationViewController.swift in Sources */,
+				F4C0F7DA1ACF8E3C00874F33 /* DeletedScheduleServerCommunication.swift in Sources */,
 				81BCA5481A0FE94300391608 /* CourseSelectionNavigationController.swift in Sources */,
 				81F9A40E1A070B1600083E55 /* CourseDetailsViewController.swift in Sources */,
 				8146ECB21A0ADB68005FF4C2 /* ManagedObjectProxy.swift in Sources */,

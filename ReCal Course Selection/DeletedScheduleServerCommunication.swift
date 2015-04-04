@@ -1,29 +1,25 @@
 //
-//  ModifiedSchedulesServerCommunication.swift
+//  DeletedScheduleServerCommunication.swift
 //  ReCal iOS
 //
-//  Created by Naphat Sanguansin on 3/29/15.
+//  Created by Naphat Sanguansin on 4/3/15.
 //  Copyright (c) 2015 ReCal. All rights reserved.
 //
 
 import Foundation
-
 import ReCalCommon
 
-class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunication {
+class DeletedScheduleServerCommunication : ServerCommunicator.ServerCommunication {
     private let scheduleId: Int
     private let managedObjectContext: NSManagedObjectContext
-    private let scheduleDictionary: [String:String]
+    private let managedObject: CDSchedule
     override var request: NSURLRequest {
         // get actual url
         let urlString = Urls.scheduleWithId(scheduleId: self.scheduleId)
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: urlString)!)
-        request.HTTPMethod = "PUT"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPMethod = "DELETE"
         request.HTTPShouldHandleCookies = true
         request.allHTTPHeaderFields = NSHTTPCookie.requestHeaderFieldsWithCookies(NSHTTPCookieStorage.sharedHTTPCookieStorage().cookiesForURL(NSURL(string: Urls.base)!)!)
-        let body = Json.serializeToData(self.scheduleDictionary)
-        request.HTTPBody = body
         let csrfToken = tryGetCsrfToken(NSHTTPCookieStorage.sharedHTTPCookieStorage()) ?? ""
         request.addValue(csrfToken, forHTTPHeaderField: "X_CSRFTOKEN")
         return request
@@ -31,8 +27,8 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
     override var idleInterval: Int {
         return 1
     }
-    init(scheduleDictionary: [String:String], scheduleId:Int, managedObjectContext: NSManagedObjectContext) {
-        self.scheduleDictionary = scheduleDictionary
+    init(managedObject: CDSchedule, scheduleId:Int, managedObjectContext: NSManagedObjectContext) {
+        self.managedObject = managedObject
         self.managedObjectContext = managedObjectContext
         self.scheduleId = scheduleId
         super.init(identifier: "SyncSchedule\(scheduleId)")
@@ -41,13 +37,11 @@ class ModifiedSchedulesServerCommunication : ServerCommunicator.ServerCommunicat
     override func handleCommunicationResult(result: ServerCommunicator.Result) -> ServerCommunicator.CompleteAction {
         switch result {
         case .Success(let response, let data):
-            println("Successfully uploaded one modified schedule with id \(self.scheduleId)")
+            println("Successfully uploaded one deleted schedule with id \(self.scheduleId)")
             if let scheduleObject = tryGetManagedObjectObject(managedObjectContext: self.managedObjectContext, entityName: "CDSchedule", attributeName: "serverId", attributeValue: "\(self.scheduleId)") as? CDSchedule {
                 var errorOpt: NSError?
                 self.managedObjectContext.performBlockAndWait {
-                    if scheduleObject.modifiedLogicalValue == .Uploading {
-                        scheduleObject.modifiedLogicalValue = .NotModified
-                    }
+                    self.managedObjectContext.deleteObject(self.managedObject)
                     self.managedObjectContext.persistentStoreCoordinator!.lock()
                     self.managedObjectContext.save(&errorOpt)
                     self.managedObjectContext.persistentStoreCoordinator!.unlock()
