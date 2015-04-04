@@ -44,8 +44,10 @@ class SchedulesSyncService {
             self.managedObjectContext.performBlockAndWait {
                 self.managedObjectContext.mergeChangesFromContextDidSaveNotification(notification)
             }
-            self.pushDeletedSchedules()
-            self.pushModifiedSchedules()
+            if let _ = Settings.currentSettings.authenticator.user {
+                self.pushDeletedSchedules()
+                self.pushModifiedSchedules()
+            }
         }
         self.notificationObservers.append(observer)
     }
