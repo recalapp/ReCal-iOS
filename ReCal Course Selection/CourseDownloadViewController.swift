@@ -14,7 +14,7 @@ class CourseDownloadViewController: UIViewController {
     // MARK: Constants
     
     /// The number of courses to download in one connection
-    private let batchSize = 700
+    private let batchSize = 1200 // not needed any more, as we download in one shot
     
     /// The estimated total number of courses, used in the inital download
     private let estimatedTotalCount = 1200
@@ -87,17 +87,17 @@ class CourseDownloadViewController: UIViewController {
             task.importPromise.onDone { (_) in
                 println("Import completed for task # \(index + 1) out of \(self.batchCount)")
             }
-            task.downloadPromise.onSuccess { (downloadedDictionary: NSDictionary) in
-                if let totalCount = downloadedDictionary["meta"]?["total_count"] as? NSNumber {
-                    self.totalCountStorage = totalCount.integerValue
-                } else {
-                    self.handleCancellation()
-                }
-                self.adjustDownloadTasksArrayLength()
-                if index + 1 < self.batchCount {
-                    self.startDownloadTask(index: index + 1)
-                }
-            }
+//            task.downloadPromise.onSuccess { (downloadedDictionary: NSDictionary) in
+//                if let totalCount = downloadedDictionary["meta"]?["total_count"] as? NSNumber {
+//                    self.totalCountStorage = totalCount.integerValue
+//                } else {
+//                    self.handleCancellation()
+//                }
+//                self.adjustDownloadTasksArrayLength()
+//                if index + 1 < self.batchCount {
+//                    self.startDownloadTask(index: index + 1)
+//                }
+//            }
             
             
         case .Active(_), .Finished:

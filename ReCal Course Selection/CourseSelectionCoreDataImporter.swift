@@ -53,66 +53,62 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
         let initialUnitCount: Int64 = 1
         progress.totalUnitCount = initialUnitCount
         progress.completedUnitCount = 0
-        if let downloadedDict = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Dictionary<String, AnyObject> {
-            if let courseDictArray = downloadedDict["objects"] as? [Dictionary<String, AnyObject>] {
-                let courseImportOperationQueue = NSOperationQueue()
-                courseImportOperationQueue.name = "Course Import"
-                courseImportOperationQueue.qualityOfService = NSOperationQueue.currentQueue()!.qualityOfService
-                courseImportOperationQueue.underlyingQueue = (NSOperationQueue.currentQueue()?.underlyingQueue)!
-                courseImportOperationQueue.maxConcurrentOperationCount = 2
-                let curQueue = NSOperationQueue.currentQueue()
-                var result: ImportResult = .Success
-                let courseImporter = CourseAttributeImporter()
-                progress.totalUnitCount = Int64(courseDictArray.count)
-                for courseDict in courseDictArray {
-                    let courseImportOperation = CourseImportOperation(courseDictionary: courseDict, courseImporter: courseImporter, managedObjectContext: self.backgroundManagedObjectContext) { (newResult) -> Void in
-                        synchronize(self) {
-                            progress.completedUnitCount += 1
-                            switch (result, newResult) {
-                            case (.Success, .Success):
-                                result = .Success
-                            default:
-                                result = .Failure
-                                courseImportOperationQueue.cancelAllOperations()
-                            }
+        if let courseDictArray = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Dictionary<String, AnyObject>] {
+            let courseImportOperationQueue = NSOperationQueue()
+            courseImportOperationQueue.name = "Course Import"
+            courseImportOperationQueue.qualityOfService = NSOperationQueue.currentQueue()!.qualityOfService
+            courseImportOperationQueue.underlyingQueue = (NSOperationQueue.currentQueue()?.underlyingQueue)!
+            courseImportOperationQueue.maxConcurrentOperationCount = 2
+            let curQueue = NSOperationQueue.currentQueue()
+            var result: ImportResult = .Success
+            let courseImporter = CourseAttributeImporter()
+            progress.totalUnitCount = Int64(courseDictArray.count)
+            for courseDict in courseDictArray {
+                let courseImportOperation = CourseImportOperation(courseDictionary: courseDict, courseImporter: courseImporter, managedObjectContext: self.backgroundManagedObjectContext) { (newResult) -> Void in
+                    synchronize(self) {
+                        progress.completedUnitCount += 1
+                        switch (result, newResult) {
+                        case (.Success, .Success):
+                            result = .Success
+                        default:
+                            result = .Failure
+                            courseImportOperationQueue.cancelAllOperations()
                         }
                     }
-                    courseImportOperationQueue.addOperation(courseImportOperation)
                 }
-                courseImportOperationQueue.waitUntilAllOperationsAreFinished()
-                switch result {
-                case .Success:
-                    assert(progress.totalUnitCount == progress.completedUnitCount, "If success, this is a requirement")
-                    var errorOpt: NSError?
-                    println("Inserted item count: \(self.backgroundManagedObjectContext.insertedObjects.count)")
-                    println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
-                    println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
-                    self.backgroundManagedObjectContext.performBlockAndWait {
-                        self.backgroundManagedObjectContext.persistentStoreCoordinator!.lock()
-                        self.backgroundManagedObjectContext.save(&errorOpt)
-                        self.backgroundManagedObjectContext.persistentStoreCoordinator!.unlock()
-                    }
-                    if let error = errorOpt {
-                        println("Error saving. Aborting. Error: \(error)")
-                        return .ShouldRetry
-                    } else {
-                        return .Success
-                    }
-                case .Failure, .ShouldRetry:
-                    revertChanges()
-                    progress.cancel()
-                    return result
-                }
-            } else {
-                progress.cancel()
-                return .Failure
+                courseImportOperationQueue.addOperation(courseImportOperation)
             }
-        } else {
+            courseImportOperationQueue.waitUntilAllOperationsAreFinished()
+            switch result {
+            case .Success:
+                assert(progress.totalUnitCount == progress.completedUnitCount, "If success, this is a requirement")
+                var errorOpt: NSError?
+                println("Inserted item count: \(self.backgroundManagedObjectContext.insertedObjects.count)")
+                println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
+                println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
+                self.backgroundManagedObjectContext.performBlockAndWait {
+                    self.backgroundManagedObjectContext.persistentStoreCoordinator!.lock()
+                    self.backgroundManagedObjectContext.save(&errorOpt)
+                    self.backgroundManagedObjectContext.persistentStoreCoordinator!.unlock()
+                }
+                if let error = errorOpt {
+                    println("Error saving. Aborting. Error: \(error)")
+                    return .ShouldRetry
+                } else {
+                    return .Success
+                }
+            case .Failure, .ShouldRetry:
+                revertChanges()
+                progress.cancel()
+                return result
+            }
+        }
+        else {
             progress.cancel()
             return .Failure
         }
     }
-    
+
     private func processAllSchedulesData(data: NSData, withProgress progress: NSProgress) -> ImportResult {
         func fetchAllOldSchedules() -> [CDSchedule] {
             let fetchRequest = NSFetchRequest(entityName: "CDSchedule")
@@ -251,7 +247,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
                     self.backgroundManagedObjectContext.performBlockAndWait {
                         self.backgroundManagedObjectContext.persistentStoreCoordinator!.lock()
-                        let _ = self.backgroundManagedObjectContext.save(&errorOpt)
+                        self.backgroundManagedObjectContext.save(&errorOpt)
                         self.backgroundManagedObjectContext.persistentStoreCoordinator!.unlock()
                     }
                     if let error = errorOpt {

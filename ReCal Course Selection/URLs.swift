@@ -19,10 +19,11 @@ extension Urls {
         return "\(schedules)&user__netid=\(username)";
     }
     static func courses(#semesterTermCode: String) -> String {
-        return "\(courseSelectionApiBase)/course/?semester__term_code=\(semesterTermCode)&format=json"
+        return "\(base)/api/static/courses/\(semesterTermCode)"
     }
     static func courses(#semesterTermCode: String, limit: Int, offset: Int) -> String {
-        return "\(courses(semesterTermCode: semesterTermCode))&limit=\(limit)&offset=\(offset)"
+        return courses(semesterTermCode: semesterTermCode)
+//        return "\(courses(semesterTermCode: semesterTermCode))&limit=\(limit)&offset=\(offset)"
     }
     static func scheduleWithId(#scheduleId: Int) -> String {
         return "\(courseSelectionApiBase)/schedule/\(scheduleId)/" // trailing slash necessary for POST

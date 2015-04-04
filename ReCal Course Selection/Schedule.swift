@@ -137,20 +137,12 @@ struct Schedule : ManagedObjectProxy {
         assert(self.checkInvariants())
     }
     static func updatedCopy(schedule: Schedule, managedObjectContext: NSManagedObjectContext) -> Schedule? {
-        switch schedule.managedObjectProxyId {
-        case .NewObject:
-            return schedule
-        case .Existing(let objectId):
-            var errorOpt: NSError?
-            if let object = managedObjectContext.existingObjectWithID(objectId, error: &errorOpt) as? CDSchedule {
-                if object.managedObjectContext != nil && !managedObjectContext.deletedObjects.containsObject(object) && !object.markedDeleted.boolValue {
-                    return Schedule(managedObject: object)
-                }
-                return nil
-            } else {
-                return nil
+        if let object = tryGetUnderlyingManagedObject(managedObjectProxyId: schedule.managedObjectProxyId, managedObjectContext: managedObjectContext) as? CDSchedule {
+            if !object.markedDeleted.boolValue && object.semester != nil {
+                return Schedule(managedObject: object)
             }
         }
+        return nil
     }
     mutating func updateCourseSectionTypeEnrollments() {
         for course in self.courseSectionTypeEnrollments.keys {

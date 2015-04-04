@@ -12,7 +12,7 @@ import ReCalCommon
 class SemesterDownloadTask : NSObject {
     
     let progress: NSProgress
-    let downloadPromise: Promise<NSDictionary, NSError>
+    let downloadPromise: Promise<NSArray, NSError>
     let importPromise: Promise<NSObject, NSError>
     let termCode: String
     let limit: Int
@@ -83,7 +83,7 @@ class SemesterDownloadTask : NSObject {
                     switch result {
                     case .Success(_, let data):
                         var errorOpt: NSError?
-                        let downloadedDictionaryOpt = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &errorOpt) as? NSDictionary
+                        let downloadedDictionaryOpt = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error: &errorOpt) as? NSArray // NSDictionary
                         if let error = errorOpt {
                             println("Error parsing JSON data. Error: \(error)")
                             self.downloadPromise.failWith(error)

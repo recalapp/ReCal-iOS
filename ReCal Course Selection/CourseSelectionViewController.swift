@@ -214,6 +214,10 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         super.viewWillAppear(animated)
         if self.schedule == nil {
             self.presentScheduleSelection()
+        } else {
+            if let termCode = self.shouldDownloadCourses() {
+                self.presentCourseDownload(termCode: termCode)
+            }
         }
     }
     
@@ -493,16 +497,36 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         }
         self.dismissViewControllerAnimated(true) {
             self.scheduleSelectionViewControllerTransitioningDelegate = nil
-            if coursesCount < 800 /* TODO safe? */ {
-                let courseDownloadVC = self.storyboard?.instantiateViewControllerWithIdentifier(courseDownloadViewControllerStoryboardId) as CourseDownloadViewController
-                courseDownloadVC.termCode = schedule!.semester.termCode
-                courseDownloadVC.delegate = self
-                courseDownloadVC.modalPresentationStyle = .Custom
-                self.courseDownloadViewControllerTransitioningDelegate = FadeOverlayPresentation.TransitioningDelegate()
-                courseDownloadVC.transitioningDelegate = self.courseDownloadViewControllerTransitioningDelegate
-                self.presentViewController(courseDownloadVC, animated: true, completion: nil)
+            if let termCode = self.shouldDownloadCourses() {
+                self.presentCourseDownload(termCode: termCode)
             }
         }
+    }
+    
+    private func shouldDownloadCourses() -> String? {
+        if let schedule = self.schedule {
+            if let scheduleManagedObject = tryGetUnderlyingManagedObject(managedObjectProxyId: schedule.managedObjectProxyId, managedObjectContext: self.managedObjectContext) as? CDSchedule {
+                if scheduleManagedObject.semester.courses.count < 800 {
+                    return scheduleManagedObject.semester.termCode
+                }
+            }
+            return nil
+        } else {
+            return nil
+        }
+    }
+    
+    private func presentCourseDownload(#termCode: String) {
+        if self.courseDownloadViewControllerTransitioningDelegate != nil {
+            return
+        }
+        let courseDownloadVC = self.storyboard?.instantiateViewControllerWithIdentifier(courseDownloadViewControllerStoryboardId) as CourseDownloadViewController
+        courseDownloadVC.termCode = termCode
+        courseDownloadVC.delegate = self
+        courseDownloadVC.modalPresentationStyle = .Custom
+        self.courseDownloadViewControllerTransitioningDelegate = FadeOverlayPresentation.TransitioningDelegate()
+        courseDownloadVC.transitioningDelegate = self.courseDownloadViewControllerTransitioningDelegate
+        self.presentViewController(courseDownloadVC, animated: true, completion: nil)
     }
     
     // MARK: - Settings View Controller Delegate
@@ -557,7 +581,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.dismissViewControllerAnimated(true) {
             self.courseDownloadViewControllerTransitioningDelegate = nil
             let alertController = UIAlertController(title: "Failed to download courses", message: "Please try again later.", preferredStyle: .Alert)
-            alertController.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (_) in
+                self.presentScheduleSelection()
+            }))
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }

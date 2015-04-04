@@ -49,3 +49,20 @@ public enum ManagedObjectProxyCommitResult {
     case Success(NSManagedObjectID)
     case Failure
 }
+
+public func tryGetUnderlyingManagedObject(#managedObjectProxyId: ManagedObjectProxyId, #managedObjectContext: NSManagedObjectContext) -> NSManagedObject? {
+    switch managedObjectProxyId {
+    case .NewObject:
+        return nil
+    case .Existing(let objectId):
+        var errorOpt: NSError?
+        if let object = managedObjectContext.existingObjectWithID(objectId, error: &errorOpt) {
+            if object.managedObjectContext != nil && !managedObjectContext.deletedObjects.containsObject(object) {
+                return object
+            }
+            return nil
+        } else {
+            return nil
+        }
+    }
+}
