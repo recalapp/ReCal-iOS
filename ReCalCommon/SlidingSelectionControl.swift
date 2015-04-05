@@ -291,11 +291,25 @@ class SlidingSelectionControlItem: UIControl {
     private func updateAppearance() {
         if self.selected {
             self.backgroundColor = self.tintColor
-            self.label.textColor = self.tintColor.darkerColor().darkerColor().darkerColor().darkerColor().darkerColor()
+            switch Settings.currentSettings.theme {
+            case .Dark:
+                self.label.textColor =
+                    self.tintColor.darkerColor().darkerColor().darkerColor().darkerColor().darkerColor()
+            case .Light:
+                self.label.textColor =
+                    self.tintColor.lighterColor().lighterColor().lighterColor().lighterColor()
+            }
+            
         }
         else {
             self.backgroundColor = self.defaultBackgroundColor
-            self.label.textColor = self.defaultBackgroundColor.lighterColor().lighterColor().lighterColor().lighterColor()
+            switch Settings.currentSettings.theme {
+            case .Dark:
+                self.label.textColor = self.defaultBackgroundColor.lighterColor().lighterColor().lighterColor().lighterColor()
+            case .Light:
+                self.label.textColor = self.defaultBackgroundColor.darkerColor().darkerColor().darkerColor().darkerColor()
+            }
+            
         }
     }
     
