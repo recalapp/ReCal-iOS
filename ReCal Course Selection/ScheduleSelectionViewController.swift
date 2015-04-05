@@ -78,8 +78,10 @@ class ScheduleSelectionViewController: UITableViewController {
         }
         self.notificationObservers.append(observer1)
         self.fetchSchedules()
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "reloadSchedules:", forControlEvents: UIControlEvents.ValueChanged)
+        
     }
     
     deinit {
@@ -94,6 +96,9 @@ class ScheduleSelectionViewController: UITableViewController {
     }
     func reloadSchedules(sender: UIRefreshControl) {
         Settings.currentSettings.schedulesSyncService.sync()
+        if let _ = Settings.currentSettings.authenticator.user {
+            self.refreshControl?.endRefreshing()
+        }
     }
     private func scheduleAtIndexPath(indexPath: NSIndexPath) -> CDSchedule? {
         return self.semesterToSchedulesMapping[self.visibleSemesters[indexPath.section]]?[indexPath.row]
