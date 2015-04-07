@@ -27,8 +27,6 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
     }
     
     private var notificationObservers: [AnyObject] = []
-    
-    private var performedCreationSegue = false
 
     private func fetchSchedules() {
         let fetchRequest = NSFetchRequest(entityName: "CDSemester")
@@ -50,12 +48,6 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
                     self.semesterToSchedulesMapping = newMapping
                     self.tableView?.reloadData()
                     
-                }
-                if self.visibleSemesters.count == 0 {
-                    if !self.performedCreationSegue {
-                        self.performedCreationSegue = true
-                        self.performSegueWithIdentifier("CreateSchedule", sender: nil)
-                    }
                 }
             }
         }
@@ -95,7 +87,6 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
     
     override func viewWillAppear(animated: Bool) {
         self.fetchSchedules()
-        self.performedCreationSegue = false
     }
     
     override func viewDidAppear(animated: Bool) {
