@@ -90,6 +90,10 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.fetchSchedules()
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
     }
@@ -109,6 +113,7 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
         if let _ = Settings.currentSettings.authenticator.user {
             
         } else {
+            self.fetchSchedules()
             self.refreshControl?.endRefreshing()
         }
     }
