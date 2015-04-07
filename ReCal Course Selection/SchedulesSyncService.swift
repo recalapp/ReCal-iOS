@@ -59,54 +59,57 @@ class SchedulesSyncService {
     }
     
     private func pushDeletedSchedules() {
-        let serverCommunications = self.fetchDeletedSchedules().map { (schedule: CDSchedule) -> DeletedScheduleServerCommunication in
-            let id = schedule.serverId.toInt() ?? 0
-            return DeletedScheduleServerCommunication(managedObject: schedule, scheduleId: id, managedObjectContext: self.managedObjectContext)
-        }
-        for communication in serverCommunications {
-            self.serverCommunicator.performBlock {
-                self.serverCommunicator.registerServerCommunication(communication)
+        self.fetchDeletedSchedules() {(fetched) in
+            let serverCommunications = fetched.map { (schedule: CDSchedule) -> DeletedScheduleServerCommunication in
+                let id = schedule.serverId.toInt() ?? 0
+                return DeletedScheduleServerCommunication(managedObject: schedule, scheduleId: id, managedObjectContext: self.managedObjectContext)
+            }
+            for communication in serverCommunications {
+                self.serverCommunicator.performBlock {
+                    self.serverCommunicator.registerServerCommunication(communication)
+                }
             }
         }
     }
     
     private func pushModifiedSchedules() {
-        let fetched = self.fetchModifiedSchedules()
-        let modifiedSchedules = fetched.filter { !$0.isNew.boolValue }
-        let newSchedules = fetched.filter { $0.isNew.boolValue }
-        let modifiedScheduleServerCommunications = modifiedSchedules.map { ScheduleDeserializer(schedule: $0).deserialize() }.filter {
-            (dict: [String:String]?) in if let _ = dict { return true } else { return false }
-            }.map { $0! }.map { (dict: [String:String]) in ModifiedSchedulesServerCommunication(scheduleDictionary: dict, scheduleId: dict["id"]?.toInt() ?? 0, managedObjectContext: self.managedObjectContext) }
-        let newScheduleServerCommunications = newSchedules.map {
-            if let dict = ScheduleDeserializer(schedule: $0).deserialize() {
-                return NewScheduleServerCommunication(scheduleDictionary: dict, managedObject: $0, managedObjectContext: self.managedObjectContext)
-            } else {
-                return nil
+        self.fetchModifiedSchedules() { (fetched) in
+            let modifiedSchedules = fetched.filter { !$0.isNew.boolValue }
+            let newSchedules = fetched.filter { $0.isNew.boolValue }
+            let modifiedScheduleServerCommunications = modifiedSchedules.map { ScheduleDeserializer(schedule: $0).deserialize() }.filter {
+                (dict: [String:String]?) in if let _ = dict { return true } else { return false }
+                }.map { $0! }.map { (dict: [String:String]) in ModifiedSchedulesServerCommunication(scheduleDictionary: dict, scheduleId: dict["id"]?.toInt() ?? 0, managedObjectContext: self.managedObjectContext) }
+            let newScheduleServerCommunications = newSchedules.map {
+                if let dict = ScheduleDeserializer(schedule: $0).deserialize() {
+                    return NewScheduleServerCommunication(scheduleDictionary: dict, managedObject: $0, managedObjectContext: self.managedObjectContext)
+                } else {
+                    return nil
+                }
+                }.filter { (comm: NewScheduleServerCommunication?) in if let _ = comm { return true } else { return false } }.map { $0! }
+            
+            fetched.map { (schedule) in
+                schedule.modifiedLogicalValue = .Uploading
             }
-        }.filter { (comm: NewScheduleServerCommunication?) in if let _ = comm { return true } else { return false } }.map { $0! }
-        
-        fetched.map { (schedule) in
-            schedule.modifiedLogicalValue = .Uploading
-        }
-        var errorOpt: NSError?
-        self.managedObjectContext.performBlock {
-            self.managedObjectContext.persistentStoreCoordinator!.lock()
-            self.managedObjectContext.save(&errorOpt)
-            self.managedObjectContext.persistentStoreCoordinator!.unlock()
-        }
-        if let error = errorOpt {
-            println("Error marking item as uploading. Error: \(error)")
-            return
-        }
-        
-        for communication in modifiedScheduleServerCommunications {
-            self.serverCommunicator.performBlock {
-                self.serverCommunicator.registerServerCommunication(communication)
+            var errorOpt: NSError?
+            self.managedObjectContext.performBlock {
+                self.managedObjectContext.persistentStoreCoordinator!.lock()
+                self.managedObjectContext.save(&errorOpt)
+                self.managedObjectContext.persistentStoreCoordinator!.unlock()
             }
-        }
-        for communication in newScheduleServerCommunications {
-            self.serverCommunicator.performBlock {
-                self.serverCommunicator.registerServerCommunication(communication)
+            if let error = errorOpt {
+                println("Error marking item as uploading. Error: \(error)")
+                return
+            }
+            
+            for communication in modifiedScheduleServerCommunications {
+                self.serverCommunicator.performBlock {
+                    self.serverCommunicator.registerServerCommunication(communication)
+                }
+            }
+            for communication in newScheduleServerCommunications {
+                self.serverCommunicator.performBlock {
+                    self.serverCommunicator.registerServerCommunication(communication)
+                }
             }
         }
     }
@@ -116,24 +119,28 @@ class SchedulesSyncService {
         }
     }
     
-    private func fetchModifiedSchedules() -> [CDSchedule] {
+    private func fetchModifiedSchedules(callback: [CDSchedule]->Void) {
         var fetched: [CDSchedule]?
         var error: NSError?
         
-        managedObjectContext.performBlockAndWait {
+        managedObjectContext.performBlock {
             fetched = self.managedObjectContext.executeFetchRequest(self.modifiedScheduleFetchRequest, error: &error) as? [CDSchedule]
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                callback(fetched ?? [])
+            }
         }
-        return fetched ?? []
     }
     
-    private func fetchDeletedSchedules() -> [CDSchedule] {
+    private func fetchDeletedSchedules(callback: [CDSchedule]->Void) {
         var fetched: [CDSchedule]?
         var error: NSError?
         
-        managedObjectContext.performBlockAndWait {
+        managedObjectContext.performBlock {
             fetched = self.managedObjectContext.executeFetchRequest(self.deletedScheduleFetchRequest, error: &error) as? [CDSchedule]
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                callback(fetched ?? [])
+            }
         }
-        return fetched ?? []
     }
     
     func sync() {
