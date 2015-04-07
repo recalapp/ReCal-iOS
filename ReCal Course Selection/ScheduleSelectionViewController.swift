@@ -97,6 +97,8 @@ class ScheduleSelectionViewController: UITableViewController {
     func reloadSchedules(sender: UIRefreshControl) {
         Settings.currentSettings.schedulesSyncService.sync()
         if let _ = Settings.currentSettings.authenticator.user {
+            
+        } else {
             self.refreshControl?.endRefreshing()
         }
     }
