@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D113c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KCU-oo-xeN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D130a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KCU-oo-xeN">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -106,7 +106,7 @@
                     <navigationItem key="navigationItem" title="Schedules" id="NC0-S4-aSC">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="d1r-ae-YAJ">
                             <connections>
-                                <segue destination="fcJ-BN-lMi" kind="show" id="c8Y-zv-zeY"/>
+                                <segue destination="fcJ-BN-lMi" kind="show" identifier="CreateSchedule" id="c8Y-zv-zeY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

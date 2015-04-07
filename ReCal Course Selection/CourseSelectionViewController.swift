@@ -561,6 +561,12 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         if self.schedule == nil {
             let alertController = UIAlertController(title: "Please select a schedule", message: nil, preferredStyle: .Alert)
             alertController.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (_) in
+                self.dismissViewControllerAnimated(true) {
+                    self.scheduleSelectionViewControllerTransitioningDelegate = nil
+                    Settings.currentSettings.authenticator.logOut()
+                }
+            }))
             presentedViewController.presentViewController(alertController, animated: true, completion: nil)
         } else {
             self.dismissViewControllerAnimated(true) {

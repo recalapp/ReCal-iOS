@@ -11,7 +11,7 @@ import ReCalCommon
 
 private let scheduleCellIdentifier = "ScheduleCell"
 
-class ScheduleSelectionViewController: UITableViewController {
+class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDelegate {
     weak var delegate: ScheduleSelectionDelegate?
     
     lazy private var managedObjectContext: NSManagedObjectContext = {
@@ -47,6 +47,12 @@ class ScheduleSelectionViewController: UITableViewController {
                     }
                     self.semesterToSchedulesMapping = newMapping
                     self.tableView?.reloadData()
+                    
+                }
+                if self.visibleSemesters.count == 0 {
+                    if self.navigationController?.topViewController == self {
+                        self.performSegueWithIdentifier("CreateSchedule", sender: nil)
+                    }
                 }
             }
         }
@@ -82,6 +88,10 @@ class ScheduleSelectionViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: "reloadSchedules:", forControlEvents: UIControlEvents.ValueChanged)
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     deinit {
@@ -208,7 +218,13 @@ class ScheduleSelectionViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let scheduleCreationViewController = segue.destinationViewController as? ScheduleCreationViewController {
             scheduleCreationViewController.delegate = self.delegate
+            scheduleCreationViewController.creationDelegate = self
             scheduleCreationViewController.managedObjectContext = self.managedObjectContext
         }
+    }
+    
+    // MARK: - Schedule Creation delegate
+    func allowNavigationBack() -> Bool {
+        return self.visibleSemesters.count > 0
     }
 }

@@ -17,6 +17,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     private typealias ItemInfo = StaticTableViewDataSource.ItemInfo
     
     weak var delegate: ScheduleSelectionDelegate?
+    weak var creationDelegate: ScheduleCreationDelegate?
 
     private var nameTextField: UITextField? {
         return self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))?.viewWithTag(1) as? UITextField
@@ -92,6 +93,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
             self.fetchActiveSemesters(processSemesters)
         }
         self.notificationObservers = [observer1, observer2]
+        self.navigationItem.hidesBackButton = !(self.creationDelegate?.allowNavigationBack() ?? true)
     }
     override func viewWillDisappear(animated: Bool) {
         for observer in self.notificationObservers {
@@ -124,6 +126,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         self.nameTextField?.becomeFirstResponder()
     }
 
@@ -183,10 +186,14 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         itemInfo.selected = true
         self.dataSource[indexPath.section, indexPath.row] = itemInfo
     }
-    
+
     /// MARK: - Text Field Delegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
+}
+
+protocol ScheduleCreationDelegate: class {
+    func allowNavigationBack() -> Bool
 }
