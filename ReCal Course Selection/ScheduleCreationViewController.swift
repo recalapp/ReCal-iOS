@@ -62,7 +62,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         let processSemesters: [CDSemester] -> Void = { (semesters: [CDSemester]) in
             self.semesters = semesters
             var itemInfos: [ItemInfo]?
-            self.managedObjectContext.performBlockAndWait {
+            self.managedObjectContext.performBlock {
                 itemInfos = self.semesters.map { (semester: CDSemester) -> ItemInfo in
                     var itemInfo = ItemInfo(cellIdentifier: basicCellIdentifier, selected: semester.termCode == self.selectedSemester?.termCode, cellProcessBlock: { (cell) -> UITableViewCell in
                         cell.textLabel?.text = semester.name
@@ -70,13 +70,13 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
                     })
                     return itemInfo
                 }
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    let semestersSection = SectionInfo(name: self.dataSource[self.semestersSectionIndex].name, items: itemInfos!)
+                    self.dataSource[self.semestersSectionIndex] = semestersSection
+                    self.tableView.reloadSections(NSIndexSet(index: self.semestersSectionIndex), withRowAnimation: .None)
+                    self.tableView.keyboardDismissMode = .OnDrag
+                }
             }
-            let semestersSection = SectionInfo(name: self.dataSource[self.semestersSectionIndex].name, items: itemInfos!)
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.dataSource[self.semestersSectionIndex] = semestersSection
-                self.tableView.reloadSections(NSIndexSet(index: self.semestersSectionIndex), withRowAnimation: .None)
-            }
-            self.tableView.keyboardDismissMode = .OnDrag
         }
         self.fetchActiveSemesters(processSemesters)
         
@@ -139,18 +139,21 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
                 var success = false
                 var error: NSError?
                 var schedule = self.managedObjectContext.existingObjectWithID(tempObjectId, error: &error) as CDSchedule
-                self.managedObjectContext.performBlockAndWait {
+                self.managedObjectContext.performBlock {
                     self.managedObjectContext.persistentStoreCoordinator!.lock()
                     success = self.managedObjectContext.save(&error)
                     self.managedObjectContext.persistentStoreCoordinator!.unlock()
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        if success {
+                            self.navigationController?.popViewControllerAnimated(true)
+                            self.delegate?.didSelectScheduleWithObjectId(schedule.objectID) // object id changes on save!
+                        } else {
+                            println("error saving. error: \(error)")
+                            assertionFailure("Failed to save schedule")
+                        }
+                    }
                 }
-                if success {
-                    self.navigationController?.popViewControllerAnimated(true)
-                    self.delegate?.didSelectScheduleWithObjectId(schedule.objectID) // object id changes on save!
-                } else {
-                    println("error saving. error: \(error)")
-                    assertionFailure("Failed to save schedule")
-                }
+                
             case .Failure:
                 assertionFailure("Failed to save schedule")
                 break
