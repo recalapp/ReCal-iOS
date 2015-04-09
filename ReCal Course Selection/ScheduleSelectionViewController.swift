@@ -231,7 +231,7 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
     
     // MARK: - Schedule Creation delegate
     func allowNavigationBack() -> Bool {
-        return self.visibleSemesters.count > 0
+        return true
     }
     
     
