@@ -312,8 +312,8 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.sidebarContainerScrollView = scrollView
         self.view.addSubview(scrollView)
         self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(scrollView, inParentView: self.view, withInsets: UIEdgeInsetsZero))
-        // TODO put back
-        //self.view.addGestureRecognizer(scrollView.panGestureRecognizer)
+       
+        self.view.addGestureRecognizer(scrollView.panGestureRecognizer)
         
         // adding sidebar
         scrollView.addSubview(self.leftSidebarView)
