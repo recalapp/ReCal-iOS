@@ -321,6 +321,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.enrolledCoursesTableViewDataSource.delegate = self
         self.enrolledCoursesView.dataSource = self.enrolledCoursesTableViewDataSource
         self.enrolledCoursesView.delegate = self
+        self.enrolledCoursesView.estimatedRowHeight = 44
         self.reloadEnrolledCoursesView()
     }
     
