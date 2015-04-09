@@ -66,6 +66,9 @@ class SchedulesSyncService {
             }
             for communication in serverCommunications {
                 self.serverCommunicator.performBlock {
+                    if self.serverCommunicator.containsServerCommunicationWithIdentifier(communication.identifier) {
+                        self.serverCommunicator.unregisterServerCommunicationWithIdentifier(communication.identifier)
+                    }
                     self.serverCommunicator.registerServerCommunication(communication)
                 }
             }
@@ -100,11 +103,17 @@ class SchedulesSyncService {
                     }
                     for communication in modifiedScheduleServerCommunications {
                         self.serverCommunicator.performBlock {
+                            if self.serverCommunicator.containsServerCommunicationWithIdentifier(communication.identifier) {
+                                self.serverCommunicator.unregisterServerCommunicationWithIdentifier(communication.identifier)
+                            }
                             self.serverCommunicator.registerServerCommunication(communication)
                         }
                     }
                     for communication in newScheduleServerCommunications {
                         self.serverCommunicator.performBlock {
+                            if self.serverCommunicator.containsServerCommunicationWithIdentifier(communication.identifier) {
+                                self.serverCommunicator.unregisterServerCommunicationWithIdentifier(communication.identifier)
+                            }
                             self.serverCommunicator.registerServerCommunication(communication)
                         }
                     }

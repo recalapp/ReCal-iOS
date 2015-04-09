@@ -55,6 +55,8 @@ public final class ServerCommunicator {
         }
         self.assertPrivateQueue()
         switch serverCommunication.status {
+        case .Removed:
+            break
         case .Connecting, .Processing:
             switch reason {
             case .Initial:
@@ -85,17 +87,22 @@ public final class ServerCommunicator {
                 switch serverCommunication.shouldSendRequest() {
                 case .Send:
                     let observer = NSURLConnection.sendObservedAsynchronousRequest(serverCommunication.request, queue: self.serverCommunicationQueue, completionHandler: { (response, data, error) -> Void in
-                        serverCommunication.status = .Processing
-                        let result: Result = error != nil ? .Failure(error!) : .Success(response!, data)
-                        switch serverCommunication.handleCommunicationResult(result) {
-                        case .ConnectAgain:
-                            serverCommunication.status = .Ready
-                            return self.advanceStateForServerCommunication(serverCommunication, reason: .Manual)
-                        case .NoAction:
-                            serverCommunication.status = .Idle(serverCommunication.idleInterval)
-                        case .Remove:
-                            if self.identiferServerCommunicationMapping[serverCommunication.identifier] === serverCommunication {
-                                self.unregisterServerCommunicationWithIdentifier(serverCommunication.identifier)
+                        switch serverCommunication.status {
+                        case .Removed:
+                            break
+                        case .Connecting(_), .Idle(_), .Processing, .Ready:
+                            serverCommunication.status = .Processing
+                            let result: Result = error != nil ? .Failure(error!) : .Success(response!, data)
+                            switch serverCommunication.handleCommunicationResult(result) {
+                            case .ConnectAgain:
+                                serverCommunication.status = .Ready
+                                return self.advanceStateForServerCommunication(serverCommunication, reason: .Manual)
+                            case .NoAction:
+                                serverCommunication.status = .Idle(serverCommunication.idleInterval)
+                            case .Remove:
+                                if self.identiferServerCommunicationMapping[serverCommunication.identifier] === serverCommunication {
+                                    self.unregisterServerCommunicationWithIdentifier(serverCommunication.identifier)
+                                }
                             }
                         }
                     })
@@ -123,7 +130,17 @@ public final class ServerCommunicator {
     public func unregisterServerCommunicationWithIdentifier(identifier: String) {
         self.assertPrivateQueue()
         assert(self[identifier] != nil, "Cannot unregister a communication that was never registered to begin with")
+        self[identifier]?.status = .Removed
         self.identiferServerCommunicationMapping.removeValueForKey(identifier)
+    }
+    
+    public func containsServerCommunicationWithIdentifier(identifier: String) -> Bool {
+        self.assertPrivateQueue()
+        if let _ = self[identifier] {
+            return true
+        } else {
+            return false
+        }
     }
     
     public func startServerCommunicationWithIdentifier(identifier: String) -> URLConnectionObserver? {
@@ -136,7 +153,7 @@ public final class ServerCommunicator {
         switch self[identifier]!.status {
         case .Connecting(let observer):
             return observer
-        case .Idle(_), .Processing, .Ready:
+        case .Idle(_), .Processing, .Ready, .Removed:
             return nil
         }
     }
@@ -181,6 +198,7 @@ public final class ServerCommunicator {
     }
     public enum CommunicationStatus {
         // if the integer goes to 0, then transition to ready
+        case Removed
         case Idle(Int)
         case Ready
         case Connecting(URLConnectionObserver)
