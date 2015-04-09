@@ -118,6 +118,14 @@ public class SettingsViewController: UITableViewController, SettingsSwitchTableV
         }
     }
     
+    override public func prefersStatusBarHidden() -> Bool {
+        if let _ = Settings.currentSettings.authenticator.user {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     // MARK: - Table View Delegate
     public override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         switch (indexPath.section, indexPath.row) {

@@ -208,6 +208,13 @@ class CourseDownloadViewController: UIViewController {
             }
         }
     }
+    override func prefersStatusBarHidden() -> Bool {
+        if let _ = Settings.currentSettings.authenticator.user {
+            return false
+        } else {
+            return true
+        }
+    }
 }
 // MARK: - Delegate
 protocol CourseDownloadViewControllerDelegate: class {

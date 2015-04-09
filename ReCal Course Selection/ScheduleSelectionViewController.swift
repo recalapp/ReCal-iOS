@@ -115,6 +115,14 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
     private func scheduleAtIndexPath(indexPath: NSIndexPath) -> CDSchedule? {
         return self.semesterToSchedulesMapping[self.visibleSemesters[indexPath.section]]?[indexPath.row]
     }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        if let _ = Settings.currentSettings.authenticator.user {
+            return false
+        } else {
+            return true
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -225,4 +233,6 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
     func allowNavigationBack() -> Bool {
         return self.visibleSemesters.count > 0
     }
+    
+    
 }

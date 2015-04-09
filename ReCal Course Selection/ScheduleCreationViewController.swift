@@ -129,6 +129,14 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         super.viewDidAppear(animated)
         self.nameTextField?.becomeFirstResponder()
     }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        if let _ = Settings.currentSettings.authenticator.user {
+            return false
+        } else {
+            return true
+        }
+    }
 
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
         if let name = self.nameTextField?.text {
