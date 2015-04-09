@@ -23,11 +23,11 @@ class CourseSelectionNavigationController: AuthenticationNavigationController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        let courseSelectionViewController = self.logicalRootViewController as CourseSelectionViewController
+        let courseSelectionViewController = self.logicalRootViewController as! CourseSelectionViewController
         courseSelectionViewController.viewContentSize = CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.navigationBar.bounds.size.height - UIApplication.sharedApplication().statusBarFrame.size.height)
     }
     override func viewDidAppear(animated: Bool) {
-        let courseSelectionViewController = self.logicalRootViewController as CourseSelectionViewController
+        let courseSelectionViewController = self.logicalRootViewController as! CourseSelectionViewController
         courseSelectionViewController.viewContentSize = CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height - self.navigationBar.bounds.size.height - UIApplication.sharedApplication().statusBarFrame.size.height)
     }
     

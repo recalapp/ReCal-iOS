@@ -124,15 +124,15 @@ class CourseDownloadViewController: UIViewController {
     
     private func progressTextForProgressFraction(progressFraction: Double) -> String {
         switch progressFraction {
-        case _ where progressFraction <= 0.4:
-            return "Downloading course data. May take a few minutes."
+//        case _ where progressFraction <= 0.4:
+//            return "Downloading course data. May take a few minutes."
         case _ where progressFraction <= 0.7:
-            return "Please do not quit this app during download."
+            return "Downloading course data. May take a few minutes. Please do not quit this app during download."
         case _ where progressFraction > 0.7:
             return "Hang tight, almost there!"
         default:
             assertionFailure("impossible")
-            break
+            return ""
         }
     }
     
@@ -149,7 +149,7 @@ class CourseDownloadViewController: UIViewController {
         switch keyPath {
         case "fractionCompleted":
             let fraction = (change[NSKeyValueChangeNewKey] as? NSNumber)?.floatValue ?? 0.0
-            let indexOpt = findProgressIndex(object as NSProgress)
+            let indexOpt = findProgressIndex(object as! NSProgress)
             NSOperationQueue.mainQueue().addOperationWithBlock {
                 if fraction >= 1 {
                     if let index = indexOpt {

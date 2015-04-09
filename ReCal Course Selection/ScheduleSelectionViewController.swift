@@ -16,7 +16,7 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
     
     lazy private var managedObjectContext: NSManagedObjectContext = {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as! AppDelegate).persistentStoreCoordinator
         return managedObjectContext
         }()
     private var visibleSemesters: [CDSemester] = []
@@ -43,7 +43,7 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
                 if let semesters = fetched {
                     var newMapping: Dictionary<CDSemester, [CDSchedule]> = Dictionary()
                     for semester in semesters {
-                        newMapping[semester] = (semester.schedules.allObjects as [CDSchedule]).sorted { $0.name < $1.name }
+                        newMapping[semester] = (Array(semester.schedules) as! [CDSchedule]).sorted { $0.name < $1.name }
                     }
                     self.semesterToSchedulesMapping = newMapping
                     self.tableView?.reloadData()
@@ -135,7 +135,7 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(scheduleCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(scheduleCellIdentifier, forIndexPath: indexPath) as! UITableViewCell
 
         cell.textLabel?.textColor = Settings.currentSettings.colorScheme.textColor
         cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
@@ -178,9 +178,7 @@ class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDe
                 deletedSchedule.markedDeleted = true
 //                self.managedObjectContext.deleteObject(deletedSchedule)
                 var errorOpt: NSError?
-                self.managedObjectContext.persistentStoreCoordinator!.lock()
                 self.managedObjectContext.save(&errorOpt)
-                self.managedObjectContext.persistentStoreCoordinator!.unlock()
                 if let error = errorOpt {
                     println("Can't delete schedule. Error: \(error)")
                 }

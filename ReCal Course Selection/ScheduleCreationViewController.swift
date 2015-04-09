@@ -131,18 +131,16 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     }
 
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
-        if let name = self.nameTextField?.text? {
+        if let name = self.nameTextField?.text {
             assert(self.selectedSemester != nil)
             var createdSchedule = Schedule(name: name, termCode: self.selectedSemester!.termCode)
             switch createdSchedule.commitToManagedObjectContext(self.managedObjectContext) {
             case .Success(let tempObjectId):
                 var success = false
                 var error: NSError?
-                var schedule = self.managedObjectContext.existingObjectWithID(tempObjectId, error: &error) as CDSchedule
+                var schedule = self.managedObjectContext.existingObjectWithID(tempObjectId, error: &error) as! CDSchedule
                 self.managedObjectContext.performBlock {
-                    self.managedObjectContext.persistentStoreCoordinator!.lock()
                     success = self.managedObjectContext.save(&error)
-                    self.managedObjectContext.persistentStoreCoordinator!.unlock()
                     NSOperationQueue.mainQueue().addOperationWithBlock {
                         if success {
                             self.navigationController?.popViewControllerAnimated(true)

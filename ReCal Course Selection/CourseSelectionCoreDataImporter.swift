@@ -87,9 +87,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
                 println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
                 self.backgroundManagedObjectContext.performBlockAndWait {
-                    self.backgroundManagedObjectContext.persistentStoreCoordinator!.lock()
                     self.backgroundManagedObjectContext.save(&errorOpt)
-                    self.backgroundManagedObjectContext.persistentStoreCoordinator!.unlock()
                 }
                 if let error = errorOpt {
                     println("Error saving. Aborting. Error: \(error)")
@@ -134,11 +132,11 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                 var importedSchedules = Set<String>()
                 for scheduleDict in scheduleDictArray {
                     if let id: AnyObject = scheduleDict["id"] {
-                        let scheduleObject = self.fetchOrCreateEntityWithServerId("\(id)", entityName: "CDSchedule") as CDSchedule
+                        let scheduleObject = self.fetchOrCreateEntityWithServerId("\(id)", entityName: "CDSchedule") as! CDSchedule
                         let result = scheduleImporter.importAttributeFromDictionary(scheduleDict, intoManagedObject: scheduleObject, inManagedObjectContext: self.backgroundManagedObjectContext)
                         switch result {
                         case .Success:
-                            importedSchedules.add("\(id)")
+                            importedSchedules.insert("\(id)")
                         case .Error(_):
                             println("Error during schedule import")
                             revertChanges()
@@ -158,9 +156,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     }
                 }
                 self.backgroundManagedObjectContext.performBlockAndWait {
-                    self.backgroundManagedObjectContext.persistentStoreCoordinator!.lock()
                     self.backgroundManagedObjectContext.save(&errorOpt)
-                    self.backgroundManagedObjectContext.persistentStoreCoordinator!.unlock()
                 }
                 if let error = errorOpt {
                     println("Error importing all schedules. Error: \(error)")
@@ -188,7 +184,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     progress.completedUnitCount += 1
                     return (nil, .Failure)
                 }
-                let semester = self.fetchOrCreateEntityWithServerId("\(serverId!)", entityName: "CDSemester") as CDSemester
+                let semester = self.fetchOrCreateEntityWithServerId("\(serverId!)", entityName: "CDSemester") as! CDSemester
                 let termCode = dict["term_code"] as? String
                 let name = dict["name"] as? String
                 if termCode == nil || name == nil {
@@ -246,9 +242,7 @@ class CourseSelectionCoreDataImporter : CoreDataImporter {
                     println("Updated item count: \(self.backgroundManagedObjectContext.updatedObjects.count)")
                     println("Deleted item count: \(self.backgroundManagedObjectContext.deletedObjects.count)")
                     self.backgroundManagedObjectContext.performBlockAndWait {
-                        self.backgroundManagedObjectContext.persistentStoreCoordinator!.lock()
                         self.backgroundManagedObjectContext.save(&errorOpt)
-                        self.backgroundManagedObjectContext.persistentStoreCoordinator!.unlock()
                     }
                     if let error = errorOpt {
                         println("Could not save active semesters. Error: \(error)")

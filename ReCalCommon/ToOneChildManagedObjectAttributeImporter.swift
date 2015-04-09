@@ -108,7 +108,7 @@ public class ToOneChildManagedObjectAttributeImporter: ManagedObjectAttributeImp
                     if !childManagedObject.isEqual(managedObject.valueForKey(self.attributeKey)) {
                         switch self.deleteMode {
                         case .Delete:
-                            managedObjectContext.deleteObject(managedObject.valueForKey(self.attributeKey) as NSManagedObject)
+                            managedObjectContext.deleteObject(managedObject.valueForKey(self.attributeKey) as! NSManagedObject)
                         case .NoDelete:
                             break
                         }

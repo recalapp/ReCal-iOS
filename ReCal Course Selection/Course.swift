@@ -25,15 +25,15 @@ struct Course: Printable, ManagedObjectProxy, ServerObject {
     init(managedObject: CDCourse) {
         self.title = managedObject.title
         self.courseDescription = managedObject.courseDescription
-        self.courseListings = managedObject.courseListings.allObjects.map { CourseListing(managedObject: $0 as CDCourseListing) }.sorted { $0.departmentCode < $1.departmentCode }
-        self.sections = managedObject.sections.allObjects.map { Section(managedObject: $0 as CDSection) }.sorted { $0.sectionName < $1.sectionName }
+        self.courseListings = Array(managedObject.courseListings).map { CourseListing(managedObject: $0 as! CDCourseListing) }.sorted { $0.departmentCode < $1.departmentCode }
+        self.sections = Array(managedObject.sections).map { Section(managedObject: $0 as! CDSection) }.sorted { $0.sectionName < $1.sectionName }
         self.managedObjectProxyId = .Existing(managedObject.objectID)
-        self.allSectionTypes = self.sections.map { $0.type }.reduce(Set<SectionType>(), combine: {(var set, type) in
+        self.allSectionTypes = Array(self.sections.map { $0.type }.reduce(Set<SectionType>(), combine: {(var set, type) in
             if !set.contains(type){
-                set.add(type)
+                set.insert(type)
             }
             return set
-        }).toArray()
+        }))
         var hash = self.title.hashValue
         hash = hash &* hashPrimeMultipler &+ self.courseDescription.hashValue
         for listing in self.courseListings {

@@ -25,10 +25,6 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
         super.init(frame: frame)
         self.initialize()
     }
-    public override init() {
-        super.init()
-        self.initialize()
-    }
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.initialize()
@@ -100,7 +96,7 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
     /// MARK: - Collection View Data Source
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as SummaryDayEventCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as! SummaryDayEventCollectionViewCell
         cell.viewModel = self.viewModel?.events[indexPath.item]
         return cell
     }
@@ -109,10 +105,10 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
         if let kind = SummaryDayCollectionViewSummarizedLayout.SupplementaryViewKind(rawValue: kind) {
             switch kind {
             case .SummarizedView:
-                let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind.rawValue, withReuseIdentifier: summarizedViewIdentifier, forIndexPath: indexPath) as UICollectionReusableView
+                let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind.rawValue, withReuseIdentifier: summarizedViewIdentifier, forIndexPath: indexPath) as! UICollectionReusableView
                 return view
             case .TimeRowHeader:
-                let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind.rawValue, withReuseIdentifier: timeRowHeaderIdentifier, forIndexPath: indexPath) as SummaryDayTimeRowHeaderView
+                let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind.rawValue, withReuseIdentifier: timeRowHeaderIdentifier, forIndexPath: indexPath) as! SummaryDayTimeRowHeaderView
                 let component = NSDateComponents()
                 component.hour = indexPath.section + self.minimumHour
                 let date = self.calendar.dateFromComponents(component)!
@@ -121,6 +117,7 @@ public class SummaryDayView: UIView, SummaryDayCollectionViewDataSourceSummarize
             }
         }
         assertionFailure("unsupported supplementary view kind \(kind)")
+        return UICollectionViewCell() // bogus
     }
     
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -43,12 +43,12 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
                     return nil
                 }
             }
-            self.enrolledCoursesSet = Set<CDCourse>(initialItems: courseManagedObjects.filter { $0 != nil }.map { $0! })
+            self.enrolledCoursesSet = Set<CDCourse>(courseManagedObjects.filter { $0 != nil }.map { $0! })
             self.clearVisibleCoursesStorageCache()
             self.tableView.reloadData()
         }
         get {
-            return self.enrolledCoursesSet.toArray().map { Course(managedObject: $0) }
+            return Array(self.enrolledCoursesSet).map { Course(managedObject: $0) }
         }
     }
     
@@ -70,7 +70,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     /// View controller for displaying course details
     lazy private var courseDetailsViewController: CourseDetailsViewController = {
-        return self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as CourseDetailsViewController
+        return self.storyboard?.instantiateViewControllerWithIdentifier(courseDetailsViewControllerStoryboardId) as! CourseDetailsViewController
     }()
     
     /// The controller for search
@@ -91,7 +91,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     // MARK: - Methods
     private func clearVisibleCoursesStorageCache() {
-        self.visibleEnrolledCourses = self.enrolledCoursesSet.toArray().sorted { $0.displayText < $1.displayText }
+        self.visibleEnrolledCourses = Array(self.enrolledCoursesSet).sorted { $0.displayText < $1.displayText }
         self.visibleUnenrolledCourses = self.filteredCourses.filter { !self.enrolledCoursesSet.contains($0) } // filtered courses already sorted
     }
     
@@ -100,7 +100,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         // set up managed object context
         self.searchOperationQueue.addOperationWithBlock {
             self.searchManagedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-            self.searchManagedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+            self.searchManagedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as! AppDelegate).persistentStoreCoordinator
         }
         self.searchOperationQueue.waitUntilAllOperationsAreFinished()
         
@@ -160,6 +160,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             return self.visibleEnrolledCourses[row]
         default:
             assertionFailure("not implemented")
+            return self.visibleEnrolledCourses[0] // bogus
         }
     }
 
@@ -190,6 +191,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
             return self.visibleEnrolledCourses.count
         default:
             assertionFailure("not implemented")
+            return 0 // bogus
         }
     }
     
@@ -231,7 +233,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
       
-        let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as CourseSearchResultTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(searchResultCellIdentifier, forIndexPath: indexPath) as! CourseSearchResultTableViewCell
         
         let course = self.courseAtIndexPath(indexPath)
         
@@ -290,7 +292,7 @@ class CourseSearchTableViewController: UITableViewController, UIPopoverPresentat
         let course = self.courseAtIndexPath(indexPath)
         assert(!self.enrolledCoursesSet.contains(course), "Selecting an selected cell")
         
-        self.enrolledCoursesSet.add(course)
+        self.enrolledCoursesSet.insert(course)
         self.clearVisibleCoursesStorageCache()
         if let newIndexPath = self.indexPathForCourse(course) {
             tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)

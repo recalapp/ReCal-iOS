@@ -60,15 +60,6 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
         self.initialize()
     }
-    override init() {
-        super.init()
-        self.initialize()
-    }
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.initialize()
-    }
-    
     private func initialize() {
         
     }

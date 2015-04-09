@@ -23,11 +23,11 @@ final public class Cache<Key: Hashable, Value>: SequenceType {
     
     public var didClear: ((Cache<Key, Value>)->Void)?
     
-    public var keys: LazyBidirectionalCollection<MapCollectionView<Dictionary<Key, Value>, Key>> {
+    public var keys: LazyForwardCollection<MapCollectionView<Dictionary<Key, Value>, Key>> {
         return self.cacheDictionary.keys
     }
     
-    public var values: LazyBidirectionalCollection<MapCollectionView<Dictionary<Key, Value>, Value>> {
+    public var values: LazyForwardCollection<MapCollectionView<Dictionary<Key, Value>, Value>> {
         return self.cacheDictionary.values
     }
 

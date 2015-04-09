@@ -23,7 +23,7 @@ struct Section: Printable, ManagedObjectProxy, ServerObject {
     init(managedObject: CDSection) {
         self.sectionName = managedObject.name
         self.type = managedObject.sectionType
-        self.sectionMeetings = managedObject.meetings.allObjects.map { SectionMeeting(managedObject: $0 as CDSectionMeeting) }.sorted { $0.hashValue < $1.hashValue }
+        self.sectionMeetings = Array(managedObject.meetings).map { SectionMeeting(managedObject: $0 as! CDSectionMeeting) }.sorted { $0.hashValue < $1.hashValue }
         self.managedObjectProxyId = .Existing(managedObject.objectID)
         assert(managedObject.serverId != nil)
         self.serverId = managedObject.serverId

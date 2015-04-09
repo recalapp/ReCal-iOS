@@ -7,15 +7,16 @@
 //
 
 import CoreData
+import ReCalCommon
 
 extension CDCourse {
     var primaryListing: CDCourseListing {
-        return self.courseListings.filteredSetUsingPredicate(NSPredicate(block: { (item, _) -> Bool in
+        return filteredSet(self.courseListings) { (item) -> Bool in
             if let courseListing = item as? CDCourseListing {
                 return courseListing.isPrimary.boolValue
             }
             return false
-        })).anyObject()! as CDCourseListing
+        }.first! as! CDCourseListing
     }
     var displayText: String {
         return self.primaryListing.displayText

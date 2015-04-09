@@ -63,6 +63,14 @@ public extension UIColor {
     }
 }
 
+public func arrayFromSetOptional<T>(set: Set<T>?)->[T]? {
+    if let setSure = set {
+        return Array(setSure)
+    } else {
+        return nil
+    }
+}
+
 public func arrayFindIndexesOfElement<T: Equatable>(#array: [T], #element: T) -> [Int] {
     var indexes = [Int]()
     for (i, elementToCheck) in enumerate(array) {
@@ -90,6 +98,16 @@ public func arrayFlatten<T>(array: [[T]]) -> [T] {
 public func randomElement<T>(array: [T]) -> T {
     let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
     return array[randomIndex]
+}
+
+public func filteredSet<T>(set: Set<T>, filter: T -> Bool)->Set<T> {
+    var answer = Set<T>()
+    for x in set {
+        if filter(x) {
+            answer.insert(x)
+        }
+    }
+    return answer
 }
 
 public extension String {

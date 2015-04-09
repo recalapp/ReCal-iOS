@@ -31,7 +31,7 @@ public class SettingsViewController: UITableViewController, SettingsSwitchTableV
     
     public class func instantiateFromStoryboard() -> SettingsViewController {
         let storyboard = UIStoryboard(name: "ReCalCommon", bundle: NSBundle(identifier: "io.recal.ReCalCommon"))
-        return storyboard.instantiateViewControllerWithIdentifier(storyboardId) as SettingsViewController
+        return storyboard.instantiateViewControllerWithIdentifier(storyboardId) as! SettingsViewController
     }
     
     private var notificationObservers: [AnyObject] = []
@@ -40,7 +40,7 @@ public class SettingsViewController: UITableViewController, SettingsSwitchTableV
         super.viewDidLoad()
         let nameSection = SectionInfo(name: .Literal("Logged in as:"), items: [
             ItemInfo(cellIdentifier: centerCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
-                let centerCell = cell as SettingsCenterTableViewCell
+                let centerCell = cell as! SettingsCenterTableViewCell
                 switch Settings.currentSettings.authenticator.state {
                 case .Authenticated(let user):
                     centerCell.centerLabel.text = user.username
@@ -78,7 +78,7 @@ public class SettingsViewController: UITableViewController, SettingsSwitchTableV
         let recalAppsSection = SectionInfo(name: .Literal("Installed ReCal Apps"), items: appItems)
         let preferencesSection = SectionInfo(name: .Literal("Preferences"), items: [
             ItemInfo(cellIdentifier: switchCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
-                let switchCell = cell as SettingsSwitchTableViewCell
+                let switchCell = cell as! SettingsSwitchTableViewCell
                 switchCell.delegate = self
                 switchCell.label.text = "Dark Mode"
                 if Settings.currentSettings.colorScheme is DarkColorScheme {
@@ -91,7 +91,7 @@ public class SettingsViewController: UITableViewController, SettingsSwitchTableV
         ])
         let logOutSection = SectionInfo(name: .Empty, items: [
             ItemInfo(cellIdentifier: centerCellIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
-                let centerCell = cell as SettingsCenterTableViewCell
+                let centerCell = cell as! SettingsCenterTableViewCell
                 centerCell.centerLabel.textColor = Settings.currentSettings.colorScheme.alertBackgroundColor
                 centerCell.centerLabel.text = "Log Out"
                 return centerCell

@@ -30,7 +30,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     
     lazy private var managedObjectContext: NSManagedObjectContext = {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as! AppDelegate).persistentStoreCoordinator
         return managedObjectContext
     }()
     private var notificationObservers: [AnyObject] = []
@@ -95,9 +95,9 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         return settingsVC
         }()
     lazy private var scheduleSelectionNavigationController: UINavigationController = {
-        let navigationVC = self.storyboard?.instantiateViewControllerWithIdentifier(scheduleSelectionNavigationControllerStoryboardId) as UINavigationController
+        let navigationVC = self.storyboard?.instantiateViewControllerWithIdentifier(scheduleSelectionNavigationControllerStoryboardId) as! UINavigationController
         
-        let scheduleSelectionViewController = navigationVC.topViewController as ScheduleSelectionViewController
+        let scheduleSelectionViewController = navigationVC.topViewController as! ScheduleSelectionViewController
         scheduleSelectionViewController.delegate = self
         return navigationVC
     }()
@@ -161,9 +161,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                             }
                         }
                         self.managedObjectContext.performBlock {
-                            self.managedObjectContext.persistentStoreCoordinator!.lock()
                             self.managedObjectContext.save(&errorOpt)
-                            self.managedObjectContext.persistentStoreCoordinator!.unlock()
                             if let error = errorOpt {
                                 println("Error deleting schedule. Error: \(error)")
                                 return
@@ -246,9 +244,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
             self.schedule!.commitToManagedObjectContext(self.managedObjectContext)
             var errorOpt: NSError?
             self.managedObjectContext.performBlock {
-                self.managedObjectContext.persistentStoreCoordinator!.lock()
                 self.managedObjectContext.save(&errorOpt)
-                self.managedObjectContext.persistentStoreCoordinator!.unlock()
                 if let error = errorOpt {
                     println("Error saving. Error: \(error)")
                 }
@@ -269,7 +265,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         
         let dataSource = self.scheduleCollectionViewDataSource
         dataSource.delegate = self
-        let layout = self.scheduleView.collectionViewLayout as CollectionViewCalendarWeekLayout
+        let layout = self.scheduleView.collectionViewLayout as! CollectionViewCalendarWeekLayout
         layout.dataSource = dataSource
         self.scheduleView.dataSource = dataSource
         self.scheduleView.delegate = self
@@ -332,7 +328,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         self.leftSidebarBackgroundColor = Settings.currentSettings.colorScheme.accessoryBackgroundColor
         
         self.searchViewController = {
-            let searchViewController = self.storyboard?.instantiateViewControllerWithIdentifier(searchViewControllerStoryboardId) as CourseSearchTableViewController
+            let searchViewController = self.storyboard?.instantiateViewControllerWithIdentifier(searchViewControllerStoryboardId) as! CourseSearchTableViewController
             searchViewController.view.setTranslatesAutoresizingMaskIntoConstraints(false)
             self.addChildViewController(searchViewController)
             self.leftSidebarContentView.addSubview(searchViewController.view)
@@ -364,7 +360,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     private func reloadSearchViewController() {
         if let schedule = self.schedule {
             self.searchViewController.semesterTermCode = schedule.termCode
-            self.searchViewController.enrolledCourses = schedule.enrolledCourses.toArray()
+            self.searchViewController.enrolledCourses = Array(schedule.enrolledCourses)
         }
     }
     
@@ -454,8 +450,8 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
     func enrollmentsDidChangeForCourseSearchTableViewController(viewController: CourseSearchTableViewController) {
         if self.schedule != nil {
             assert(viewController == self.searchViewController, "Wrong view controller")
-            let newEnrolled = Set(initialItems: viewController.enrolledCourses)
-            let deletedCourses = self.schedule!.enrolledCourses.toArray().filter { !newEnrolled.contains($0) }
+            let newEnrolled = Set(viewController.enrolledCourses)
+            let deletedCourses = Array(self.schedule!.enrolledCourses).filter { !newEnrolled.contains($0) }
             self.schedule!.enrolledCourses = newEnrolled
             for deleted in deletedCourses {
                 self.schedule!.updateColorUsageForDeletedCourse(deleted)
@@ -530,7 +526,7 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
         if self.courseDownloadViewControllerTransitioningDelegate != nil {
             return
         }
-        let courseDownloadVC = self.storyboard?.instantiateViewControllerWithIdentifier(courseDownloadViewControllerStoryboardId) as CourseDownloadViewController
+        let courseDownloadVC = self.storyboard?.instantiateViewControllerWithIdentifier(courseDownloadViewControllerStoryboardId) as! CourseDownloadViewController
         courseDownloadVC.termCode = termCode
         courseDownloadVC.delegate = self
         courseDownloadVC.modalPresentationStyle = .Custom

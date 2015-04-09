@@ -25,7 +25,7 @@ public final class ServerCommunicator {
         return queue
     }()
     
-    private let timer: NSTimer!
+    private var timer: NSTimer!
     
     public convenience init() {
         self.init(interruptInterval: 5)

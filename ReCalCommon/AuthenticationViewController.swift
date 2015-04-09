@@ -60,7 +60,8 @@ class AuthenticationViewController: UIViewController, UIWebViewDelegate {
         if self.authenticationUrl.isEqual(webView.request?.URL) {
             // if we got to this page, then we are done
             if let content = webView.stringByEvaluatingJavaScriptFromString("document.body.innerText") {
-                let components = split(content, { $0 == " " }, allowEmptySlices:false)
+                
+                let components = split(content, maxSplit: 10, allowEmptySlices: false, isSeparator: { $0 == " " })
                 if components.count == 2 {
                     self.delegate?.authentication(self, didAuthenticateWithUsername: components[0], userId: components[1])
                     return

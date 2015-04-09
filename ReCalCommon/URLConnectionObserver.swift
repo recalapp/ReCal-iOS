@@ -24,7 +24,7 @@ public final class URLConnectionObserver: NSObject, NSURLConnectionDataDelegate 
     public func connectionDidFinishLoading(connection: NSURLConnection) {
         self.progress.completedUnitCount = self.progress.totalUnitCount
         self.completionQueue.addOperationWithBlock {
-            self.completion(self.response, self.incomingData.copy() as NSData, nil)
+            self.completion(self.response, self.incomingData.copy() as! NSData, nil)
         }
     }
     public func connection(connection: NSURLConnection, didReceiveData data: NSData) {
@@ -34,7 +34,7 @@ public final class URLConnectionObserver: NSObject, NSURLConnectionDataDelegate 
     public func connection(connection: NSURLConnection, didFailWithError error: NSError) {
         self.progress.cancel()
         self.completionQueue.addOperationWithBlock {
-            self.completion(self.response, self.incomingData.copy() as NSData, error)
+            self.completion(self.response, self.incomingData.copy() as! NSData, error)
         }
     }
     public func connection(connection: NSURLConnection, didReceiveResponse response: NSURLResponse) {

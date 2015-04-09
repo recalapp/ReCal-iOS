@@ -81,7 +81,7 @@ public class CoreDataImporter {
             println("Error parsing json data. Aborting write. Error: \(error)")
             return .Failure
         }
-        return self.writeObjectDataToPendingItemsDirectory(parsed as NSCoding, withTemporaryFileName: fileName)
+        return self.writeObjectDataToPendingItemsDirectory(parsed as! NSCoding, withTemporaryFileName: fileName)
     }
     
     public final func writeObjectDataToPendingItemsDirectory(object: NSCoding, withTemporaryFileName fileName: String) -> ImportWriteResult {

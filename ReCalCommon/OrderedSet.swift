@@ -28,7 +28,7 @@ public struct OrderedSet<T: Hashable>: Equatable, SequenceType {
             self.itemsSet.remove(self.itemsArray[index])
             self.itemsArray[index] = newValue
             self.checkInvariants()
-            self.itemsSet.add(newValue)
+            self.itemsSet.insert(newValue)
         }
     }
     
@@ -52,14 +52,14 @@ public struct OrderedSet<T: Hashable>: Equatable, SequenceType {
     
     public mutating func append(item: T) {
         assert(!self.contains(item), "Cannot append an item that already belong to the set to begin with")
-        self.itemsSet.add(item)
+        self.itemsSet.insert(item)
         self.itemsArray.append(item)
         self.checkInvariants()
     }
     
     public mutating func insert(item: T, atIndex index: Int) {
         assert(!self.contains(item), "Cannot add an item that already belong to the set to begin with")
-        self.itemsSet.add(item)
+        self.itemsSet.insert(item)
         self.itemsArray.insert(item, atIndex: index)
         self.checkInvariants()
     }

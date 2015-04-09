@@ -41,7 +41,7 @@ class CourseColorManager: NSObject, NSCoding, NSCopying {
     }
     
     required init(coder aDecoder: NSCoder) {
-        self.frequencyCount = aDecoder.decodeObjectForKey(frequencyCountKey) as Dictionary<CourseColor, Int>
+        self.frequencyCount = aDecoder.decodeObjectForKey(frequencyCountKey) as! Dictionary<CourseColor, Int>
         super.init()
         println(self.frequencyCount)
         assert(self.checkInvariants())

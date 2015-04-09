@@ -285,7 +285,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
             label.lineBreakMode = .ByCharWrapping
             label.numberOfLines = 0
             label.tintColor = Settings.currentSettings.colorScheme.textColor
-            let leftVibrancyEffect = UIVibrancyEffect(forBlurEffect: coverView.effect as UIBlurEffect)
+            let leftVibrancyEffect = UIVibrancyEffect(forBlurEffect: coverView.effect as! UIBlurEffect)
             let leftVibrancyEffectView = UIVisualEffectView(effect: leftVibrancyEffect)
             leftVibrancyEffectView.setTranslatesAutoresizingMaskIntoConstraints(false)
             leftVibrancyEffectView.contentView.addSubview(label)
@@ -312,7 +312,8 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         self.sidebarContainerScrollView = scrollView
         self.view.addSubview(scrollView)
         self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(scrollView, inParentView: self.view, withInsets: UIEdgeInsetsZero))
-        self.view.addGestureRecognizer(scrollView.panGestureRecognizer)
+        // TODO put back
+        //self.view.addGestureRecognizer(scrollView.panGestureRecognizer)
         
         // adding sidebar
         scrollView.addSubview(self.leftSidebarView)
@@ -345,7 +346,21 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
     
     // MARK: Scroll View Delegate
     
-    public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, var targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        if scrollView == self.sidebarContainerScrollView {
+            let unselectedContentOffset = self.contentOffsetForDoubleSidebarState(.Unselected)
+            if scrollView.contentOffset.x > unselectedContentOffset.x + self.contentOffsetBuffer {
+                self.sidebarState = .RightSidebarShown
+            } else if scrollView.contentOffset.x < unselectedContentOffset.x - self.contentOffsetBuffer {
+                self.sidebarState = .LeftSidebarShown
+            } else {
+                self.sidebarState = .Unselected
+            }
+            scrollView.setContentOffset(self.calculatedContentOffset, animated: true)
+        }
+    }
+    
+    public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if scrollView == self.sidebarContainerScrollView {
             switch self.sidebarState {
             case .Unselected:
@@ -386,7 +401,8 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
                     }
                 }
             }
-            targetContentOffset.put(self.calculatedContentOffset)
+            scrollView.setContentOffset(self.calculatedContentOffset, animated: true)
+            //targetContentOffset.put(self.calculatedContentOffset)
             if velocity.x == 0 {
                 // must animate manually
                 scrollView.setContentOffset(self.calculatedContentOffset, animated: true)

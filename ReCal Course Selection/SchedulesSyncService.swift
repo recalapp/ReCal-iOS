@@ -14,7 +14,7 @@ class SchedulesSyncService {
     
     lazy private var managedObjectContext: NSManagedObjectContext = {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as! AppDelegate).persistentStoreCoordinator
         return managedObjectContext
         }()
     
@@ -92,23 +92,22 @@ class SchedulesSyncService {
             }
             var errorOpt: NSError?
             self.managedObjectContext.performBlock {
-                self.managedObjectContext.persistentStoreCoordinator!.lock()
                 self.managedObjectContext.save(&errorOpt)
-                self.managedObjectContext.persistentStoreCoordinator!.unlock()
-            }
-            if let error = errorOpt {
-                println("Error marking item as uploading. Error: \(error)")
-                return
-            }
-            
-            for communication in modifiedScheduleServerCommunications {
-                self.serverCommunicator.performBlock {
-                    self.serverCommunicator.registerServerCommunication(communication)
-                }
-            }
-            for communication in newScheduleServerCommunications {
-                self.serverCommunicator.performBlock {
-                    self.serverCommunicator.registerServerCommunication(communication)
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    if let error = errorOpt {
+                        println("Error marking item as uploading. Error: \(error)")
+                        return
+                    }
+                    for communication in modifiedScheduleServerCommunications {
+                        self.serverCommunicator.performBlock {
+                            self.serverCommunicator.registerServerCommunication(communication)
+                        }
+                    }
+                    for communication in newScheduleServerCommunications {
+                        self.serverCommunicator.performBlock {
+                            self.serverCommunicator.registerServerCommunication(communication)
+                        }
+                    }
                 }
             }
         }
@@ -145,6 +144,7 @@ class SchedulesSyncService {
     
     func sync() {
         if let _ = Settings.currentSettings.authenticator.user {
+            Settings.currentSettings.authenticator.authenticate()
             self.pushDeletedSchedules()
             self.pushModifiedSchedules()
             self.pullSchedules()
@@ -158,13 +158,13 @@ class SchedulesSyncService {
             return schedule.managedObjectContext!
         }
         private var colorMap: [String: CourseColor] {
-            return schedule.courseColorMap as [String:CourseColor]
+            return schedule.courseColorMap as! [String:CourseColor]
         }
         private let sectionIds: Set<String>
         
         init(schedule: CDSchedule) {
             self.schedule = schedule
-            self.sectionIds = Set(initialItems: self.schedule.enrolledSectionsIds as [String])
+            self.sectionIds = Set(self.schedule.enrolledSectionsIds as! [String])
         }
         
         private func deserializeCourseColor(color: CourseColor)->[String:AnyObject] {
@@ -177,7 +177,7 @@ class SchedulesSyncService {
         
         private func deserializeCourse(courseId: String) -> [String:AnyObject]? {
             if let courseObject = tryGetManagedObjectObject(managedObjectContext: self.managedObjectContext, entityName: "CDCourse", attributeName: "serverId", attributeValue: courseId) as? CDCourse {
-                let sections: [Int] = (courseObject.sections.allObjects as? [CDSection])?.map {$0.serverId}.filter { self.sectionIds.contains($0) }.map { $0.toInt() ?? 0 } ?? []
+                let sections: [Int] = (Array(courseObject.sections) as? [CDSection])?.map {$0.serverId}.filter { self.sectionIds.contains($0) }.map { $0.toInt() ?? 0 } ?? []
                 if self.colorMap[courseId] == nil {
                     return nil
                 }

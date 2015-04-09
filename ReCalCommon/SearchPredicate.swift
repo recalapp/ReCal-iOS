@@ -15,5 +15,6 @@ public class SearchPredicate<Target, Query> {
     }
     public func evaluate(subject: Target, withQuery query: Query) -> Bool {
         assertionFailure("Abstract method")
+        return false
     }
 }
