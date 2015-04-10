@@ -70,7 +70,7 @@ class CourseDetailsViewController: UITableViewController {
         ])
         self.staticTableViewDataSource.setSectionInfos([nameSection, descriptionSection])
         self.tableView.dataSource = self.staticTableViewDataSource
-        
+        self.tableView.estimatedRowHeight = 44
         self.notificationObservers.append(observer1)
     }
     
