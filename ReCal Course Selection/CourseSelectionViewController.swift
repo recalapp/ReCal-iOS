@@ -136,6 +136,11 @@ class CourseSelectionViewController: DoubleSidebarViewController, UICollectionVi
                 NSOperationQueue.mainQueue().addOperationWithBlock {
                     if let schedule = self.schedule {
                         self.schedule = Schedule.updatedCopy(schedule, managedObjectContext: self.managedObjectContext)
+                        if let _ = self.schedule {
+                            self.reloadEnrolledCoursesView()
+                            self.reloadScheduleView()
+                            self.reloadSearchViewController()
+                        }
                     }
                 }
             }
