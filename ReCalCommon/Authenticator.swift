@@ -81,8 +81,8 @@ public class Authenticator: AuthenticationViewControllerDelegate {
     }
     
     lazy private var authenticationNavigationController: UINavigationController = {
-        let vc = UIStoryboard(name: "ReCalCommon", bundle: NSBundle(identifier: "io.recal.ReCalCommon")).instantiateViewControllerWithIdentifier(authenticationNavigationControllerStoryboardId) as UINavigationController
-        let authVC = (vc.visibleViewController as AuthenticationViewController)
+        let vc = UIStoryboard(name: "ReCalCommon", bundle: NSBundle(identifier: "io.recal.ReCalCommon")).instantiateViewControllerWithIdentifier(authenticationNavigationControllerStoryboardId) as! UINavigationController
+        let authVC = (vc.visibleViewController as! AuthenticationViewController)
         authVC.delegate = self
         authVC.authenticationUrl = self.authenticationUrl
         return vc
@@ -109,8 +109,9 @@ public class Authenticator: AuthenticationViewControllerDelegate {
                 if let response = responseOpt as? NSHTTPURLResponse {
                     if self.authenticationUrl.isEqual(response.URL) && response.statusCode == 200 {
                         // no redirection, and connection was successful, meaning data returned is the username
-                        let content = NSString(data: data!, encoding: NSASCIIStringEncoding) as String
-                        let components = split(content, { $0 == " " }, allowEmptySlices:false)
+                        let content = NSString(data: data!, encoding: NSASCIIStringEncoding) as! String
+                        
+                        let components = split(content, maxSplit: 10, allowEmptySlices: false, isSeparator: {$0 == " " })
                         if components.count == 2 {
                             self.advanceStateWithAuthenticationResult(.Success(components[0], components[1]))
                         } else {
@@ -272,13 +273,14 @@ public func == (lhs: AuthenticationStatus, rhs: AuthenticationStatus) -> Bool {
 public struct User: Equatable, Serializable {
     public let username: String
     public let userId: String
-    private let serializedDictionaryKeyUser = "user"
-    private let serializedDictionaryKeyUserId = "userId"
-    private let serializedDictionaryKeyIsReal = "isReal"
-    private let isRealUser: Bool = true
+    private static let serializedDictionaryKeyUser = "user"
+    private static let serializedDictionaryKeyUserId = "userId"
+    private static let serializedDictionaryKeyIsReal = "isReal"
+    private let isRealUser: Bool
     public init(username: String, userId: String) {
         self.username = username
         self.userId = userId
+        self.isRealUser = true
     }
     public init(username: String, isRealUser: Bool) {
         self.username = username
@@ -286,12 +288,12 @@ public struct User: Equatable, Serializable {
         self.isRealUser = isRealUser
     }
     public init(serializedDictionary: SerializedDictionary) {
-        self.username = serializedDictionary[serializedDictionaryKeyUser]! as String
-        self.isRealUser = serializedDictionary[serializedDictionaryKeyIsReal]! as Bool
-        self.userId = serializedDictionary[serializedDictionaryKeyUserId]! as String
+        self.username = serializedDictionary[User.serializedDictionaryKeyUser]! as! String
+        self.isRealUser = serializedDictionary[User.serializedDictionaryKeyIsReal]! as! Bool
+        self.userId = serializedDictionary[User.serializedDictionaryKeyUserId]! as! String
     }
     public func serialize() -> SerializedDictionary {
-        return [serializedDictionaryKeyUser: self.username, serializedDictionaryKeyIsReal: self.isRealUser, serializedDictionaryKeyUserId: self.userId]
+        return [User.serializedDictionaryKeyUser: self.username, User.serializedDictionaryKeyIsReal: self.isRealUser, User.serializedDictionaryKeyUserId: self.userId]
     }
 }
 

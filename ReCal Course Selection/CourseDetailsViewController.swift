@@ -39,7 +39,7 @@ class CourseDetailsViewController: UITableViewController {
         let nameSection = SectionInfo(name: .Empty, items: [
             ItemInfo(cellIdentifier: singleLabelCellReuseIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
                 if let course = self.course {
-                    let label = cell.contentView.viewWithTag(1) as UILabel
+                    let label = cell.contentView.viewWithTag(1) as! UILabel
                     label.text = join("/", course.courseListings.map { $0.description } as [String])
                     label.textColor = Settings.currentSettings.colorScheme.textColor
                 }
@@ -48,7 +48,7 @@ class CourseDetailsViewController: UITableViewController {
             }),
             ItemInfo(cellIdentifier: singleLabelCellReuseIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
             if let course = self.course {
-                let label = cell.contentView.viewWithTag(1) as UILabel
+                let label = cell.contentView.viewWithTag(1) as! UILabel
                 label.text = course.title
                 label.textColor = Settings.currentSettings.colorScheme.textColor
             }
@@ -59,7 +59,7 @@ class CourseDetailsViewController: UITableViewController {
         let descriptionSection = SectionInfo(name: .Literal("Description"), items: [
             ItemInfo(cellIdentifier: singleLabelCellReuseIdentifier, cellProcessBlock: { (cell) -> UITableViewCell in
             if let course = self.course {
-                let label = cell.contentView.viewWithTag(1) as UILabel
+                let label = cell.contentView.viewWithTag(1) as! UILabel
                 label.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
                 label.text = course.courseDescription
                 label.textColor = Settings.currentSettings.colorScheme.textColor
@@ -70,7 +70,7 @@ class CourseDetailsViewController: UITableViewController {
         ])
         self.staticTableViewDataSource.setSectionInfos([nameSection, descriptionSection])
         self.tableView.dataSource = self.staticTableViewDataSource
-        
+        self.tableView.estimatedRowHeight = 44
         self.notificationObservers.append(observer1)
     }
     

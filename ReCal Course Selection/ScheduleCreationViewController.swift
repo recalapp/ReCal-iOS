@@ -17,6 +17,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     private typealias ItemInfo = StaticTableViewDataSource.ItemInfo
     
     weak var delegate: ScheduleSelectionDelegate?
+    weak var creationDelegate: ScheduleCreationDelegate?
 
     private var nameTextField: UITextField? {
         return self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))?.viewWithTag(1) as? UITextField
@@ -61,7 +62,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         let processSemesters: [CDSemester] -> Void = { (semesters: [CDSemester]) in
             self.semesters = semesters
             var itemInfos: [ItemInfo]?
-            self.managedObjectContext.performBlockAndWait {
+            self.managedObjectContext.performBlock {
                 itemInfos = self.semesters.map { (semester: CDSemester) -> ItemInfo in
                     var itemInfo = ItemInfo(cellIdentifier: basicCellIdentifier, selected: semester.termCode == self.selectedSemester?.termCode, cellProcessBlock: { (cell) -> UITableViewCell in
                         cell.textLabel?.text = semester.name
@@ -69,13 +70,13 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
                     })
                     return itemInfo
                 }
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    let semestersSection = SectionInfo(name: self.dataSource[self.semestersSectionIndex].name, items: itemInfos!)
+                    self.dataSource[self.semestersSectionIndex] = semestersSection
+                    self.tableView.reloadSections(NSIndexSet(index: self.semestersSectionIndex), withRowAnimation: .None)
+                    self.tableView.keyboardDismissMode = .OnDrag
+                }
             }
-            let semestersSection = SectionInfo(name: self.dataSource[self.semestersSectionIndex].name, items: itemInfos!)
-            NSOperationQueue.mainQueue().addOperationWithBlock {
-                self.dataSource[self.semestersSectionIndex] = semestersSection
-                self.tableView.reloadSections(NSIndexSet(index: self.semestersSectionIndex), withRowAnimation: .None)
-            }
-            self.tableView.keyboardDismissMode = .OnDrag
         }
         self.fetchActiveSemesters(processSemesters)
         
@@ -92,6 +93,7 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
             self.fetchActiveSemesters(processSemesters)
         }
         self.notificationObservers = [observer1, observer2]
+        self.navigationItem.hidesBackButton = !(self.creationDelegate?.allowNavigationBack() ?? true)
     }
     override func viewWillDisappear(animated: Bool) {
         for observer in self.notificationObservers {
@@ -124,30 +126,40 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         self.nameTextField?.becomeFirstResponder()
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        if let _ = Settings.currentSettings.authenticator.user {
+            return false
+        } else {
+            return true
+        }
     }
 
     @IBAction func saveButtonTapped(sender: UIBarButtonItem) {
-        if let name = self.nameTextField?.text? {
+        if let name = self.nameTextField?.text {
             assert(self.selectedSemester != nil)
             var createdSchedule = Schedule(name: name, termCode: self.selectedSemester!.termCode)
             switch createdSchedule.commitToManagedObjectContext(self.managedObjectContext) {
             case .Success(let tempObjectId):
                 var success = false
                 var error: NSError?
-                var schedule = self.managedObjectContext.existingObjectWithID(tempObjectId, error: &error) as CDSchedule
-                self.managedObjectContext.performBlockAndWait {
-                    self.managedObjectContext.persistentStoreCoordinator!.lock()
+                var schedule = self.managedObjectContext.existingObjectWithID(tempObjectId, error: &error) as! CDSchedule
+                self.managedObjectContext.performBlock {
                     success = self.managedObjectContext.save(&error)
-                    self.managedObjectContext.persistentStoreCoordinator!.unlock()
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        if success {
+                            self.navigationController?.popViewControllerAnimated(true)
+                            self.delegate?.didSelectScheduleWithObjectId(schedule.objectID) // object id changes on save!
+                        } else {
+                            println("error saving. error: \(error)")
+                            assertionFailure("Failed to save schedule")
+                        }
+                    }
                 }
-                if success {
-                    self.navigationController?.popViewControllerAnimated(true)
-                    self.delegate?.didSelectScheduleWithObjectId(schedule.objectID) // object id changes on save!
-                } else {
-                    println("error saving. error: \(error)")
-                    assertionFailure("Failed to save schedule")
-                }
+                
             case .Failure:
                 assertionFailure("Failed to save schedule")
                 break
@@ -183,10 +195,14 @@ class ScheduleCreationViewController: UITableViewController, UITextFieldDelegate
         itemInfo.selected = true
         self.dataSource[indexPath.section, indexPath.row] = itemInfo
     }
-    
+
     /// MARK: - Text Field Delegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
+}
+
+protocol ScheduleCreationDelegate: class {
+    func allowNavigationBack() -> Bool
 }

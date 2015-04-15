@@ -11,12 +11,12 @@ import ReCalCommon
 
 private let scheduleCellIdentifier = "ScheduleCell"
 
-class ScheduleSelectionViewController: UITableViewController {
+class ScheduleSelectionViewController: UITableViewController, ScheduleCreationDelegate {
     weak var delegate: ScheduleSelectionDelegate?
     
     lazy private var managedObjectContext: NSManagedObjectContext = {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as AppDelegate).persistentStoreCoordinator
+        managedObjectContext.persistentStoreCoordinator = (UIApplication.sharedApplication().delegate as! AppDelegate).persistentStoreCoordinator
         return managedObjectContext
         }()
     private var visibleSemesters: [CDSemester] = []
@@ -43,10 +43,11 @@ class ScheduleSelectionViewController: UITableViewController {
                 if let semesters = fetched {
                     var newMapping: Dictionary<CDSemester, [CDSchedule]> = Dictionary()
                     for semester in semesters {
-                        newMapping[semester] = (semester.schedules.allObjects as [CDSchedule]).sorted { $0.name < $1.name }
+                        newMapping[semester] = (Array(semester.schedules) as! [CDSchedule]).sorted { $0.name < $1.name }
                     }
                     self.semesterToSchedulesMapping = newMapping
                     self.tableView?.reloadData()
+                    
                 }
             }
         }
@@ -84,6 +85,14 @@ class ScheduleSelectionViewController: UITableViewController {
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.fetchSchedules()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     deinit {
         for observer in self.notificationObservers {
             NSNotificationCenter.defaultCenter().removeObserver(observer)
@@ -99,11 +108,20 @@ class ScheduleSelectionViewController: UITableViewController {
         if let _ = Settings.currentSettings.authenticator.user {
             
         } else {
+            self.fetchSchedules()
             self.refreshControl?.endRefreshing()
         }
     }
     private func scheduleAtIndexPath(indexPath: NSIndexPath) -> CDSchedule? {
         return self.semesterToSchedulesMapping[self.visibleSemesters[indexPath.section]]?[indexPath.row]
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        if let _ = Settings.currentSettings.authenticator.user {
+            return false
+        } else {
+            return true
+        }
     }
 
     // MARK: - Table view data source
@@ -125,7 +143,7 @@ class ScheduleSelectionViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(scheduleCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(scheduleCellIdentifier, forIndexPath: indexPath) as! UITableViewCell
 
         cell.textLabel?.textColor = Settings.currentSettings.colorScheme.textColor
         cell.backgroundColor = Settings.currentSettings.colorScheme.contentBackgroundColor
@@ -168,9 +186,7 @@ class ScheduleSelectionViewController: UITableViewController {
                 deletedSchedule.markedDeleted = true
 //                self.managedObjectContext.deleteObject(deletedSchedule)
                 var errorOpt: NSError?
-                self.managedObjectContext.persistentStoreCoordinator!.lock()
                 self.managedObjectContext.save(&errorOpt)
-                self.managedObjectContext.persistentStoreCoordinator!.unlock()
                 if let error = errorOpt {
                     println("Can't delete schedule. Error: \(error)")
                 }
@@ -208,7 +224,15 @@ class ScheduleSelectionViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let scheduleCreationViewController = segue.destinationViewController as? ScheduleCreationViewController {
             scheduleCreationViewController.delegate = self.delegate
+            scheduleCreationViewController.creationDelegate = self
             scheduleCreationViewController.managedObjectContext = self.managedObjectContext
         }
     }
+    
+    // MARK: - Schedule Creation delegate
+    func allowNavigationBack() -> Bool {
+        return true
+    }
+    
+    
 }

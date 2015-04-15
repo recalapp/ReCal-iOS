@@ -29,25 +29,25 @@ class CourseSearchOperation: NSOperation {
     }
     
     private var searchPredicate: NSPredicate {
-        let queries = self.searchQuery.componentsSeparatedByString(" ").filter { countElements($0) >= self.minimumQueryLength }
+        let queries = self.searchQuery.componentsSeparatedByString(" ").filter { count($0) >= self.minimumQueryLength }
         let predicates = queries.map { self.predicateForQuery($0) }
         return NSCompoundPredicate.andPredicateWithSubpredicates(predicates)
     }
     
     private func predicateForQuery(query: String) -> NSPredicate {
-        let termCodePredicate = NSPredicate(format: "semester.termCode LIKE %@", self.semesterTermCode)!
+        let termCodePredicate = NSPredicate(format: "semester.termCode LIKE %@", self.semesterTermCode)
         var queryPredicate: NSPredicate
         switch query {
         case _ where query.isNumeric():
             let numberPredicate = NSPredicate(format: "ANY courseListings.courseNumber CONTAINS[c] %@", query)
-            queryPredicate = numberPredicate!
-        case _ where countElements(query) == 3:
+            queryPredicate = numberPredicate
+        case _ where count(query) == 3:
             let deptPredicate = NSPredicate(format: "ANY courseListings.departmentCode LIKE[c] %@", query)
-            queryPredicate = deptPredicate!
+            queryPredicate = deptPredicate
         default:
             let deptPredicate = NSPredicate(format: "ANY courseListings.departmentCode CONTAINS[c] %@", argumentArray: [query])
             let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", argumentArray: [query])
-            let descriptionPredicate = NSPredicate(format: "courseDescription CONTAINS[c] %@", query)!
+            let descriptionPredicate = NSPredicate(format: "courseDescription CONTAINS[c] %@", query)
             queryPredicate = NSCompoundPredicate.orPredicateWithSubpredicates([deptPredicate, titlePredicate, descriptionPredicate])
         }
         return NSCompoundPredicate.andPredicateWithSubpredicates([termCodePredicate, queryPredicate])
@@ -57,7 +57,7 @@ class CourseSearchOperation: NSOperation {
         if self.cancelled {
             return
         }
-        if countElements(self.searchQuery) < self.minimumQueryLength {
+        if count(self.searchQuery) < self.minimumQueryLength {
             self.successHandler([])
             return
         }

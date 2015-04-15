@@ -42,9 +42,7 @@ class DeletedScheduleServerCommunication : ServerCommunicator.ServerCommunicatio
                 var errorOpt: NSError?
                 self.managedObjectContext.performBlock {
                     self.managedObjectContext.deleteObject(self.managedObject)
-                    self.managedObjectContext.persistentStoreCoordinator!.lock()
                     self.managedObjectContext.save(&errorOpt)
-                    self.managedObjectContext.persistentStoreCoordinator!.unlock()
                     if let error = errorOpt {
                         println("Error saving modified schedule. Error: \(error)")
                     }

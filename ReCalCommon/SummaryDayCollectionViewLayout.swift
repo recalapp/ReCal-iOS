@@ -28,6 +28,8 @@ public extension SummaryDayView {
 
         required init(coder aDecoder: NSCoder) {
             assertionFailure("not used")
+            self.dataSource = NSObject() as! SummaryDayCollectionViewDataSourceSummarizedLayout // NOTE this will fail
+            super.init(coder: aDecoder)
         }
         
         private let calendar: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
@@ -166,7 +168,7 @@ public extension SummaryDayView {
                     let interval = Interval(start: hour, end: hour + hourStep)
                     let intersected = eventTimes.reduce(false) { $0 || $1.interval.intersects(interval, inclusive: false) }
                     if !intersected {
-                        hourSteps.add(i)
+                        hourSteps.insert(i)
                         hourIntervals.append(interval)
                     }
                     i++
@@ -415,7 +417,7 @@ public extension SummaryDayView {
                 let toBeAdjusted = allAttributes.filter { !adjustedAttributesSet.contains($0) && CGRectIntersectsRect(frame, $0.frame) } // this will include the event itself by default
                 adjustOverlap(toBeAdjusted)
                 for adjusted in toBeAdjusted {
-                    adjustedAttributesSet.add(adjusted)
+                    adjustedAttributesSet.insert(adjusted)
                 }
             }
         }

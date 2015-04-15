@@ -25,7 +25,7 @@ public extension String {
         return self.toInt() != nil
     }
     public func urlParameterEncoding() -> String {
-        let queryCharacterSet: NSMutableCharacterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as NSMutableCharacterSet
+        let queryCharacterSet: NSMutableCharacterSet = NSCharacterSet.URLQueryAllowedCharacterSet().mutableCopy() as! NSMutableCharacterSet
         queryCharacterSet.removeCharactersInRange(NSMakeRange(Character("&").utf8Value(), 1))
         queryCharacterSet.removeCharactersInRange(NSMakeRange(Character("=").utf8Value(), 1))
         queryCharacterSet.removeCharactersInRange(NSMakeRange(Character("?").utf8Value(), 1))

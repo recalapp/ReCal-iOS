@@ -53,9 +53,7 @@ class NewScheduleServerCommunication : ServerCommunicator.ServerCommunication {
                     if self.managedObject.modifiedLogicalValue == .Uploading {
                         self.managedObject.modifiedLogicalValue = .NotModified
                     }
-                    self.managedObjectContext.persistentStoreCoordinator!.lock()
                     self.managedObjectContext.save(&errorOpt)
-                    self.managedObjectContext.persistentStoreCoordinator!.unlock()
                     if let error = errorOpt {
                         println("Error saving modified schedule. Error: \(error)")
                     }

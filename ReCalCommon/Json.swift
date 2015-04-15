@@ -16,7 +16,7 @@ public class Json {
     }
     private class func serializeToString(dict: AnyObject)-> String? {
         if let data = self.serializeToData(dict) {
-            return NSString(data: data, encoding: NSUTF8StringEncoding)
+            return NSString(data: data, encoding: NSUTF8StringEncoding) as? String
         } else {
             return nil
         }

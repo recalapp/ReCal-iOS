@@ -12,18 +12,18 @@ private let authenticationPromptViewControllerStoryboardId = "AuthenticationProm
 
 public class AuthenticationNavigationController: UINavigationController {
 
-    public let logicalRootViewController: UIViewController!
+    public var logicalRootViewController: UIViewController!
     public let authenticationPromptViewController: AuthenticationPromptViewController
     private var notificationObservers: [AnyObject] = []
     
     override init(rootViewController: UIViewController) {
         self.logicalRootViewController = rootViewController
-        self.authenticationPromptViewController = UIStoryboard(name: "ReCalCommon", bundle: NSBundle(identifier: "io.recal.ReCalCommon")).instantiateViewControllerWithIdentifier(authenticationPromptViewControllerStoryboardId) as AuthenticationPromptViewController
+        self.authenticationPromptViewController = UIStoryboard(name: "ReCalCommon", bundle: NSBundle(identifier: "io.recal.ReCalCommon")).instantiateViewControllerWithIdentifier(authenticationPromptViewControllerStoryboardId) as! AuthenticationPromptViewController
         super.init(rootViewController: self.authenticationPromptViewController)
     }
 
     required public init(coder aDecoder: NSCoder) {
-        self.authenticationPromptViewController = UIStoryboard(name: "ReCalCommon", bundle: NSBundle(identifier: "io.recal.ReCalCommon")).instantiateViewControllerWithIdentifier(authenticationPromptViewControllerStoryboardId) as AuthenticationPromptViewController
+        self.authenticationPromptViewController = UIStoryboard(name: "ReCalCommon", bundle: NSBundle(identifier: "io.recal.ReCalCommon")).instantiateViewControllerWithIdentifier(authenticationPromptViewControllerStoryboardId) as! AuthenticationPromptViewController
         super.init(coder: aDecoder)
         self.logicalRootViewController = self.viewControllers.first as? UIViewController
         self.setViewControllers([self.authenticationPromptViewController], animated: false)

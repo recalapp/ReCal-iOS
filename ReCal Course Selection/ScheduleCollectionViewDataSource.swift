@@ -125,7 +125,7 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
         return self.eventsForDay(day).count
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as EventCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(eventCellIdentifier, forIndexPath: indexPath) as! EventCollectionViewCell
         let event = self.eventForIndexPath(indexPath)
         cell.event = event
         if event.enrolled {
@@ -145,15 +145,15 @@ class ScheduleCollectionViewDataSource: NSObject, UICollectionViewDataSource, Co
             }
         }
         if let viewType = CollectionViewCalendarWeekLayoutSupplementaryViewKind(rawValue: kind) {
-            let supplementaryView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: getViewIdentifier(viewType), forIndexPath: indexPath) as UICollectionReusableView
+            let supplementaryView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: getViewIdentifier(viewType), forIndexPath: indexPath) as! UICollectionReusableView
             switch viewType {
             case .DayColumnHeader:
                 let day = Day(rawValue: indexPath.indexAtPosition(0))!
-                let dayColumnHeaderView = supplementaryView as DayColumnHeaderView
+                let dayColumnHeaderView = supplementaryView as! DayColumnHeaderView
                 dayColumnHeaderView.weekDayLabel.text = day.description
             case .TimeRowHeader:
                 let hour = self.minimumHour + indexPath.indexAtPosition(0) * self.hourStep
-                let timeRowHeaderView = supplementaryView as TimeRowHeaderView
+                let timeRowHeaderView = supplementaryView as! TimeRowHeaderView
                 let timeComponent = NSDateComponents()
                 timeComponent.hour = hour
                 let time = self.calendar.dateFromComponents(timeComponent)!

@@ -47,7 +47,7 @@ class SectionMeetingAttributeImporter: CompositeManagedObjectAttributeImporter {
             if dict[self.dictionaryKey] == nil {
                 return .Error(.InvalidDictionary)
             }
-            let components = getTimeComponents(dict[self.dictionaryKey] as String)
+            let components = getTimeComponents(dict[self.dictionaryKey] as! String)
             if components == nil {
                 return .Error(.InvalidDictionary)
             }

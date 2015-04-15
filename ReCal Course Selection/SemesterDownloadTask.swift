@@ -103,7 +103,7 @@ class SemesterDownloadTask : NSObject {
                 }
             }
             let serverCommunicator = Settings.currentSettings.serverCommunicator
-            serverCommunicator.performBlockAndWait {
+            serverCommunicator.performBlock {
                 serverCommunicator.registerServerCommunication(courseServerCommunication)
                 let observer = Settings.currentSettings.serverCommunicator.startServerCommunicationWithIdentifier(courseServerCommunication.identifier)
                 if observer != nil {

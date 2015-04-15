@@ -32,7 +32,7 @@ public class ColorRepresentation : NSObject, NSCoding, NSCopying, Hashable {
     public init(var hexString: String) {
         hexString = hexString.stringByReplacingOccurrencesOfString("#", withString: "")
         
-        switch countElements(hexString) {
+        switch count(hexString) {
         case 3: // #RGB
             self.normalizedHexString = "FF\(doubleStringChar(hexString))"
         case 4: // #ARGB
@@ -56,7 +56,7 @@ public class ColorRepresentation : NSObject, NSCoding, NSCopying, Hashable {
     }
 
     required public init(coder aDecoder: NSCoder) {
-        self.normalizedHexString = aDecoder.decodeObjectForKey(CodingKeys.NormalizedHexString) as String
+        self.normalizedHexString = aDecoder.decodeObjectForKey(CodingKeys.NormalizedHexString) as! String
     }
     public func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(self.normalizedHexString, forKey: CodingKeys.NormalizedHexString)
@@ -77,7 +77,7 @@ public func == (lhs: ColorRepresentation, rhs: ColorRepresentation)-> Bool {
 }
 
 private func doubleStringChar(input: String) -> String {
-    if countElements(input) == 0 {
+    if count(input) == 0 {
         return ""
     }
     let firstChar = input.substringToIndex(input.startIndex.successor())

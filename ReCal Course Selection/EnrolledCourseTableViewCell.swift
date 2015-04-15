@@ -60,15 +60,6 @@ class EnrolledCourseTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
         self.initialize()
     }
-    override init() {
-        super.init()
-        self.initialize()
-    }
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.initialize()
-    }
-    
     private func initialize() {
         
     }
@@ -163,6 +154,7 @@ class EnrolledCourseTableViewCell: UITableViewCell {
                 let bottomConstraint = NSLayoutConstraint(item: prev, attribute: .Bottom, relatedBy: .Equal, toItem: self.contentView, attribute: .BottomMargin, multiplier: 1, constant: -8)
                 self.contentView.addConstraint(bottomConstraint)
             }
+            
         }
     }
     
@@ -191,6 +183,11 @@ class EnrolledCourseTableViewCell: UITableViewCell {
     @IBAction func deleteButtonTapped(sender: UIButton) {
         assert(sender == self.deleteButton)
         self.delegate?.shouldDeleteCourseForEnrolledCourseTableViewCell(self)
+    }
+    
+    override func sizeThatFits(size: CGSize) -> CGSize {
+        let superSize = super.sizeThatFits(size)
+        return CGSize(width: superSize.width, height: 1000)
     }
 }
 

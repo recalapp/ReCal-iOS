@@ -49,7 +49,7 @@ public class ToManyChildManagedObjectAttributeImporter: ManagedObjectAttributeIm
             case .Delete:
                 managedObjectContext.performBlockAndWait {
                     for child in childrenSet {
-                        managedObjectContext.deleteObject(child as NSManagedObject)
+                        managedObjectContext.deleteObject(child as! NSManagedObject)
                     }
                 }
             case .NoDelete:
@@ -71,7 +71,7 @@ public class ToManyChildManagedObjectAttributeImporter: ManagedObjectAttributeIm
         case .SearchStringEqual(let childDictionaryKey, let childAttributeKey):
             var deleteSet: NSMutableSet!
             managedObjectContext.performBlockAndWait {
-                deleteSet = childrenSet.mutableCopy() as NSMutableSet
+                deleteSet = childrenSet.mutableCopy() as! NSMutableSet
             }
             for childDict in value! {
                 var childManagedObject: NSManagedObject!
@@ -114,7 +114,7 @@ public class ToManyChildManagedObjectAttributeImporter: ManagedObjectAttributeIm
             case .Delete:
                 managedObjectContext.performBlockAndWait {
                     for toBeDeleted in deleteSet {
-                        managedObjectContext.deleteObject(toBeDeleted as NSManagedObject)
+                        managedObjectContext.deleteObject(toBeDeleted as! NSManagedObject)
                     }
                 }
             case .NoDelete:

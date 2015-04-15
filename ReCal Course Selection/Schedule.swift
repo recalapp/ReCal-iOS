@@ -84,7 +84,7 @@ struct Schedule : ManagedObjectProxy {
             }
             return []
         }()
-        self.enrolledCourses = Set(initialItems: enrolledCourses.map { Course(managedObject: $0) })
+        self.enrolledCourses = Set(enrolledCourses.map { Course(managedObject: $0) })
         self.courseSectionTypeEnrollments = Dictionary<Course, SectionTypeEnrollment>()
         for course in self.enrolledCourses {
             var sectionTypeEnrollment = SectionTypeEnrollment()
@@ -106,10 +106,10 @@ struct Schedule : ManagedObjectProxy {
             }
             self.courseSectionTypeEnrollments[course] = sectionTypeEnrollment
         }
-        let colorMapRepresentation = managedObject.courseColorMap as Dictionary<String,CourseColor>
+        let colorMapRepresentation = managedObject.courseColorMap as! [String: CourseColor]
         self.courseColorMap = Dictionary()
         for (id, color) in colorMapRepresentation {
-            let courseOpt = self.enrolledCourses.toArray().filter { $0.serverId == id }.last
+            let courseOpt = Array(self.enrolledCourses).filter { $0.serverId == id }.last
             if let course = courseOpt {
                 self.courseColorMap[course] = color
             }
@@ -118,9 +118,9 @@ struct Schedule : ManagedObjectProxy {
         let availableColors: [CourseColor] = (managedObject.availableColors as? [CourseColor]) ?? {
             var colors = Set<CourseColor>()
             for (_, color) in courseColorMap {
-                colors.add(color)
+                colors.insert(color)
             }
-            return colors.toArray()
+            return Array(colors)
         }()
         self.colorManager = CourseColorManager(availableColors: availableColors, occurrences: self.courseColorMap.values.array)
         self.updateCourseColorMap()
@@ -186,7 +186,7 @@ struct Schedule : ManagedObjectProxy {
     
     mutating func commitToManagedObjectContext(managedObjectContext: NSManagedObjectContext) -> ManagedObjectProxyCommitResult {
         let updateManagedObject = { (schedule: CDSchedule) -> ManagedObjectProxyCommitResult in
-            var enrolledCoursesIds: [String] = self.enrolledCourses.toArray().map { $0.serverId }
+            var enrolledCoursesIds: [String] = Array(self.enrolledCourses).map { $0.serverId }
             var enrolledSectionsIds: [String] = self.enrolledSections.map { $0.serverId }
             var colorMapRepresentation = Dictionary<String, CourseColor>()
             for (course, color) in self.courseColorMap {

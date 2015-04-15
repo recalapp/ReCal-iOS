@@ -27,7 +27,7 @@ public class SlidingSelectionControl: UIControl {
     private var contentSize: CGSize?
     
     /// An array of all the SlidingSelectionControlItem
-    private let slidingSelectionControlItems: [SlidingSelectionControlItem]
+    private var slidingSelectionControlItems: [SlidingSelectionControlItem]
     
     /// A stack of all the constraints associated with slidingSelectionControlItems
     lazy private var slidingSelectionControlItemConstraints = Stack<NSLayoutConstraint>()
@@ -71,7 +71,7 @@ public class SlidingSelectionControl: UIControl {
         assert(initialSelection >= 0, "Initial selection must be an array index, so it cannot be negative")
         assert(initialSelection < items.count, "Initial selection must be an array index, so it must be in the bounds of the array")
         self.slidingSelectionControlItems = []
-        super.init()
+        super.init(frame: CGRect())
         self.setTranslatesAutoresizingMaskIntoConstraints(false)
         //self.setTranslatesAutoresizingMaskIntoConstraints(false)
         for item in items {
@@ -102,7 +102,7 @@ public class SlidingSelectionControl: UIControl {
     /// Update selection based on event
     func updateSelection(sender: SlidingSelectionControlItem?, forEvent eventOpt: UIEvent?) {
         if let event = eventOpt {
-            let touchOpt = event.allTouches()?.anyObject() as UITouch?
+            let touchOpt = event.allTouches()?.first as? UITouch
             if let touch = touchOpt {
                 // check if touch is in any view, if not, we don't process it (keeping last selection)
                 let touchInSomeView = self.slidingSelectionControlItems.reduce(false, combine: {(found, item) in
@@ -178,7 +178,7 @@ public class SlidingSelectionControl: UIControl {
         var runningHeight: CGFloat = 0.0
         for slidingSelectionControlItem in reverse(self.slidingSelectionControlItems) {
             // update content size
-            let itemConstraints = slidingSelectionControlItem.constraints() as [NSLayoutConstraint]
+            let itemConstraints = slidingSelectionControlItem.constraints() as! [NSLayoutConstraint]
             for constraint in itemConstraints {
                 if constraint.firstAttribute == .Width {
                     slidingSelectionControlItem.removeConstraint(constraint)
@@ -258,11 +258,6 @@ class SlidingSelectionControlItem: UIControl {
     }
     
     private let label: UILabel
-    override init() {
-        self.label = UILabel()
-        super.init()
-        self.initialize()
-    }
     required init(coder aDecoder: NSCoder) {
         self.label = UILabel()
         super.init(coder: aDecoder)

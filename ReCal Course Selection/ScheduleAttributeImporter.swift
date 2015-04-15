@@ -179,7 +179,7 @@ private class AvailableColorAttributeImporter: ManagedObjectAttributeImporter {
                     println("Error, invalid available color array in schedule")
                     return .Error(.InvalidDictionary)
                 }
-                let colors = array.map { CourseColor(normalColorHexString: $0[lightDictionaryKey]! as String, highlightedColorHexString: $0[darkDictionaryKey]! as String, serverId: "\($0[colorIdDictionaryKey])") }
+                let colors = array.map { CourseColor(normalColorHexString: $0[lightDictionaryKey]! as! String, highlightedColorHexString: $0[darkDictionaryKey]! as! String, serverId: "\($0[colorIdDictionaryKey])") }
                 managedObjectContext.performBlockAndWait {
                     managedObject.setValue(colors, forKey: self.attributeKey)
                 }

@@ -40,9 +40,9 @@ class CourseColor: NSObject, NSCoding, Hashable, NSCopying {
         super.init()
     }
     required init(coder aDecoder: NSCoder) {
-        self.serverId = aDecoder.decodeObjectForKey(CodingKeys.ServerId) as String
-        self.normalColorRepresentation = aDecoder.decodeObjectForKey(CodingKeys.NormalColor) as ColorRepresentation
-        self.highlightedColorRepresentation = aDecoder.decodeObjectForKey(CodingKeys.HighlightedColor) as ColorRepresentation
+        self.serverId = aDecoder.decodeObjectForKey(CodingKeys.ServerId) as! String
+        self.normalColorRepresentation = aDecoder.decodeObjectForKey(CodingKeys.NormalColor) as! ColorRepresentation
+        self.highlightedColorRepresentation = aDecoder.decodeObjectForKey(CodingKeys.HighlightedColor) as! ColorRepresentation
     }
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(self.serverId, forKey: CodingKeys.ServerId)
@@ -60,7 +60,7 @@ class CourseColor: NSObject, NSCoding, Hashable, NSCopying {
         }
     }
     func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy = CourseColor(normalColorRepresentation: self.normalColorRepresentation.copyWithZone(zone) as ColorRepresentation, highlightedColorRepresentation: self.highlightedColorRepresentation.copyWithZone(zone) as ColorRepresentation,
+        let copy = CourseColor(normalColorRepresentation: self.normalColorRepresentation.copyWithZone(zone) as! ColorRepresentation, highlightedColorRepresentation: self.highlightedColorRepresentation.copyWithZone(zone) as! ColorRepresentation,
             serverId: self.serverId)
         return copy
     }

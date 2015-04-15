@@ -314,7 +314,7 @@ public class CollectionViewCalendarWeekLayout: UICollectionViewLayout {
             let toBeAdjusted = allAttributes.filter { !adjustedAttributesSet.contains($0) && CGRectIntersectsRect(frame, $0.frame) } // this will include the event itself by default
             adjustOverlap(toBeAdjusted)
             for adjusted in toBeAdjusted {
-                adjustedAttributesSet.add(adjusted)
+                adjustedAttributesSet.insert(adjusted)
             }
         }
     }

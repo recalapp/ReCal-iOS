@@ -36,7 +36,7 @@ class EnrolledCoursesTableViewDataSource: NSObject, UITableViewDataSource, Enrol
     
     // MARK: - Table View Data Source
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(courseCellIdentifier, forIndexPath: indexPath) as EnrolledCourseTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(courseCellIdentifier, forIndexPath: indexPath) as! EnrolledCourseTableViewCell
         let course = self.courseForIndexPath(indexPath)
         cell.enrollmentsBySectionType = self.enrollments[course]!
         cell.expanded = indexPath == self.selectedIndexPath
