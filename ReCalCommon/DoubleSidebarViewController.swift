@@ -309,6 +309,7 @@ public class DoubleSidebarViewController: UIViewController, UIScrollViewDelegate
         scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.keyboardDismissMode = .OnDrag
         self.sidebarContainerScrollView = scrollView
         self.view.addSubview(scrollView)
         self.view.addConstraints(NSLayoutConstraint.layoutConstraintsForChildView(scrollView, inParentView: self.view, withInsets: UIEdgeInsetsZero))
